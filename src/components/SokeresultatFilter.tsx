@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, ComponentPropsWithoutRef } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
 
@@ -8,7 +8,7 @@ const HendelseTekster: any = {
     UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
 };
 
-interface Props {
+interface Props extends ComponentPropsWithoutRef<any> {
     onValgteElementerChange: (filter: HendelseTypeFilters) => void;
 }
 
@@ -41,7 +41,6 @@ export default ({ onValgteElementerChange }: Props) => {
     });
 
     return (
-        <div style={{ marginRight: '8px', minWidth: '250px'}}>
             <EkspanderbartPanel apen={true} tittel="Hendelse">
                 <div>
                     {elementer.map((k) => {
@@ -54,6 +53,5 @@ export default ({ onValgteElementerChange }: Props) => {
                     })}
                 </div>
             </EkspanderbartPanel>
-        </div>
     );
 };

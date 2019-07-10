@@ -124,8 +124,10 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
         <OversiktHeader type={type} />
         {henterAlt && <AppSpinner />}
         {noeErHentet && type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
-          <div style={{display: 'flex'}}>
-            <SokeresultatFilter onValgteElementerChange={this.onHendelsesTypeChange} />
+          <div className="oversiktContainer__innhold">
+            <div className="sokeresultatFilter">
+                <SokeresultatFilter onValgteElementerChange={this.onHendelsesTypeChange} />
+            </div>
             <Sokeresultat
               tildelVeileder={actions.tildelVeileder}
               aktivEnhet={aktivEnhet}
