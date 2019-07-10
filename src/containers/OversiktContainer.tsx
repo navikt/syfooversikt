@@ -16,6 +16,8 @@ import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_ac
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
 import { Veilederenhet } from '../store/veilederenheter/veilederenheterTypes';
 import { Veilederinfo } from '../store/veilederinfo/veilederinfoTypes';
+import SokeresultatFilter, { HendelseTypeFilters } from '../components/SokeresultatFilter';
+import { isNullOrUndefined } from 'util';
 
 const tekster = {
   overskrifter: {
@@ -51,9 +53,41 @@ interface DispatchProps {
   };
 }
 
+interface OversiktContainerState {
+    filter?: HendelseTypeFilters;
+}
+
 export type OversiktContainerProps = OversiktProps & StateProps & DispatchProps;
 
-class OversiktCont extends Component<OversiktContainerProps> {
+const filtrerPersonregister = (personregister: PersonregisterState, filter?: HendelseTypeFilters): PersonregisterState => {
+    if (!filter) return personregister;
+    const erTomtFilter = Object.keys(filter).filter((key) => ((filter as any)[key] === true)).length === 0;
+    const nyttFiltrertPersonregister = erTomtFilter
+        ? personregister
+        : Object.keys(personregister).reduce((cv, fnr) => {
+            const pd = personregister[fnr];
+            if (filter.onskerMote && pd.harMotebehovUbehandlet) {
+                cv[fnr] = pd;
+            } else if (filter.svartMote && pd.harMote) {
+                cv[fnr] = pd;
+            } else if (filter.ufordeltBruker && isNullOrUndefined(pd.tildeltVeilederIdent)) {
+                cv[fnr] = pd;
+            }
+            return cv;
+        }, {} as PersonregisterState);
+    return nyttFiltrertPersonregister;
+  };
+
+class OversiktCont extends Component<OversiktContainerProps, OversiktContainerState> {
+
+  constructor(props: OversiktContainerProps) {
+    super(props);
+    this.state = {
+        filter: undefined,
+    };
+    this.onHendelsesTypeChange = this.onHendelsesTypeChange.bind(this);
+  }
+
   componentDidMount() {
     const { actions } = this.props;
     actions.hentVeilederenheter();
@@ -65,6 +99,10 @@ class OversiktCont extends Component<OversiktContainerProps> {
     actions.hentPersonoversiktForespurt();
   }
 
+  onHendelsesTypeChange = (filter: HendelseTypeFilters) => {
+    this.setState({ filter });
+  }
+
   render() {
     const {
       type,
@@ -74,55 +112,85 @@ class OversiktCont extends Component<OversiktContainerProps> {
       actions,
       aktivEnhet,
       aktivVeilederinfo,
-      personregister,
     } = this.props;
-    return (<div className="oversiktContainer">
-        { altFeilet && OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT
-          && AlertStripeMedMelding(tekster.feil.hentingFeilet, 'oversiktContainer__alertstripe')
-        }
-        <OversiktHeader type={type}/>
-        { henterAlt
-          && <AppSpinner />
-        }
-        { noeErHentet && OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT
-          && <Sokeresultat
-            tildelVeileder={actions.tildelVeileder}
-            aktivEnhet={aktivEnhet}
-            aktivVeilederinfo={aktivVeilederinfo}
-            personregister={personregister}
-        />}
-    </div>);
+    return (
+      <div className="oversiktContainer">
+        {altFeilet &&
+          OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT &&
+          AlertStripeMedMelding(
+            tekster.feil.hentingFeilet,
+            'oversiktContainer__alertstripe'
+          )}
+        <OversiktHeader type={type} />
+        {henterAlt && <AppSpinner />}
+        {noeErHentet && type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
+          <div style={{display: 'flex'}}>
+            <SokeresultatFilter onValgteElementerChange={this.onHendelsesTypeChange} />
+            <Sokeresultat
+              tildelVeileder={actions.tildelVeileder}
+              aktivEnhet={aktivEnhet}
+              aktivVeilederinfo={aktivVeilederinfo}
+              personregister={filtrerPersonregister(this.props.personregister, this.state.filter)}
+            />
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
 const OversiktHeader = (oversiktsType: OversiktProps) => {
   const { type } = oversiktsType;
-  return (<div>
-      {type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && <h2>{tekster.overskrifter.enhetensOversikt}</h2>}
-  </div>);
+  return (
+    <div>
+      {type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
+        <h2>{tekster.overskrifter.enhetensOversikt}</h2>
+      )}
+    </div>
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   actions: {
     hentEnhetensMoterForespurt: () => dispatch(hentEnhetensMoterForespurt()),
-    hentPersonInfoForespurt: (fnrListe: Fodselsnummer[]) => dispatch(hentPersonInfoForespurt(fnrListe)),
+    hentPersonInfoForespurt: (fnrListe: Fodselsnummer[]) =>
+      dispatch(hentPersonInfoForespurt(fnrListe)),
     hentPersonoversiktForespurt: () => dispatch(hentPersonoversiktForespurt()),
     hentVeilederenheter: () => dispatch(hentVeilederenheter()),
-    tildelVeileder: (liste: VeilederArbeidstaker[]) => dispatch(pushVeilederArbeidstakerForespurt(liste)),
+    tildelVeileder: (liste: VeilederArbeidstaker[]) =>
+      dispatch(pushVeilederArbeidstakerForespurt(liste)),
   },
 });
 
-const mapStateToProps = ({ personoversikt, enhetensMoter, personregister, veilederenheter, veilederinfo }: ApplicationState, oversiktProps: OversiktProps) => ({
+const mapStateToProps = (
+  {
+    personoversikt,
+    enhetensMoter,
+    personregister,
+    veilederenheter,
+    veilederinfo,
+  }: ApplicationState,
+  oversiktProps: OversiktProps
+) => ({
   personregister,
   oversiktProps,
   aktivEnhet: veilederenheter.aktivEnhet,
   aktivVeilederinfo: veilederinfo.data,
-  henterAlt: veilederenheter.henter || veilederinfo.henter || (personoversikt.henter && enhetensMoter.henter),
-  noeErHentet: veilederenheter.hentet && veilederinfo.hentet && (personoversikt.hentet || enhetensMoter.hentet),
-  altFeilet: veilederenheter.hentingFeilet || veilederinfo.hentingFeilet || (personoversikt.hentingFeilet && enhetensMoter.hentingFeilet),
+  henterAlt:
+    veilederenheter.henter ||
+    veilederinfo.henter ||
+    (personoversikt.henter && enhetensMoter.henter),
+  noeErHentet:
+    veilederenheter.hentet &&
+    veilederinfo.hentet &&
+    (personoversikt.hentet || enhetensMoter.hentet),
+  altFeilet:
+    veilederenheter.hentingFeilet ||
+    veilederinfo.hentingFeilet ||
+    (personoversikt.hentingFeilet && enhetensMoter.hentingFeilet),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(OversiktCont);

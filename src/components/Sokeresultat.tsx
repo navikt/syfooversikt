@@ -28,7 +28,7 @@ const lagListe = (markertePersoner: string[], veilederIdent: string, enhet: stri
 };
 
 class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
-  constructor(props: any) {
+  constructor(props: SokeresultatProps) {
     super(props);
     this.state = {
       markertePersoner: [],
@@ -74,7 +74,7 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     const {
       personregister,
     } = this.props;
-    return (<div>
+    return (<div className="Sokeresultat__container">
       <Toolbar buttonHandler={this.buttonHandler}/>
       <Personliste
         personregister={personregister}
