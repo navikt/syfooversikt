@@ -16,7 +16,8 @@ import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbe
 import { Veilederenhet } from '../store/veilederenheter/veilederenheterTypes';
 import { Veilederinfo } from '../store/veilederinfo/veilederinfoTypes';
 import SokeresultatFilter, { HendelseTypeFilters } from '../components/HendelseTypeFilter';
-import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
+import { filtrerPersonregister, Filterable, filtrerPaaFodelsnummerEllerNavn } from '../utils/hendelseFilteringUtils';
+import TekstFilter from '../components/TekstFilter';
 
 const tekster = {
   overskrifter: {
@@ -53,6 +54,7 @@ interface DispatchProps {
 
 interface OversiktContainerState {
     hendelseTypeFilter?: HendelseTypeFilters;
+    tekstFilter: string;
 }
 
 export type OversiktContainerProps = OversiktProps & StateProps & DispatchProps;
@@ -63,8 +65,10 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
     super(props);
     this.state = {
         hendelseTypeFilter: undefined,
+        tekstFilter: '',
     };
     this.onHendelsesTypeChange = this.onHendelsesTypeChange.bind(this);
+    this.onTekstFilterChange = this.onTekstFilterChange.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +85,10 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
     this.setState({ hendelseTypeFilter: filter });
   }
 
+  onTekstFilterChange = (tekstFilter: string) => {
+      this.setState({ tekstFilter });
+  }
+
   render() {
     const {
       type,
@@ -90,7 +98,14 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
       actions,
       aktivEnhet,
       aktivVeilederinfo,
+      personregister,
     } = this.props;
+
+    const filtrertListe = new Filterable<PersonregisterState>(personregister)
+        .applyFilter((v) => filtrerPersonregister(v, this.state.hendelseTypeFilter))
+        .applyFilter((v) => filtrerPaaFodelsnummerEllerNavn(v, this.state.tekstFilter))
+        .value;
+
     return (
       <div className="oversiktContainer">
         {altFeilet &&
@@ -104,13 +119,14 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
         {noeErHentet && type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
           <div className="oversiktContainer__innhold">
             <div className="sokeresultatFilter">
+                <TekstFilter  onFilterChange={this.onTekstFilterChange} />
                 <SokeresultatFilter onValgteElementerChange={this.onHendelsesTypeChange} />
             </div>
             <Sokeresultat
               tildelVeileder={actions.tildelVeileder}
               aktivEnhet={aktivEnhet}
               aktivVeilederinfo={aktivVeilederinfo}
-              personregister={filtrerPersonregister(this.props.personregister, this.state.hendelseTypeFilter)}
+              personregister={filtrertListe}
             />
           </div>
         )}

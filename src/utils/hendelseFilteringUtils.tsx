@@ -2,8 +2,39 @@ import { PersonregisterState } from '../store/personregister/personregisterTypes
 import { HendelseTypeFilters } from '../components/HendelseTypeFilter';
 import { isNullOrUndefined } from 'util';
 
+export class Filterable<T> {
+
+    value: T;
+
+    constructor(initialValue: T) {
+        this.value = initialValue;
+    }
+
+    applyFilter(filter: (currentValue: T) => T): Filterable<T> {
+        return new Filterable<T>(filter(this.value));
+    }
+}
+
+// type Filterable<T> = (arg: T) => Filterable<T>;
+
+export const filtrerPaaFodelsnummerEllerNavn = (personregister: PersonregisterState, sok: string): PersonregisterState => {
+    if (sok.length === 0) {
+        return personregister;
+    }
+    return Object.keys(personregister).reduce((cv, fnr) => {
+        const pd = personregister[fnr];
+        if (fnr.toLowerCase().indexOf(sok.toLowerCase()) > -1) {
+            cv[fnr] = personregister[fnr];
+        } else if (pd.navn.toLowerCase().indexOf(sok.toLocaleLowerCase()) > -1) {
+            cv[fnr] = personregister[fnr];
+        }
+        return cv;
+    }, {} as PersonregisterState);
+};
+
 export const filtrerPersonregister = (personregister: PersonregisterState, filter?: HendelseTypeFilters): PersonregisterState => {
     if (!filter) return personregister;
+
     const erTomtFilter = Object
         .keys(filter)
         .filter((key) => ((filter as any)[key] === true))
