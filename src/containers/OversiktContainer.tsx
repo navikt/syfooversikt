@@ -52,7 +52,7 @@ interface DispatchProps {
 }
 
 interface OversiktContainerState {
-    filter?: HendelseTypeFilters;
+    hendelseTypeFilter?: HendelseTypeFilters;
 }
 
 export type OversiktContainerProps = OversiktProps & StateProps & DispatchProps;
@@ -62,7 +62,7 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
   constructor(props: OversiktContainerProps) {
     super(props);
     this.state = {
-        filter: undefined,
+        hendelseTypeFilter: undefined,
     };
     this.onHendelsesTypeChange = this.onHendelsesTypeChange.bind(this);
   }
@@ -78,7 +78,7 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
   }
 
   onHendelsesTypeChange = (filter: HendelseTypeFilters) => {
-    this.setState({ filter });
+    this.setState({ hendelseTypeFilter: filter });
   }
 
   render() {
@@ -110,7 +110,7 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
               tildelVeileder={actions.tildelVeileder}
               aktivEnhet={aktivEnhet}
               aktivVeilederinfo={aktivVeilederinfo}
-              personregister={filtrerPersonregister(this.props.personregister, this.state.filter)}
+              personregister={filtrerPersonregister(this.props.personregister, this.state.hendelseTypeFilter)}
             />
           </div>
         )}
