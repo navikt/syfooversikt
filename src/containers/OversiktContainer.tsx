@@ -16,8 +16,8 @@ import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_ac
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
 import { Veilederenhet } from '../store/veilederenheter/veilederenheterTypes';
 import { Veilederinfo } from '../store/veilederinfo/veilederinfoTypes';
-import SokeresultatFilter, { HendelseTypeFilters } from '../components/SokeresultatFilter';
-import { isNullOrUndefined } from 'util';
+import SokeresultatFilter, { HendelseTypeFilters } from '../components/HendelseTypeFilter';
+import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
 
 const tekster = {
   overskrifter: {
@@ -58,25 +58,6 @@ interface OversiktContainerState {
 }
 
 export type OversiktContainerProps = OversiktProps & StateProps & DispatchProps;
-
-const filtrerPersonregister = (personregister: PersonregisterState, filter?: HendelseTypeFilters): PersonregisterState => {
-    if (!filter) return personregister;
-    const erTomtFilter = Object.keys(filter).filter((key) => ((filter as any)[key] === true)).length === 0;
-    const nyttFiltrertPersonregister = erTomtFilter
-        ? personregister
-        : Object.keys(personregister).reduce((cv, fnr) => {
-            const pd = personregister[fnr];
-            if (filter.onskerMote && pd.harMotebehovUbehandlet) {
-                cv[fnr] = pd;
-            } else if (filter.svartMote && pd.harMote) {
-                cv[fnr] = pd;
-            } else if (filter.ufordeltBruker && isNullOrUndefined(pd.tildeltVeilederIdent)) {
-                cv[fnr] = pd;
-            }
-            return cv;
-        }, {} as PersonregisterState);
-    return nyttFiltrertPersonregister;
-  };
 
 class OversiktCont extends Component<OversiktContainerProps, OversiktContainerState> {
 

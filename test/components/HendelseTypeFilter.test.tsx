@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
-import SokeresultatFilter from '../../src/components/SokeresultatFilter';
+import SokeresultatFilter from '../../src/components/HendelseTypeFilter';
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 
