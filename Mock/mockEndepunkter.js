@@ -6,7 +6,6 @@ const ENHETER = 'enheter';
 const MOTEBEHOV = 'motebehov';
 const PERSON_INFO = 'personInfo';
 const PERSONOVERSIKT_ENHET = 'personoversiktEnhet';
-const MOTER = 'moter';
 const VEILEDERINFO = 'veilederinfo';
 const ENHET_NAVN = 'enhetNavn';
 
@@ -21,7 +20,6 @@ lastFilTilMinne(ENHETER);
 lastFilTilMinne(MOTEBEHOV);
 lastFilTilMinne(PERSON_INFO);
 lastFilTilMinne(PERSONOVERSIKT_ENHET);
-lastFilTilMinne(MOTER);
 lastFilTilMinne(VEILEDERINFO);
 lastFilTilMinne(ENHET_NAVN);
 
@@ -38,11 +36,6 @@ function mockForLokal(server) {
 
   server.post('/api/v1/persontildeling/registrer', (req, res) => {
     res.send();
-  });
-
-  server.get('/syfomoteadmin/api/enhet/:id/moter/brukere', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(mockData[MOTER]));
   });
 
   server.get('/syfomoteadmin/api/internad/veilederinfo', (req, res) => {

@@ -26,9 +26,9 @@ export const testdata = {
 };
 
 export const personregister: PersonregisterState = {
-  [testdata.fnr1]: { navn: testdata.navn1, harMotebehovUbehandlet: true, harMote: false,
+  [testdata.fnr1]: { navn: testdata.navn1, harMotebehovUbehandlet: true, harMoteplanleggerUbehandlet: false,
     skjermingskode: testdata.skjermingskode.ingen, markert: false } as PersonData,
-  [testdata.fnr2]: { navn: testdata.navn2, harMotebehovUbehandlet: false, harMote: false,
+  [testdata.fnr2]: { navn: testdata.navn2, harMotebehovUbehandlet: false, harMoteplanleggerUbehandlet: false,
     skjermingskode: testdata.skjermingskode.egenAnsatt, markert: false } as PersonData,
 };
 

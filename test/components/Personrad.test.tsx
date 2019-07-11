@@ -14,7 +14,7 @@ const expect = chai.expect;
 
 describe('Personrad', () => {
   const fnr = testdata.fnr1;
-  const personData = { navn: testdata.navn1, harMotebehovUbehandlet: false, harMote: false,
+  const personData = { navn: testdata.navn1, harMotebehovUbehandlet: false, harMoteplanleggerUbehandlet: false,
     skjermingskode: testdata.skjermingskode.ingen, markert: false } as PersonData;
   // tslint:disable-next-line:no-empty
   const checkboxHandler = () => {};

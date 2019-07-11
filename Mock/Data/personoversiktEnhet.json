@@ -1,26 +1,44 @@
 [
   {
+    "fnr":"99999911111",
+    "enhet": "0315",
+    "veilederIdent": null,
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": true
+  },
+  {
     "fnr":"99999922222",
     "enhet": "0315",
     "veilederIdent": null,
-    "motebehovUbehandlet": true
+    "motebehovUbehandlet": true,
+    "moteplanleggerUbehandlet": null
   },
   {
     "fnr":"99999933333",
     "enhet": "0315",
     "veilederIdent":"Z101010",
-    "motebehovUbehandlet": null
+    "motebehovUbehandlet": true,
+    "moteplanleggerUbehandlet": true
   },
   {
     "fnr":"99999944444",
     "enhet": "0315",
     "veilederIdent":"Z101010",
-    "motebehovUbehandlet": true
+    "motebehovUbehandlet": true,
+    "moteplanleggerUbehandlet": true
+  },
+  {
+    "fnr":"99999955555",
+    "enhet": "0315",
+    "veilederIdent": null,
+    "motebehovUbehandlet": true,
+    "moteplanleggerUbehandlet": null
   },
   {
     "fnr": "99999966666",
     "enhet": "0316",
     "veilederIdent": "Z202020",
-    "motebehovUbehandlet": null
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": true
   }
 ]

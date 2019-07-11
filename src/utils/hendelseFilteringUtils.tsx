@@ -15,7 +15,7 @@ export const filtrerPersonregister = (personregister: PersonregisterState, filte
             const personData = personregister[fnr];
             if (filter.onskerMote && personData.harMotebehovUbehandlet) {
                 cv[fnr] = personData;
-            } else if (filter.svartMote && personData.harMote) {
+            } else if (filter.svartMote && personData.harMoteplanleggerUbehandlet) {
                 cv[fnr] = personData;
             } else if (filter.ufordeltBruker && isNullOrUndefined(personData.tildeltVeilederIdent)) {
                 cv[fnr] = personData;

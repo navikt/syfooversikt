@@ -16,7 +16,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMote: false,
+        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.egenAnsatt,
         markert: false,
       } as PersonData;
@@ -29,7 +29,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMote: false,
+        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;
@@ -45,7 +45,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: true,
-        harMote: true,
+        harMoteplanleggerUbehandlet: true,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;
@@ -58,7 +58,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: true,
-        harMote: false,
+        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;
@@ -71,7 +71,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMote: true,
+        harMoteplanleggerUbehandlet: true,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;
@@ -84,7 +84,7 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMote: false,
+        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;

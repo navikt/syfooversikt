@@ -10,7 +10,6 @@ import {
   PersonregisterState,
   PersonHendelseData,
 } from './personregisterTypes';
-import { EnhetensMoterActionTypes } from '../enhetensMoter/enhetensMoter_actions';
 
 const tilPersonDataMap = (personDataMapObject: any) => {
   return personDataMapObject.reduce((acc: { }, curr: { [fnr: string]: PersonData}) => {
@@ -25,19 +24,6 @@ const personregisterReducer: Reducer<PersonregisterState> = (
   action
 ) => {
   switch (action.type) {
-    case EnhetensMoterActionTypes.HENT_ENHETENS_MOTER_HENTET: {
-      const moterSvarHentet = action.data;
-      const personerSomSkalOppdateres: { [fnr: string]: PersonData } = moterSvarHentet.map((moter: PersonHendelseData) => {
-        return {
-          [moter.fnr]: {
-            ...state[moter.fnr],
-            harMote: true,
-          },
-        };
-      });
-      const oppdatering = tilPersonDataMap(personerSomSkalOppdateres);
-      return {...state, ...oppdatering };
-    }
     case PersonInfoActionTypes.HENT_PERSON_INFO_HENTET: {
       const navnHentet = action.data;
       const personerSomSkalOppdateres: { [fnr: string]: PersonData } = navnHentet.map((personInfo: PersonInfo) => {
@@ -75,6 +61,7 @@ const personregisterReducer: Reducer<PersonregisterState> = (
             tildeltEnhetId: person.enhet,
             tildeltVeilederIdent: person.veilederIdent,
             harMotebehovUbehandlet: person.motebehovUbehandlet,
+            harMoteplanleggerUbehandlet: person.moteplanleggerUbehandlet,
           },
         };
       });

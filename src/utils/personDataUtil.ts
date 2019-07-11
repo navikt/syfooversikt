@@ -15,12 +15,12 @@ export const hendelsestypeString = {
 
 export const hendelsestype = (person: PersonData) => {
   if (person.harMotebehovUbehandlet) {
-    if (person.harMote) {
+    if (person.harMoteplanleggerUbehandlet) {
       return hendelsestypeString.motebehovMote;
     }
     return hendelsestypeString.motebehov;
   }
-  if (person.harMote) {
+  if (person.harMoteplanleggerUbehandlet) {
     return hendelsestypeString.mote;
   }
   return hendelsestypeString.ingen;

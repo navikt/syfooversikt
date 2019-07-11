@@ -3,6 +3,7 @@ export interface PersonoversiktStatus {
   enhet: string;
   veilederIdent: string | null;
   motebehovUbehandlet: boolean | null;
+  moteplanleggerUbehandlet: boolean | null;
 }
 
 export interface PersonoversiktStatusState {
