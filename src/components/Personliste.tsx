@@ -6,17 +6,15 @@ import { PersonregisterState } from '../store/personregister/personregisterTypes
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
-  checkboxHandler: (fnr: string) => void;
+  checkboxHandler: (fnr: string ) => void;
   markertePersoner: string[];
   checkAllHandler: (checked: boolean) => void;
 }
 
 const erMarkert = (markertePersoner: string[], fnr: string) => {
-  return (
-    markertePersoner.findIndex((markertPerson: string) => {
-      return markertPerson === fnr;
-    }) !== -1
-  );
+  return markertePersoner.findIndex((markertPerson: string) => {
+    return markertPerson === fnr;
+  }) !== -1;
 };
 
 const Personliste = (props: PersonlisteProps) => {
@@ -27,22 +25,20 @@ const Personliste = (props: PersonlisteProps) => {
     checkAllHandler,
   } = props;
   const fnrListe = Object.keys(personregister);
-  return (
-    <div className="personliste">
-      <Sorteringsrad checkAllHandler={checkAllHandler} />
-      {fnrListe.map((fnr: string, idx: number) => {
-        return (
-          <Personrad
-            key={idx}
-            fnr={fnr}
-            personData={personregister[fnr]}
-            checkboxHandler={checkboxHandler}
-            kryssAv={erMarkert(markertePersoner, fnr)}
-          />
-        );
-      })}
-    </div>
-  );
+  return (<Container className="personliste">
+    <Sorteringsrad checkAllHandler={checkAllHandler} />
+    {
+      fnrListe.map((fnr: string, idx: number) => {
+        return (<Personrad
+          key={idx}
+          fnr={fnr}
+          personData={personregister[fnr]}
+          checkboxHandler={checkboxHandler}
+          kryssAv={erMarkert(markertePersoner, fnr)}
+        />);
+      })
+    }
+  </Container>);
 };
 
 export default Personliste;
