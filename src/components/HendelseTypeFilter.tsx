@@ -26,7 +26,7 @@ const lagNyttFilter = (forrigeFilter: HendelseTypeFilters, tekst: string, checke
     return filter;
 };
 
-export default ({ onValgteElementerChange }: Props) => {
+export default ({ onValgteElementerChange, className }: Props) => {
 
     const intiialFilter: HendelseTypeFilters = {
         onskerMote: false,
@@ -41,17 +41,19 @@ export default ({ onValgteElementerChange }: Props) => {
     });
 
     return (
-            <EkspanderbartPanel apen={true} tittel="Hendelse">
-                <div>
-                    {elementer.map((k) => {
-                        return <Checkbox label={k.tekst} id={k.key} key={k.key} onChange={(e) => {
-                            // tslint:disable-next-line:no-console
-                            const nyttFilter = lagNyttFilter(filter, k.tekst, e.target.checked);
-                            setFilter(nyttFilter);
-                            onValgteElementerChange(nyttFilter);
-                        }} />;
-                    })}
-                </div>
-            </EkspanderbartPanel>
+            <div className={...className}>
+                <EkspanderbartPanel apen={true} tittel="Hendelse">
+                    <div>
+                        {elementer.map((k) => {
+                            return <Checkbox label={k.tekst} id={k.key} key={k.key} onChange={(e) => {
+                                // tslint:disable-next-line:no-console
+                                const nyttFilter = lagNyttFilter(filter, k.tekst, e.target.checked);
+                                setFilter(nyttFilter);
+                                onValgteElementerChange(nyttFilter);
+                            }} />;
+                        })}
+                    </div>
+                </EkspanderbartPanel>
+            </div>
     );
 };

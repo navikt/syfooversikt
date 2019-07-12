@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
+import { Panel } from 'nav-frontend-paneler';
+import classNames from 'classnames';
 
-interface Props {
+interface Props extends React.PropsWithoutRef<any> {
     // todo
     initialValue?: string;
     onFilterChange: (query: string) => void;
 }
 
-export default ({ onFilterChange, initialValue }: Props) => {
+export default ({ onFilterChange, initialValue, className }: Props) => {
 
     const [value, setValue] = useState(initialValue || '');
 
     return (
-        <Input label={'Navn / Fødselsnummer'} value={value} onChange={(e) => {
-            // tslint:disable-next-line:no-console
-            setValue(e.target.value);
-            onFilterChange(e.target.value);
-        }} />
+        <Panel className={classNames(className, 'TekstFilter')} >
+            <Input label={'Navn / Fødselsnummer'} placeholder={'Søk på navn eller fødselsnummer'}  value={value} onChange={(e) => {
+                // tslint:disable-next-line:no-console
+                setValue(e.target.value);
+                onFilterChange(e.target.value);
+            }} />
+        </Panel>
     );
 };

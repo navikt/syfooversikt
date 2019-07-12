@@ -119,8 +119,8 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
         {noeErHentet && type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
           <div className="oversiktContainer__innhold">
             <div className="sokeresultatFilter">
-                <TekstFilter  onFilterChange={this.onTekstFilterChange} />
-                <SokeresultatFilter onValgteElementerChange={this.onHendelsesTypeChange} />
+                <TekstFilter className="sokeresultatFilter__panel" onFilterChange={this.onTekstFilterChange} />
+                <SokeresultatFilter className="sokeresultatFilter__panel" onValgteElementerChange={this.onHendelsesTypeChange} />
             </div>
             <Sokeresultat
               tildelVeileder={actions.tildelVeileder}
