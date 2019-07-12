@@ -9,7 +9,7 @@ const HendelseTekster: any = {
 };
 
 interface Props extends ComponentPropsWithoutRef<any> {
-    onValgteElementerChange: (filter: HendelseTypeFilters) => void;
+    onFilterChange: (filter: HendelseTypeFilters) => void;
 }
 
 export interface HendelseTypeFilters {
@@ -26,34 +26,44 @@ const lagNyttFilter = (forrigeFilter: HendelseTypeFilters, tekst: string, checke
     return filter;
 };
 
-export default ({ onValgteElementerChange, className }: Props) => {
+interface CheckboksElement {
+    tekst: string;
+    key: string;
+}
 
-    const intiialFilter: HendelseTypeFilters = {
+export default ({ onFilterChange: onValgteElementerChange, className }: Props) => {
+
+    const initialFilter: HendelseTypeFilters = {
         onskerMote: false,
         svartMote: false,
         ufordeltBruker: false,
     };
-    const [ filter, setFilter ] = useState<HendelseTypeFilters>(intiialFilter);
+    const [ filter, setFilter ] = useState<HendelseTypeFilters>(initialFilter);
 
     const elementer = Object.keys(HendelseTekster).map((key) => {
         const tekst: string = HendelseTekster[key];
-        return { key, tekst };
+        return { key, tekst } as CheckboksElement;
     });
+
+    const onCheckedChange = (element: CheckboksElement, checked: boolean) => {
+        const nyttFilter = lagNyttFilter(filter, element.tekst, checked);
+        setFilter(nyttFilter);
+        onValgteElementerChange(nyttFilter);
+    };
 
     return (
             <div className={...className}>
-                <EkspanderbartPanel apen={true} tittel="Hendelse">
+                <EkspanderbartPanel apen tittel="Hendelse">
                     <div>
-                        {elementer.map((k) => {
-                            return <Checkbox label={k.tekst} id={k.key} key={k.key} onChange={(e) => {
-                                // tslint:disable-next-line:no-console
-                                const nyttFilter = lagNyttFilter(filter, k.tekst, e.target.checked);
-                                setFilter(nyttFilter);
-                                onValgteElementerChange(nyttFilter);
-                            }} />;
-                        })}
+                        {genererHendelseCheckbokser(elementer, onCheckedChange)}
                     </div>
                 </EkspanderbartPanel>
             </div>
     );
 };
+
+const genererHendelseCheckbokser = (elementer: CheckboksElement[], onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void) => (
+    elementer.map((k) => {
+        return <Checkbox label={k.tekst} id={k.key} key={k.key} onChange={(e) => onCheckedChange(k, e.target.checked)} />;
+    })
+);

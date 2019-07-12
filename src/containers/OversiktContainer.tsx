@@ -108,8 +108,7 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
 
     return (
       <div className="oversiktContainer">
-        {altFeilet &&
-          OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT &&
+        {altFeilet && OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT &&
           AlertStripeMedMelding(
             tekster.feil.hentingFeilet,
             'oversiktContainer__alertstripe'
@@ -120,7 +119,7 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
           <div className="oversiktContainer__innhold">
             <div className="sokeresultatFilter">
                 <TekstFilter className="sokeresultatFilter__panel" onFilterChange={this.onTekstFilterChange} />
-                <SokeresultatFilter className="sokeresultatFilter__panel" onValgteElementerChange={this.onHendelsesTypeChange} />
+                <SokeresultatFilter className="sokeresultatFilter__panel" onFilterChange={this.onHendelsesTypeChange} />
             </div>
             <Sokeresultat
               tildelVeileder={actions.tildelVeileder}
@@ -137,13 +136,9 @@ class OversiktCont extends Component<OversiktContainerProps, OversiktContainerSt
 
 const OversiktHeader = (oversiktsType: OversiktProps) => {
   const { type } = oversiktsType;
-  return (
-    <div>
-      {type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (
-        <h2>{tekster.overskrifter.enhetensOversikt}</h2>
-      )}
-    </div>
-  );
+  return (<div>
+      {type === OVERSIKT_VISNING_TYPE.ENHETENS_OVERSIKT && (<h2>{tekster.overskrifter.enhetensOversikt}</h2>)}
+    </div>);
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -168,5 +163,5 @@ const mapStateToProps = ({ personoversikt, personregister, veilederenheter, veil
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(OversiktCont);

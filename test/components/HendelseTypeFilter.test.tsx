@@ -11,7 +11,7 @@ const expect = chai.expect;
 describe('SokeresultatFilter', () => {
     // tslint:disable-next-line:no-empty
     const callback = () => {};
-    const component = shallow(<SokeresultatFilter onValgteElementerChange={callback} /> );
+    const component = shallow(<SokeresultatFilter onFilterChange={callback} /> );
 
     it('Skal inneholde checkbokser med riktige labels', () => {
         expect(component.contains(<Checkbox label={'Ønsker møte'} checked={false} />));
