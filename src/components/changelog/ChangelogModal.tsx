@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import NavFrontendModal from 'nav-frontend-modal';
 import styled from 'styled-components';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import cn from 'classnames';
 import ChevronKnapp from '../ChevronKnapp';
 import { Changelog } from '../../store/changelog/changelogTypes';
 import NumberIndicator from '../NumberIndicator';
@@ -74,6 +73,17 @@ const ChangelogImage = styled.img`
     box-shadow: 0 2px 5px rgba(120, 112, 106, 0.5);
 `;
 
+const StyledChangelogTextField = styled.div`
+    height: 4.125em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > p {
+        overflow: hidden;
+    }
+`;
+
 const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
     if (!changelog) return <></>;
 
@@ -98,9 +108,9 @@ const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
                         <ChangelogImage src={currentPage.image}
                         />
                         <Undertittel>{currentPage.title}</Undertittel>
-                        <div style={{ height: '4.125em', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Normaltekst style={{ overflow: 'hidden' }}>{currentPage.text}</Normaltekst>
-                        </div>
+                        <StyledChangelogTextField>
+                            <Normaltekst>{currentPage.text}</Normaltekst>
+                        </StyledChangelogTextField>
                     </ModalMain>
                     <ModalButtons>
                         <ChevronKnapp type="venstre" tekst="Forrige" visible={!isFirstPage} onClick={() => {
