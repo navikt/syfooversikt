@@ -38,14 +38,13 @@ interface ChevronKnappProps {
 }
 
 const ChevronKnapp = ({ type = 'venstre', tekst, visible, onClick }: ChevronKnappProps) => {
-    const Empty = <StyledEmptyContainer />;
     if (!visible) {
-        return Empty;
+        return <StyledEmptyContainer />;
     }
     const CustomLabel = <StyledChevronTekst>{tekst}</StyledChevronTekst>;
 
     return (
-        <StyledChevronKnapp aria-label="blabla" onClick={onClick}>
+        <StyledChevronKnapp onClick={onClick}>
             {type === 'høyre' && CustomLabel}
             <StyledChevron type={type} />
             {type === 'venstre' && CustomLabel}

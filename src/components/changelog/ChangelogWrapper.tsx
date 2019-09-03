@@ -19,10 +19,7 @@ const CHANGELOG_LOCAL_KEY = 'SYFOOVERSIKT_CHANGELOG';
 
 const getChangelogStorage = (): ChangelogStorage | undefined => {
     const stored = localStorage.getItem(CHANGELOG_LOCAL_KEY);
-    if (stored !== null) {
-        return JSON.parse(stored);
-    }
-    return undefined;
+    return stored && JSON.parse(stored);
 };
 
 const createChangelogStorage = (version: number) => ({
@@ -48,25 +45,22 @@ export default () => {
     } = useSelector(getPropsFromState);
 
     useEffect(() => {
-        if (changelogs.length > 0) {
-            const lastChangelog = [...changelogs].sort((a, b) => {
-                return a.version > b.version
-                    ? -1
-                    : 1;
-            })[0];
+        if (changelogs.length === 0) return;
+        const lastChangelog = [...changelogs].sort((a, b) => {
+            return a.version > b.version
+                ? -1
+                : 1;
+        })[0];
 
-            if (lastChangelog === undefined) return;
+        if (lastChangelog === undefined) return;
 
-            const storedSettings = getChangelogStorage();
-            if (storedSettings) {
-                if (storedSettings.viewed_version < lastChangelog.version) {
-                    setLatestChangelog(lastChangelog);
-                    setShowChangelog(true);
-                }
-            } else {
-                setLatestChangelog(lastChangelog);
-                setShowChangelog(true);
-            }
+        const storedSettings = getChangelogStorage();
+        if (storedSettings) {
+            setLatestChangelog(lastChangelog);
+            setShowChangelog(storedSettings.viewed_version < lastChangelog.version);
+        } else {
+            setLatestChangelog(lastChangelog);
+            setShowChangelog(true);
         }
     }, [changelogs]);
 

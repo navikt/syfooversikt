@@ -19,7 +19,7 @@ const StyledModal = styled(NavFrontendModal)`
     }
 `;
 
-const ModalHeader = styled.div`
+const StyledModalHeader = styled.div`
     padding-top: 1rem;
     padding-bottom: 1rem;
     background: white;
@@ -30,20 +30,20 @@ const ModalHeader = styled.div`
     box-shadow: 0 2px 5px rgba(120, 112, 106, 0.5);
 `;
 
-const ModalContent = styled.div`
+const StyledModalContent = styled.div`
     width: 500px;
     display: flex;
     flex-direction: column;
 `;
 
-const ModalMain = styled.section`
+const StyledModalMain = styled.section`
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
 `;
 
-const ModalButtons = styled.div`
+const StyledModalButtons = styled.div`
     margin: 0.5em;
     margin-top: 1em;
     display: block;
@@ -66,7 +66,7 @@ const ModalButtons = styled.div`
     }
 `;
 
-const ChangelogImage = styled.img`
+const StyledChangelogImage = styled.img`
     margin-bottom: 1em;
     width: 100%;
     height: 12.5rem;
@@ -102,17 +102,16 @@ const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
             <StyledModal onRequestClose={() => {
                 onClose(isLastPage, changelog.version);
             }} contentLabel="Changelog Modal" closeButton={true} isOpen={isOpen}>
-                <ModalContent>
-                    <ModalHeader>{changelog.title}</ModalHeader>
-                    <ModalMain>
-                        <ChangelogImage src={currentPage.image}
-                        />
+                <StyledModalContent>
+                    <StyledModalHeader>{changelog.title}</StyledModalHeader>
+                    <StyledModalMain>
+                        <StyledChangelogImage src={currentPage.image} />
                         <Undertittel>{currentPage.title}</Undertittel>
                         <StyledChangelogTextField>
                             <Normaltekst>{currentPage.text}</Normaltekst>
                         </StyledChangelogTextField>
-                    </ModalMain>
-                    <ModalButtons>
+                    </StyledModalMain>
+                    <StyledModalButtons>
                         <ChevronKnapp type="venstre" tekst="Forrige" visible={!isFirstPage} onClick={() => {
                             setPageNumber(currentPageNumber - 1);
                         }}/>
@@ -123,8 +122,8 @@ const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
                         {isLastPage && <ChevronKnapp type="høyre" tekst="Ferdig" visible={true} onClick={() => {
                             onClose(isLastPage, changelog.version);
                         }}/>}
-                    </ModalButtons>
-                </ModalContent>
+                    </StyledModalButtons>
+                </StyledModalContent>
             </StyledModal>
         </div>
     );
