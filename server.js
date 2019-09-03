@@ -6,6 +6,9 @@ const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const prom_client = require('prom-client');
 const counters = require('./server/counters');
+const changelogs = require('./server/changelogReader');
+const stream = require('stream');
+const fs = require('fs');
 
 // Prometheus metrics
 const setupMetrics = () => {
@@ -33,6 +36,8 @@ const settings = env === 'local' ? {isProd: false} : require('./settings.json');
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
+
+changelogs.readChangelogDir();
 
 const renderApp = () => {
     return new Promise((resolve, reject) => {
@@ -70,6 +75,15 @@ const startServer = (html) => {
         '/syfooversikt/src/img',
         express.static(path.resolve(__dirname, 'dist/resources/img')),
     );
+
+    server.get('/syfooversikt/changelogs/image/:version/:image', (req, res) => {
+        const imgPath = path.join(__dirname, "changelogs", req.params.version, req.params.image);
+        res.sendFile(imgPath);
+    }) 
+
+    server.get('/syfooversikt/changelogs', (req, res) => {
+        res.json(changelogs.changeLogCache);
+    })
 
     server.get(
         ['/', '/syfooversikt/?', /^\/syfooversikt\/(?!(resources|img)).*$/],

@@ -4,6 +4,7 @@ import React, {
 import cn from 'classnames';
 import { OverviewTabType } from '../konstanter';
 import OversiktContainer from '../containers/OversiktContainer';
+import ChangelogModal from '../components/changelog/ChangelogModal';
 
 const tekster = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -12,6 +13,7 @@ const tekster = {
 
 interface StateProps {
   visning: OverviewTabType;
+  changeLogModalOpen: boolean;
 }
 
 const getButtonClassNames = (aktiv: boolean) => {
@@ -26,13 +28,21 @@ class OversiktVelger extends Component<{}, StateProps> {
     super(props);
     this.state = {
       visning: OverviewTabType.ENHET_OVERVIEW,
+      changeLogModalOpen: true,
     };
     this.byttVisning = this.byttVisning.bind(this);
+    this.closeChangeLogModal = this.closeChangeLogModal.bind(this);
   }
 
   byttVisning(visning: OverviewTabType) {
     this.setState({
       visning,
+    });
+  }
+
+  closeChangeLogModal() {
+    this.setState({
+      changeLogModalOpen: false,
     });
   }
 

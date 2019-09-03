@@ -1,0 +1,30 @@
+
+.step-indicator {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+
+    > * {
+        margin: 0 0.25rem;
+    }
+
+    > :first-child {
+        margin-left: 0;
+    }
+
+    > :last-child {
+        margin-right: 0;
+    }
+
+    &__step {
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 50%;
+        background-color: @navBlaLighten60;
+    }
+
+    &__step--selected {
+        background-color: @navBla;
+        transition: background-color 333ms linear;
+    }
+}

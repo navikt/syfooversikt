@@ -27,6 +27,8 @@ import createHashHistory from 'history/createHashHistory';
 import configureStore from './configureStore';
 import veilederArbeidstakerSagas from './veilederArbeidstaker/veilederArbeidstakerSagas';
 import enhetNavnSagas from './enhetNavn/enhetNavnSagas';
+import changelogReducer, { ChangelogState } from './changelog/changelogReducer';
+import changelogSagas from './changelog/changelogSagas';
 
 export interface ApplicationState {
   modiacontext: ModiacontextState;
@@ -37,6 +39,7 @@ export interface ApplicationState {
   personoversikt: PersonoversiktStatusState;
   personregister: PersonregisterState;
   enhetNavn: EnhetNavnState;
+  changelogs: ChangelogState;
 }
 
 export interface ConnectedReduxProps<A extends Action = AnyAction> {
@@ -52,6 +55,7 @@ export const rootReducer = combineReducers<ApplicationState>({
   personoversikt: personoversiktReducer,
   personregister: personregisterReducer,
   enhetNavn: enhetNavnReducer,
+  changelogs: changelogReducer,
 });
 
 export function* rootSaga() {
@@ -64,6 +68,7 @@ export function* rootSaga() {
     fork(personoversiktSagas),
     fork(veilederArbeidstakerSagas),
     fork(enhetNavnSagas),
+    fork(changelogSagas),
   ]);
 }
 
