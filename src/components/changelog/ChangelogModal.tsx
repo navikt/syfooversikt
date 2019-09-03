@@ -5,33 +5,13 @@ import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import cn from 'classnames';
 import ChevronKnapp from '../ChevronKnapp';
 import { Changelog } from '../../store/changelog/changelogTypes';
+import NumberIndicator from '../NumberIndicator';
 
 interface Props {
     isOpen: boolean;
     changelog?: Changelog;
     onClose(didComplete: boolean, version: number): void;
 }
-
-interface NumberIndicatorProps {
-    antall: number;
-    valgtIndex: number;
-}
-
-const NumberIndicator = ({ antall, valgtIndex }: NumberIndicatorProps) => {
-    const mapTilSteg = () => {
-        return new Array(antall)
-            .fill(0)
-            .map((_, i) => (
-                <div key={i} className={cn('step-indicator__step', {'step-indicator__step--selected': i === valgtIndex})}/>
-            ));
-    };
-
-    return (
-        <div className="step-indicator">
-            {mapTilSteg()}
-        </div>
-    );
-};
 
 const StyledModal = styled(NavFrontendModal)`
     padding: 0 !important;

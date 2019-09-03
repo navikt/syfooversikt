@@ -7,8 +7,6 @@ const Promise = require('promise');
 const prom_client = require('prom-client');
 const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
-const stream = require('stream');
-const fs = require('fs');
 
 // Prometheus metrics
 const setupMetrics = () => {
