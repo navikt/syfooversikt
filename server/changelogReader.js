@@ -44,10 +44,7 @@ function readChangelog(changelogDir, versionCode) {
 }
 
 function readDir(dirname) {
-    // read directory
-    console.log("------- begin read changelog ---\n")
     fs.readdir(dirname, (err, files) => {
-        // find all folders and skip the rest
         if (err) {
             console.error(err)
         } else {
@@ -58,7 +55,6 @@ function readDir(dirname) {
                 }
             });
         }
-        console.log("\n------- end read changelog ---")
     });
 }
 
