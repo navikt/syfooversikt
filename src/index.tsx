@@ -17,6 +17,7 @@ import {
 import AppRouter from './routers/AppRouter';
 import { config, setEventHandlersOnConfig } from './global';
 import { store, history } from './store';
+import NavFrontendModal from 'nav-frontend-modal';
 
 if (!(window as any)._babelPolyfill) {
   require('babel-polyfill'); // tslint:disable-line no-var-requires
@@ -59,6 +60,8 @@ render(
   </Provider>,
   document.getElementById('maincontent')
 );
+
+NavFrontendModal.setAppElement('#maincontent');
 
 /* tslint:disable no-unused-expression */
 document.addEventListener('DOMContentLoaded', () => {

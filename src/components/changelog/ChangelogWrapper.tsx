@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import NavFrontendModal from 'nav-frontend-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChangelogs } from '../../store/changelog/changelog_actions';
 import ChangelogModal from '../../components/changelog/ChangelogModal';
 import { ApplicationState, store } from '../../store';
 import { Changelog } from '../../store/changelog/changelogTypes';
 
-NavFrontendModal.setAppElement('#maincontent');
 const getPropsFromState = (state: ApplicationState) => ({
     changelogs: state.changelogs.data,
 });

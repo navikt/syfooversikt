@@ -22,7 +22,7 @@ For å legge til en ny changelog/veiviser ved ny funksjonalitet:
 }
 ```
 
-3. Legg til bilder i med `bredde: 500px` og `høyde: 500px` med navnene som matcher `"image"`-feltet ovenfor.
+3. Legg til bilder i med `bredde: 500px` og `høyde: 200px` med navnene som matcher `"image"`-feltet ovenfor.
 
 Klienten vil automatisk fange opp den nye endringen og vise en dialog når bruker laster den nye versjonen første gang.
 
