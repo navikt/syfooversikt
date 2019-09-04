@@ -2,7 +2,7 @@
     "title" : "Ny oppdatering 2",
     "items" : [
         { "title": "Test", "text": "Dette er en lang text", "image": "1_1.png" },
-        { "title": "Test 2", "text": "Dette er en lang text 2", "image": "1_1.png" },
+        { "title": "Test 2", "text": "Dette er en mye lengre ", "image": "1_1.png" },
         { "title": "Test 3", "text": "Dette er en lang text 3", "image": "1_2.png" }
     ]
 }

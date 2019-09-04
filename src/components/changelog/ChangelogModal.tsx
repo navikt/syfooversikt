@@ -24,9 +24,9 @@ const ModalHeader = styled.div`
     padding-bottom: 1rem;
     background: white;
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     z-index: 2;
-    font-weight: 400;
+    font-weight: 500;
     box-shadow: 0 2px 5px rgba(120, 112, 106, 0.5);
 `;
 
