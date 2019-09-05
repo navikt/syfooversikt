@@ -35,7 +35,7 @@ export const fetchChangelogs = () => ({
     type: ChangelogActionTypes.FETCH_CHANGELOGS_ASKED,
 }) as FetchChangelogAction;
 
-export const fetchChengelogsLoadinAction = () => ({
+export const fetchChengelogsLoadingAction = () => ({
     type: ChangelogActionTypes.FETCH_CHANGELOGS_LOADING,
 }) as FetchChangelogLoadingAction;
 

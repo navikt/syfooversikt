@@ -1,6 +1,9 @@
 import { Reducer } from 'redux';
 import { Changelog } from './changelogTypes';
-import { ChangelogAction, ChangelogActionTypes } from './changelog_actions';
+import {
+    ChangelogAction,
+    ChangelogActionTypes,
+} from './changelog_actions';
 
 export const CHANGELOG_STATE_KEY = 'changelogs';
 
