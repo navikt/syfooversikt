@@ -1,6 +1,4 @@
 import {
-  Column,
-  Container,
   Row
 } from 'nav-frontend-grid';
 import React from 'react';
@@ -15,18 +13,14 @@ const DocumentTitle = require('react-document-title'); // tslint:disable-line no
 
 const Side = ({ tittel = '', children }: SideProps) => {
   return (<DocumentTitle title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}>
-    <Container>
-      <Row>
-        <Column className="col-xs-12">
-          <ContextContainer />
-        </Column>
-      </Row>
-      <Row>
-        <Column className="col-xs-12">
-          {children}
-        </Column>
-      </Row>
-    </Container>
+      <div>
+        <Row>
+            <ContextContainer />
+        </Row>
+        <Row>
+            {children}
+        </Row>
+      </div>
   </DocumentTitle>);
 };
 

@@ -1,4 +1,10 @@
-import { call, fork, put, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+} from 'redux-saga/effects';
 import { post } from '../../api/index';
 import * as actions from './personInfo_actions';
 import { fullNaisUrlDefault } from '../../utils/miljoUtil';
@@ -25,5 +31,5 @@ function* watchHentPersonInfo() {
 }
 
 export default function* personInfoSagas() {
-  yield [fork(watchHentPersonInfo)];
+  yield all([fork(watchHentPersonInfo)]);
 }

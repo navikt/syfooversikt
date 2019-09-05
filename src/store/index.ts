@@ -1,4 +1,5 @@
 import { combineReducers, Dispatch, Action, AnyAction } from 'redux';
+import { connectRouter } from 'connected-react-router';
 import { all, fork } from 'redux-saga/effects';
 import { ModiacontextState } from './modiacontext/modiacontextTypes';
 import { VeiledereState } from './veiledere/veiledereTypes';
@@ -23,14 +24,15 @@ import veilederenheterSagas from './veilederenheter/veilederenheterSagas';
 import veilederinfoSagas from './veilederinfo/veilederinfoSagas';
 import personInfoSagas from './personInfo/personInfoSagas';
 import personoversiktSagas from './personoversikt/personoversiktSagas';
-import createHashHistory from 'history/createHashHistory';
 import configureStore from './configureStore';
 import veilederArbeidstakerSagas from './veilederArbeidstaker/veilederArbeidstakerSagas';
 import enhetNavnSagas from './enhetNavn/enhetNavnSagas';
 import changelogReducer, { ChangelogState } from './changelog/changelogReducer';
 import changelogSagas from './changelog/changelogSagas';
+import { createBrowserHistory } from 'history';
 
 export interface ApplicationState {
+  router: any;
   modiacontext: ModiacontextState;
   veiledere: VeiledereState;
   veilederenheter: VeilederenheterState;
@@ -46,7 +48,8 @@ export interface ConnectedReduxProps<A extends Action = AnyAction> {
   dispatch: Dispatch<A>;
 }
 
-export const rootReducer = combineReducers<ApplicationState>({
+export const rootReducer = () => combineReducers<ApplicationState>({
+  router: connectRouter(history),
   modiacontext: modiacontextReducer,
   veiledere: veiledereReducer,
   veilederenheter: veilederenheterReducer,
@@ -72,9 +75,10 @@ export function* rootSaga() {
   ]);
 }
 
-const history = createHashHistory();
+const history = createBrowserHistory();
 
 const initialState = (window as any).initialReduxState;
+
 const store = configureStore(history, initialState);
 
 export { store, history };

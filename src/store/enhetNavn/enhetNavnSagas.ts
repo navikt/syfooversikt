@@ -1,4 +1,11 @@
-import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  select,
+  takeEvery,
+} from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './enhetNavn_actions';
 import { EnhetNavnActionTypes } from './enhetNavnTypes';
@@ -38,5 +45,5 @@ function* watchHentEnhetNavn() {
 }
 
 export default function* enhetNavnSagas() {
-  yield [fork(watchHentEnhetNavn)];
+  yield all([fork(watchHentEnhetNavn)]);
 }

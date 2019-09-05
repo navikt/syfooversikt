@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LandingssideHeader = () => {
-  return (<div className="landingsside__header">
+  return (<div>
       <h1>Sykefraværsoppfølging</h1>
   </div>);
 };

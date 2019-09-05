@@ -74,29 +74,10 @@ const startServer = (html) => {
         express.static(path.resolve(__dirname, 'dist/resources/img')),
     );
 
-    server.get('/syfooversikt/changelogs/image/:version/:image', (req, res) => {
-        const imgPath = path.join(__dirname, "changelogs", req.params.version, req.params.image);
-        res.sendFile(imgPath);
-    }) 
-
-    server.get('/syfooversikt/changelogs', (req, res) => {
-        res.json(changelogs.changeLogCache);
-    })
-
-    server.get(
-        ['/', '/syfooversikt/?', /^\/syfooversikt\/(?!(resources|img)).*$/],
-        nocache,
-        (req, res) => {
-            res.send(html);
-            prometheus.getSingleMetric('http_request_duration_ms')
-                .labels(req.route.path)
-                .observe(10);
-        },
-    );
-
     server.get('/health/isAlive', (req, res) => {
         res.sendStatus(200);
     });
+    
     server.get('/health/isReady', (req, res) => {
         res.sendStatus(200);
     });
@@ -124,6 +105,17 @@ const startServer = (html) => {
     server.listen(port, () => {
         console.log(`App listening on port: ${port}`);
     });
+
+    server.use(
+        ['*', '/syfooversikt/?',/^\/syfooversikt\/(?!(resources|img)).*$/],
+        nocache,
+        (req, res) => {
+            res.send(html);
+            prometheus.getSingleMetric('http_request_duration_ms')
+                .labels(req.route.path)
+                .observe(10);
+        },
+    );
 };
 
 const logError = (errorMessage, details) => {

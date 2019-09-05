@@ -7,10 +7,11 @@ import {
 } from 'react-redux';
 import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
 import { ApplicationState } from '../store';
-import { OverviewTabType } from '../konstanter';
 import { hentPersonoversiktForespurt } from '../store/personoversikt/personoversikt_actions';
 import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_actions';
 import EnhetensOversiktContainer from './EnhetensOversiktContainer';
+import { OverviewTabType } from '../konstanter';
+import { Container } from 'nav-frontend-grid';
 
 const tekster = {
   overskrifter: {
@@ -42,7 +43,7 @@ const getPropsFromState = (
   altFeilet: veilederinfo.hentingFeilet || personoversikt.hentingFeilet,
 });
 
-const OversiktContainer = ({type}: OversiktProps) => {
+const OversiktContainer = ({ type }: OversiktProps) => {
 
   const {
     aktivEnhet,
@@ -64,14 +65,14 @@ const OversiktContainer = ({type}: OversiktProps) => {
   }, [aktivEnhet.enhetId]);
 
   return (
-    <div className="oversiktContainer">
+    <Container>
       {aktivEnhetFeilet && (
         <AktivEnhetFeiletError />
       )}
       {!aktivEnhetFeilet && (
         <EnhetensOversiktContainer tabType={type as OverviewTabType} />
       )}
-    </div>
+    </Container>
   );
 };
 

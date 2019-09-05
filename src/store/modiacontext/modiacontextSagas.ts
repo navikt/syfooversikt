@@ -1,4 +1,10 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+} from 'redux-saga/effects';
 import { get, post } from '../../api/index';
 import { fullNaisUrl } from '../../utils/miljoUtil';
 import * as actions from './modiacontext_actions';

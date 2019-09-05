@@ -66,10 +66,10 @@ const HendelseFilterStyled = styled(SokeresultatFilter)`
 `;
 
 interface Props {
-  tabType: OverviewTabType;
+  tabType?: OverviewTabType;
 }
 
-export default ({ tabType }: Props) => {
+export default ({ tabType = OverviewTabType.ENHET_OVERVIEW  }: Props) => {
   const initHendelseTypeFilter = {} as HendelseTypeFilters;
   const [ hendelseTypeFilter, onHendelsesTypeChange ] = useState(initHendelseTypeFilter);
   const [ tekstFilter, onTekstFilterChange ] = useState('');

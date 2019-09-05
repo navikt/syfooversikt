@@ -47,7 +47,7 @@ export function get(url: string) {
                 lagreRedirectUrlILocalStorage(window.location.href);
                 window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl(window.location.href)}`;
             } else if (res.status === 403) {
-                window.location.href = `/#/na`;
+                window.location.href = `/na`;
             } else if (res.status > 400) {
                 log(res);
                 throw new Error('Forespørsel feilet');
@@ -78,7 +78,7 @@ export function post(url: string, body: object) {
                 window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl(window.location.href)}`;
                 return null;
             } else if (res.status === 403) {
-                window.location.href = `/#/na`;
+                window.location.href = `/na`;
             } else if (res.status > 400) {
                 log(res);
                 throw new Error('Forespørsel feilet');

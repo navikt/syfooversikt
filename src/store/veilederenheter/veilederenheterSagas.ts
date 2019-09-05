@@ -1,4 +1,10 @@
-import { call, fork, put, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+} from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './veilederenheter_actions';
 import { fullNaisUrl } from '../../utils/miljoUtil';
@@ -27,5 +33,5 @@ function* watchHentVeilederinfo() {
 }
 
 export default function* veilederinfoSagas() {
-  yield [fork(watchHentVeilederinfo)];
+  yield all([fork(watchHentVeilederinfo)]);
 }

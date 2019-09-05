@@ -1,4 +1,11 @@
-import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  select,
+  takeEvery,
+} from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './veiledere_actions';
 import { VeiledereActionTypes } from './veiledere_actions';
@@ -42,5 +49,5 @@ function* watchHentVeiledere() {
 }
 
 export default function* veiledereSagas() {
-  yield [fork(watchHentVeiledere)];
+  yield all([fork(watchHentVeiledere)]);
 }

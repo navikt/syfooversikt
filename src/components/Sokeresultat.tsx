@@ -59,12 +59,12 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     });
   }
 
-  componentWillReceiveProps(nextProps: SokeresultatProps, currentState: SokeresultatState) {
-    if (nextProps.tabType !== currentState.currentTabType) {
+  componentDidUpdate(prevProps: SokeresultatProps, currentState: SokeresultatState) {
+    if (this.props.tabType !== currentState.currentTabType) {
       this.setState({
         alleMarkert: false,
         markertePersoner: [],
-        currentTabType: nextProps.tabType,
+        currentTabType: this.props.tabType,
       });
     }
   }
