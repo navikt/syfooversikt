@@ -12,7 +12,7 @@ interface Props {
     onClose(didComplete: boolean, version: number): void;
 }
 
-const StyledModal = styled(NavFrontendModal)`
+const ModalStyled = styled(NavFrontendModal)`
     padding: 0 !important;
     .lukknapp {
         z-index: 3;
@@ -99,7 +99,7 @@ const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
 
     return (
         <div>
-            <StyledModal onRequestClose={() => {
+            <ModalStyled onRequestClose={() => {
                 onClose(isLastPage, changelog.version);
             }} contentLabel="Changelog Modal" closeButton={true} isOpen={isOpen}>
                 <ModalContent>
@@ -124,7 +124,7 @@ const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
                         }}/>}
                     </ModalButtons>
                 </ModalContent>
-            </StyledModal>
+            </ModalStyled>
         </div>
     );
 };
