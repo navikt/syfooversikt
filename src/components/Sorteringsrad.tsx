@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import {
   Column,
@@ -45,7 +46,7 @@ interface SortingRowProps {
 }
 
 const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
-  const [currentSortingType, setCurrentSortingType ] = useState<SortingType>('NONE');
+  const [ currentSortingType, setCurrentSortingType ] = useState<SortingType>('NONE');
   return (
     <>
       <OverskriftRad className="">
@@ -61,10 +62,11 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
             const nextSortingType = currentSortingType === 'NAME_ASC'
               ? 'NAME_DESC'
               : 'NAME_ASC';
-
             setCurrentSortingType(nextSortingType);
             onSortClick(nextSortingType);
-          }}><strong>{tekster.navn}</strong></SortingButton>
+          }}>
+            <strong>{tekster.navn}</strong>
+          </SortingButton>
         </Column>
         <Column xs={'2'}>{tekster.fodselsnummer}</Column>
         <Column xs={'2'}>{tekster.ident}</Column>
