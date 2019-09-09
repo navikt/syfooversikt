@@ -1,6 +1,7 @@
-import { PersonregisterState } from '../store/personregister/personregisterTypes';
+import { PersonregisterState, PersonData } from '../store/personregister/personregisterTypes';
 import { HendelseTypeFilters } from '../components/HendelseTypeFilter';
 import { isNullOrUndefined } from 'util';
+import { formaterNavn } from './lenkeUtil';
 
 export class Filterable<T> {
 
@@ -62,4 +63,38 @@ export const filterEventsOnVeileder = (personregister: PersonregisterState, veil
         return p;
     }, {} as PersonregisterState);
     return final;
+};
+
+export type SortingType = 'NAME_ASC' | 'NAME_DESC' | 'NONE';
+
+export const getSortedEventsFromSortingType = (personregister: PersonregisterState, type: SortingType) => {
+    if (type === 'NAME_DESC') {
+        return sortEventsOnName(personregister, 'NAME_DESC');
+    } else if (type === 'NAME_ASC') {
+        return sortEventsOnName(personregister, 'NAME_ASC');
+    }
+    return personregister;
+};
+
+export const sortEventsOnName = (personregister: PersonregisterState, order: SortingType): PersonregisterState => {
+    const sortingResultAsArray = Object.keys(personregister).reduce((currentState, fnr) => {
+        if (personregister[fnr]) {
+            currentState.push({...personregister[fnr], fnr });
+        }
+        return currentState;
+    }, [] as any[]);
+    const sortedArray = sortingResultAsArray.sort((a, b) => {
+        if (a && b) {
+            const lastNameA: string = formaterNavn(a.navn).split(',').shift() || '';
+            const lastNameB: string = formaterNavn(b.navn).split(',').shift() || '';
+            if (lastNameA > lastNameB) return order === 'NAME_ASC' ? -1 : 1;
+            if (lastNameA < lastNameB) return order === 'NAME_ASC' ? 1 : -1;
+        }
+        return 0;
+    });
+    const finalMap = sortedArray.reduce((current, value) => {
+        current[value.fnr] = value;
+        return current;
+    }, {} as PersonregisterState);
+    return finalMap;
 };

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Personrad from './Personrad';
 import Sorteringsrad from './Sorteringsrad';
 import { PersonData, PersonregisterState } from '../store/personregister/personregisterTypes';
 import { Veileder } from '../store/veiledere/veiledereTypes';
+import { SortingType, getSortedEventsFromSortingType } from '../utils/hendelseFilteringUtils';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
@@ -34,10 +35,13 @@ const Personliste = (props: PersonlisteProps) => {
     veiledere,
   } = props;
 
-  const fnrListe = Object.keys(personregister);
+  const [ selectedSortingType, setSortingType ] = useState<SortingType>('NONE');
+  const fnrListe = Object.keys(getSortedEventsFromSortingType(personregister, selectedSortingType));
 
   return (<section>
-    <Sorteringsrad />
+    <Sorteringsrad  onSortClick={(type) => {
+      setSortingType(type);
+    }} />
     {
       fnrListe.map((fnr: string, idx: number) => {
         return (<Personrad

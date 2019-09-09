@@ -7,7 +7,7 @@ const lenkeTilModiaBasertPaaFnr = (fnr: string) => {
   return fullAppAdeoUrl(path);
 };
 
-const formaterNavn = (navn?: string) => {
+export const formaterNavn = (navn?: string): string => {
   if (!navn) return '';
   const arr = navn.split(' ');
   const etternavn = arr.pop();
@@ -15,7 +15,7 @@ const formaterNavn = (navn?: string) => {
     const fornavn = arr.join(' ');
     return `${etternavn}, ${fornavn}`;
   }
-  return etternavn;
+  return etternavn || '';
 };
 
 export const lenkeTilModiaEnkeltperson = (navn: string, fnr: string) => {

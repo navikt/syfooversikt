@@ -58,11 +58,11 @@ const SokeresultatFiltre = styled.div`
 `;
 
 const TekstFilterStyled = styled(TekstFilter)`
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
 `;
 
 const HendelseFilterStyled = styled(SokeresultatFilter)`
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
 `;
 
 interface Props {

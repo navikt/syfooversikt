@@ -7,11 +7,11 @@ declare module 'nav-frontend-grid' {
     fluid?: boolean;
   }
 
-  export interface RowProps {
+  export interface RowProps extends React.ComponentProps<any> {
     className?: string;
   }
 
-  export interface ColumnProps {
+  export interface ColumnProps extends React.ComponentProps<any> {
     xs?: string;
     sm?: string;
     md?: string;
