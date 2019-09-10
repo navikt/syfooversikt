@@ -6,6 +6,7 @@ const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const prom_client = require('prom-client');
 const counters = require('./server/counters');
+const changelogs = require('./server/changelogReader');
 
 // Prometheus metrics
 const setupMetrics = () => {
@@ -33,6 +34,8 @@ const settings = env === 'local' ? {isProd: false} : require('./settings.json');
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
+
+changelogs.readChangelogDir();
 
 const renderApp = () => {
     return new Promise((resolve, reject) => {
@@ -74,6 +77,7 @@ const startServer = (html) => {
     server.get('/health/isAlive', (req, res) => {
         res.sendStatus(200);
     });
+    
     server.get('/health/isReady', (req, res) => {
         res.sendStatus(200);
     });

@@ -4,6 +4,28 @@ Frontend for å vise oversikt over syfooppgaver
 ## TL;DR
 React-app for veileder 
 
+
+## Changelog
+
+For å legge til en ny changelog/veiviser ved ny funksjonalitet:
+
+1. I mappen `changelogs` legg til en ny mappe med versjons-kode som navn (f.eks: Hvis mappen `1` eksisterer, opprett en ny mappe med navn `2`)
+2. Opprett en ny fil i `.json` eller kopier fra forrige versjon med følgende format (navn er vilkårlig, unngå bruk av mellomrom):
+```json
+{
+    "title" : "Ny funksjonalitet",
+    "date": "18-08-89",
+    "items" : [
+        { "title": "Side 1", "text": "En beksrivelse for side 1", "image": "bilde1.png" },
+        { "title": "Side 2", "text": "En beskrivelse for side 2", "image": "bilde2.png" },
+    ]
+}
+```
+
+3. Legg til bilder i med `bredde: 500px` og `høyde: 200px` med navnene som matcher `"image"`-feltet ovenfor.
+
+Klienten vil automatisk fange opp den nye endringen og vise en dialog når bruker laster den nye versjonen første gang.
+
 ## Kjøre lokalt
 * For å kjøre koden lokalt: 
     - `$ npm install`

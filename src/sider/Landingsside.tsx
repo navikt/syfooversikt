@@ -1,12 +1,12 @@
 import React from 'react';
-import { RouteComponentProps, Router, Route, Switch, Redirect } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import OversiktContainer from '../containers/OversiktContainer';
 import { OverviewTabType } from '../konstanter';
 import HeaderWrapper from '../components/HeaderWrapper';
 import LandingssideHeader from '../components/LandingssideHeader';
 import NavigationBar from '../components/NavigationBar';
 
-export const Landingsside = (props: RouteComponentProps) => (
+export const Landingsside = () => (
       <div>
         <HeaderWrapper>
           <LandingssideHeader />

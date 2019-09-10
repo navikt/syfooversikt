@@ -19,3 +19,5 @@ npm-debug.log*
 *.iml
 *.log
 settings.json
+
+**/.DS_STORE

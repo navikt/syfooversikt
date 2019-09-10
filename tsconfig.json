@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": [
+          "styled",
+          "css",
+          "sty"
+        ]
+      }
+    ],
     "baseUrl": ".",
     "target": "es6",
     "allowJs": true,
