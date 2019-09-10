@@ -59,7 +59,7 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
         <Column className="emptyColumn" xs={'1'} />
         <Column xs={'3'}>
           <SortingButton onClick={() => {
-            const nextSortingType = currentSortingType === 'NAME_ASC'
+            const nextSortingType: SortingType = currentSortingType === 'NAME_ASC'
               ? 'NAME_DESC'
               : 'NAME_ASC';
             setCurrentSortingType(nextSortingType);

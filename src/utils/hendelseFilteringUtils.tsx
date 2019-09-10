@@ -76,14 +76,14 @@ export const getSortedEventsFromSortingType = (personregister: PersonregisterSta
     return personregister;
 };
 
-export const sortEventsOnName = (personregister: PersonregisterState, order: SortingType): PersonregisterState => {
-    const sortingResultAsArray = Object.keys(personregister).reduce((currentState, fnr) => {
+const sortEventsOnName = (personregister: PersonregisterState, order: SortingType): PersonregisterState => {
+    const personRegisterAsArray = Object.keys(personregister).reduce((currentPersonregisterArray, fnr) => {
         if (personregister[fnr]) {
-            currentState.push({...personregister[fnr], fnr });
+            currentPersonregisterArray.push({...personregister[fnr], fnr });
         }
-        return currentState;
+        return currentPersonregisterArray;
     }, [] as any[]);
-    const sortedArray = sortingResultAsArray.sort((a, b) => {
+    const sortedPersonRegisterArray = personRegisterAsArray.sort((a, b) => {
         if (a && b) {
             const lastNameA: string = formaterNavn(a.navn).split(',').shift() || '';
             const lastNameB: string = formaterNavn(b.navn).split(',').shift() || '';
@@ -92,9 +92,9 @@ export const sortEventsOnName = (personregister: PersonregisterState, order: Sor
         }
         return 0;
     });
-    const finalMap = sortedArray.reduce((current, value) => {
-        current[value.fnr] = value;
-        return current;
+    const sortedRegisterAsMap = sortedPersonRegisterArray.reduce((personregisterMap, value) => {
+        personregisterMap[value.fnr] = value;
+        return personregisterMap;
     }, {} as PersonregisterState);
-    return finalMap;
+    return sortedRegisterAsMap;
 };
