@@ -2,7 +2,7 @@ import React from 'react';
 import Chevron from 'nav-frontend-chevron';
 import styled from 'styled-components';
 
-const StyledChevronKnapp = styled.button`
+const ChevronButton = styled.button`
     background: transparent;
     border: none;
     display: flex;
@@ -10,20 +10,20 @@ const StyledChevronKnapp = styled.button`
     align-items: center;
     padding: 0.25em;
     cursor: pointer;
-    color: #0067c5
+    color: #0067c5;
 `;
 
-const StyledChevronTekst = styled.span`
+const ChevronLabel = styled.span`
     color: #0067c5;
     box-sizing: border-box;
     margin-bottom: 2px;
     border: 2px solid transparent;
-    ${StyledChevronKnapp}:hover & {
+    ${ChevronButton}:hover & {
         border-bottom: 1px solid #0067c5;
     }
 `;
 
-const StyledChevron = styled(Chevron)`
+const ChevronStyled = styled(Chevron)`
 `;
 
 const StyledEmptyContainer = styled.div`
@@ -41,14 +41,14 @@ const ChevronKnapp = ({ type = 'venstre', tekst, visible, onClick }: ChevronKnap
     if (!visible) {
         return <StyledEmptyContainer />;
     }
-    const CustomLabel = <StyledChevronTekst>{tekst}</StyledChevronTekst>;
+    const CustomLabel = <ChevronLabel>{tekst}</ChevronLabel>;
 
     return (
-        <StyledChevronKnapp onClick={onClick}>
+        <ChevronButton onClick={onClick}>
             {type === 'høyre' && CustomLabel}
-            <StyledChevron type={type} />
+            <ChevronStyled type={type} />
             {type === 'venstre' && CustomLabel}
-        </StyledChevronKnapp>
+        </ChevronButton>
     );
 };
 
