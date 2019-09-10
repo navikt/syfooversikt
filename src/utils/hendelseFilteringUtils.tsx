@@ -69,9 +69,9 @@ export type SortingType = 'NAME_ASC' | 'NAME_DESC' | 'NONE';
 
 export const getSortedEventsFromSortingType = (personregister: PersonregisterState, type: SortingType) => {
     if (type === 'NAME_DESC') {
-        return sortEventsOnName(personregister, 'NAME_DESC');
+        return sortEventsOnName(personregister, type);
     } else if (type === 'NAME_ASC') {
-        return sortEventsOnName(personregister, 'NAME_ASC');
+        return sortEventsOnName(personregister, type);
     }
     return personregister;
 };
