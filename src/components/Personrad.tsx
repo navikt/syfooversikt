@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {
-  Column,
-} from 'nav-frontend-grid';
+import { Column } from 'nav-frontend-grid';
 import { Checkbox } from 'nav-frontend-skjema';
 import themes from '../styles/themes';
 import { lenkeTilModiaEnkeltperson } from '../utils/lenkeUtil';
 import { PersonData } from '../store/personregister/personregisterTypes';
 import {
   skjermingskode,
-  veilederEllerUfordelt,
 } from '../utils/personDataUtil';
-import { Veileder } from '../store/veiledere/veiledereTypes';
 
 interface PersonradProps {
   fnr: string;
@@ -54,20 +50,20 @@ export default (props: PersonradProps) => {
 
   return (
     <PersonRad index={index} selected={kryssAv}>
-        <Column xs={'1'}>
-          <VelgBoks
-            label={''}
-            checked={!!kryssAv}
-            onChange={(event) => {
-              checkboxHandler(fnr);
-            }}
-          />
-        </Column>
-        <Column className="personrad__navn" xs={'3'}>{lenkeTilModiaEnkeltperson(personData.navn, fnr)}</Column>
-        <Column className="personrad__fnr" xs={'2'}>{fnr}</Column>
-        <Column className="personrad__veileder" xs={'2'}>{personData.tildeltVeilederIdent}</Column>
-        <Column className="personrad__veiledernavn" xs={'2'}>{veilederName}</Column>
-        <Column className="personrad__skjermet" xs={'2'}>{skjermingskode(personData)}</Column>
-      </PersonRad>
+      <Column xs={'1'}>
+        <VelgBoks
+          label={''}
+          checked={!!kryssAv}
+          onChange={(event) => {
+            checkboxHandler(fnr);
+          }}
+        />
+      </Column>
+      <Column className="personrad__navn" xs={'3'}>{lenkeTilModiaEnkeltperson(personData.navn, fnr)}</Column>
+      <Column className="personrad__fnr" xs={'2'}>{fnr}</Column>
+      <Column className="personrad__veileder" xs={'2'}>{personData.tildeltVeilederIdent}</Column>
+      <Column className="personrad__veiledernavn" xs={'2'}>{veilederName}</Column>
+      <Column className="personrad__skjermet" xs={'2'}>{skjermingskode(personData)}</Column>
+    </PersonRad>
   );
 };
