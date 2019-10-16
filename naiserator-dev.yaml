@@ -1,0 +1,38 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: syfooversikt
+  namespace: default
+  labels:
+    team: teamsykefravr
+spec:
+  image: "docker.pkg.github.com/navikt/syfooversikt:{{tag}}"
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 90
+  port: 8080
+  liveness:
+    path: /health/isAlive
+    initialDelay: 10
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: /health/isReady
+    initialDelay: 30
+    periodSeconds: 5
+    timeout: 5
+  prometheus:
+    enabled: true
+    path: /actuator/metrics
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  webproxy: false
+  ingresses:
+    - "https://syfooversikt.nais.preprod.local"
