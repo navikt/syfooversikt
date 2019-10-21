@@ -28,8 +28,6 @@ const ButtonDiv = styled.div`
 const SearchVeileder = (props: VeilederIdentsFilterProps) => {
     const [showList, setShowList] = useState(false);
     const [input, setInput] = useState('');
-    const [veileders, setVeileders] = useState<(Veileder[])>([]);
-
     const appState = useSelector((state: ApplicationState) => state);
     const selectedVeilederIdents: string[] = appState.filters.selectedVeilederIdents;
 
@@ -42,11 +40,13 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
     );
 
     const toggleShowList = () => {
-        setVeileders(activeVeilederFilter);
         setShowList(!showList);
     };
 
     const cancelButtonHandler = () => {
+        setActiveVeilederFilter([])
+        setActiveFilters(0)
+        props.onSelect([])
         setShowList(false);
     };
 
@@ -89,10 +89,10 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
     const filteredVeiledere = lowerCasedAndFilteredVeiledere.sort(checkedSort);
 
     const checkboxOnChangeHandler = (veileder: Veileder) => {
-        if (veileders.find((v: Veileder) => v.ident === veileder.ident)) {
-            setVeileders(veileders.filter((v) => v.ident !== veileder.ident));
+        if (activeVeilederFilter.find((v: Veileder) => v.ident === veileder.ident)) {
+            setActiveVeilederFilter(activeVeilederFilter.filter((v) => v.ident !== veileder.ident));
         } else {
-            setVeileders([...veileders, veileder]);
+            setActiveVeilederFilter([...activeVeilederFilter, veileder]);
         }
     };
 
@@ -100,23 +100,24 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
 
     useEffect(() => {
         if (checkedVeileders.length === 0) {
-            setVeileders([]);
             setActiveFilters(0);
             setActiveVeilederFilter([]);
+        } else {
+            setActiveFilters(activeVeilederFilter.length);
         }
     }, [checkedVeileders]);
 
     const chooseButtonHandler = () => {
-        setActiveFilters((veileders.length));
+        setActiveFilters((activeVeilederFilter.length));
         setShowList(false);
-        setActiveVeilederFilter(veileders);
-        props.onSelect(veileders.map((v) => v.ident));
+        props.onSelect(activeVeilederFilter.map((v) => v.ident));
     };
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         const currentTarget = e.currentTarget;
         setTimeout(() => {
             if (!currentTarget.contains(document.activeElement)) {
+                props.onSelect(activeVeilederFilter.map((v) => v.ident));
                 setShowList(false);
             }
         }, 0);
@@ -139,7 +140,7 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
                     cancelButtonHandler={cancelButtonHandler}
                     chooseButtonHandler={chooseButtonHandler}
                     filteredVeiledere={filteredVeiledere}
-                    selectedVeileders={veileders}
+                    selectedVeileders={activeVeilederFilter}
                     placeholder={'Søk veileder'}
                     input={input}
                     inputChangeHandler={inputChangeHandler}

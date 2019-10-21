@@ -38,6 +38,10 @@ const DropdownPanel = styled.section`
   z-index: 1;
 `;
 
+const texts = {
+    buttonText: 'Lagre',
+};
+
 export const Dropdown = (props: DropdownProps) => {
     const {
         cancelButtonHandler,
@@ -77,6 +81,6 @@ export const Dropdown = (props: DropdownProps) => {
             chosenVeilederIdent={chosenVeilederIdent}
             chooseButtonHandler={chooseButtonHandler}
             veilederIsChosen={veilederIsChosen}
-            assignText={'Velg veileder(e)'}/>
+            assignText={texts.buttonText}/>
     </DropdownPanel>);
 };
