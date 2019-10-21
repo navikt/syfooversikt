@@ -44,9 +44,9 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
     };
 
     const cancelButtonHandler = () => {
-        setActiveVeilederFilter([])
-        setActiveFilters(0)
-        props.onSelect([])
+        setActiveVeilederFilter([]);
+        setActiveFilters(0);
+        props.onSelect([]);
         setShowList(false);
     };
 
