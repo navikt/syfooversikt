@@ -71,7 +71,7 @@ const Personliste = (props: PersonlisteProps) => {
   const fnrListe = Object.keys(getSortedEventsFromSortingType(personregister, selectedSortingType));
   const isVeilederDataLoaded = useSelector((state: ApplicationState) => {
     const aktivEnhet = state.veilederenheter.aktivEnhetId;
-    if (aktivEnhet) {
+    if (aktivEnhet && state.veiledere[aktivEnhet]) {
       return state.veiledere[aktivEnhet].hentet;
     }
     return false;
