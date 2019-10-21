@@ -126,9 +126,8 @@ export const getSortedEventsFromSortingType = (personregister: PersonregisterSta
         return sortEventsOnName(personregister, type);
     } else if (type === 'FNR_ASC' || type === 'FNR_DESC') {
         return sortEventsOnFnr(personregister, type);
-    } else {
-        return personregister;
     }
+    return personregister;
 };
 
 const sortEventsOnFnr = (personregister: PersonregisterState, order: SortingType) => {
