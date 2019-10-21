@@ -52,8 +52,7 @@ const veilederForPerson = ((veiledere: Veileder[], person: PersonData) => {
   return undefined;
 });
 
-export const getVeilederComponent = (hide: boolean, veiledere: Veileder[], personData: PersonData) => {
-  if (hide) return <div />;
+export const getVeilederComponent = (veiledere: Veileder[], personData: PersonData) => {
   const veilederName = veilederEllerNull(veilederForPerson(veiledere, personData));
   return veilederName === null
     ? <UfordeltBrukerEtikett />
@@ -70,9 +69,13 @@ const Personliste = (props: PersonlisteProps) => {
 
   const [ selectedSortingType, setSortingType ] = useState<SortingType>('NONE');
   const fnrListe = Object.keys(getSortedEventsFromSortingType(personregister, selectedSortingType));
-
-  const isVeilederDataLoaded = useSelector((state: ApplicationState) => state.veiledere.hentet);
-  const shouldHideVeilederName = !isVeilederDataLoaded;
+  const isVeilederDataLoaded = useSelector((state: ApplicationState) => {
+    const aktivEnhet = state.veilederenheter.aktivEnhetId;
+    if (aktivEnhet) {
+      return state.veiledere[aktivEnhet].hentet;
+    }
+    return false;
+  });
 
   return (<>
     <Sorteringsrad onSortClick={(type) => {
@@ -82,9 +85,11 @@ const Personliste = (props: PersonlisteProps) => {
       fnrListe.map((fnr: string, idx: number) => {
         return (<Personrad
           index={idx}
-          key={JSON.stringify({...personregister[fnr], idx })}
+          key={idx}
           fnr={fnr}
-          veilederComponent={getVeilederComponent(shouldHideVeilederName, veiledere, personregister[fnr])}
+          veilederName={isVeilederDataLoaded
+            ? getVeilederComponent(veiledere, personregister[fnr])
+            : <div />}
           personData={personregister[fnr]}
           checkboxHandler={checkboxHandler}
           kryssAv={erMarkert(markertePersoner, fnr)}

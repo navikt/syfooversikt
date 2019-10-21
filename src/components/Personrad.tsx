@@ -15,7 +15,7 @@ interface PersonradProps {
   personData: PersonData;
   checkboxHandler: (fnr: string) => void;
   kryssAv: boolean;
-  veilederComponent: string | React.ReactNode;
+  veilederName: string | React.ReactNode;
   index: number;
 }
 
@@ -51,7 +51,7 @@ export default (props: PersonradProps) => {
     checkboxHandler,
     personData,
     kryssAv,
-    veilederComponent: veilederName,
+    veilederName,
     index,
   } = props;
 
