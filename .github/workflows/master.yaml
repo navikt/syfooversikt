@@ -58,3 +58,5 @@ jobs:
           cluster: prod-fss
           team: teamsykefravr
           resources: naiserator-prod.yaml
+      - name: Pling!
+        run: "curl -s https://syfoping.herokuapp.com/regDeploy?deployedBy=Veden"
