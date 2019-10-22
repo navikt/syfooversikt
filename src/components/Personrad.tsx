@@ -8,7 +8,7 @@ import { PersonData } from '../store/personregister/personregisterTypes';
 import {
   skjermingskode,
   companyNamesFromPersonData,
-  firstCompanyNameAndFnrFromPersonData,
+  firstCompanyNameFromPersonData,
 } from '../utils/personDataUtil';
 
 interface PersonradProps {
@@ -69,7 +69,7 @@ export default (props: PersonradProps) => {
       </Column>
       <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData.navn, fnr)}</Column>
       <Column xs={'2'}>{fnr}</Column>
-      <Column xs={'2'}>{firstCompanyNameAndFnrFromPersonData(fnr, personData).company}</Column>
+      <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
       <Column xs={'2'}>{veilederName}</Column>
       <Column xs={'2'}><NoWrapText>{skjermingskode(personData)}</NoWrapText></Column>
     </PersonRad>

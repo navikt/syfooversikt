@@ -5,7 +5,7 @@ import {
 import { isNullOrUndefined } from 'util';
 import { formaterNavn } from './lenkeUtil';
 import { HendelseTypeFilters } from '../store/filters/filterReducer';
-import { firstCompanyNameAndFnrFromPersonData } from './personDataUtil';
+import { firstCompanyNameFromPersonData } from './personDataUtil';
 
 export class Filterable<T> {
 
@@ -143,7 +143,13 @@ export const getSortedEventsFromSortingType = (personregister: PersonregisterSta
 
 const sortEventsOnCompanyName = (personregister: PersonregisterState, order: SortingType) => {
     const allFnr = Object.keys(personregister);
-    return allFnr.map((fnr) => firstCompanyNameAndFnrFromPersonData(fnr, personregister[fnr]))
+    return allFnr
+        .map((fnr) => {
+            return {
+                fnr,
+                company: firstCompanyNameFromPersonData(personregister[fnr]),
+            };
+        })
         .sort((a,b) => {
             const companyNameA = a.company || '';
             const companyNameB = b.company || '';
