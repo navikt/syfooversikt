@@ -8,6 +8,7 @@ import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
 import { ApplicationState } from '../store';
 import { HendelseTypeFilters } from '../store/filters/filterReducer';
 import { updateHendelseFilterAction } from '../store/filters/filter_actions';
+import { OverviewTabType } from '../konstanter';
 
 export const HendelseTekster: any = {
     UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
