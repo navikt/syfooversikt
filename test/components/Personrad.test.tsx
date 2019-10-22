@@ -10,6 +10,7 @@ import { lenkeTilModiaEnkeltperson } from '../../src/utils/lenkeUtil';
 import {
   skjermingskode,
   companyNamesFromPersonData,
+  firstCompanyNameAndFnrFromPersonData,
 } from '../../src/utils/personDataUtil';
 import {
   testdata,
@@ -40,7 +41,7 @@ describe('Personrad', () => {
   });
 
   it('Skal rendre Column-komponenter med riktig navn, fodselsnummer og skjermingskode', () => {
+    expect(component.contains(<Column xs={'2'}>{firstCompanyNameAndFnrFromPersonData(fnr, personData).company}</Column>)).to.equal(true);
     expect(component.contains(<Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData.navn, fnr)}</Column>)).to.equal(true);
-    expect(component.contains(<Column xs={'2'}>{companyNamesFromPersonData(personData)}</Column>)).to.equal(true);
   });
 });
