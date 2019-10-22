@@ -8,8 +8,6 @@ import Personrad, {
 } from '../../src/components/Personrad';
 import { lenkeTilModiaEnkeltperson } from '../../src/utils/lenkeUtil';
 import {
-  skjermingskode,
-  companyNamesFromPersonData,
   firstCompanyNameAndFnrFromPersonData,
 } from '../../src/utils/personDataUtil';
 import {
