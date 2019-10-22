@@ -1,17 +1,15 @@
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import { Column } from 'nav-frontend-grid';
-import Sorteringsrad, { OverskriftRad, SortingButton } from '../../src/components/Sorteringsrad';
+import Sorteringsrad, { SortingButton } from '../../src/components/Sorteringsrad';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
 
 describe('Sorteringsrad', () => {
-  const kolonneForNavnTekst = 'Etternavn, Fornavn';
   const kolonneVirksomhetTekst = 'Virksomhet';
-  const kolonneForFnrTekst = 'Fødselsnummer';
   const kolonneForVeilederTekst = 'Veileder';
   const component = shallow(<Sorteringsrad onSortClick={(type) => {}}/>);
 

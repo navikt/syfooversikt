@@ -86,6 +86,14 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
     onSortClick(nextSortingType);
   };
 
+  const onSortingButtonClicked = (sortingTypeAsc: SortingType, sortingTypeDesc: SortingType) => {
+    const nextSortingType: SortingType = currentSortingType === sortingTypeAsc
+              ? sortingTypeDesc
+              : sortingTypeAsc;
+    setCurrentSortingType(nextSortingType);
+    onSortClick(nextSortingType);
+  };
+
   const chevronType = currentSortingType === 'NAME_ASC'
     ? 'opp'
     : 'ned';
@@ -105,9 +113,13 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
             <strong>{tekster.fodselsnummer}</strong>
           </SortingButton>
         </Column>
-        <Column xs={'2'}>{tekster.virksomhet}</Column>
+        <Column xs={'2'}>
+          <SortingButton onClick={() => onSortingButtonClicked('COMPANY_ASC', 'COMPANY_DESC')}>
+            <strong>{tekster.virksomhet}</strong>
+          </SortingButton>
+        </Column>
         <Column xs={'2'}>{tekster.veileder}</Column>
-        <Column xs={'2'}>{}</Column>
+        <Column xs={'2'} />
       </IngressRad>
     </>
   );
