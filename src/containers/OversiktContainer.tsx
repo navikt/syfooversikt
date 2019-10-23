@@ -12,6 +12,7 @@ import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_ac
 import EnhetensOversiktContainer from './EnhetensOversiktContainer';
 import { OverviewTabType } from '../konstanter';
 import styled from 'styled-components';
+import { resetAllFilters } from '../store/filters/filter_actions';
 
 const tekster = {
   overskrifter: {

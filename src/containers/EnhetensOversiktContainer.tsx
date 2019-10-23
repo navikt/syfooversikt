@@ -30,6 +30,7 @@ import { OverviewTabType } from '../konstanter';
 import { hentVeiledere } from '../store/veiledere/veiledere_actions';
 import PersonFilter from '../components/PersonFilter';
 import ClearFilters from '../components/filters/ClearFilters';
+import { resetAllFilters } from '../store/filters/filter_actions';
 
 const tekster = {
     feil: {
@@ -116,6 +117,10 @@ export default ({ tabType = OverviewTabType.ENHET_OVERVIEW  }: Props) => {
   useEffect(() => {
     actions.hentVeiledere();
   }, [aktivEnhetId]);
+
+  useEffect(() => {
+    dispatch(resetAllFilters());
+  }, [tabType]);
 
   let allEvents = new Filterable<PersonregisterState>(personregister)
       .applyFilter((v) => filterOnEnhet(v, aktivEnhetId));
