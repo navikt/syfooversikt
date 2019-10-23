@@ -70,18 +70,10 @@ interface SortingRowProps {
 const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
   const [ currentSortingType, setCurrentSortingType ] = useState<SortingType>('NONE');
 
-  const onSortingByNameClick = () => {
-    const nextSortingType: SortingType = currentSortingType === 'NAME_ASC'
-              ? 'NAME_DESC'
-              : 'NAME_ASC';
-    setCurrentSortingType(nextSortingType);
-    onSortClick(nextSortingType);
-  };
-
-  const onSortingByFnrClick = () => {
-    const nextSortingType: SortingType = currentSortingType === 'FNR_ASC'
-              ? 'FNR_DESC'
-              : 'FNR_ASC';
+  const onSortingButtonClicked = (sortingTypeAsc: SortingType, sortingTypeDesc: SortingType) => {
+    const nextSortingType: SortingType = currentSortingType === sortingTypeAsc
+              ? sortingTypeDesc
+              : sortingTypeAsc;
     setCurrentSortingType(nextSortingType);
     onSortClick(nextSortingType);
   };
@@ -94,20 +86,24 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
       <IngressRad>
         <Column className="emptyColumn" xs={'1'} />
         <FlexColumn xs={'3'}>
-          <SortingButton onClick={onSortingByNameClick}>
+        <SortingButton onClick={() => onSortingButtonClicked('COMPANY_ASC', 'COMPANY_DESC')}>
             <strong>Etternavn</strong>
           </SortingButton>
           <p>, Fornavn</p>
           <GrayChevron type={chevronType} />
         </FlexColumn>
         <Column xs={'2'}>
-          <SortingButton onClick={onSortingByFnrClick}>
+          <SortingButton onClick={() => onSortingButtonClicked('FNR_ASC', 'FNR_DESC')}>
             <strong>{tekster.fodselsnummer}</strong>
           </SortingButton>
         </Column>
-        <Column xs={'2'}>{tekster.virksomhet}</Column>
+        <Column xs={'2'}>
+          <SortingButton onClick={() => onSortingButtonClicked('COMPANY_ASC', 'COMPANY_DESC')}>
+            <strong>{tekster.virksomhet}</strong>
+          </SortingButton>
+        </Column>
         <Column xs={'2'}>{tekster.veileder}</Column>
-        <Column xs={'2'}>{}</Column>
+        <Column xs={'2'} />
       </IngressRad>
     </>
   );

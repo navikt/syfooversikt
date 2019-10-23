@@ -5,6 +5,7 @@ import {
 import { isNullOrUndefined } from 'util';
 import { formaterNavn } from './lenkeUtil';
 import { HendelseTypeFilters } from '../store/filters/filterReducer';
+import { firstCompanyNameFromPersonData } from './personDataUtil';
 
 export class Filterable<T> {
 
@@ -119,15 +120,47 @@ export const filterEventsOnVeileder = (personregister: PersonregisterState, veil
     return final;
 };
 
-export type SortingType = 'NAME_ASC' | 'NAME_DESC' | 'FNR_ASC' | 'FNR_DESC' | 'NONE';
+export type SortingType =
+    | 'NAME_ASC'
+    | 'NAME_DESC'
+    | 'FNR_ASC'
+    | 'FNR_DESC'
+    | 'COMPANY_ASC'
+    | 'COMPANY_DESC'
+    | 'NONE'
+    ;
 
 export const getSortedEventsFromSortingType = (personregister: PersonregisterState, type: SortingType) => {
     if (type === 'NAME_ASC' || type === 'NAME_DESC') {
         return sortEventsOnName(personregister, type);
     } else if (type === 'FNR_ASC' || type === 'FNR_DESC') {
         return sortEventsOnFnr(personregister, type);
+    } else if (type === 'COMPANY_ASC' || type === 'COMPANY_DESC') {
+        return sortEventsOnCompanyName(personregister, type);
     }
     return personregister;
+};
+
+const sortEventsOnCompanyName = (personregister: PersonregisterState, order: SortingType) => {
+    const allFnr = Object.keys(personregister);
+    return allFnr
+        .map((fnr) => {
+            return {
+                fnr,
+                company: firstCompanyNameFromPersonData(personregister[fnr]),
+            };
+        })
+        .sort((a,b) => {
+            const companyNameA = a.company || '';
+            const companyNameB = b.company || '';
+            if (companyNameA > companyNameB) return order === 'COMPANY_ASC' ? -1 : 1;
+            if (companyNameA < companyNameB) return order === 'COMPANY_ASC' ? 1 : -1;
+            return 0;
+        })
+        .reduce((newPersonregister, companyAndFnr) => {
+            newPersonregister[companyAndFnr.fnr] = personregister[companyAndFnr.fnr];
+            return newPersonregister;
+        }, {} as PersonregisterState);
 };
 
 const sortEventsOnFnr = (personregister: PersonregisterState, order: SortingType) => {

@@ -40,6 +40,10 @@ export const companyNamesFromPersonData = (p: PersonData): string[] => {
   return allCompaniesForPerson;
 };
 
+export const firstCompanyNameFromPersonData = (p: PersonData) => {
+    return companyNamesFromPersonData(p).shift();
+};
+
 export const hendelsestype = (person: PersonData) => {
   if (person.harMotebehovUbehandlet) {
     if (person.harMoteplanleggerUbehandlet) {
