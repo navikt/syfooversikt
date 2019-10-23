@@ -5,14 +5,13 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
+import styled from 'styled-components';
 import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
 import { ApplicationState } from '../store';
 import { hentPersonoversiktForespurt } from '../store/personoversikt/personoversikt_actions';
 import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_actions';
 import EnhetensOversiktContainer from './EnhetensOversiktContainer';
 import { OverviewTabType } from '../konstanter';
-import styled from 'styled-components';
-import { resetAllFilters } from '../store/filters/filter_actions';
 
 const tekster = {
   overskrifter: {
