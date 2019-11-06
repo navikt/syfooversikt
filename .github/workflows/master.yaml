@@ -9,6 +9,8 @@ jobs:
   build-push-deploy:
     name: Checkout code and create docker tag
     runs-on: ubuntu-latest
+    env:
+      APP_NAME: syfooversikt
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -26,10 +28,8 @@ jobs:
         run: |
           npm run nais-build
       - name: Create Docker tag
-        env:
-          NAME: syfooversikt
         run: |
-          echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$NAME" > .docker_image
+          echo "docker.pkg.github.com"/"$GITHUB_REPOSITORY"/"$APP_NAME" > .docker_image
           echo "$(date "+%Y.%m.%d")-$(git rev-parse --short HEAD)" > .docker_tag
       - name: Build Docker image
         run: |
@@ -59,4 +59,4 @@ jobs:
           team: teamsykefravr
           resources: naiserator-prod.yaml
       - name: Pling!
-        run: "curl -s https://syfoping.herokuapp.com/regDeploy?deployedBy=Veden"
+        run: curl -s "https://syfoping.herokuapp.com/regDeploy?deployedBy=Veden&app=$APP_NAME"
