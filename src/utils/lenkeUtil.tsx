@@ -25,7 +25,7 @@ export const formaterNavn = (navn?: string): string => {
 };
 
 export const lenkeTilModiaEnkeltperson = (navn: string, fnr: string) => {
-  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr)} target="_blank">
+  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr)} >
       {formaterNavn(navn)}
   </Lenke>);
 };
