@@ -3,7 +3,7 @@ import React, {
     useState,
     useEffect,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Veileder } from '../../../store/veiledere/veiledereTypes';
 import styled from 'styled-components';
@@ -13,12 +13,12 @@ import { filterVeiledereOnInput } from '../../../utils/assignVeilederUtils';
 import { Veilederinfo } from '../../../store/veilederinfo/veilederinfoTypes';
 import { ApplicationState } from '../../../store';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
+import { updateVeilederIdentsFilter } from '../../../store/filters/filter_actions';
+import countFilterAction, { CounterFilterActionTypes } from '../../../metrics/countFilterAction';
 
 interface VeilederIdentsFilterProps {
     aktivVeilederInfo: Veilederinfo;
     veiledere: Veileder[];
-
-    onSelect(value: string[]): void;
 }
 
 const ButtonDiv = styled.div`
@@ -35,6 +35,7 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
     const [showList, setShowList] = useState(false);
     const [input, setInput] = useState('');
     const appState = useSelector((state: ApplicationState) => state);
+    const dispatch = useDispatch();
     const selectedVeilederIdents: string[] = appState.filters.selectedVeilederIdents;
 
     const [activeFilters, setActiveFilters] = useState(selectedVeilederIdents.length);
@@ -54,7 +55,7 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
         setActiveVeilederFilter([]);
         setActiveFilters(0);
         setInput('');
-        props.onSelect([]);
+        onVeilderIdentsChange([]);
     };
 
     const inputChangeHandler = (event: ChangeEvent) => {
@@ -71,6 +72,11 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
         veiledereSortedAlphabetically,
         lowerCaseInput
     );
+
+    const onVeilderIdentsChange = (veilederIdents: string[]) => {
+        dispatch(updateVeilederIdentsFilter(veilederIdents));
+        countFilterAction(CounterFilterActionTypes.VEILEDER_SOK).next();
+    };
 
     const checkedSort = (v1: Veileder, v2: Veileder) => {
         const v1InFilter = selectedVeilederIdents.find((v) => v === v1.ident);
@@ -118,14 +124,14 @@ const SearchVeileder = (props: VeilederIdentsFilterProps) => {
         setActiveFilters((activeVeilederFilter.length));
         setShowList(false);
         setInput('');
-        props.onSelect(activeVeilederFilter.map((v) => v.ident));
+        onVeilderIdentsChange(activeVeilederFilter.map((v) => v.ident));
     };
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         const currentTarget = e.currentTarget;
         setTimeout(() => {
             if (!currentTarget.contains(document.activeElement)) {
-                props.onSelect(activeVeilederFilter.map((v) => v.ident));
+                onVeilderIdentsChange(activeVeilederFilter.map((v) => v.ident));
                 setShowList(false);
                 setInput('');
             }

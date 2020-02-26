@@ -86,7 +86,7 @@ const Toolbar = (props: ToolbarProps) => {
                 <Element>
                     <TildelVeileder {...props} />
                     {props.tabType === OverviewTabType.ENHET_OVERVIEW && (
-                        <SearchVeileder onSelect={onVeilderIdentsChange} {...props} />)}
+                        <SearchVeileder {...props} />)}
                 </Element>
                 <PaginationContainer
                     numberOfItemsPerPage={numberOfItemsPerPage}
