@@ -100,6 +100,10 @@ module.exports = {
             },
         ]
     },
+    devServer: {
+        disableHostCheck: true,
+        stats: 'errors-only'
+    },
     plugins: [
         new Dotenv(),
         new ForkTsCheckerWebpackPlugin({
