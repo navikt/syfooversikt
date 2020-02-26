@@ -3,7 +3,10 @@ import React, {
     useState,
     useEffect,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+    useDispatch,
+    useSelector,
+} from 'react-redux';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Veileder } from '../../../store/veiledere/veiledereTypes';
 import styled from 'styled-components';
