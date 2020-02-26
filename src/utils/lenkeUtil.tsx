@@ -1,10 +1,12 @@
 import React from 'react';
 import Lenke from 'nav-frontend-lenker';
+import { PersonData } from '../store/personregister/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeFirstLetter } from './stringUtil';
 
-const lenkeTilModiaBasertPaaFnr = (fnr: string) => {
-  const path = `/sykefravaer/${fnr}`;
+const lenkeTilModiaBasertPaaFnr = (fnr: string, personData: PersonData) => {
+  const skalTilMoteoversikt = personData.harMotebehovUbehandlet || personData.harMoteplanleggerUbehandlet;
+  const path = `/sykefravaer/${fnr}${skalTilMoteoversikt ? '/moteoversikt' : ''}`;
   return fullNaisUrlDefault('syfomodiaperson', path);
 };
 
@@ -24,8 +26,8 @@ export const formaterNavn = (navn?: string): string => {
   return fullName;
 };
 
-export const lenkeTilModiaEnkeltperson = (navn: string, fnr: string) => {
-  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr)} >
-      {formaterNavn(navn)}
+export const lenkeTilModiaEnkeltperson = (personData: PersonData, fnr: string) => {
+  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)} >
+      {formaterNavn(personData.navn)}
   </Lenke>);
 };

@@ -67,7 +67,7 @@ export default (props: PersonradProps) => {
           }}
         />
       </Column>
-      <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData.navn, fnr)}</Column>
+      <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData, fnr)}</Column>
       <Column xs={'2'}>{fnr}</Column>
       <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
       <Column xs={'2'}>{veilederName}</Column>
