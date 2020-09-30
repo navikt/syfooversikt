@@ -4,17 +4,17 @@
     "items": [
         {
             "title": "Ny hendelse",
-            "text": "Under «Hendelse» finner du nå «Arbeidsgiver ønsker bistand». Denne hendelsen viser brukere med oppfølgingsplan hvor det bes om bistand",
+            "text": "Den nye hendelsen «Arbeidsgiver ønsker bistand» viser sykmeldte med en oppfølgingsplan hvor det bes om bistand.",
             "image": "lpsnytt1.png"
         },
         {
-            "title": "LPS-planer",
-            "text": "Oppfølgingsplanene dette gjelder kommer fra lønns- og personalsystemer (LPS) og har tidligere blitt vist i Arena",
+            "title": "Oppfølgingsplaner",
+            "text": "Her kommer planene fra arbeidsgivernes egne lønns- og personalsystem (LPS). Disse planene har tidligere blitt vist i Arena, nå kommer de bare her",
             "image": "lpsnytt2.png"
         },
         {
             "title": "Ferdig med et klikk",
-            "text": "Hendelsen kan markeres som ferdig behandlet på samme sted som du leser oppfølgingsplanen i Modia",
+            "text": "Du kan markere hendelsen som ferdig behandlet på samme sted som du leser oppfølgingsplanen.",
             "image": "lpsnytt2.png"
         }  
     ]
