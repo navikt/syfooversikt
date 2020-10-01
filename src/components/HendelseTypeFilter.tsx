@@ -9,7 +9,6 @@ import { ApplicationState } from '../store';
 import { HendelseTypeFilters } from '../store/filters/filterReducer';
 import { updateHendelseFilterAction } from '../store/filters/filter_actions';
 import { OverviewTabType } from '../konstanter';
-import { toggleOppfolgingsplanLPSBistand } from '../toggle';
 
 export const HendelseTekster: any = {
     UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -69,8 +68,6 @@ export default ({ className, personRegister, tabType }: Props) => {
     const elementer = Object.keys(HendelseTekster).filter((key) => {
         if (HendelseTekster[key] === HendelseTekster.UFORDELTE_BRUKERE && tabType === OverviewTabType.MY_OVERVIEW) {
             return false;
-        } else if (HendelseTekster[key] === HendelseTekster.ARBEIDSGIVER_BISTAND) {
-            return toggleOppfolgingsplanLPSBistand();
         }
         return true;
     }).map((key) => {
