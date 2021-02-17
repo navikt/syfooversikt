@@ -3,9 +3,7 @@ name: main
 on: push
 
 env:
-  APP_NAME: syfooversikt
   IMAGE: docker.pkg.github.com/${{ github.repository }}/syfooversikt:${{ github.sha }}
-  COMMITER_NAME: ${{ github.event.pusher.name }}
 
 jobs:
   build:
