@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ChevronKnapp from './ChevronKnapp';
@@ -31,7 +31,7 @@ const PaginationRow = ({
   startPage = 0,
   maxNumberPerPage,
   onPageChange,
-}: PaginationProps) => {
+}: PaginationProps): ReactElement => {
   const getNumberOfPages = () => {
     if (numberOfItems === maxNumberPerPage) {
       return 0;

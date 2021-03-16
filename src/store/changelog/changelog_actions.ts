@@ -17,7 +17,6 @@ interface FetchChangelogLoadingAction {
 
 interface FetchChangelogFailedAction {
   type: ChangelogActionTypes.FETCH_CHANGELOGS_FAILED;
-  err?: any;
 }
 
 interface FetchChangelogSuccessAction {
@@ -31,24 +30,19 @@ export type ChangelogAction =
   | FetchChangelogSuccessAction
   | FetchChangelogLoadingAction;
 
-export const fetchChangelogs = () =>
-  ({
-    type: ChangelogActionTypes.FETCH_CHANGELOGS_ASKED,
-  } as FetchChangelogAction);
+export const fetchChangelogs = (): ChangelogAction => ({
+  type: ChangelogActionTypes.FETCH_CHANGELOGS_ASKED,
+});
 
-export const fetchChengelogsLoadingAction = () =>
-  ({
-    type: ChangelogActionTypes.FETCH_CHANGELOGS_LOADING,
-  } as FetchChangelogLoadingAction);
+export const fetchChengelogsLoadingAction = (): ChangelogAction => ({
+  type: ChangelogActionTypes.FETCH_CHANGELOGS_LOADING,
+});
 
-export const fetchChangelogError = (err?: any) =>
-  ({
-    type: ChangelogActionTypes.FETCH_CHANGELOGS_FAILED,
-    err,
-  } as FetchChangelogFailedAction);
+export const fetchChangelogError = (): ChangelogAction => ({
+  type: ChangelogActionTypes.FETCH_CHANGELOGS_FAILED,
+});
 
-export const fetchChangelogsSuccess = (data: Changelog[]) =>
-  ({
-    type: ChangelogActionTypes.FETCH_CHANGELOGS_SUCCESS,
-    data,
-  } as FetchChangelogSuccessAction);
+export const fetchChangelogsSuccess = (data: Changelog[]): ChangelogAction => ({
+  type: ChangelogActionTypes.FETCH_CHANGELOGS_SUCCESS,
+  data,
+});

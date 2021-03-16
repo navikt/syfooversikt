@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Side from './Side';
 import { Container } from 'nav-frontend-grid';
 
-export default () => (
+export const ManglerTilgangsside = (): ReactElement => (
   <Side tittel="Under utvikling">
     <Container>
       <h1>Under utvikling</h1>

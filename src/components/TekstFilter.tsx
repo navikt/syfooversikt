@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 import { Input } from 'nav-frontend-skjema';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
 interface Props extends React.PropsWithoutRef<any> {
@@ -9,7 +9,11 @@ interface Props extends React.PropsWithoutRef<any> {
   onFilterChange: (query: string) => void;
 }
 
-export default ({ onFilterChange, initialValue, className }: Props) => {
+export const TekstFilter = ({
+  onFilterChange,
+  initialValue,
+  className,
+}: Props): ReactElement => {
   const [value, setValue] = useState(initialValue || '');
 
   return (

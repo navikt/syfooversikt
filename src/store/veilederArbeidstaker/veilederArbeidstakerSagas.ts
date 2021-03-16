@@ -1,9 +1,10 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { post } from '../../api/index';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { post } from '../../api';
 import * as actions from './veilederArbeidstaker_actions';
+import { PushVeilederArbeidstakerForespurtAction } from './veilederArbeidstaker_actions';
 
 export function* pushBrukerArbeidstakerSaga(
-  action: ReturnType<typeof actions.pushVeilederArbeidstakerForespurt>
+  action: PushVeilederArbeidstakerForespurtAction
 ) {
   yield put(actions.pushVeilederArbeidstakerPusher());
   try {
@@ -16,13 +17,9 @@ export function* pushBrukerArbeidstakerSaga(
   }
 }
 
-function* watchPushVeilederArbeidstaker() {
+export default function* veilederArbeidstakerSagas() {
   yield takeEvery(
     actions.veilederArbeidstakerActionTypes.PUSH_VEILEDERARBEIDSTAKER_FORESPURT,
     pushBrukerArbeidstakerSaga
   );
-}
-
-export default function* veilederArbeidstakerSagas() {
-  yield all([fork(watchPushVeilederArbeidstaker)]);
 }

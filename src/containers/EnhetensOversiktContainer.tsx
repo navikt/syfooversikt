@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { PersonregisterState } from '../store/personregister/personregisterTypes';
-import AppSpinner from '../components/AppSpinner';
 import Sokeresultat from '../components/Sokeresultat';
 import { pushVeilederArbeidstakerForespurt } from '../store/veilederArbeidstaker/veilederArbeidstaker_actions';
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
-import SokeresultatFilter from '../components/HendelseTypeFilter';
+import { HendelseTypeFilter } from '../components/HendelseTypeFilter';
 import {
   Filterable,
-  filtrerPersonregister,
-  filtrerPaaFodselsnummerEllerNavn,
   filterEventsOnVeileder,
   filterOnBirthDates,
   filterOnCompany,
   filterOnEnhet,
+  filtrerPaaFodselsnummerEllerNavn,
+  filtrerPersonregister,
 } from '../utils/hendelseFilteringUtils';
-import TekstFilter from '../components/TekstFilter';
+import { TekstFilter } from '../components/TekstFilter';
 import { ApplicationState } from '../store';
 import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
 import { AlertStripeWarning } from '../components/AlertStripeWarning';
 import { OverviewTabType } from '../konstanter';
 import { hentVeiledere } from '../store/veiledere/veiledere_actions';
-import PersonFilter from '../components/PersonFilter';
-import ClearFilters from '../components/filters/ClearFilters';
+import { PersonFilter } from '../components/PersonFilter';
+import { ClearFilters } from '../components/filters/ClearFilters';
 import { resetAllFilters } from '../store/filters/filter_actions';
 
 const tekster = {
@@ -72,7 +71,7 @@ const TekstFilterStyled = styled(TekstFilter)`
   margin-bottom: 1rem;
 `;
 
-const HendelseFilterStyled = styled(SokeresultatFilter)`
+const HendelseFilterStyled = styled(HendelseTypeFilter)`
   margin-bottom: 1rem;
 `;
 
@@ -86,7 +85,9 @@ interface Props {
   tabType?: OverviewTabType;
 }
 
-export default ({ tabType = OverviewTabType.ENHET_OVERVIEW }: Props) => {
+export const EnhetensOversiktContainer = ({
+  tabType = OverviewTabType.ENHET_OVERVIEW,
+}: Props): ReactElement => {
   const [tekstFilter, onTekstFilterChange] = useState('');
 
   const dispatch = useDispatch();
@@ -101,7 +102,6 @@ export default ({ tabType = OverviewTabType.ENHET_OVERVIEW }: Props) => {
     aktivEnhetId,
     aktivVeilederinfo,
     henterAlt,
-    noeErHentet,
     altFeilet,
     veiledere,
     selectedBirthDates,
@@ -146,29 +146,26 @@ export default ({ tabType = OverviewTabType.ENHET_OVERVIEW }: Props) => {
   return (
     <div>
       {info(altFeilet, hentetIngenPersoner)}
-      {henterAlt && <AppSpinner />}
-      {noeErHentet && (
-        <OversiktContainerInnhold>
-          <SokeresultatFiltre>
-            <ClearFiltersButton />
-            <TekstFilterStyled onFilterChange={onTekstFilterChange} />
-            <HendelseFilterStyled
-              personRegister={allEvents.value}
-              tabType={tabType}
-            />
-
-            <PersonFilter personregister={personregister} />
-          </SokeresultatFiltre>
-          <Sokeresultat
-            tildelVeileder={actions.tildelVeileder}
-            aktivEnhetId={aktivEnhetId}
-            aktivVeilederinfo={aktivVeilederinfo}
-            personregister={filteredEvents.value}
-            veiledere={veiledere}
+      <OversiktContainerInnhold>
+        <SokeresultatFiltre>
+          <ClearFiltersButton />
+          <TekstFilterStyled onFilterChange={onTekstFilterChange} />
+          <HendelseFilterStyled
+            personRegister={allEvents.value}
             tabType={tabType}
           />
-        </OversiktContainerInnhold>
-      )}
+
+          <PersonFilter personregister={personregister} />
+        </SokeresultatFiltre>
+        <Sokeresultat
+          tildelVeileder={actions.tildelVeileder}
+          aktivEnhetId={aktivEnhetId}
+          aktivVeilederinfo={aktivVeilederinfo}
+          personregister={filteredEvents.value}
+          veiledere={veiledere}
+          tabType={tabType}
+        />
+      </OversiktContainerInnhold>
     </div>
   );
 };

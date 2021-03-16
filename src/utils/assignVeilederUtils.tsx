@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Veileder } from '../store/veiledere/veiledereTypes';
 import { sortVeiledereAlphabetically } from './veiledereUtils';
 import { ToolbarWrapperProps } from '../components/toolbar/ToolbarWrapper';
@@ -6,7 +5,7 @@ import { ToolbarWrapperProps } from '../components/toolbar/ToolbarWrapper';
 export const assignUsersToSelectedVeileder = (
   { buttonHandler, checkAllHandler }: ToolbarWrapperProps,
   selectedVeilederIdent: string
-) => {
+): void => {
   if (selectedVeilederIdent && selectedVeilederIdent.length > 0) {
     buttonHandler(selectedVeilederIdent);
   }
@@ -16,7 +15,7 @@ export const assignUsersToSelectedVeileder = (
 export const filterVeiledereOnInput = (
   veiledere: Veileder[],
   lowerCaseInput: string
-) => {
+): Veileder[] => {
   const filteredVeiledere = veiledere.filter(
     (veileder: Veileder) =>
       lowerCaseInput === '' ||
@@ -31,10 +30,10 @@ export const filterVeiledereOnInput = (
   return filteredVeiledere;
 };
 
-export const hasNoCheckedPersoner = (personer: string[]) => {
+export const hasNoCheckedPersoner = (personer: string[]): boolean => {
   return personer.length === 0;
 };
 
-export const isInputGiven = (input: string) => {
+export const isInputGiven = (input: string): boolean => {
   return input.length > 0;
 };

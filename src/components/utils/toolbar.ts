@@ -9,7 +9,7 @@ export const onTogglePaginationClick = (
   numberOfItemsPerPage: number,
   setNumberOfItemsPerPage: (n: number) => void,
   numberOfItemsTotal: number
-) => {
+): void => {
   if (numberOfItemsPerPage === numberOfItemsTotal) {
     setNumberOfItemsPerPage(PAGINATED_NUMBER_OF_ITEMS);
   } else {
@@ -20,7 +20,7 @@ export const onTogglePaginationClick = (
 export const getTogglePaginationText = (
   numberOfItemsPerPage: number,
   numberOfItemsTotal: number
-) => {
+): string => {
   return numberOfItemsPerPage === numberOfItemsTotal
     ? texts.showLess
     : texts.showMore;

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
@@ -41,19 +40,33 @@ export const FlexColumn = styled(Column)`
   }
 `;
 
+type XsType =
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | '11'
+  | '12';
+
 interface ColumnItem {
   sortingText: string;
   extraText: any;
   sortingTypeAsc: SortingType;
   sortingTypeDesc: SortingType;
-  xs: string;
+  xs: XsType;
 }
 
 interface SortingRowProps {
   onSortClick(type: SortingType): void;
 }
 
-const Sorteringsrad = ({ onSortClick }: SortingRowProps) => {
+const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
   const [currentSortingType, setCurrentSortingType] = useState<SortingType>(
     'NONE'
   );
