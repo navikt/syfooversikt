@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 
@@ -13,7 +13,7 @@ const Clickable = (props: {
   index: number;
   setPage: (page: number) => void;
   currentPage: number;
-}) => {
+}): ReactElement => {
   const isActive = props.index === props.currentPage ? 'active' : undefined;
 
   const page = props.index + 1;

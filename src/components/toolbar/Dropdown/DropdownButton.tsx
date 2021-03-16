@@ -1,13 +1,13 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import KnappBase, { KnappBaseProps } from 'nav-frontend-knapper';
+import { ReactElement } from 'react';
 
 interface DropdownButtonProps extends KnappBaseProps {
   classNameElement: string;
   text: string;
 }
 
-const DropdownButton = (props: DropdownButtonProps) => {
+const DropdownButton = (props: DropdownButtonProps): ReactElement => {
   return (
     <KnappBase
       className={`confirmVeilederButton__${props.classNameElement}`}

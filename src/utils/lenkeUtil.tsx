@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '../store/personregister/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
@@ -37,7 +37,7 @@ export const formaterNavn = (navn?: string): string => {
 export const lenkeTilModiaEnkeltperson = (
   personData: PersonData,
   fnr: string
-) => {
+): ReactElement => {
   return (
     <Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)}>
       {formaterNavn(personData.navn)}
@@ -48,7 +48,7 @@ export const lenkeTilModiaEnkeltperson = (
 export const lenkeTilModiaEnkeltpersonFnr = (
   personData: PersonData,
   fnr: string
-) => {
+): ReactElement | string => {
   const hasPersonName = personData.navn && personData.navn.length > 0;
   if (hasPersonName) {
     return fnr;

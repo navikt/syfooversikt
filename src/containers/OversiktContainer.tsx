@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
-import { ApplicationState } from '../store';
 import { hentPersonoversiktForespurt } from '../store/personoversikt/personoversikt_actions';
 import { hentVeilederenheter } from '../store/veilederenheter/veilederenheter_actions';
-import EnhetensOversiktContainer from './EnhetensOversiktContainer';
+import { EnhetensOversiktContainer } from './EnhetensOversiktContainer';
 import { OverviewTabType } from '../konstanter';
+import AppSpinner from '../components/AppSpinner';
+import { OversiktData, useOversiktData } from '../store/hooks/oversiktHooks';
 
 const tekster = {
   overskrifter: {
@@ -19,70 +20,36 @@ const tekster = {
   },
 };
 
-interface OversiktProps {
-  type: string;
-}
-
 const Container = styled.div`
   width: calc(100% - 10%);
   margin: auto;
 `;
 
-const getPropsFromState = ({
-  modiacontext,
-  personoversikt,
-  personregister,
-  veilederenheter,
-  veilederinfo,
-}: ApplicationState) => ({
-  personregister,
-  aktivEnhetId: veilederenheter.aktivEnhetId,
-  aktivEnhetFeilet: modiacontext.hentingEnhetFeilet,
-  aktivVeilederinfo: veilederinfo.data,
-  henterAlt:
-    veilederenheter.henter || veilederinfo.henter || personoversikt.henter,
-  noeErHentet:
-    veilederenheter.hentet && veilederinfo.hentet && personoversikt.hentet,
-  altFeilet:
-    modiacontext.hentingEnhetFeilet ||
-    veilederinfo.hentingFeilet ||
-    personoversikt.hentingFeilet,
-});
+interface OversiktProps {
+  type: string;
+}
 
-const OversiktContainer = ({ type }: OversiktProps) => {
-  const { aktivEnhetId, aktivEnhetFeilet } = getPropsFromState(
-    useSelector((state: ApplicationState) => state)
-  );
-
+const OversiktContainer = ({ type }: OversiktProps): ReactElement => {
   const dispatch = useDispatch();
-  const actions = {
-    hentPersonoversiktForespurt: (enhetId: string) =>
-      dispatch(hentPersonoversiktForespurt(enhetId)),
-    hentVeilederenheter: () => dispatch(hentVeilederenheter()),
-  };
+  const oversiktData: OversiktData = useOversiktData();
 
   useEffect(() => {
-    actions.hentVeilederenheter();
-  }, []);
-
-  useEffect(() => {
-    actions.hentPersonoversiktForespurt(aktivEnhetId);
-  }, [aktivEnhetId]);
+    dispatch(hentVeilederenheter());
+    dispatch(hentPersonoversiktForespurt(oversiktData.aktivEnhet));
+  }, [oversiktData.aktivEnhet]);
 
   return (
     <Container>
-      {aktivEnhetFeilet && <AktivEnhetFeiletError />}
-      {!aktivEnhetFeilet && (
+      {oversiktData.hentingEnhetFeilet &&
+        AlertStripeRod(
+          tekster.feil.hentVeilederenheterFeilet,
+          'oversiktContainer__alertstripe'
+        )}
+      <AppSpinner laster={oversiktData.laster}>
         <EnhetensOversiktContainer tabType={type as OverviewTabType} />
-      )}
+      </AppSpinner>
     </Container>
   );
 };
-
-const AktivEnhetFeiletError = () =>
-  AlertStripeRod(
-    tekster.feil.hentVeilederenheterFeilet,
-    'oversiktContainer__alertstripe'
-  );
 
 export default OversiktContainer;

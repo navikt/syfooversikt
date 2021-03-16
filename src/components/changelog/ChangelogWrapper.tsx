@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChangelogs } from '../../store/changelog/changelog_actions';
 import ChangelogModal from '../../components/changelog/ChangelogModal';
-import { ApplicationState, store } from '../../store';
+import { ApplicationState } from '../../store';
 import { Changelog } from '../../store/changelog/changelogTypes';
 
 const getPropsFromState = (state: ApplicationState) => ({
@@ -25,14 +25,14 @@ const createChangelogStorage = (version: number) =>
     viewed_version: version,
   } as ChangelogStorage);
 
-const saveChangelogVersionViewed = (version: number = 0) => {
+const saveChangelogVersionViewed = (version = 0) => {
   localStorage.setItem(
     CHANGELOG_LOCAL_KEY,
     JSON.stringify(createChangelogStorage(version))
   );
 };
 
-export default () => {
+export const ChangelogWrapper = (): ReactElement => {
   const dispatch = useDispatch();
   const [showChangelog, setShowChangelog] = useState(false);
   const [latestChangelog, setLatestChangelog] = useState<Changelog | undefined>(

@@ -8,63 +8,60 @@ export enum FilterActionTypes {
   RESET_ALL_FILTERS = 'RESET_ALL_FILTERS',
 }
 
-interface UpdateBirthDateFilter {
+interface UpdateBirthDateFilterAction {
   type: FilterActionTypes.UPDATE_BIRTH_DATE;
   selectedBirthDates: string[];
 }
 
-interface UpdateVeilederIdentsFilter {
+interface UpdateVeilederIdentsFilterAction {
   type: FilterActionTypes.UPDATE_VEILDERER_IDENTS;
   selectedVeilederIdents: string[];
 }
 
-interface UpdateCompaniesFilter {
+interface UpdateCompaniesFilterAction {
   type: FilterActionTypes.UPDATE_COMPANIES;
   selectedCompanies: string[];
 }
 
-interface UpdateHendelseFilter {
+interface UpdateHendelseFilterAction {
   type: FilterActionTypes.UPDATE_HENDELSE_FILTER;
   filter: HendelseTypeFilters;
 }
-interface ResetAllFilters {
+interface ResetAllFiltersAction {
   type: FilterActionTypes.RESET_ALL_FILTERS;
 }
 
 export type FilterAction =
-  | UpdateBirthDateFilter
-  | UpdateVeilederIdentsFilter
-  | UpdateCompaniesFilter
-  | UpdateHendelseFilter
-  | ResetAllFilters;
+  | UpdateBirthDateFilterAction
+  | UpdateVeilederIdentsFilterAction
+  | UpdateCompaniesFilterAction
+  | UpdateHendelseFilterAction
+  | ResetAllFiltersAction;
 
 export const updateHendelseFilterAction = (
   hendelseFilter: HendelseTypeFilters
-) =>
-  ({
-    filter: hendelseFilter,
-    type: FilterActionTypes.UPDATE_HENDELSE_FILTER,
-  } as UpdateHendelseFilter);
+): FilterAction => ({
+  filter: hendelseFilter,
+  type: FilterActionTypes.UPDATE_HENDELSE_FILTER,
+});
 
-export const updateBirthDateFilter = (birthDates: string[]) =>
-  ({
-    type: FilterActionTypes.UPDATE_BIRTH_DATE,
-    selectedBirthDates: birthDates,
-  } as UpdateBirthDateFilter);
+export const updateBirthDateFilter = (birthDates: string[]): FilterAction => ({
+  type: FilterActionTypes.UPDATE_BIRTH_DATE,
+  selectedBirthDates: birthDates,
+});
 
-export const updateVeilederIdentsFilter = (veilederIdents: string[]) =>
-  ({
-    type: FilterActionTypes.UPDATE_VEILDERER_IDENTS,
-    selectedVeilederIdents: veilederIdents,
-  } as UpdateVeilederIdentsFilter);
+export const updateVeilederIdentsFilter = (
+  veilederIdents: string[]
+): FilterAction => ({
+  type: FilterActionTypes.UPDATE_VEILDERER_IDENTS,
+  selectedVeilederIdents: veilederIdents,
+});
 
-export const updateCompaniesFilter = (companies: string[]) =>
-  ({
-    type: FilterActionTypes.UPDATE_COMPANIES,
-    selectedCompanies: companies,
-  } as UpdateCompaniesFilter);
+export const updateCompaniesFilter = (companies: string[]): FilterAction => ({
+  type: FilterActionTypes.UPDATE_COMPANIES,
+  selectedCompanies: companies,
+});
 
-export const resetAllFilters = () =>
-  ({
-    type: FilterActionTypes.RESET_ALL_FILTERS,
-  } as ResetAllFilters);
+export const resetAllFilters = (): FilterAction => ({
+  type: FilterActionTypes.RESET_ALL_FILTERS,
+});

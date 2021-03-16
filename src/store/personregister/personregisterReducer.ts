@@ -9,7 +9,7 @@ import { PersonData, PersonregisterState } from './personregisterTypes';
 
 const tilPersonDataMap = (personDataMapObject: any) => {
   return personDataMapObject.reduce(
-    (acc: {}, curr: { [fnr: string]: PersonData }) => {
+    (acc: Record<string, unknown>, curr: { [fnr: string]: PersonData }) => {
       return { ...acc, ...curr };
     },
     {}
@@ -17,10 +17,6 @@ const tilPersonDataMap = (personDataMapObject: any) => {
 };
 
 const initiellState = {};
-
-const hasName = (person: PersonData) => {
-  return person && person.navn && person.navn.length > 0;
-};
 
 const personregisterReducer: Reducer<PersonregisterState> = (
   state = initiellState,

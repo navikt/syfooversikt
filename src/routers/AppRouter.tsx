@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router';
 import { Landingsside } from '../sider/Landingsside';
-import ManglerTilgangside from '../sider/ManglerTilgangside';
 import { BrowserRouter } from 'react-router-dom';
 import Side from '../sider/Side';
+import { ManglerTilgangsside } from '../sider/ManglerTilgangside';
 
-const AppRouter = () => {
+const AppRouter = (): ReactElement => {
   return (
     <BrowserRouter basename="/">
       <Side tittel="Sykefraværsoppfølging">
         <Switch>
-          <Route exact path="/na" component={ManglerTilgangside} />
+          <Route exact path="/na" component={ManglerTilgangsside} />
           <Route component={Landingsside} />
         </Switch>
       </Side>

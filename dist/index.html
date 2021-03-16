@@ -38,41 +38,6 @@
       .app--laster {
         height: 100vh;
       }
-      .app-spinner {
-        width: 4rem;
-        height: 4rem;
-        border-top: 0.3125rem solid #7f756c;
-        border-left: 0.3125rem solid #b7b1a9;
-        border-bottom: 0.3125rem solid #b7b1a9;
-        border-right: 0.3125rem solid #7f756c;
-        border-radius: 50%;
-        -webkit-transform: translateZ(0);
-        -ms-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-animation: rotering 800ms infinite linear;
-        animation: rotering 800ms infinite linear;
-        margin: 8rem auto;
-      }
-      @-webkit-keyframes rotering {
-        from {
-          -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        to {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @keyframes rotering {
-        from {
-          -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        to {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
     </style>
   </head>
   <body data-hj-suppress>
@@ -82,9 +47,7 @@
 
     <div id="header"></div>
 
-    <div id="maincontent" class="app app--laster" tabindex="-1">
-      <div class="app-spinner" aria-label="Vent litt mens siden laster"></div>
-    </div>
+    <div id="maincontent" class="app app--laster" tabindex="-1"></div>
 
     <div id="feilmelding" style="display: none">
       <div class="scriptFeilmelding">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -36,7 +36,7 @@ const LinkStyled = styled(NavLink)`
   }
 `;
 
-const NavigationBar = styled.div`
+const NavigationBarDiv = styled.div`
   background: white;
   width: 100%;
   margin: auto;
@@ -54,8 +54,8 @@ const NavigationBarContent = styled.div`
   }
 `;
 
-export default () => (
-  <NavigationBar>
+export const NavigationBar = (): ReactElement => (
+  <NavigationBarDiv>
     <NavigationBarContent>
       <LinkStyled activeClassName="active" to={'/minoversikt'}>
         {tekster.minOversikt}
@@ -64,5 +64,5 @@ export default () => (
         {tekster.enhetensOversikt}
       </LinkStyled>
     </NavigationBarContent>
-  </NavigationBar>
+  </NavigationBarDiv>
 );
