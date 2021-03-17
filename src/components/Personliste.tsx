@@ -10,9 +10,7 @@ import {
   PersonData,
   PersonregisterState,
 } from '../store/personregister/personregisterTypes';
-import {
-  getSortedEventsFromSortingType,
-} from '../utils/hendelseFilteringUtils';
+import { getSortedEventsFromSortingType } from '../utils/hendelseFilteringUtils';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
@@ -35,28 +33,39 @@ const EtikettFokusStyled = styled(EtikettInfo)`
   border: 1px solid rgb(102, 203, 236);
 `;
 
-const UfordeltBrukerEtikett = () => <EtikettFokusStyled>Ufordelt bruker</EtikettFokusStyled>;
+const UfordeltBrukerEtikett = () => (
+  <EtikettFokusStyled>Ufordelt bruker</EtikettFokusStyled>
+);
 
 const erMarkert = (markertePersoner: string[], fnr: string) => {
-  return markertePersoner.findIndex((markertPerson: string) => {
-    return markertPerson === fnr;
-  }) !== -1;
+  return (
+    markertePersoner.findIndex((markertPerson: string) => {
+      return markertPerson === fnr;
+    }) !== -1
+  );
 };
 
-const veilederForPerson = ((veiledere: Veileder[], person: PersonData) => {
+const veilederForPerson = (veiledere: Veileder[], person: PersonData) => {
   if (person.tildeltVeilederIdent) {
     return veiledere.find((veileder) => {
       return veileder.ident === person.tildeltVeilederIdent;
     });
   }
   return undefined;
-});
+};
 
-export const getVeilederComponent = (veiledere: Veileder[], personData: PersonData) => {
-  const veilederName = veilederEllerNull(veilederForPerson(veiledere, personData));
-  return veilederName === null
-    ? <UfordeltBrukerEtikett />
-    : <VeilederNavn>{veilederName}</VeilederNavn>;
+export const getVeilederComponent = (
+  veiledere: Veileder[],
+  personData: PersonData
+) => {
+  const veilederName = veilederEllerNull(
+    veilederForPerson(veiledere, personData)
+  );
+  return veilederName === null ? (
+    <UfordeltBrukerEtikett />
+  ) : (
+    <VeilederNavn>{veilederName}</VeilederNavn>
+  );
 };
 
 const Personliste = (props: PersonlisteProps) => {
@@ -67,20 +76,32 @@ const Personliste = (props: PersonlisteProps) => {
     veiledere,
   } = props;
 
-  const paginatePersonregister = (register: PersonregisterState, startItem: number, endItem: number) => {
+  const paginatePersonregister = (
+    register: PersonregisterState,
+    startItem: number,
+    endItem: number
+  ) => {
     const allFnr = Object.keys(register);
     return allFnr
-        .slice(startItem, endItem + 1)
-        .reduce((slicedPersonregister, fnr) => {
-          slicedPersonregister[fnr] = personregister[fnr];
-          return slicedPersonregister;
-        }, {} as PersonregisterState);
+      .slice(startItem, endItem + 1)
+      .reduce((slicedPersonregister, fnr) => {
+        slicedPersonregister[fnr] = personregister[fnr];
+        return slicedPersonregister;
+      }, {} as PersonregisterState);
   };
 
   const brukerSorting = useSelector((state: ApplicationState) => state.sorting);
 
-  const sortedPersonregister = getSortedEventsFromSortingType(personregister, veiledere, brukerSorting.sortingType);
-  const paginatedPersonregister = paginatePersonregister(sortedPersonregister, props.startItem, props.endItem);
+  const sortedPersonregister = getSortedEventsFromSortingType(
+    personregister,
+    veiledere,
+    brukerSorting.sortingType
+  );
+  const paginatedPersonregister = paginatePersonregister(
+    sortedPersonregister,
+    props.startItem,
+    props.endItem
+  );
 
   const fnrListe = Object.keys(paginatedPersonregister);
 
@@ -92,23 +113,29 @@ const Personliste = (props: PersonlisteProps) => {
     return false;
   });
 
-  return (<>
-    {
-      fnrListe.map((fnr: string, idx: number) => {
-        return (<Personrad
-          index={idx}
-          key={idx}
-          fnr={fnr}
-          veilederName={isVeilederDataLoaded
-            ? getVeilederComponent(veiledere, personregister[fnr])
-            : <div />}
-          personData={personregister[fnr]}
-          checkboxHandler={checkboxHandler}
-          kryssAv={erMarkert(markertePersoner, fnr)}
-        />);
-      })
-    }
-  </>);
+  return (
+    <>
+      {fnrListe.map((fnr: string, idx: number) => {
+        return (
+          <Personrad
+            index={idx}
+            key={idx}
+            fnr={fnr}
+            veilederName={
+              isVeilederDataLoaded ? (
+                getVeilederComponent(veiledere, personregister[fnr])
+              ) : (
+                <div />
+              )
+            }
+            personData={personregister[fnr]}
+            checkboxHandler={checkboxHandler}
+            kryssAv={erMarkert(markertePersoner, fnr)}
+          />
+        );
+      })}
+    </>
+  );
 };
 
 export default Personliste;

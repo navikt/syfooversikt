@@ -1,21 +1,21 @@
 {
-    "title": "Ny oppdatering",
-    "date": "09-10-19",
-    "items": [
-        {
-            "title": "Søk veileder",
-            "text": "Du kan nå søke etter veiledere i din enhet",
-            "image": "sok_veileder.png"
-        },
-        {
-            "title": "Ikke i aktivitet",
-            "text": "Under «Hendelse» finner du nå «100% f.o.m. 8 uker». Denne hendelsen viser brukere som er 100% sykmeldte og som har passert 8 uker f.o.m. i dag.",
-            "image": "hendelse.png"
-        },
-        {
-            "title": "Virksomhet",
-            "text": "Under «Filter» finner du nå «Virksomhet». Her vises alle virksomhetene som brukerne i oversikten er ansatt i.",
-            "image": "virksomhet.png"
-        }
-    ]
+  "title": "Ny oppdatering",
+  "date": "09-10-19",
+  "items": [
+    {
+      "title": "Søk veileder",
+      "text": "Du kan nå søke etter veiledere i din enhet",
+      "image": "sok_veileder.png"
+    },
+    {
+      "title": "Ikke i aktivitet",
+      "text": "Under «Hendelse» finner du nå «100% f.o.m. 8 uker». Denne hendelsen viser brukere som er 100% sykmeldte og som har passert 8 uker f.o.m. i dag.",
+      "image": "hendelse.png"
+    },
+    {
+      "title": "Virksomhet",
+      "text": "Under «Filter» finner du nå «Virksomhet». Her vises alle virksomhetene som brukerne i oversikten er ansatt i.",
+      "image": "virksomhet.png"
+    }
+  ]
 }

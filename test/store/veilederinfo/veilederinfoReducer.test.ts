@@ -23,17 +23,17 @@ describe('veilederinfoReducer', () => {
       const action = henterVeilederinfo();
       const nesteState = veilederinfoReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: true,
       });
     });
 
     it(`handterer ${VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET}`, () => {
-      const data =  veilederinfo;
+      const data = veilederinfo;
       const action = veilederinfoHentet(data);
       const nesteState = veilederinfoReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         hentet: true,
         henter: false,
         data,
@@ -44,7 +44,7 @@ describe('veilederinfoReducer', () => {
       const action = hentVeilederinfoFeilet();
       const nesteState = veilederinfoReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: false,
         hentingFeilet: true,
         data: initData,

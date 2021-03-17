@@ -3,19 +3,12 @@
     "plugins": [
       {
         "name": "typescript-styled-plugin",
-        "tags": [
-          "styled",
-          "css",
-          "sty"
-        ]
+        "tags": ["styled", "css", "sty"]
       }
     ],
     "baseUrl": ".",
     "target": "es6",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
@@ -31,10 +24,6 @@
     "sourceMap": true,
     "noImplicitAny": true
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
 }

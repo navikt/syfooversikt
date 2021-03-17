@@ -1,21 +1,21 @@
 {
-    "title": "Ny oppdatering",
-    "date": "30-09-20",
-    "items": [
-        {
-            "title": "Ny hendelse",
-            "text": "Den nye hendelsen «Arbeidsgiver ønsker bistand» viser sykmeldte med en oppfølgingsplan hvor det bes om bistand.",
-            "image": "lpsnytt1.png"
-        },
-        {
-            "title": "Oppfølgingsplaner",
-            "text": "Her kommer planene fra arbeidsgivernes egne lønns- og personalsystem (LPS). Disse planene har tidligere blitt vist i Arena, nå kommer de bare her",
-            "image": "lpsnytt2.png"
-        },
-        {
-            "title": "Ferdig med et klikk",
-            "text": "Du kan markere hendelsen som ferdig behandlet på samme sted som du leser oppfølgingsplanen.",
-            "image": "lpsnytt2.png"
-        }  
-    ]
+  "title": "Ny oppdatering",
+  "date": "30-09-20",
+  "items": [
+    {
+      "title": "Ny hendelse",
+      "text": "Den nye hendelsen «Arbeidsgiver ønsker bistand» viser sykmeldte med en oppfølgingsplan hvor det bes om bistand.",
+      "image": "lpsnytt1.png"
+    },
+    {
+      "title": "Oppfølgingsplaner",
+      "text": "Her kommer planene fra arbeidsgivernes egne lønns- og personalsystem (LPS). Disse planene har tidligere blitt vist i Arena, nå kommer de bare her",
+      "image": "lpsnytt2.png"
+    },
+    {
+      "title": "Ferdig med et klikk",
+      "text": "Du kan markere hendelsen som ferdig behandlet på samme sted som du leser oppfølgingsplanen.",
+      "image": "lpsnytt2.png"
+    }
+  ]
 }

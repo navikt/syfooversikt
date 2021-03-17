@@ -5,7 +5,7 @@ import themes from '../../../styles/themes';
 import SearchIcon from '../../../img/icons/SearchIcon';
 
 interface ButtonDivProps {
-    active: boolean;
+  active: boolean;
 }
 
 const activeStyle = css`
@@ -13,7 +13,7 @@ const activeStyle = css`
     text-decoration: underline;
   }
   & > * {
-    color: ${themes.color.navBla}
+    color: ${themes.color.navBla};
   }
 `;
 
@@ -35,7 +35,7 @@ const ButtonDiv = styled.div`
 `;
 
 const DropdownButtonButton = styled.button`
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   margin: 0;
   width: 100%;
   background: none;
@@ -56,31 +56,37 @@ const SearchIconWrapper = styled.span`
 `;
 
 interface AssignToVeilederButtonProps {
-    text: string;
-    userIsChecked: boolean;
-    onClick: () => void;
-    showList: boolean;
-    search: boolean;
+  text: string;
+  userIsChecked: boolean;
+  onClick: () => void;
+  showList: boolean;
+  search: boolean;
 }
 
 const chevronType = (showList: boolean) => {
-    return showList
-        ? 'opp'
-        : 'ned';
+  return showList ? 'opp' : 'ned';
 };
 
 const OpenDropdownButton = (props: AssignToVeilederButtonProps) => {
-    return (<ButtonDiv className="openDropdownButton" active={props.userIsChecked}>
-        <DropdownButtonButton className="openDropdownButton__button" onClick={props.onClick}>
-            {props.search &&
-            <SearchIconWrapper>
-                <SearchIconBlue className="inputWithSearchIcon__icon"/>
-            </SearchIconWrapper>
-            }
-            {props.text}
-            <DropdownButtonChevron className="openDropdownButton__chevron" type={chevronType(props.showList)}/>
-        </DropdownButtonButton>
-    </ButtonDiv>);
+  return (
+    <ButtonDiv className="openDropdownButton" active={props.userIsChecked}>
+      <DropdownButtonButton
+        className="openDropdownButton__button"
+        onClick={props.onClick}
+      >
+        {props.search && (
+          <SearchIconWrapper>
+            <SearchIconBlue className="inputWithSearchIcon__icon" />
+          </SearchIconWrapper>
+        )}
+        {props.text}
+        <DropdownButtonChevron
+          className="openDropdownButton__chevron"
+          type={chevronType(props.showList)}
+        />
+      </DropdownButtonButton>
+    </ButtonDiv>
+  );
 };
 
 export default OpenDropdownButton;

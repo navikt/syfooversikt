@@ -15,7 +15,7 @@ declare module 'nav-frontend-hjelpetekst' {
   export class HjelpetekstVenstre extends React.Component<
     HjelpetekstProps,
     {}
-    > {}
+  > {}
   export class HjelpetekstAuto extends React.Component<HjelpetekstProps, {}> {}
   export class HjelpetekstMidt extends React.Component<HjelpetekstProps, {}> {}
 }

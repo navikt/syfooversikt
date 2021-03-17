@@ -22,7 +22,7 @@ describe('personoversiktReducer', () => {
       const action = hentPersonoversiktHenter();
       const nesteState = personoversiktReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: true,
       });
     });
@@ -32,7 +32,7 @@ describe('personoversiktReducer', () => {
       const action = hentPersonoversiktHentet(data);
       const nesteState = personoversiktReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         hentet: true,
         henter: false,
         data,
@@ -43,7 +43,7 @@ describe('personoversiktReducer', () => {
       const action = hentPersonoversiktFeilet();
       const nesteState = personoversiktReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: false,
         hentingFeilet: true,
         data: [],

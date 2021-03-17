@@ -1,9 +1,11 @@
 import React from 'react';
 
 const LandingssideHeader = () => {
-  return (<div>
+  return (
+    <div>
       <h1>Sykefraværsoppfølging</h1>
-  </div>);
+    </div>
+  );
 };
 
 export default LandingssideHeader;

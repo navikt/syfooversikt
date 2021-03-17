@@ -3,34 +3,31 @@ import styled from 'styled-components';
 import InputWithSearchIcon from '../../InputWithSearchIcon';
 import { VeilederInputButtons } from './VeilederInputButtons';
 import { isInputGiven } from '../../../utils/assignVeilederUtils';
-import {
-    DropdownButtons,
-    DropdownButtonTexts,
-} from './DropdownButtons';
+import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
 import { Veileder } from '../../../store/veiledere/veiledereTypes';
 
 interface DropdownProps {
-    buttonTexts: DropdownButtonTexts;
-    cancelButtonHandler: () => void;
-    chooseButtonHandler: (chosenVeilederIdent: string) => void;
-    chosenVeilederIdent: string;
-    filteredVeiledere: Veileder[];
-    input: string;
-    inputChangeHandler: (event: ChangeEvent) => void;
-    buttonChangeHandler: (veileder: Veileder) => void;
-    veilederIsChosen: boolean;
-    selectedVeileders: Veileder[];
-    showNoChosenVeilederError: boolean;
-    placeholder: string;
-    buttonType: string;
+  buttonTexts: DropdownButtonTexts;
+  cancelButtonHandler: () => void;
+  chooseButtonHandler: (chosenVeilederIdent: string) => void;
+  chosenVeilederIdent: string;
+  filteredVeiledere: Veileder[];
+  input: string;
+  inputChangeHandler: (event: ChangeEvent) => void;
+  buttonChangeHandler: (veileder: Veileder) => void;
+  veilederIsChosen: boolean;
+  selectedVeileders: Veileder[];
+  showNoChosenVeilederError: boolean;
+  placeholder: string;
+  buttonType: string;
 }
 
 const ButtonPanelGroup = styled.div`
-  margin: .5em;
+  margin: 0.5em;
   border: 0;
   overflow: auto;
   height: 20em;
-  width: calc(100% - .5em);
+  width: calc(100% - 0.5em);
 `;
 
 const DropdownPanel = styled.section`
@@ -44,59 +41,66 @@ const DropdownPanel = styled.section`
 `;
 
 const texts = {
-    noChosenVeilederError: 'Du må velge en veileder for å kunne tildele. ',
+  noChosenVeilederError: 'Du må velge en veileder for å kunne tildele. ',
 };
 
 const NoVeilederChosenErrorMessage = styled.p`
-    color: red;
-    margin: 0 0 1em .5em;
-    font-weight: bold;
+  color: red;
+  margin: 0 0 1em 0.5em;
+  font-weight: bold;
 `;
 
 export const Dropdown = (props: DropdownProps) => {
-    const {
-        buttonTexts,
-        cancelButtonHandler,
-        chooseButtonHandler,
-        chosenVeilederIdent,
-        filteredVeiledere,
-        input,
-        inputChangeHandler,
-        buttonChangeHandler,
-        veilederIsChosen,
-        selectedVeileders,
-        showNoChosenVeilederError,
-        placeholder,
-        buttonType,
-    } = props;
+  const {
+    buttonTexts,
+    cancelButtonHandler,
+    chooseButtonHandler,
+    chosenVeilederIdent,
+    filteredVeiledere,
+    input,
+    inputChangeHandler,
+    buttonChangeHandler,
+    veilederIsChosen,
+    selectedVeileders,
+    showNoChosenVeilederError,
+    placeholder,
+    buttonType,
+  } = props;
 
-    return (<DropdownPanel className="tildelVeileder__dropdownPanel">
-        <InputWithSearchIcon
-            autofocus
-            label=""
-            onChange={inputChangeHandler}
-            placeholder={placeholder}
-            type={'text'}
-            value={input}
+  return (
+    <DropdownPanel className="tildelVeileder__dropdownPanel">
+      <InputWithSearchIcon
+        autofocus
+        label=""
+        onChange={inputChangeHandler}
+        placeholder={placeholder}
+        type={'text'}
+        value={input}
+      />
+
+      <ButtonPanelGroup className="radioPanelGroup">
+        <VeilederInputButtons
+          onChangeHandler={buttonChangeHandler}
+          filteredVeiledere={filteredVeiledere}
+          selectedVeileders={selectedVeileders}
+          isInputGiven={isInputGiven(input)}
+          buttonType={buttonType}
         />
+      </ButtonPanelGroup>
 
-        <ButtonPanelGroup className="radioPanelGroup">
-            <VeilederInputButtons
-                onChangeHandler={buttonChangeHandler}
-                filteredVeiledere={filteredVeiledere}
-                selectedVeileders={selectedVeileders}
-                isInputGiven={isInputGiven(input)}
-                buttonType={buttonType}/>
-        </ButtonPanelGroup>
+      <DropdownButtons
+        cancelButtonHandler={cancelButtonHandler}
+        chosenVeilederIdent={chosenVeilederIdent}
+        chooseButtonHandler={chooseButtonHandler}
+        veilederIsChosen={veilederIsChosen}
+        texts={buttonTexts}
+      />
 
-        <DropdownButtons
-            cancelButtonHandler={cancelButtonHandler}
-            chosenVeilederIdent={chosenVeilederIdent}
-            chooseButtonHandler={chooseButtonHandler}
-            veilederIsChosen={veilederIsChosen}
-            texts={buttonTexts}/>
-
-        {showNoChosenVeilederError &&
-            <NoVeilederChosenErrorMessage>{texts.noChosenVeilederError}</NoVeilederChosenErrorMessage>}
-    </DropdownPanel>);
+      {showNoChosenVeilederError && (
+        <NoVeilederChosenErrorMessage>
+          {texts.noChosenVeilederError}
+        </NoVeilederChosenErrorMessage>
+      )}
+    </DropdownPanel>
+  );
 };

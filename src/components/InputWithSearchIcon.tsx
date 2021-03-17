@@ -20,7 +20,7 @@ const InputDiv = styled.div`
   justify-content: flex-end;
 `;
 const InputStyled = styled(Input)`
-  margin: .5em;
+  margin: 0.5em;
   width: 100%;
   outline: none;
 `;
@@ -33,27 +33,22 @@ const SearchIconBlue = styled(SearchIcon)`
 `;
 
 const InputWithSearchIcon = (props: InputWithSearchIconProps) => {
-  const {
-    autofocus,
-    label,
-    onChange,
-    placeholder,
-    type,
-    value,
-  } = props;
-  return (<InputDiv className="inputWithSearchIcon">
-    <InputStyled
-      className="inputWithSearchIcon__input"
-      label={label}
-      value={value}
-      type={type}
-      onChange={(event) => onChange(event)}
-      placeholder={placeholder}
-      autoFocus={autofocus}
-    />
+  const { autofocus, label, onChange, placeholder, type, value } = props;
+  return (
+    <InputDiv className="inputWithSearchIcon">
+      <InputStyled
+        className="inputWithSearchIcon__input"
+        label={label}
+        value={value}
+        type={type}
+        onChange={(event) => onChange(event)}
+        placeholder={placeholder}
+        autoFocus={autofocus}
+      />
 
-    <SearchIconBlue className="inputWithSearchIcon__icon" />
-  </InputDiv>);
+      <SearchIconBlue className="inputWithSearchIcon__icon" />
+    </InputDiv>
+  );
 };
 
 export default InputWithSearchIcon;

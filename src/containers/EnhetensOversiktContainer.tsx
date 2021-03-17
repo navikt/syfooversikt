@@ -1,11 +1,5 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { PersonregisterState } from '../store/personregister/personregisterTypes';
 import AppSpinner from '../components/AppSpinner';
@@ -33,22 +27,24 @@ import ClearFilters from '../components/filters/ClearFilters';
 import { resetAllFilters } from '../store/filters/filter_actions';
 
 const tekster = {
-    feil: {
-      hentEnhetensOversiktFeilet: 'Det skjedde en feil: Kunne ikke hente enhetens oversikt',
-      hentetIngenPersoner: 'Det er ingen personer knyttet til enhet med hendelser',
-    },
+  feil: {
+    hentEnhetensOversiktFeilet:
+      'Det skjedde en feil: Kunne ikke hente enhetens oversikt',
+    hentetIngenPersoner:
+      'Det er ingen personer knyttet til enhet med hendelser',
+  },
 };
 
 const info = (altFeilet: boolean, hentetIngenPersoner: boolean) => {
   if (altFeilet) {
     return AlertStripeRod(
-        tekster.feil.hentEnhetensOversiktFeilet,
-        'oversiktContainer__alertstripe'
+      tekster.feil.hentEnhetensOversiktFeilet,
+      'oversiktContainer__alertstripe'
     );
-  } else if(hentetIngenPersoner) {
+  } else if (hentetIngenPersoner) {
     return AlertStripeWarning(
-        tekster.feil.hentetIngenPersoner,
-        'oversiktContainer__alertstripe'
+      tekster.feil.hentetIngenPersoner,
+      'oversiktContainer__alertstripe'
     );
   }
 };
@@ -83,20 +79,20 @@ const HendelseFilterStyled = styled(SokeresultatFilter)`
 const ClearFiltersButton = styled(ClearFilters)`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 `;
 
 interface Props {
   tabType?: OverviewTabType;
 }
 
-export default ({ tabType = OverviewTabType.ENHET_OVERVIEW  }: Props) => {
-
-  const [ tekstFilter, onTekstFilterChange ] = useState('');
+export default ({ tabType = OverviewTabType.ENHET_OVERVIEW }: Props) => {
+  const [tekstFilter, onTekstFilterChange] = useState('');
 
   const dispatch = useDispatch();
   const actions = {
-    tildelVeileder: (liste: VeilederArbeidstaker[]) => dispatch(pushVeilederArbeidstakerForespurt(liste)),
+    tildelVeileder: (liste: VeilederArbeidstaker[]) =>
+      dispatch(pushVeilederArbeidstakerForespurt(liste)),
     hentVeiledere: () => dispatch(hentVeiledere()),
   };
 
@@ -122,18 +118,26 @@ export default ({ tabType = OverviewTabType.ENHET_OVERVIEW  }: Props) => {
     dispatch(resetAllFilters());
   }, [tabType]);
 
-  let allEvents = new Filterable<PersonregisterState>(personregister)
-      .applyFilter((v) => filterOnEnhet(v, aktivEnhetId));
+  let allEvents = new Filterable<PersonregisterState>(
+    personregister
+  ).applyFilter((v) => filterOnEnhet(v, aktivEnhetId));
 
-  const hentetIngenPersoner = !henterAlt && Object.keys(allEvents.value).length === 0;
+  const hentetIngenPersoner =
+    !henterAlt && Object.keys(allEvents.value).length === 0;
 
   if (tabType === OverviewTabType.MY_OVERVIEW) {
-    allEvents = allEvents.applyFilter((v) => filterEventsOnVeileder(v, [aktivVeilederinfo.ident]));
+    allEvents = allEvents.applyFilter((v) =>
+      filterEventsOnVeileder(v, [aktivVeilederinfo.ident])
+    );
   } else {
-    allEvents = allEvents.applyFilter((v) => filterEventsOnVeileder(v, selectedVeilederIdents));
+    allEvents = allEvents.applyFilter((v) =>
+      filterEventsOnVeileder(v, selectedVeilederIdents)
+    );
   }
 
-  const filteredEvents = new Filterable<PersonregisterState>({...allEvents.value})
+  const filteredEvents = new Filterable<PersonregisterState>({
+    ...allEvents.value,
+  })
     .applyFilter((v) => filterOnCompany(v, selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, selectedBirthDates))
     .applyFilter((v) => filtrerPersonregister(v, selectedHendelseTypeFilters))
@@ -146,17 +150,15 @@ export default ({ tabType = OverviewTabType.ENHET_OVERVIEW  }: Props) => {
       {noeErHentet && (
         <OversiktContainerInnhold>
           <SokeresultatFiltre>
-              <ClearFiltersButton />
-              <TekstFilterStyled
-                  onFilterChange={onTekstFilterChange}
-              />
-              <HendelseFilterStyled
-                  personRegister={allEvents.value}
-                  tabType={tabType}
-              />
+            <ClearFiltersButton />
+            <TekstFilterStyled onFilterChange={onTekstFilterChange} />
+            <HendelseFilterStyled
+              personRegister={allEvents.value}
+              tabType={tabType}
+            />
 
-              <PersonFilter personregister={personregister} />
-          </SokeresultatFiltre >
+            <PersonFilter personregister={personregister} />
+          </SokeresultatFiltre>
           <Sokeresultat
             tildelVeileder={actions.tildelVeileder}
             aktivEnhetId={aktivEnhetId}
@@ -176,10 +178,22 @@ const getPropsFromState = (state: ApplicationState) => ({
   aktivEnhetId: state.veilederenheter.aktivEnhetId,
   aktivEnhetFeilet: state.veilederenheter.hentingFeilet,
   aktivVeilederinfo: state.veilederinfo.data,
-  henterAlt: state.veilederenheter.henter || state.veilederinfo.henter || state.personoversikt.henter,
-  noeErHentet: state.veilederenheter.aktivEnhetId !== '' && state.veilederinfo.hentet && state.personoversikt.hentet,
-  altFeilet: state.modiacontext.hentingEnhetFeilet || state.veilederinfo.hentingFeilet || state.personoversikt.hentingFeilet,
-  veiledere: state.veiledere[state.veilederenheter.aktivEnhetId] && state.veiledere[state.veilederenheter.aktivEnhetId].data || [],
+  henterAlt:
+    state.veilederenheter.henter ||
+    state.veilederinfo.henter ||
+    state.personoversikt.henter,
+  noeErHentet:
+    state.veilederenheter.aktivEnhetId !== '' &&
+    state.veilederinfo.hentet &&
+    state.personoversikt.hentet,
+  altFeilet:
+    state.modiacontext.hentingEnhetFeilet ||
+    state.veilederinfo.hentingFeilet ||
+    state.personoversikt.hentingFeilet,
+  veiledere:
+    (state.veiledere[state.veilederenheter.aktivEnhetId] &&
+      state.veiledere[state.veilederenheter.aktivEnhetId].data) ||
+    [],
   selectedBirthDates: state.filters.selectedBirthDates,
   selectedVeilederIdents: state.filters.selectedVeilederIdents,
   selectedCompanies: state.filters.selectedCompanies,

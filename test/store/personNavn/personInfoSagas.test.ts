@@ -7,11 +7,16 @@ import { testdata } from '../../data/fellesTestdata';
 
 describe('hentPersonInfoSagas', () => {
   const requestBody = [{ fnr: testdata.fnr1 }];
-  const forespurtAction = { type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT, data: requestBody};
+  const forespurtAction = {
+    type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT,
+    data: requestBody,
+  };
   const generator = hentPersonInfoSaga(forespurtAction);
 
   it(`Skal dispatche ${PersonInfoActionTypes.HENT_PERSON_INFO_HENTER}`, () => {
-    const nesteAction = put({ type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTER });
+    const nesteAction = put({
+      type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTER,
+    });
     expect(generator.next().value).to.deep.equal(nesteAction);
   });
 
@@ -22,10 +27,12 @@ describe('hentPersonInfoSagas', () => {
   });
 
   it(`Skal dernest sette ${PersonInfoActionTypes.HENT_PERSON_INFO_HENTET}`, () => {
-    const personInfoSvar = [{
-      fnr: testdata.fnr1,
-      skjermingskode: testdata.skjermingskode.ingen,
-    }];
+    const personInfoSvar = [
+      {
+        fnr: testdata.fnr1,
+        skjermingskode: testdata.skjermingskode.ingen,
+      },
+    ];
     const nextPut = put({
       type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTET,
       data: personInfoSvar,

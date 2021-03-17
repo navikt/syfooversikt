@@ -1,11 +1,9 @@
 export const finnMiljoStreng = () => {
-  return erPreProd()
-    ? '-q1'
-    : '';
+  return erPreProd() ? '-q1' : '';
 };
 
 export const erProd = () => {
-    return window.location.href.indexOf('nais.adeo.no') > -1;
+  return window.location.href.indexOf('nais.adeo.no') > -1;
 };
 
 export const erPreProd = () => {
@@ -17,13 +15,11 @@ export const erLokal = () => {
 };
 
 export const erHerokuApp = () => {
-    return window.location.href.indexOf('herokuapp') > -1;
+  return window.location.href.indexOf('herokuapp') > -1;
 };
 
 export const finnNaisUrlDefault = () => {
-  return erPreProd() ?
-      '.nais.preprod.local'
-      : '.nais.adeo.no';
+  return erPreProd() ? '.nais.preprod.local' : '.nais.adeo.no';
 };
 
 export const fullNaisUrlDefault = (host: string, path: string) => {
@@ -34,9 +30,7 @@ export const fullNaisUrlDefault = (host: string, path: string) => {
 };
 
 export const finnNaisUrlQ1 = () => {
-  return erPreProd() ?
-      '-q1.nais.preprod.local'
-      : '.nais.adeo.no';
+  return erPreProd() ? '-q1.nais.preprod.local' : '.nais.adeo.no';
 };
 
 export const fullNaisUrlQ1 = (host: string, path: string) => {

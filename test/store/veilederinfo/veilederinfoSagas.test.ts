@@ -9,7 +9,9 @@ describe('veilederinfoSagas', () => {
   const generator = hentVeilederinfoSaga();
 
   it(`Skal dispatche ${VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTER}`, () => {
-    const nesteAction = put({ type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTER });
+    const nesteAction = put({
+      type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTER,
+    });
     expect(generator.next().value).to.deep.equal(nesteAction);
   });
 

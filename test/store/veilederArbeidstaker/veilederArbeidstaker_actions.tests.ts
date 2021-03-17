@@ -14,11 +14,13 @@ const expect = chai.expect;
 
 describe('veilederArbeidstaker_actions', () => {
   it('pushVeilederArbeidstakerForespurt() skal returnere riktig action', () => {
-    const payload = [{
-      veilederIdent: 'Z999999',
-      fnr: '123456789',
-      enhet: '0001',
-    }];
+    const payload = [
+      {
+        veilederIdent: 'Z999999',
+        fnr: '123456789',
+        enhet: '0001',
+      },
+    ];
     expect(pushVeilederArbeidstakerForespurt(payload)).to.deep.equal({
       type: veilederArbeidstakerActionTypes.PUSH_VEILEDERARBEIDSTAKER_FORESPURT,
       data: payload,
@@ -32,11 +34,13 @@ describe('veilederArbeidstaker_actions', () => {
   });
 
   it('pushVeilederArbeidstakerPushet() skal returnere riktig action', () => {
-    const tildelinger = [ {
-      fnr: testdata.fnr1,
-      veilederIdent: '',
-      enhet: '',
-    } ];
+    const tildelinger = [
+      {
+        fnr: testdata.fnr1,
+        veilederIdent: '',
+        enhet: '',
+      },
+    ];
     expect(pushVeilederArbeidstakerPushet(tildelinger)).to.deep.equal({
       type: veilederArbeidstakerActionTypes.PUSH_VEILEDERARBEIDSTAKER_PUSHET,
       data: tildelinger,

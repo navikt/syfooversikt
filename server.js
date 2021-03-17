@@ -11,191 +11,208 @@ const proxy = require('express-http-proxy');
 
 // Prometheus metrics
 const setupMetrics = () => {
-    const collectDefaultMetrics = prom_client.collectDefaultMetrics;
-    collectDefaultMetrics({ timeout: 5000 });
+  const collectDefaultMetrics = prom_client.collectDefaultMetrics;
+  collectDefaultMetrics({ timeout: 5000 });
 
-    const Registry = prom_client.Registry;
-    const register = new Registry();
+  const Registry = prom_client.Registry;
+  const register = new Registry();
 
-    register.registerMetric(counters.httpRequestDurationMicroseconds);
-    register.registerMetric(counters.userFilterMotebehovCounter);
-    register.registerMetric(counters.userFilterMoteplanleggerCounter);
-    register.registerMetric(counters.userFilterUfordelteCounter);
-    register.registerMetric(counters.userFilterIkkeAktivitetCounter);
-    register.registerMetric(counters.userFilterVeilederSearchCounter);
-    register.registerMetric(counters.userFilterCompanyCounter);
-    register.registerMetric(counters.userFilterBirthdayCounter);
+  register.registerMetric(counters.httpRequestDurationMicroseconds);
+  register.registerMetric(counters.userFilterMotebehovCounter);
+  register.registerMetric(counters.userFilterMoteplanleggerCounter);
+  register.registerMetric(counters.userFilterUfordelteCounter);
+  register.registerMetric(counters.userFilterIkkeAktivitetCounter);
+  register.registerMetric(counters.userFilterVeilederSearchCounter);
+  register.registerMetric(counters.userFilterCompanyCounter);
+  register.registerMetric(counters.userFilterBirthdayCounter);
 
-    collectDefaultMetrics({ register });
-    return register;
+  collectDefaultMetrics({ register });
+  return register;
 };
 const prometheus = setupMetrics();
 
 const server = express();
 
 const env = process.argv[2];
-const settings = env === 'local' ? {isProd: false} : require('./settings.json');
+const settings =
+  env === 'local' ? { isProd: false } : require('./settings.json');
 
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
 
-const modiacontextholderUrl =  process.env.NAIS_CONTEXT === 'dev'
+const modiacontextholderUrl =
+  process.env.NAIS_CONTEXT === 'dev'
     ? 'modiacontextholder.q1'
     : 'modiacontextholder.default';
 
 changelogs.readChangelogDir();
 
 const renderApp = () => {
-    return new Promise((resolve, reject) => {
-        server.render(
-            'index.html',
-            Object.assign(
-                {},
-                settings,
-            ),
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(html);
-                }
-            },
-        );
+  return new Promise((resolve, reject) => {
+    server.render('index.html', Object.assign({}, settings), (err, html) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(html);
+      }
     });
+  });
 };
 
 function nocache(req, res, next) {
-    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    res.header('Expires', '-1');
-    res.header('Pragma', 'no-cache');
-    next();
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
 }
 
 const startServer = (html) => {
-    server.use(
-        '/syfooversikt/resources',
-        express.static(path.resolve(__dirname, 'dist/resources')),
-    );
+  server.use(
+    '/syfooversikt/resources',
+    express.static(path.resolve(__dirname, 'dist/resources'))
+  );
 
-    server.use(
-        '/syfooversikt/src/img',
-        express.static(path.resolve(__dirname, 'dist/resources/img')),
-    );
+  server.use(
+    '/syfooversikt/src/img',
+    express.static(path.resolve(__dirname, 'dist/resources/img'))
+  );
 
-    server.get(
-        '/syfooversikt/changelogs', (req, res) => {
-            res.send(changelogs.changeLogCache)
-        }
-    );
+  server.get('/syfooversikt/changelogs', (req, res) => {
+    res.send(changelogs.changeLogCache);
+  });
 
-    server.get(
-        '/syfooversikt/changelogs/image/:changelogId/:imageName', (req, res) => {
-            res.sendFile(path.join(__dirname, 'changelogs', req.params.changelogId, req.params.imageName));
-        }
-    );
-
-    server.get('/health/isAlive', (req, res) => {
-        res.sendStatus(200);
-    });
-
-    server.get('/health/isReady', (req, res) => {
-        res.sendStatus(200);
-    });
-
-    server.get('/actuator/metrics', (req, res) => {
-        res.set('Content-Type', prometheus.contentType);
-        res.end(prometheus.metrics());
-    });
-
-    server.post('/metrics/actions/filters/:type', (req, res) => {
-        const counterPostfix = req.params.type
-            ? req.params.type
-            : '';
-        const counterKey = counters.getMetricName(counters.METRIC_FILTER_INFIX, counterPostfix);
-        prometheus.getSingleMetric(counterKey).inc(1, new Date());
-        res.sendStatus(200);
-    });
-
-    if (env === 'local' || env === 'opplaering') {
-        console.log('Setter opp lokale mock-endepunkter');
-        require('./Mock/mockEndepunkter').mockForLokal(server);
-    } else {
-        server.use('/api', proxy('syfooversiktsrv.default',  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/api${req.path}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for syfooversiktsrv", err);
-                next(err);
-            }
-        }));
-        server.use('/modiacontextholder/api', proxy(modiacontextholderUrl,  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/modiacontextholder/api${req.url}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for modiacontextholder", err);
-                next(err);
-            },
-        }));
-        server.use('/syfomoteadmin/api', proxy('syfomoteadmin.default',  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/syfomoteadmin/api${req.url}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for syfomoteadmin", err);
-                next(err);
-            },
-        }));
-        server.use('/syfoperson/api', proxy('syfoperson.default',  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/syfoperson/api${req.url}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for syfoperson", err);
-                next(err);
-            },
-        }));
-        server.use('/syfoveileder/api', proxy('syfoveileder.default',  {
-            https: false,
-            proxyReqPathResolver: function(req) {
-                return `/syfoveileder/api${req.url}`
-            },
-            proxyErrorHandler: function(err, res, next) {
-                console.error("Error in proxy for syfoveileder", err);
-                next(err);
-            },
-        }));
+  server.get(
+    '/syfooversikt/changelogs/image/:changelogId/:imageName',
+    (req, res) => {
+      res.sendFile(
+        path.join(
+          __dirname,
+          'changelogs',
+          req.params.changelogId,
+          req.params.imageName
+        )
+      );
     }
+  );
 
-    const port = process.env.PORT || 8080;
+  server.get('/health/isAlive', (req, res) => {
+    res.sendStatus(200);
+  });
 
-    server.listen(port, () => {
-        console.log(`App listening on port: ${port}`);
-    });
+  server.get('/health/isReady', (req, res) => {
+    res.sendStatus(200);
+  });
 
-    server.use(
-        ['*', '/syfooversikt/?',/^\/syfooversikt\/(?!(resources|img)).*$/],
-        nocache,
-        (req, res) => {
-            res.send(html);
-            prometheus.getSingleMetric('http_request_duration_ms')
-                .labels(req.path)
-                .observe(10);
-        },
+  server.get('/actuator/metrics', (req, res) => {
+    res.set('Content-Type', prometheus.contentType);
+    res.end(prometheus.metrics());
+  });
+
+  server.post('/metrics/actions/filters/:type', (req, res) => {
+    const counterPostfix = req.params.type ? req.params.type : '';
+    const counterKey = counters.getMetricName(
+      counters.METRIC_FILTER_INFIX,
+      counterPostfix
     );
+    prometheus.getSingleMetric(counterKey).inc(1, new Date());
+    res.sendStatus(200);
+  });
+
+  if (env === 'local' || env === 'opplaering') {
+    console.log('Setter opp lokale mock-endepunkter');
+    require('./Mock/mockEndepunkter').mockForLokal(server);
+  } else {
+    server.use(
+      '/api',
+      proxy('syfooversiktsrv.default', {
+        https: false,
+        proxyReqPathResolver: function (req) {
+          return `/api${req.path}`;
+        },
+        proxyErrorHandler: function (err, res, next) {
+          console.error('Error in proxy for syfooversiktsrv', err);
+          next(err);
+        },
+      })
+    );
+    server.use(
+      '/modiacontextholder/api',
+      proxy(modiacontextholderUrl, {
+        https: false,
+        proxyReqPathResolver: function (req) {
+          return `/modiacontextholder/api${req.url}`;
+        },
+        proxyErrorHandler: function (err, res, next) {
+          console.error('Error in proxy for modiacontextholder', err);
+          next(err);
+        },
+      })
+    );
+    server.use(
+      '/syfomoteadmin/api',
+      proxy('syfomoteadmin.default', {
+        https: false,
+        proxyReqPathResolver: function (req) {
+          return `/syfomoteadmin/api${req.url}`;
+        },
+        proxyErrorHandler: function (err, res, next) {
+          console.error('Error in proxy for syfomoteadmin', err);
+          next(err);
+        },
+      })
+    );
+    server.use(
+      '/syfoperson/api',
+      proxy('syfoperson.default', {
+        https: false,
+        proxyReqPathResolver: function (req) {
+          return `/syfoperson/api${req.url}`;
+        },
+        proxyErrorHandler: function (err, res, next) {
+          console.error('Error in proxy for syfoperson', err);
+          next(err);
+        },
+      })
+    );
+    server.use(
+      '/syfoveileder/api',
+      proxy('syfoveileder.default', {
+        https: false,
+        proxyReqPathResolver: function (req) {
+          return `/syfoveileder/api${req.url}`;
+        },
+        proxyErrorHandler: function (err, res, next) {
+          console.error('Error in proxy for syfoveileder', err);
+          next(err);
+        },
+      })
+    );
+  }
+
+  const port = process.env.PORT || 8080;
+
+  server.listen(port, () => {
+    console.log(`App listening on port: ${port}`);
+  });
+
+  server.use(
+    ['*', '/syfooversikt/?', /^\/syfooversikt\/(?!(resources|img)).*$/],
+    nocache,
+    (req, res) => {
+      res.send(html);
+      prometheus
+        .getSingleMetric('http_request_duration_ms')
+        .labels(req.path)
+        .observe(10);
+    }
+  );
 };
 
 const logError = (errorMessage, details) => {
-    console.log(errorMessage, details);
+  console.log(errorMessage, details);
 };
 
-renderApp()
-    .then(startServer, (error) => {
-        logError('Failed to render app', error);
-    });
+renderApp().then(startServer, (error) => {
+  logError('Failed to render app', error);
+});

@@ -1,14 +1,14 @@
 [
   {
-    "fnr":"01999911111",
-    "skjermingskode":"INGEN"
+    "fnr": "01999911111",
+    "skjermingskode": "INGEN"
   },
   {
-    "fnr":"99999922222",
-    "skjermingskode":"DISKRESJONSMERKET"
+    "fnr": "99999922222",
+    "skjermingskode": "DISKRESJONSMERKET"
   },
   {
-    "fnr":"99999933333",
-    "skjermingskode":"EGEN_ANSATT"
+    "fnr": "99999933333",
+    "skjermingskode": "EGEN_ANSATT"
   }
 ]

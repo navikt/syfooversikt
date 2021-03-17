@@ -2,9 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import ModalWrapper from 'nav-frontend-modal';
-import {
-  CONTEXT_EVENT_TYPE,
-} from './konstanter';
+import { CONTEXT_EVENT_TYPE } from './konstanter';
 import {
   hentAktivEnhet,
   pushModiaContext,
@@ -13,10 +11,7 @@ import { setAktivEnhetHentet } from './store/veilederenheter/veilederenheter_act
 import './styles/styles.less';
 import { fullNaisUrlDefault } from './utils/miljoUtil';
 import AppRouter from './routers/AppRouter';
-import {
-  config,
-  setEventHandlersOnConfig,
-} from './global';
+import { config, setEventHandlersOnConfig } from './global';
 import { store } from './store';
 
 if (!(window as any)._babelPolyfill) {
@@ -55,7 +50,8 @@ store.dispatch(
   })
 );
 
-(window as any).renderDecoratorHead && (window as any).renderDecoratorHead(config); // tslint:disable-line no-unused-expression
+(window as any).renderDecoratorHead &&
+  (window as any).renderDecoratorHead(config); // tslint:disable-line no-unused-expression
 
 render(
   <Provider store={store}>

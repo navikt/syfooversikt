@@ -1,10 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put, select,
-  takeEvery,
-} from 'redux-saga/effects';
+import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './personoversikt_actions';
 import { hentFodselsnummerFraPersonOversikt } from '../../components/utils/util';
@@ -12,9 +6,7 @@ import * as personInfoActions from '../personInfo/personInfo_actions';
 import { PersonoversiktStatus } from './personoversiktTypes';
 import { filterOnEnhet } from '../../utils/hendelseFilteringUtils';
 
-export function* hentPersonoversikt(
-    enhetId: string
-) {
+export function* hentPersonoversikt(enhetId: string) {
   yield put(actions.hentPersonoversiktHenter());
   try {
     const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/personoversikt/enhet/${enhetId}`;
@@ -34,15 +26,21 @@ export const hentPersonregister = (state: any) => {
   return state.personregister || [];
 };
 
-export function* hentNavnForPersonerUtenNavn(data: PersonoversiktStatus[]): any {
+export function* hentNavnForPersonerUtenNavn(
+  data: PersonoversiktStatus[]
+): any {
   const fnrListe = hentFodselsnummerFraPersonOversikt(data);
 
   const personRegisterData = yield select(hentPersonregister);
 
   const filtrertListe = fnrListe.filter((fnrObjekt) => {
-    return !personRegisterData[fnrObjekt.fnr]
-        || (personRegisterData[fnrObjekt.fnr] && personRegisterData[fnrObjekt.fnr].skjermingskode === undefined)
-        || (personRegisterData[fnrObjekt.fnr] && personRegisterData[fnrObjekt.fnr].navn === '');
+    return (
+      !personRegisterData[fnrObjekt.fnr] ||
+      (personRegisterData[fnrObjekt.fnr] &&
+        personRegisterData[fnrObjekt.fnr].skjermingskode === undefined) ||
+      (personRegisterData[fnrObjekt.fnr] &&
+        personRegisterData[fnrObjekt.fnr].navn === '')
+    );
   });
 
   yield put(personInfoActions.hentPersonInfoForespurt(filtrertListe));
@@ -53,7 +51,11 @@ const hentetAktivEnhetId = (state: any): string => {
 };
 
 const henterPersonerMedEnhet = (state: any): boolean => {
-  return Object.keys(filterOnEnhet(state.personregister, state.veilederenheter.aktivEnhetId)).length > 0;
+  return (
+    Object.keys(
+      filterOnEnhet(state.personregister, state.veilederenheter.aktivEnhetId)
+    ).length > 0
+  );
 };
 
 export function* hentPersonoversiktHvisEnhetHentet(): any {
@@ -66,13 +68,11 @@ export function* hentPersonoversiktHvisEnhetHentet(): any {
 
 function* watchHentPersonoversikt() {
   yield takeEvery(
-      actions.PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT,
-      hentPersonoversiktHvisEnhetHentet
+    actions.PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT,
+    hentPersonoversiktHvisEnhetHentet
   );
 }
 
 export default function* personoversiktSagas() {
-  yield all([
-    fork(watchHentPersonoversikt)
-  ]);
+  yield all([fork(watchHentPersonoversikt)]);
 }

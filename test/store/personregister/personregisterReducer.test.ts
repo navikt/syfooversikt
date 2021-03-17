@@ -1,13 +1,10 @@
 import { expect } from 'chai';
 import { hentPersonInfoHentet } from '../../../src/store/personInfo/personInfo_actions';
 import personregisterReducer from '../../../src/store/personregister/personregisterReducer';
-import {
-  personoversikt,
-  testdata,
-} from '../../data/fellesTestdata';
+import { personoversikt, testdata } from '../../data/fellesTestdata';
 import {
   hentPersonoversiktHentet,
-  PersonoversiktActionTypes
+  PersonoversiktActionTypes,
 } from '../../../src/store/personoversikt/personoversikt_actions';
 import { PersonoversiktStatus } from '../../../src/store/personoversikt/personoversiktTypes';
 
@@ -32,7 +29,7 @@ const mapPersonerToState = (liste: PersonoversiktStatus[]) => {
 
 describe('personregisterReducer', () => {
   describe('Henter persondata', () => {
-    const initialState = Object.freeze({ });
+    const initialState = Object.freeze({});
 
     it(`handterer ${PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTET}`, () => {
       const forsteAction = hentPersonoversiktHentet(personoversikt);
@@ -41,18 +38,23 @@ describe('personregisterReducer', () => {
     });
 
     it('handterer HENT_PERSON_INFO_HENTET', () => {
-      const dataIForsteKall = [ {
-        fnr: testdata.fnr1,
-        skjermingskode: testdata.skjermingskode.ingen,
-      }, {
-        fnr: testdata.fnr2,
-        skjermingskode: testdata.skjermingskode.ingen,
-      } ];
-      const dataIAndreKall = [ {
-        fnr: testdata.fnr3,
-        navn: testdata.navn3,
-        skjermingskode: testdata.skjermingskode.ingen,
-      } ];
+      const dataIForsteKall = [
+        {
+          fnr: testdata.fnr1,
+          skjermingskode: testdata.skjermingskode.ingen,
+        },
+        {
+          fnr: testdata.fnr2,
+          skjermingskode: testdata.skjermingskode.ingen,
+        },
+      ];
+      const dataIAndreKall = [
+        {
+          fnr: testdata.fnr3,
+          navn: testdata.navn3,
+          skjermingskode: testdata.skjermingskode.ingen,
+        },
+      ];
       const forsteAction = hentPersonInfoHentet(dataIForsteKall);
       const andreAction = hentPersonInfoHentet(dataIAndreKall);
       const forsteState = personregisterReducer(initialState, forsteAction);
@@ -80,7 +82,10 @@ describe('personregisterReducer', () => {
 
     it('handterer kombinasjoner', () => {
       const personoversiktAction = hentPersonoversiktHentet(personoversikt);
-      const forsteState = personregisterReducer(initialState, personoversiktAction);
+      const forsteState = personregisterReducer(
+        initialState,
+        personoversiktAction
+      );
       const expForsteState = mapPersonerToState(personoversikt);
       expect(forsteState).to.deep.equal(expForsteState);
 
@@ -96,10 +101,14 @@ describe('personregisterReducer', () => {
         {
           fnr: testdata.fnr4,
           skjermingskode: testdata.skjermingskode.ingen,
-        } ];
+        },
+      ];
       const hentPersonInfoAction = hentPersonInfoHentet(dataIAndreKall);
 
-      const andreState = personregisterReducer(forsteState, hentPersonInfoAction);
+      const andreState = personregisterReducer(
+        forsteState,
+        hentPersonInfoAction
+      );
       const expAndreState = {
         ...forsteState,
         [testdata.fnr1]: {

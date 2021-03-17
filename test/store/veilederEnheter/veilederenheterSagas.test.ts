@@ -1,8 +1,5 @@
 import { expect } from 'chai';
-import {
-  call,
-  put,
-} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { get } from '../../../src/api';
 import { hentVeilederenheter } from '../../../src/store/veilederenheter/veilederenheterSagas';
 import { VeilederenheterActionTypes } from '../../../src/store/veilederenheter/veilederenheter_actions';
@@ -12,7 +9,9 @@ describe('veilederenheterSagas', () => {
   const generator = hentVeilederenheter();
 
   it(`Skal dispatche ${VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTER}`, () => {
-    const nesteAction = put({ type: VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTER });
+    const nesteAction = put({
+      type: VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTER,
+    });
     expect(generator.next().value).to.deep.equal(nesteAction);
   });
 
@@ -23,10 +22,8 @@ describe('veilederenheterSagas', () => {
   });
 
   it(`Skal dernest sette ${VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET}`, () => {
-    const data =  {
-      enhetliste: [
-        enhet
-      ],
+    const data = {
+      enhetliste: [enhet],
     };
     const nextPut = put({
       type: VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET,

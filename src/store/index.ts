@@ -1,14 +1,6 @@
-import {
-  Action,
-  AnyAction,
-  combineReducers,
-  Dispatch,
-} from 'redux';
+import { Action, AnyAction, combineReducers, Dispatch } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import {
-  all,
-  fork,
-} from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 import { ModiacontextState } from './modiacontext/modiacontextTypes';
 import { VeiledereState } from './veiledere/veiledereTypes';
 import { VeilederenheterState } from './veilederenheter/veilederenheterTypes';
@@ -57,19 +49,20 @@ export interface ConnectedReduxProps<A extends Action = AnyAction> {
   dispatch: Dispatch<A>;
 }
 
-export const rootReducer = () => combineReducers<ApplicationState>({
-  router: connectRouter(history),
-  changelogs: changelogReducer,
-  filters: filterReducer,
-  modiacontext: modiacontextReducer,
-  veiledere: veiledereReducer,
-  veilederenheter: veilederenheterReducer,
-  veilederinfo: veilederinfoReducer,
-  personInfo: personInfoReducer,
-  personoversikt: personoversiktReducer,
-  personregister: personregisterReducer,
-  sorting: sortingReducer,
-});
+export const rootReducer = () =>
+  combineReducers<ApplicationState>({
+    router: connectRouter(history),
+    changelogs: changelogReducer,
+    filters: filterReducer,
+    modiacontext: modiacontextReducer,
+    veiledere: veiledereReducer,
+    veilederenheter: veilederenheterReducer,
+    veilederinfo: veilederinfoReducer,
+    personInfo: personInfoReducer,
+    personoversikt: personoversiktReducer,
+    personregister: personregisterReducer,
+    sorting: sortingReducer,
+  });
 
 export function* rootSaga() {
   yield all([

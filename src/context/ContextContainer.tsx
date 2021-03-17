@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../store';
 import { CONTEXT_EVENT_TYPE } from '../konstanter';
 import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
@@ -18,7 +15,9 @@ import { config } from '../global';
 import ChangeEnhetModal from './ChangeEnhetModal';
 
 const tekster = {
-  feil: { hentVeilederIdentFeilet: 'Det skjedde en feil: Vi fant ikke din ident' },
+  feil: {
+    hentVeilederIdentFeilet: 'Det skjedde en feil: Vi fant ikke din ident',
+  },
 };
 
 interface StateProps {
@@ -32,10 +31,12 @@ interface DispatchProps {
 type ContextContainerProps = StateProps & DispatchProps;
 
 const Context = () => {
-  const veilederinfo = useSelector((state: ApplicationState) => state.veilederinfo);
+  const veilederinfo = useSelector(
+    (state: ApplicationState) => state.veilederinfo
+  );
   const dispatch = useDispatch();
   const doHentEnhet = (data: HentAktivEnhetData) =>
-      dispatch(hentAktivEnhet(data));
+    dispatch(hentAktivEnhet(data));
 
   const [changedEnhet, setChangedEnhet] = useState(false);
   const [previousEnhet, setPreviousEnhet] = useState('');
@@ -61,7 +62,12 @@ const Context = () => {
 
   const updateEnhet = (enhet: string) => {
     config.config.initiellEnhet = enhet;
-    dispatch(pushModiaContext({verdi: enhet, eventType: CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET}));
+    dispatch(
+      pushModiaContext({
+        verdi: enhet,
+        eventType: CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET,
+      })
+    );
     if ((window as any).renderDecoratorHead) {
       (window as any).renderDecoratorHead(config);
     }
@@ -93,14 +99,19 @@ const Context = () => {
   }, [veilederinfo.hentet]);
 
   return (
-      <div className="contextContainer">
-        <ChangeEnhetModal isOpen={changedEnhet} keepEnhet={keepEnhet} changeEnhet={changeEnhet} />
-        {veilederinfo.hentingFeilet &&
+    <div className="contextContainer">
+      <ChangeEnhetModal
+        isOpen={changedEnhet}
+        keepEnhet={keepEnhet}
+        changeEnhet={changeEnhet}
+      />
+      {veilederinfo.hentingFeilet &&
         AlertStripeRod(
-            tekster.feil.hentVeilederIdentFeilet,
-            'contextContainer__alertstripe'
+          tekster.feil.hentVeilederIdentFeilet,
+          'contextContainer__alertstripe'
         )}
-      </div>);
+    </div>
+  );
 };
 
 export default Context;

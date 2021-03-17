@@ -12,16 +12,20 @@ export const skjermingskode = (person: PersonData) => {
 
 export const veilederEllerNull = (veileder?: Veileder) => {
   if (veileder) {
-      return  veileder.fornavn === '' ? veileder.ident : `${veileder.etternavn}, ${veileder.fornavn}`;
+    return veileder.fornavn === ''
+      ? veileder.ident
+      : `${veileder.etternavn}, ${veileder.fornavn}`;
   }
   return null;
 };
 
-export const mapPersonregisterToCompanyList = (personregister: PersonregisterState) => {
+export const mapPersonregisterToCompanyList = (
+  personregister: PersonregisterState
+) => {
   const allCompanyNames: string[] = [];
   Object.keys(personregister).forEach((fnr) => {
-     const personData = personregister[fnr];
-     allCompanyNames.push(...companyNamesFromPersonData(personData));
+    const personData = personregister[fnr];
+    allCompanyNames.push(...companyNamesFromPersonData(personData));
   });
   return [...new Set(allCompanyNames)].filter((v) => v && v.length > 0);
 };
@@ -34,5 +38,5 @@ export const companyNamesFromPersonData = (p: PersonData): string[] => {
 };
 
 export const firstCompanyNameFromPersonData = (p: PersonData) => {
-    return companyNamesFromPersonData(p).shift();
+  return companyNamesFromPersonData(p).shift();
 };

@@ -11,7 +11,7 @@ const expect = chai.expect;
 
 describe('Sorteringsrad', () => {
   const kolonneForVeilederTekst = 'Veileder';
-  const component = shallow(<Sorteringsrad onSortClick={(type) => {}}/>);
+  const component = shallow(<Sorteringsrad onSortClick={(type) => {}} />);
 
   it('Skal rendre navn, fodselsnummer, veilederident og veiledernavn Column-komponenter', () => {
     expect(component.find(SortingButton)).to.have.length(4);
