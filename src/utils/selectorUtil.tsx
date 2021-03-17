@@ -4,8 +4,5 @@ export const skalHenteReducer = (reducer: any) => {
 
 export const hentVeilederEnhetFraState = (state: any) => {
   const reducer = state.veilederenheter;
-  return reducer
-  && reducer.hentet
-      ? reducer.aktivEnhet
-      : undefined;
+  return reducer && reducer.hentet ? reducer.aktivEnhet : undefined;
 };

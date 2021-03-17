@@ -1,6 +1,4 @@
-import {
-  Row
-} from 'nav-frontend-grid';
+import { Row } from 'nav-frontend-grid';
 import React from 'react';
 import ContextContainer from '../context/ContextContainer';
 
@@ -12,16 +10,18 @@ interface SideProps {
 const DocumentTitle = require('react-document-title'); // tslint:disable-line no-var-requires
 
 const Side = ({ tittel = '', children }: SideProps) => {
-  return (<DocumentTitle title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}>
+  return (
+    <DocumentTitle
+      title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}
+    >
       <div>
         <Row>
-            <ContextContainer />
+          <ContextContainer />
         </Row>
-        <Row>
-            {children}
-        </Row>
+        <Row>{children}</Row>
       </div>
-  </DocumentTitle>);
+    </DocumentTitle>
+  );
 };
 
 export default Side;

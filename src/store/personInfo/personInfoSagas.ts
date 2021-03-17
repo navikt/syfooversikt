@@ -1,14 +1,10 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-} from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { post } from '../../api/index';
 import * as actions from './personInfo_actions';
 
-export function* hentPersonInfoSaga(action: ReturnType<typeof actions.hentPersonInfoForespurt>) {
+export function* hentPersonInfoSaga(
+  action: ReturnType<typeof actions.hentPersonInfoForespurt>
+) {
   yield put(actions.hentPersonInfoHenter());
   try {
     const path = `${process.env.REACT_APP_SYFOPERSONREST_ROOT}/person/info`;

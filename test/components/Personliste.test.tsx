@@ -27,17 +27,19 @@ store.dispatch(modiaContextPushet(modiacontextNyAktivEnhet));
 describe('Personliste', () => {
   const markertePersoner = ['123', '234'];
   // tslint:disable-next-line:no-empty
-  const checkboxHandler = () =>  {};
-  const component = mount(<Provider store={store}>
-    <Personliste
-      personregister={personregister}
-      checkboxHandler={checkboxHandler}
-      markertePersoner={markertePersoner}
-      veiledere={veiledere}
-      startItem={0}
-      endItem={1}
-    />
-  </Provider>);
+  const checkboxHandler = () => {};
+  const component = mount(
+    <Provider store={store}>
+      <Personliste
+        personregister={personregister}
+        checkboxHandler={checkboxHandler}
+        markertePersoner={markertePersoner}
+        veiledere={veiledere}
+        startItem={0}
+        endItem={1}
+      />
+    </Provider>
+  );
 
   it('Skal rendre 2 personrader', () => {
     // tslint:disable-next-line: no-console

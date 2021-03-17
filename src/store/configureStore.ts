@@ -1,17 +1,9 @@
-import {
-  applyMiddleware,
-  createStore,
-  Store,
-} from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import {
-  ApplicationState,
-  rootReducer,
-  rootSaga,
-} from './index';
+import { ApplicationState, rootReducer, rootSaga } from './index';
 import { History } from 'history';
 
 export default function configureStore(

@@ -2,7 +2,10 @@ const mockUtils = require('./mockUtils.js');
 
 const generatedPersons = mockUtils.generatePersons(50);
 const personInfo = [...mockUtils.personInfo, ...generatedPersons];
-const personoversiktEnhet = [...mockUtils.personoversiktEnhet, ...mockUtils.generatePersonoversiktEnhetFromPersons(generatedPersons)];
+const personoversiktEnhet = [
+  ...mockUtils.personoversiktEnhet,
+  ...mockUtils.generatePersonoversiktEnhetFromPersons(generatedPersons),
+];
 
 function mockForLokal(server) {
   server.post('/syfoperson/api/person/info', (req, res) => {

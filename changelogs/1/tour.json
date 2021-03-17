@@ -1,8 +1,16 @@
 {
-    "title" : "Ny oppdatering",
-    "date": "10-09-19",
-    "items" : [
-        { "title": "Tildel veileder", "text": "Tildel meg er fjernet. Denne funksjonaliteten finner du nå under Tildel veileder", "image": "tildelmeg1.png" },
-        { "title": "Tildel meg", "text": "Navnet ditt/nav-identen din finner du øverst i denne listen", "image": "tildelmeg2.png" }
-    ]
+  "title": "Ny oppdatering",
+  "date": "10-09-19",
+  "items": [
+    {
+      "title": "Tildel veileder",
+      "text": "Tildel meg er fjernet. Denne funksjonaliteten finner du nå under Tildel veileder",
+      "image": "tildelmeg1.png"
+    },
+    {
+      "title": "Tildel meg",
+      "text": "Navnet ditt/nav-identen din finner du øverst i denne listen",
+      "image": "tildelmeg2.png"
+    }
+  ]
 }

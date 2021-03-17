@@ -28,7 +28,8 @@ describe('veilederinfo_actions', () => {
   it('veilederinfoHentet() skal returnere riktig action', () => {
     const data = veilederinfo;
     expect(veilederinfoHentet(data)).to.deep.equal({
-      type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET, data,
+      type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET,
+      data,
     });
   });
 

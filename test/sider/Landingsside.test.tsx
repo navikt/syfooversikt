@@ -16,7 +16,8 @@ describe('Landingsside', () => {
       <MemoryRouter>
         <Landingsside />
       </MemoryRouter>
-    </Provider>);
+    </Provider>
+  );
 
   it('Skal rendre Oversikt', () => {
     expect(component.find('OversiktContainer')).to.have.lengthOf(1);

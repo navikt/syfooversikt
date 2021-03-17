@@ -1,10 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-} from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './veilederinfo_actions';
 import { VeilederinfoActionTypes } from './veilederinfo_actions';

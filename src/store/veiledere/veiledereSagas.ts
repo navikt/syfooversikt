@@ -1,19 +1,10 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  select,
-  takeEvery,
-} from 'redux-saga/effects';
+import { all, call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './veiledere_actions';
 import { VeiledereActionTypes } from './veiledere_actions';
 import { skalHenteReducer } from '../../utils/selectorUtil';
 
-export function* hentVeiledereSaga(
-  enhetId: string,
-) {
+export function* hentVeiledereSaga(enhetId: string) {
   yield put(actions.henterVeiledere(enhetId));
   try {
     const path = `${process.env.REACT_APP_SYFOVEILEDER_ROOT}/veiledere/enhet/${enhetId}`;
@@ -25,7 +16,9 @@ export function* hentVeiledereSaga(
 }
 
 const hentetAktivEnhetId = (state: any): string => {
-  return skalHenteReducer(state.veiledere[state.veilederenheter.aktivEnhetId] || {})
+  return skalHenteReducer(
+    state.veiledere[state.veilederenheter.aktivEnhetId] || {}
+  )
     ? state.veilederenheter.aktivEnhetId
     : '';
 };

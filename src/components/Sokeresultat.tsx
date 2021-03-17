@@ -1,6 +1,4 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import Personliste from './Personliste';
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
@@ -27,7 +25,11 @@ interface SokeresultatProps {
   tabType: OverviewTabType;
 }
 
-const lagListe = (markertePersoner: string[], veilederIdent: string, enhet: string): VeilederArbeidstaker[] => {
+const lagListe = (
+  markertePersoner: string[],
+  veilederIdent: string,
+  enhet: string
+): VeilederArbeidstaker[] => {
   return markertePersoner.map((fnr: string) => ({
     veilederIdent,
     fnr,
@@ -60,12 +62,17 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
         ? [...prevState.markertePersoner, fnr]
         : fjernMarkertPerson(prevState, fnr);
 
-      const alleMarkert = markertePersoner.length === Object.keys(this.props.personregister).length;
-      return {markertePersoner, alleMarkert};
+      const alleMarkert =
+        markertePersoner.length ===
+        Object.keys(this.props.personregister).length;
+      return { markertePersoner, alleMarkert };
     });
-  }
+  };
 
-  componentDidUpdate(prevProps: SokeresultatProps, currentState: SokeresultatState) {
+  componentDidUpdate(
+    prevProps: SokeresultatProps,
+    currentState: SokeresultatState
+  ) {
     if (this.props.tabType !== currentState.currentTabType) {
       this.setState({
         alleMarkert: false,
@@ -77,7 +84,10 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     const currentRegisterLength = Object.keys(this.props.personregister).length;
     const previousRegisterLength = Object.keys(prevProps.personregister).length;
 
-    if (currentState.markertePersoner.length > 0 && currentRegisterLength !== previousRegisterLength) {
+    if (
+      currentState.markertePersoner.length > 0 &&
+      currentRegisterLength !== previousRegisterLength
+    ) {
       this.setState({
         markertePersoner: [],
         alleMarkert: false,
@@ -86,37 +96,34 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
   }
 
   checkAllHandler = (checked: boolean) => {
-    const {
-      personregister,
-    } = this.props;
+    const { personregister } = this.props;
 
     const fnrListe = Object.keys(personregister);
 
-    const markertePersoner = checked
-      ? fnrListe
-      : [];
+    const markertePersoner = checked ? fnrListe : [];
     const alleMarkert = checked;
     this.setState(() => ({
       markertePersoner,
       alleMarkert,
     }));
-  }
+  };
 
   buttonHandler = (veilederIdent: string) => {
-    const {
-      aktivEnhetId,
-      tildelVeileder,
-    } = this.props;
-    const veilederArbeidstakerListe = lagListe(this.state.markertePersoner, veilederIdent, aktivEnhetId);
+    const { aktivEnhetId, tildelVeileder } = this.props;
+    const veilederArbeidstakerListe = lagListe(
+      this.state.markertePersoner,
+      veilederIdent,
+      aktivEnhetId
+    );
     tildelVeileder(veilederArbeidstakerListe);
-  }
+  };
 
   onPageChange = (startItem: number, endItem: number) => {
     this.setState({
       endItem,
       startItem,
     });
-  }
+  };
 
   render() {
     const {
@@ -126,44 +133,42 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
       tabType,
     } = this.props;
 
-    const {
-      alleMarkert,
-      markertePersoner,
-      startItem,
-      endItem,
-    } = this.state;
+    const { alleMarkert, markertePersoner, startItem, endItem } = this.state;
 
     const allFnr = Object.keys(personregister);
 
-    return (<SokeresultatContainer>
-      <ToolbarWrapper
-        numberOfItemsTotal={allFnr.length}
-        onPageChange={this.onPageChange}
-        tabType={tabType}
-        aktivVeilederInfo={aktivVeilederinfo}
-        alleMarkert={alleMarkert}
-        buttonHandler={this.buttonHandler}
-        checkAllHandler={this.checkAllHandler}
-        veiledere={veiledere}
-        markertePersoner={markertePersoner}
-      />
-      <Personliste
-        personregister={personregister}
-        startItem={startItem}
-        endItem={endItem}
-        checkboxHandler={this.checkboxHandler}
-        markertePersoner={markertePersoner}
-        veiledere={veiledere}
-      />
-    </SokeresultatContainer>);
+    return (
+      <SokeresultatContainer>
+        <ToolbarWrapper
+          numberOfItemsTotal={allFnr.length}
+          onPageChange={this.onPageChange}
+          tabType={tabType}
+          aktivVeilederInfo={aktivVeilederinfo}
+          alleMarkert={alleMarkert}
+          buttonHandler={this.buttonHandler}
+          checkAllHandler={this.checkAllHandler}
+          veiledere={veiledere}
+          markertePersoner={markertePersoner}
+        />
+        <Personliste
+          personregister={personregister}
+          startItem={startItem}
+          endItem={endItem}
+          checkboxHandler={this.checkboxHandler}
+          markertePersoner={markertePersoner}
+          veiledere={veiledere}
+        />
+      </SokeresultatContainer>
+    );
   }
 }
 
 const personErIkkeMarkert = (prevState: any, fnr: string) => {
-  return prevState.markertePersoner.findIndex((markertPerson: string) => {
+  return (
+    prevState.markertePersoner.findIndex((markertPerson: string) => {
       return markertPerson === fnr;
-    }
-  ) === -1;
+    }) === -1
+  );
 };
 
 const fjernMarkertPerson = (prevState: any, fnr: string) => {

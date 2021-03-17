@@ -8,13 +8,17 @@ import { VeilederenheterActionTypes } from './veilederenheter_actions';
 import { modiacontextActionTypes } from '../modiacontext/modiacontext_actions';
 import { CONTEXT_EVENT_TYPE } from '../../konstanter';
 
-export const sorterEnhetLavesteEnhetIdForst = (enhetliste: Veilederenhet[]): Veilederenhet[] => {
+export const sorterEnhetLavesteEnhetIdForst = (
+  enhetliste: Veilederenhet[]
+): Veilederenhet[] => {
   return [...enhetliste].sort((e1, e2) => {
-    return parseInt(e1.enhetId, 10) - parseInt(e2.enhetId,  10);
+    return parseInt(e1.enhetId, 10) - parseInt(e2.enhetId, 10);
   });
 };
 
-export const getAktivEnhet = (veilederenheter: Veilederenheter): Veilederenhet => {
+export const getAktivEnhet = (
+  veilederenheter: Veilederenheter
+): Veilederenhet => {
   return veilederenheter.enhetliste.length > 0
     ? sorterEnhetLavesteEnhetIdForst(veilederenheter.enhetliste)[0]
     : initiellState.aktivEnhet;
@@ -70,7 +74,9 @@ const veilederenheterReducer: Reducer<VeilederenheterState> = (
       };
     }
     case modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHET: {
-      if (action.data.eventType.valueOf() === CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET) {
+      if (
+        action.data.eventType.valueOf() === CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET
+      ) {
         return {
           ...state,
           aktivEnhetId: action.data.verdi,

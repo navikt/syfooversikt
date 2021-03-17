@@ -2,18 +2,22 @@
   "extends": ["tslint:recommended", "tslint-react"],
   "rules": {
     "triple-equals": [true, "allow-null-check"],
-    "curly": [true, "ignore-same-line"],
+    "curly": false,
     "member-access": false,
     "object-literal-sort-keys": false,
-    "trailing-comma": [true, {
-      "singleline": "never",
-      "multiline": {
-        "objects": "always",
-        "arrays": "ignore",
-        "functions": "ignore",
-        "typeLiterals": "ignore"
+    "semicolon": false,
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": {
+          "objects": "always",
+          "arrays": "ignore",
+          "functions": "ignore",
+          "typeLiterals": "ignore"
+        }
       }
-    }],
+    ],
     "max-line-length": false,
     "interface-name": [true, "never-prefix"],
     "ordered-imports": false,
@@ -25,11 +29,9 @@
     "jsx-no-string-ref": false,
     "jsx-wrap-multiline": false,
     "whitespace": [true, "check-module"],
-    "quotemark": [true, "single", "jsx-double"]
+    "quotemark": false
   },
   "linterOptions": {
-    "exclude": [
-      "node_modules/**/*.ts"
-    ]
+    "exclude": ["node_modules/**/*.ts"]
   }
 }

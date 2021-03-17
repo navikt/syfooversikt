@@ -6,8 +6,10 @@ import { capitalizeFirstLetter } from './stringUtil';
 
 const lenkeTilModiaBasertPaaFnr = (fnr: string, personData: PersonData) => {
   let path = `/sykefravaer/${fnr}`;
-  const skalTilMoteoversikt = personData.harMotebehovUbehandlet || personData.harMoteplanleggerUbehandlet;
-  const skalTilOppfolgingsplanOversikt = personData.harOppfolgingsplanLPSBistandUbehandlet;
+  const skalTilMoteoversikt =
+    personData.harMotebehovUbehandlet || personData.harMoteplanleggerUbehandlet;
+  const skalTilOppfolgingsplanOversikt =
+    personData.harOppfolgingsplanLPSBistandUbehandlet;
   if (skalTilOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
   } else if (skalTilMoteoversikt) {
@@ -32,18 +34,24 @@ export const formaterNavn = (navn?: string): string => {
   return fullName;
 };
 
-export const lenkeTilModiaEnkeltperson = (personData: PersonData, fnr: string) => {
-  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)} >
+export const lenkeTilModiaEnkeltperson = (
+  personData: PersonData,
+  fnr: string
+) => {
+  return (
+    <Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)}>
       {formaterNavn(personData.navn)}
-  </Lenke>);
+    </Lenke>
+  );
 };
 
-export const lenkeTilModiaEnkeltpersonFnr = (personData: PersonData, fnr: string) => {
+export const lenkeTilModiaEnkeltpersonFnr = (
+  personData: PersonData,
+  fnr: string
+) => {
   const hasPersonName = personData.navn && personData.navn.length > 0;
   if (hasPersonName) {
     return fnr;
   }
-  return (<Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)} >
-    {fnr}
-  </Lenke>);
+  return <Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)}>{fnr}</Lenke>;
 };

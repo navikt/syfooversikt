@@ -31,19 +31,19 @@ describe('veilederenheterReducer', () => {
       const action = hentVeilederenheterHenter();
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: true,
       });
     });
 
     it(`handterer ${VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET} med tom liste`, () => {
-      const data =  {
+      const data = {
         enhetliste: [],
       };
       const action = hentVeilederenheterHentet(data);
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         hentet: true,
         henter: false,
         data,
@@ -51,15 +51,13 @@ describe('veilederenheterReducer', () => {
     });
 
     it(`handterer ${VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET} med liste med 1 enhet`, () => {
-      const data =  {
-        enhetliste: [
-          enhet
-        ],
+      const data = {
+        enhetliste: [enhet],
       };
       const action = hentVeilederenheterHentet(data);
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         hentet: true,
         henter: false,
         aktivEnhet: enhet,
@@ -76,16 +74,13 @@ describe('veilederenheterReducer', () => {
         ...enhet,
         enhetId: '0201',
       };
-      const data =  {
-        enhetliste: [
-          enhetHoyestId,
-          enhetLavestId,
-        ],
+      const data = {
+        enhetliste: [enhetHoyestId, enhetLavestId],
       };
       const action = hentVeilederenheterHentet(data);
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         hentet: true,
         henter: false,
         aktivEnhet: enhetLavestId,
@@ -97,7 +92,7 @@ describe('veilederenheterReducer', () => {
       const action = hentVeilederenheterFeilet();
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         henter: false,
         hentingFeilet: true,
         data: initData,
@@ -112,7 +107,7 @@ describe('veilederenheterReducer', () => {
       const action = modiaContextPushet(context);
       const nesteState = veilederenheterReducer(initialState, action);
       expect(nesteState).to.deep.equal({
-        ... initialState,
+        ...initialState,
         aktivEnhetId: context.verdi,
       });
     });

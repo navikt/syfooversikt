@@ -4,8 +4,8 @@ import { Column } from 'nav-frontend-grid';
 import { Checkbox } from 'nav-frontend-skjema';
 import themes from '../styles/themes';
 import {
-    lenkeTilModiaEnkeltperson,
-    lenkeTilModiaEnkeltpersonFnr,
+  lenkeTilModiaEnkeltperson,
+  lenkeTilModiaEnkeltpersonFnr,
 } from '../utils/lenkeUtil';
 import { PersonData } from '../store/personregister/personregisterTypes';
 import {
@@ -23,7 +23,7 @@ interface PersonradProps {
   index: number;
 }
 
-export const PersonRad = styled.div<{ index: number, selected: boolean }>`
+export const PersonRad = styled.div<{ index: number; selected: boolean }>`
   display: flex;
   align-items: center;
   padding-right: 0.5em;
@@ -74,7 +74,9 @@ export default (props: PersonradProps) => {
       <Column xs={'2'}>{lenkeTilModiaEnkeltpersonFnr(personData, fnr)}</Column>
       <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
       <Column xs={'2'}>{veilederName}</Column>
-      <Column xs={'2'}><NoWrapText>{skjermingskode(personData)}</NoWrapText></Column>
+      <Column xs={'2'}>
+        <NoWrapText>{skjermingskode(personData)}</NoWrapText>
+      </Column>
     </PersonRad>
   );
 };

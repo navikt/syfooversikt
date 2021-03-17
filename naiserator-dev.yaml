@@ -1,12 +1,12 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: syfooversikt
   namespace: default
   labels:
     team: teamsykefravr
 spec:
-  image: {{ image }}
+  image: { { image } }
   replicas:
     min: 2
     max: 4
@@ -35,7 +35,7 @@ spec:
       memory: 128Mi
   webproxy: false
   ingresses:
-    - "https://syfooversikt.nais.preprod.local"
+    - 'https://syfooversikt.nais.preprod.local'
   env:
     - name: NAIS_CONTEXT
       value: 'dev'

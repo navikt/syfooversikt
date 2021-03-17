@@ -1,10 +1,4 @@
-import {
-  all,
-  call,
-  fork,
-  put,
-  takeEvery,
-} from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { get } from '../../api/index';
 import * as actions from './veilederenheter_actions';
 
@@ -21,8 +15,8 @@ export function* hentVeilederenheter() {
 
 function* watchHentVeilederinfo() {
   yield takeEvery(
-      actions.VeilederenheterActionTypes.HENT_VEILEDERENHETER_FORESPURT,
-      hentVeilederenheter
+    actions.VeilederenheterActionTypes.HENT_VEILEDERENHETER_FORESPURT,
+    hentVeilederenheter
   );
 }
 

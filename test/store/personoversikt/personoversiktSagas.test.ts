@@ -10,7 +10,9 @@ describe('personoversiktSagas', () => {
   const generator = hentPersonoversikt(enhetId);
 
   it(`Skal dispatche ${PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER}`, () => {
-    const nesteAction = put({ type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER });
+    const nesteAction = put({
+      type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER,
+    });
     expect(generator.next().value).to.deep.equal(nesteAction);
   });
 

@@ -7,14 +7,17 @@ interface DropdownButtonProps extends KnappBaseProps {
   text: string;
 }
 
-const DropdownButton = ((props: DropdownButtonProps) => {
-  return (<KnappBase
+const DropdownButton = (props: DropdownButtonProps) => {
+  return (
+    <KnappBase
       className={`confirmVeilederButton__${props.classNameElement}`}
       type={props.type}
       onClick={props.onClick}
-      mini>
+      mini
+    >
       {props.text}
-    </KnappBase>);
-});
+    </KnappBase>
+  );
+};
 
 export default DropdownButton;

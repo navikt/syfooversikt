@@ -1,10 +1,7 @@
 import TildelVeileder from './AssignVeileder/TildelVeileder';
 import { OverviewTabType } from '../../konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
-import {
-    Column,
-    Row,
-} from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import Sorteringsrad from '../Sorteringsrad';
 import { sortBrukere } from '../../store/sorting/sorting_actions';
 import React, { useState } from 'react';
@@ -21,7 +18,7 @@ const Innhold = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 .5em;
+  margin: 0 0.5em;
   border-bottom: 1px solid ${themes.color.navGra40};
 `;
 
@@ -29,7 +26,7 @@ const Element = styled.div`
   display: flex;
   align-items: center;
   & > div:not(:nth-child(2)) {
-    padding: .5em;
+    padding: 0.5em;
   }
 `;
 
@@ -65,53 +62,63 @@ const ToolbarStyled = styled.div`
 `;
 
 const tekster = {
-    selectAll: 'Velg alle',
+  selectAll: 'Velg alle',
 };
 
 interface ToolbarProps extends ToolbarWrapperProps {
-    setPageInfo: (indices: {firstVisibleIndex: number, lastVisibleIndex: number}) => void;
+  setPageInfo: (indices: {
+    firstVisibleIndex: number;
+    lastVisibleIndex: number;
+  }) => void;
 }
 
 const Toolbar = (props: ToolbarProps) => {
-    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(PAGINATED_NUMBER_OF_ITEMS);
-    const dispatch = useDispatch();
+  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
+    PAGINATED_NUMBER_OF_ITEMS
+  );
+  const dispatch = useDispatch();
 
-    const shouldShowTogglePagination = props.numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS;
+  const shouldShowTogglePagination =
+    props.numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS;
 
-    return (
-        <ToolbarStyled>
-            <Innhold>
-                <Element>
-                    <TildelVeileder {...props} />
-                    {props.tabType === OverviewTabType.ENHET_OVERVIEW && (
-                        <SearchVeileder {...props} />)}
-                </Element>
-                <PaginationContainer
-                    numberOfItemsPerPage={numberOfItemsPerPage}
-                    numberOfItemsTotal={props.numberOfItemsTotal}
-                    onPageChange={props.onPageChange}
-                    setNumberOfItemsPerPage={setNumberOfItemsPerPage}
-                    setPageInfo={props.setPageInfo}
-                    shouldShowTogglePagination={shouldShowTogglePagination}
-                />
-            </Innhold>
-            <IngressRad>
-                <Column xs="1">
-                    <VelgBoks
-                        className="toolbar__velgBoks"
-                        aria-label={tekster.selectAll}
-                        label="&nbsp;"
-                        checked={props.alleMarkert}
-                        onChange={(event) => {
-                            props.checkAllHandler(event.target.checked);
-                        }}
-                    /></Column>
-                <Sorteringsrad onSortClick={(type) => {
-                    dispatch(sortBrukere(type));
-                }}/>
-            </IngressRad>
-        </ToolbarStyled>
-    );
+  return (
+    <ToolbarStyled>
+      <Innhold>
+        <Element>
+          <TildelVeileder {...props} />
+          {props.tabType === OverviewTabType.ENHET_OVERVIEW && (
+            <SearchVeileder {...props} />
+          )}
+        </Element>
+        <PaginationContainer
+          numberOfItemsPerPage={numberOfItemsPerPage}
+          numberOfItemsTotal={props.numberOfItemsTotal}
+          onPageChange={props.onPageChange}
+          setNumberOfItemsPerPage={setNumberOfItemsPerPage}
+          setPageInfo={props.setPageInfo}
+          shouldShowTogglePagination={shouldShowTogglePagination}
+        />
+      </Innhold>
+      <IngressRad>
+        <Column xs="1">
+          <VelgBoks
+            className="toolbar__velgBoks"
+            aria-label={tekster.selectAll}
+            label="&nbsp;"
+            checked={props.alleMarkert}
+            onChange={(event) => {
+              props.checkAllHandler(event.target.checked);
+            }}
+          />
+        </Column>
+        <Sorteringsrad
+          onSortClick={(type) => {
+            dispatch(sortBrukere(type));
+          }}
+        />
+      </IngressRad>
+    </ToolbarStyled>
+  );
 };
 
 export default Toolbar;

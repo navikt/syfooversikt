@@ -14,9 +14,10 @@ const expect = chai.expect;
 
 describe('personInfo_actions', () => {
   it('hentPersonInfoForespurt() skal returnere riktig action', () => {
-    const fnrListe = [{fnr: testdata.fnr1}];
+    const fnrListe = [{ fnr: testdata.fnr1 }];
     expect(hentPersonInfoForespurt(fnrListe)).to.deep.equal({
-      type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT, data: fnrListe,
+      type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT,
+      data: fnrListe,
     });
   });
 
@@ -27,10 +28,12 @@ describe('personInfo_actions', () => {
   });
 
   it('hentPersonInfoHentet() skal returnere riktig action', () => {
-    const personInfoSvar = [ {
-      fnr: testdata.fnr1,
-      skjermingskode: testdata.skjermingskode.ingen,
-    } ];
+    const personInfoSvar = [
+      {
+        fnr: testdata.fnr1,
+        skjermingskode: testdata.skjermingskode.ingen,
+      },
+    ];
     expect(hentPersonInfoHentet(personInfoSvar)).to.deep.equal({
       type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTET,
       data: personInfoSvar,

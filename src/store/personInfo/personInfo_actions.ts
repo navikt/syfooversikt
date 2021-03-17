@@ -1,7 +1,4 @@
-import {
-  PersonInfo,
-  Fodselsnummer,
-} from './personInfoTypes';
+import { PersonInfo, Fodselsnummer } from './personInfoTypes';
 
 export const enum PersonInfoActionTypes {
   HENT_PERSON_INFO_FORESPURT = 'HENT_PERSON_INFO_FORESPURT',

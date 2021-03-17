@@ -85,13 +85,10 @@ export const veiledere = [
     ident: 'Z000000',
     fornavn: 'NAV',
     etternavn: 'Ansatt',
-  }
+  },
 ];
 
-export const markertePersoner = [
-  '01999911111',
-  '99999922222',
-];
+export const markertePersoner = ['01999911111', '99999922222'];
 
 export const modiacontextNyAktivEnhet = {
   verdi: enhet.enhetId,

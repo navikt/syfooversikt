@@ -7,9 +7,7 @@ import {
   hentVeilederenheterFeilet,
   VeilederenheterActionTypes,
 } from '../../../src/store/veilederenheter/veilederenheter_actions';
-import {
-  enhet,
-} from '../../data/fellesTestdata';
+import { enhet } from '../../data/fellesTestdata';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -28,13 +26,12 @@ describe('veilederenheter_actions', () => {
   });
 
   it('hentVeilederenheterHentet() skal returnere riktig action', () => {
-    const data =  {
-      enhetliste: [
-        enhet
-      ],
+    const data = {
+      enhetliste: [enhet],
     };
     expect(hentVeilederenheterHentet(data)).to.deep.equal({
-      type: VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET, data,
+      type: VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTET,
+      data,
     });
   });
 

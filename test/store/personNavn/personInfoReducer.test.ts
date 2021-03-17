@@ -30,10 +30,12 @@ describe('personInfoReducer', () => {
     });
 
     it(`handterer ${PersonInfoActionTypes.HENT_PERSON_INFO_HENTET}`, () => {
-      const personInfoSvar = [{
-        fnr: testdata.fnr1,
-        skjermingskode: testdata.skjermingskode.ingen,
-      }];
+      const personInfoSvar = [
+        {
+          fnr: testdata.fnr1,
+          skjermingskode: testdata.skjermingskode.ingen,
+        },
+      ];
       const action = hentPersonInfoHentet(personInfoSvar);
       const nesteState = personInfoReducer(initialState, action);
       expect(nesteState).to.deep.equal({

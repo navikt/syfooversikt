@@ -2,22 +2,34 @@
 <html lang="no">
   <head>
     <title>Syfooversikt</title>
-    <meta charset="UTF-8">
-      {{#isProd}}
-      <link href="/syfooversikt/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="syfooversikt-styles" />
-      {{/isProd}}
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8" />
+    {{#isProd}}
+    <link
+      href="/syfooversikt/resources/styles.css?ts={{{timestamp}}}"
+      rel="stylesheet"
+      id="syfooversikt-styles"
+    />
+    {{/isProd}}
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <script src="https://internarbeidsflatedecorator.nais.adeo.no/internarbeidsflatedecorator/js/head.min.js"></script>
     <!-- Hotjar Tracking Code for http://navlab.no/ -->
     <script>
-      (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:148751,hjsv:6};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-      a.appendChild(r);
-      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 148751, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script');
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
     <style>
       .app:focus {
@@ -74,20 +86,29 @@
       <div class="app-spinner" aria-label="Vent litt mens siden laster"></div>
     </div>
 
-    <div id="feilmelding" style="display: none;">
+    <div id="feilmelding" style="display: none">
       <div class="scriptFeilmelding">
         <div class="scriptFeilmelding__panel">
           {{#isProd}}
           <h2 class="scriptFeilmelding__tittel">Hoi! Der gikk det galt!</h2>
           <p>Vi har problemer med å vise Syfooversikt akkurat nå.</p>
-          <p>Vi jobber med å løse feilen, og håper å være tilbake om kort tid.</p>
+          <p>
+            Vi jobber med å løse feilen, og håper å være tilbake om kort tid.
+          </p>
           <p>Beklager!</p>
-          {{/isProd}}
-          {{^isProd}}
+          {{/isProd}} {{^isProd}}
           <h2 class="scriptFeilmelding__tittel">Utvikling i syfooversikt</h2>
           <p>Kjør appen lokalt ved å kjøre <code>npm run start-local</code>.</p>
-          <p>Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server som bygger TS og CSS for deg.</p>
-          <p>Sykefravaer blir da tilgjengelig under <a href="http://localhost:8080/syfooversikt">http://localhost:8080/syfooversikt</a></p>
+          <p>
+            Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server
+            som bygger TS og CSS for deg.
+          </p>
+          <p>
+            Sykefravaer blir da tilgjengelig under
+            <a href="http://localhost:8080/syfooversikt"
+              >http://localhost:8080/syfooversikt</a
+            >
+          </p>
           <p>Happy coding!</p>
           {{/isProd}}
         </div>
@@ -151,25 +172,24 @@
     </style>
 
     <script>
-        (function() {
-            var visFeilmelding = function() {
-                var el = document.getElementById("maincontent");
-                var feilmelding = document.getElementById("feilmelding");
-                el.innerHTML = feilmelding.innerHTML;
-            };
+      (function() {
+          var visFeilmelding = function() {
+              var el = document.getElementById("maincontent");
+              var feilmelding = document.getElementById("feilmelding");
+              el.innerHTML = feilmelding.innerHTML;
+          };
 
-            var script = document.createElement("script");
+          var script = document.createElement("script");
 
-            {{#isProd}}
-            script.src = "/syfooversikt/resources/bundle-prod.js?ts={{timestamp}}";
-            {{/isProd}}
-                {{^isProd}}
-                script.src = "http://localhost:9090/assets/bundle.js";
-                {{/isProd}}
-                    script.onerror = visFeilmelding;
-                    document.body.appendChild(script);
-                })();
+          {{#isProd}}
+          script.src = "/syfooversikt/resources/bundle-prod.js?ts={{timestamp}}";
+          {{/isProd}}
+              {{^isProd}}
+              script.src = "http://localhost:9090/assets/bundle.js";
+              {{/isProd}}
+                  script.onerror = visFeilmelding;
+                  document.body.appendChild(script);
+              })();
     </script>
-
   </body>
 </html>
