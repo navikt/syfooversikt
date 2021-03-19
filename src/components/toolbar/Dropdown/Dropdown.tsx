@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import InputWithSearchIcon from '../../InputWithSearchIcon';
 import { VeilederInputButtons } from './VeilederInputButtons';
@@ -50,7 +50,7 @@ const NoVeilederChosenErrorMessage = styled.p`
   font-weight: bold;
 `;
 
-export const Dropdown = (props: DropdownProps): ReactElement => {
+export const Dropdown = (props: DropdownProps) => {
   const {
     buttonTexts,
     cancelButtonHandler,

@@ -1,52 +1,26 @@
-import { Fodselsnummer, PersonInfo } from './personInfoTypes';
+import { PersonInfo, Fodselsnummer } from './personInfoTypes';
 
-export enum PersonInfoActionTypes {
+export const enum PersonInfoActionTypes {
   HENT_PERSON_INFO_FORESPURT = 'HENT_PERSON_INFO_FORESPURT',
   HENT_PERSON_INFO_HENTER = 'HENT_PERSON_INFO_HENTER',
   HENT_PERSON_INFO_FEILET = 'HENT_PERSON_INFO_FEILET',
   HENT_PERSON_INFO_HENTET = 'HENT_PERSON_INFO_HENTET',
 }
 
-export interface HentPersonInfoForespurtAction {
-  type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT;
-  data: Fodselsnummer[];
-}
-
-export interface HentPersonInfoHenterAction {
-  type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTER;
-}
-
-export interface HentPersonInfoHentetAction {
-  type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTET;
-  data: PersonInfo[];
-}
-
-export interface HentPersonInfoFeiletAction {
-  type: PersonInfoActionTypes.HENT_PERSON_INFO_FEILET;
-}
-
-export type PersoninfoAction =
-  | HentPersonInfoForespurtAction
-  | HentPersonInfoHenterAction
-  | HentPersonInfoHentetAction
-  | HentPersonInfoFeiletAction;
-
-export const hentPersonInfoForespurt = (
-  data: Fodselsnummer[]
-): PersoninfoAction => ({
+export const hentPersonInfoForespurt = (data: Fodselsnummer[]) => ({
   type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT,
   data,
 });
 
-export const hentPersonInfoHenter = (): PersoninfoAction => ({
+export const hentPersonInfoHenter = () => ({
   type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTER,
 });
 
-export const hentPersonInfoHentet = (data: PersonInfo[]): PersoninfoAction => ({
+export const hentPersonInfoHentet = (data: PersonInfo[]) => ({
   type: PersonInfoActionTypes.HENT_PERSON_INFO_HENTET,
   data,
 });
 
-export const hentPersonInfoFeilet = (): PersoninfoAction => ({
+export const hentPersonInfoFeilet = () => ({
   type: PersonInfoActionTypes.HENT_PERSON_INFO_FEILET,
 });

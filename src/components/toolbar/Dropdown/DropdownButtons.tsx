@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ReactElement } from 'react';
 import styled from 'styled-components';
 import DropdownButton from './DropdownButton';
 
@@ -24,7 +23,7 @@ const DropdownButtonsDiv = styled.div`
   }
 `;
 
-export const DropdownButtons = (props: DropdownButtonsProps): ReactElement => {
+export const DropdownButtons = (props: DropdownButtonsProps) => {
   const {
     cancelButtonHandler,
     chosenVeilederIdent,

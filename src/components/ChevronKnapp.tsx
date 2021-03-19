@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';
@@ -30,9 +30,10 @@ interface ChevronKnappProps {
 
 const ChevronKnapp = ({
   type = 'venstre',
+  text: tekst,
   disabled,
   onClick,
-}: ChevronKnappProps): ReactElement => {
+}: ChevronKnappProps) => {
   const colorClassname = classNames(disabled ? 'disabled' : 'enabled');
 
   return (

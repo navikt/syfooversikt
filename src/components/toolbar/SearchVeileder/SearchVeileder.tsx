@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect, ReactElement } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Veileder } from '../../../store/veiledere/veiledereTypes';
@@ -29,7 +29,7 @@ const dropdownButtonTexts: DropdownButtonTexts = {
   reset: 'Nullstill',
 };
 
-const SearchVeileder = (props: VeilederIdentsFilterProps): ReactElement => {
+const SearchVeileder = (props: VeilederIdentsFilterProps) => {
   const [showList, setShowList] = useState(false);
   const [input, setInput] = useState('');
   const appState = useSelector((state: ApplicationState) => state);

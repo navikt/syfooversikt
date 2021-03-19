@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 interface SlettIkonProps {
   fargeKode: string;
   className?: string;
 }
 
-const SlettIkon = ({ className, fargeKode }: SlettIkonProps): ReactElement => (
+const SlettIkon = ({ className, fargeKode }: SlettIkonProps) => (
   <svg className={className} width="20" height="20" viewBox="0 0 24 24">
     <g
       stroke={fargeKode}

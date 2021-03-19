@@ -1,5 +1,3 @@
-import 'core-js';
-import 'regenerator-runtime/runtime';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
@@ -16,6 +14,10 @@ import AppRouter from './routers/AppRouter';
 import { config, setEventHandlersOnConfig } from './global';
 import { store } from './store';
 
+if (!(window as any)._babelPolyfill) {
+  require('babel-polyfill'); // tslint:disable-line no-var-requires
+}
+
 const handleChangeEnhet = (data: string) => {
   if (config.config.initiellEnhet !== data) {
     store.dispatch(
@@ -31,7 +33,7 @@ const handleChangeEnhet = (data: string) => {
 const handlePersonsokSubmit = (nyttFnr: string) => {
   const host = 'syfomodiaperson';
   const path = `/sykefravaer/${nyttFnr}`;
-  window.location.href = fullNaisUrlDefault(host, path);
+  (window as any).location = fullNaisUrlDefault(host, path);
 };
 
 setEventHandlersOnConfig(handlePersonsokSubmit, handleChangeEnhet);
@@ -49,7 +51,7 @@ store.dispatch(
 );
 
 (window as any).renderDecoratorHead &&
-  (window as any).renderDecoratorHead(config);
+  (window as any).renderDecoratorHead(config); // tslint:disable-line no-unused-expression
 
 render(
   <Provider store={store}>
@@ -60,7 +62,9 @@ render(
 
 ModalWrapper.setAppElement('#maincontent');
 
+/* tslint:disable no-unused-expression */
 document.addEventListener('DOMContentLoaded', () => {
   (window as any).renderDecoratorHead &&
     (window as any).renderDecoratorHead(config);
 });
+/* tslint:enable no-unused-expression */

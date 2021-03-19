@@ -1,10 +1,11 @@
 import { expect } from 'chai';
+import deepFreeze from 'deep-freeze';
 import veilederenheterReducer from '../../../src/store/veilederenheter/veilederenheterReducer';
 import {
-  hentVeilederenheterFeilet,
+  VeilederenheterActionTypes,
   hentVeilederenheterHenter,
   hentVeilederenheterHentet,
-  VeilederenheterActionTypes,
+  hentVeilederenheterFeilet,
 } from '../../../src/store/veilederenheter/veilederenheter_actions';
 import { enhet } from '../../data/fellesTestdata';
 import {
@@ -17,14 +18,14 @@ describe('veilederenheterReducer', () => {
   describe('Henter veilederenhet', () => {
     const initData = { enhetliste: [] };
     const initAktivEnhet = { enhetId: '', navn: '' };
-    const initialState = {
+    const initialState = deepFreeze({
       hentet: false,
       henter: false,
       hentingFeilet: false,
       aktivEnhet: initAktivEnhet,
       aktivEnhetId: initAktivEnhet.enhetId,
       data: initData,
-    };
+    });
 
     it(`handterer ${VeilederenheterActionTypes.HENT_VEILEDERENHETER_HENTER}`, () => {
       const action = hentVeilederenheterHenter();

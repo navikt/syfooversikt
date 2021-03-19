@@ -4,7 +4,6 @@ import { hentVeilederinfoSaga } from '../../../src/store/veilederinfo/veilederin
 import { get } from '../../../src/api';
 import { VeilederinfoActionTypes } from '../../../src/store/veilederinfo/veilederinfo_actions';
 import { veilederinfo } from '../../data/fellesTestdata';
-import { Veilederinfo } from '../../../src/store/veilederinfo/veilederinfoTypes';
 
 describe('veilederinfoSagas', () => {
   const generator = hentVeilederinfoSaga();
@@ -22,8 +21,8 @@ describe('veilederinfoSagas', () => {
     expect(generator.next().value).to.deep.equal(nesteKall);
   });
 
-  it(`Skal dernest sette ${VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET}`, () => {
-    const data: Veilederinfo = veilederinfo;
+  it(`Skal dernest sette ${VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTER}`, () => {
+    const data = { veilederinfo };
     const nextPut = put({
       type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET,
       data,

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { resetAllFilters } from '../../store/filters/filter_actions';
@@ -28,11 +28,7 @@ const ClearFiltersWrapper = styled.div`
   }
 `;
 
-interface Props {
-  className?: string;
-}
-
-export const ClearFilters = (props: Props): ReactElement => {
+export default (props: any) => {
   const dispatch = useDispatch();
 
   const clearAllFilters = () => {

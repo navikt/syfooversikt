@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Veilederinfo } from '../../store/veilederinfo/veilederinfoTypes';
 import { Veileder } from '../../store/veiledere/veiledereTypes';
@@ -51,7 +51,7 @@ const textMarkedUsers = (amount: number) => {
   return `${amount} markerte brukere.`;
 };
 
-const ToolbarWrapper = (props: ToolbarWrapperProps): ReactElement => {
+const ToolbarWrapper = (props: ToolbarWrapperProps) => {
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     firstVisibleIndex: 0,
     lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,

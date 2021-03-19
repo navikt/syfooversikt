@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Tekst = styled.div`
@@ -7,6 +7,6 @@ const Tekst = styled.div`
   margin-bottom: 0.5em;
 `;
 
-export const FilterTitle = (
-  props: React.PropsWithChildren<unknown>
-): ReactElement => <Tekst>{props.children}</Tekst>;
+export default (props: React.PropsWithChildren<any>) => (
+  <Tekst>{props.children}</Tekst>
+);

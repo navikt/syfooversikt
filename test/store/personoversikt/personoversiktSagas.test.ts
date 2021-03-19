@@ -1,27 +1,13 @@
 import { expect } from 'chai';
-import { put, call, select } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import { get } from '../../../src/api';
 import { personoversikt } from '../../data/fellesTestdata';
-import {
-  henterPersonerMedEnhet,
-  hentPersonoversikt,
-} from '../../../src/store/personoversikt/personoversiktSagas';
-import {
-  HentPersonoversiktForespurtAction,
-  PersonoversiktActionTypes,
-} from '../../../src/store/personoversikt/personoversikt_actions';
+import { hentPersonoversikt } from '../../../src/store/personoversikt/personoversiktSagas';
+import { PersonoversiktActionTypes } from '../../../src/store/personoversikt/personoversikt_actions';
 
 describe('personoversiktSagas', () => {
-  const action: HentPersonoversiktForespurtAction = {
-    type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT,
-    enhetId: '0101',
-  };
-  const generator = hentPersonoversikt(action);
-
-  it(`Henter personer på enhetid`, () => {
-    const nesteSelect = select(henterPersonerMedEnhet);
-    expect(generator.next().value).to.deep.equal(nesteSelect);
-  });
+  const enhetId = '0101';
+  const generator = hentPersonoversikt(enhetId);
 
   it(`Skal dispatche ${PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER}`, () => {
     const nesteAction = put({
@@ -31,7 +17,7 @@ describe('personoversiktSagas', () => {
   });
 
   it('Skal dernest kalle REST-tjenesten', () => {
-    const url = `/api/v1/personoversikt/enhet/${action.enhetId}`;
+    const url = `/api/v1/personoversikt/enhet/${enhetId}`;
     const nesteKall = call(get, url);
     expect(generator.next().value).to.deep.equal(nesteKall);
   });

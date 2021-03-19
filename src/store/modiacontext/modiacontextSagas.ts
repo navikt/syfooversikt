@@ -1,13 +1,10 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { get, post } from '../../api';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import { get, post } from '../../api/index';
 import * as actions from './modiacontext_actions';
-import {
-  HentAktivEnhetAction,
-  PushModiaContextAction,
-} from './modiacontext_actions';
-import { Modiacontext } from './modiacontextTypes';
 
-export function* pushModiacontextSaga(action: PushModiaContextAction) {
+export function* pushModiacontextSaga(
+  action: ReturnType<typeof actions.pushModiaContext>
+) {
   yield put(actions.pusherModiaContext());
   try {
     const path = `${process.env.REACT_APP_MODIACONTEXTHOLDER_ROOT}/context`;
@@ -21,24 +18,33 @@ export function* pushModiacontextSaga(action: PushModiaContextAction) {
   }
 }
 
-export function* aktivEnhetSaga(action: HentAktivEnhetAction) {
+export function* aktivEnhetSaga(
+  action: ReturnType<typeof actions.hentAktivEnhet>
+) {
   yield put(actions.henterAktivEnhet());
   try {
     const path = `${process.env.REACT_APP_MODIACONTEXTHOLDER_ROOT}/context/aktivenhet`;
-    const data: Modiacontext = yield call(get, path);
+    const data = yield call(get, path);
     action.data.callback(data.aktivEnhet);
   } catch (e) {
     yield put(actions.hentAktivEnhetFeilet());
   }
 }
 
-export default function* modiacontextSagas() {
+function* watchPushModiacontext() {
   yield takeEvery(
     actions.modiacontextActionTypes.PUSH_MODIACONTEXT_FORESPURT,
     pushModiacontextSaga
   );
+}
+
+function* watchAktivEnhet() {
   yield takeEvery(
     actions.modiacontextActionTypes.HENT_AKTIVENHET_FORESPURT,
     aktivEnhetSaga
   );
+}
+
+export default function* modiacontextSagas() {
+  yield all([fork(watchPushModiacontext), fork(watchAktivEnhet)]);
 }

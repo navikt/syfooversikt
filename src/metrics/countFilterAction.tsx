@@ -8,8 +8,8 @@ export const CounterFilterActionTypes = {
   ...HendelseTekster,
 };
 
-function* countFilterAction(value: string): Generator {
-  let key: string;
+function* countFilterAction(value: string): any {
+  let key = '';
   switch (value) {
     case CounterFilterActionTypes.MOTEBEHOV:
       key = 'motebehov';

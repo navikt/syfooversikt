@@ -1,9 +1,9 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { fork, takeEvery, put, call, all } from 'redux-saga/effects';
 import {
   ChangelogActionTypes,
-  fetchChangelogError,
-  fetchChangelogsSuccess,
   fetchChengelogsLoadingAction,
+  fetchChangelogsSuccess,
+  fetchChangelogError,
 } from './changelog_actions';
 import { get } from '../../api';
 
@@ -16,10 +16,14 @@ function* getChangelog(): IterableIterator<any> {
       yield put(fetchChangelogsSuccess(data));
     }
   } catch (e) {
-    yield put(fetchChangelogError());
+    yield put(fetchChangelogError(e));
   }
 }
 
-export default function* changelogSagas() {
+function* watchGetChangelog() {
   yield takeEvery(ChangelogActionTypes.FETCH_CHANGELOGS_ASKED, getChangelog);
+}
+
+export default function* changelogSagas() {
+  yield all([fork(watchGetChangelog)]);
 }

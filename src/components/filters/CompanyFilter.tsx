@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { FilterTitle } from '../FilterTitle';
+import FilterTitle from '../FilterTitle';
 import { ValueType } from 'react-select/src/types';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
@@ -26,7 +26,7 @@ const companyNamesToOptions = (companies: string[]): CompanyOption[] => {
   return companies.map((v) => ({ label: v, value: v } as CompanyOption));
 };
 
-const CompanyFilter = (props: CompantyFilterProps): ReactElement => {
+const CompanyFilter = (props: CompantyFilterProps) => {
   const selectedCompanies = useSelector(
     (state: ApplicationState) => state.filters.selectedCompanies
   );

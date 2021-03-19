@@ -4,13 +4,14 @@ import path from 'path';
 
 const dotEnvPath = path.resolve('.env');
 
+// tslint:disable-next-line no-var-requires
 require('dotenv').config({
   path: dotEnvPath,
 });
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const { JSDOM } = require('jsdom');
+const { JSDOM } = require('jsdom'); // tslint:disable-line no-var-requires
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;

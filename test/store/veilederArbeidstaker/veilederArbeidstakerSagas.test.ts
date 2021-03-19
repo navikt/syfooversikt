@@ -1,8 +1,5 @@
 import { expect } from 'chai';
-import {
-  PushVeilederArbeidstakerForespurtAction,
-  veilederArbeidstakerActionTypes,
-} from '../../../src/store/veilederArbeidstaker/veilederArbeidstaker_actions';
+import { veilederArbeidstakerActionTypes } from '../../../src/store/veilederArbeidstaker/veilederArbeidstaker_actions';
 import { call, put } from 'redux-saga/effects';
 import { pushBrukerArbeidstakerSaga } from '../../../src/store/veilederArbeidstaker/veilederArbeidstakerSagas';
 import { post } from '../../../src/api';
@@ -16,7 +13,7 @@ describe('veilederArbeidstakerSagas', () => {
         enhet: '0001',
       },
     ];
-    const forespurtAction: PushVeilederArbeidstakerForespurtAction = {
+    const forespurtAction = {
       type: veilederArbeidstakerActionTypes.PUSH_VEILEDERARBEIDSTAKER_FORESPURT,
       data: payload,
     };

@@ -3,11 +3,19 @@ import styled, { css } from 'styled-components';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import themes from '../../../styles/themes';
 import SearchIcon from '../../../img/icons/SearchIcon';
-import { ReactElement } from 'react';
 
 interface ButtonDivProps {
   active: boolean;
 }
+
+const activeStyle = css`
+  &:hover {
+    text-decoration: underline;
+  }
+  & > * {
+    color: ${themes.color.navBla};
+  }
+`;
 
 const SearchIconBlue = styled(SearchIcon)`
   fill: ${themes.color.navBla};
@@ -15,7 +23,7 @@ const SearchIconBlue = styled(SearchIcon)`
   margin-left: -1em;
 `;
 
-const ButtonDiv = styled.div<ButtonDivProps>`
+const ButtonDiv = styled.div`
   display: flex;
   cursor: pointer;
   align-items: center;
@@ -23,16 +31,7 @@ const ButtonDiv = styled.div<ButtonDivProps>`
   height: 100%;
   border: 1px solid ${themes.color.darkGrayish};
   border-radius: 4px;
-  ${({ active }) =>
-    active &&
-    css`
-      &:hover {
-        text-decoration: underline;
-      }
-      & > * {
-        color: ${themes.color.navBla};
-      }
-    `}
+  ${(props: ButtonDivProps) => props.active && activeStyle};
 `;
 
 const DropdownButtonButton = styled.button`
@@ -68,9 +67,7 @@ const chevronType = (showList: boolean) => {
   return showList ? 'opp' : 'ned';
 };
 
-const OpenDropdownButton = (
-  props: AssignToVeilederButtonProps
-): ReactElement => {
+const OpenDropdownButton = (props: AssignToVeilederButtonProps) => {
   return (
     <ButtonDiv className="openDropdownButton" active={props.userIsChecked}>
       <DropdownButtonButton

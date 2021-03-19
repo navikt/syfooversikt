@@ -1,25 +1,6 @@
 import { erHerokuApp, erLokal } from './utils/miljoUtil';
 
-interface Config {
-  config: {
-    dataSources: {
-      veileder: string;
-      enheter: string;
-    };
-    initiellEnhet: string;
-    toggles: {
-      visEnhetVelger: boolean;
-      visVeileder: boolean;
-      visSokefelt: boolean;
-      toggleSendEventVedEnEnhet: boolean;
-    };
-    applicationName: string;
-    handlePersonsokSubmit?: (data: string) => unknown;
-    handleChangeEnhet?: (data: string) => unknown;
-  };
-}
-
-export const config: Config = {
+export const config: any = {
   config: {
     dataSources: {
       veileder: `${process.env.REACT_APP_SYFOMOTEADMIN_ROOT}/internad/veilederinfo`,
@@ -32,16 +13,16 @@ export const config: Config = {
       visSokefelt: true,
       toggleSendEventVedEnEnhet: false,
     },
-    applicationName: 'Sykefraværsoppfølging',
     handlePersonsokSubmit: undefined,
+    applicationName: 'Sykefraværsoppfølging',
     handleChangeEnhet: undefined,
   },
 };
 
 export const setEventHandlersOnConfig = (
-  handlePersonsokSubmit: (fnr: string) => unknown,
-  handleChangeEnhet: (data: string) => unknown
+  handlePersonsokSubmit: (fnr: string) => any,
+  handleChangeEnhet: (data: string) => any
 ): void => {
-  config.config.handlePersonsokSubmit = handlePersonsokSubmit;
-  config.config.handleChangeEnhet = handleChangeEnhet;
+  (config.config as any).handlePersonsokSubmit = handlePersonsokSubmit;
+  (config.config as any).handleChangeEnhet = handleChangeEnhet;
 };

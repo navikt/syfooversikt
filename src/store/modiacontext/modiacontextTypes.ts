@@ -18,5 +18,5 @@ export interface ModiacontextState {
   readonly pushingFeilet: boolean;
   readonly henterEnhet: boolean;
   readonly hentingEnhetFeilet: boolean;
-  readonly data: Modiacontext | unknown;
+  readonly data: Modiacontext | {};
 }

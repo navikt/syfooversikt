@@ -3,11 +3,14 @@ import { Provider } from 'react-redux';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount } from 'enzyme';
-import Personliste from '../../src/components/Personliste';
-import { Personrad } from '../../src/components/Personrad';
+import { before } from 'mocha';
+import Personliste, { VeilederNavn } from '../../src/components/Personliste';
+import Sorteringsrad from '../../src/components/Sorteringsrad';
+import Personrad from '../../src/components/Personrad';
 import {
   enhet,
   modiacontextNyAktivEnhet,
+  testdata,
   personregister,
   veiledere,
 } from '../data/fellesTestdata';
@@ -23,7 +26,7 @@ store.dispatch(modiaContextPushet(modiacontextNyAktivEnhet));
 
 describe('Personliste', () => {
   const markertePersoner = ['123', '234'];
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // tslint:disable-next-line:no-empty
   const checkboxHandler = () => {};
   const component = mount(
     <Provider store={store}>
@@ -39,6 +42,7 @@ describe('Personliste', () => {
   );
 
   it('Skal rendre 2 personrader', () => {
+    // tslint:disable-next-line: no-console
     expect(component.find(Personrad)).to.have.length(2);
   });
 });

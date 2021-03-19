@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 interface NumberIndicatorProps {
@@ -28,7 +28,7 @@ interface IndicatorProps {
   selected: boolean;
 }
 
-const StyledNumberIndicator = styled.div<IndicatorProps>`
+const NumberIndicator = styled.div<IndicatorProps>`
   width: 0.625rem;
   height: 0.625rem;
   border-radius: 50%;
@@ -41,16 +41,11 @@ const StyledNumberIndicator = styled.div<IndicatorProps>`
     `};
 `;
 
-export const NumberIndicator = ({
-  antall,
-  valgtIndex,
-}: NumberIndicatorProps): ReactElement => {
+export default ({ antall, valgtIndex }: NumberIndicatorProps) => {
   const mapTilSteg = () => {
     return new Array(antall)
       .fill(0)
-      .map((_, i) => (
-        <StyledNumberIndicator key={i} selected={i === valgtIndex} />
-      ));
+      .map((_, i) => <NumberIndicator key={i} selected={i === valgtIndex} />);
   };
 
   return <NumberIndicatorWrapper>{mapTilSteg()}</NumberIndicatorWrapper>;

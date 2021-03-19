@@ -1,6 +1,8 @@
 import { Reducer } from 'redux';
 import { FilterActionTypes, FilterAction } from './filter_actions';
 
+export const FILTERS_STATE_KEY = 'Filters';
+
 export interface FilterState {
   selectedBirthDates: string[];
   selectedVeilederIdents: string[];

@@ -1,21 +1,22 @@
 import { expect } from 'chai';
+import deepFreeze from 'deep-freeze';
 import personoversiktReducer from '../../../src/store/personoversikt/personoversiktReducer';
 import {
-  hentPersonoversiktFeilet,
+  PersonoversiktActionTypes,
   hentPersonoversiktHenter,
   hentPersonoversiktHentet,
-  PersonoversiktActionTypes,
+  hentPersonoversiktFeilet,
 } from '../../../src/store/personoversikt/personoversikt_actions';
 import { personoversikt } from '../../data/fellesTestdata';
 
 describe('personoversiktReducer', () => {
   describe('Henter personoversikt', () => {
-    const initialState = {
+    const initialState = deepFreeze({
       hentet: false,
       henter: false,
       hentingFeilet: false,
       data: [],
-    };
+    });
 
     it(`handterer ${PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER}`, () => {
       const action = hentPersonoversiktHenter();

@@ -1,36 +1,40 @@
 import { Reducer } from 'redux';
 import { VeiledereState } from './veiledereTypes';
-import { VeiledereAction, VeiledereActionTypes } from './veiledere_actions';
+import { VeiledereActionTypes } from './veiledere_actions';
 
 const initiellState: VeiledereState = {};
 
-const veiledereReducer: Reducer<VeiledereState, VeiledereAction> = (
+const veiledereReducer: Reducer<VeiledereState> = (
   state = initiellState,
-  action: VeiledereAction
+  action
 ) => {
+  const enhet: any = {};
   switch (action.type) {
     case VeiledereActionTypes.HENT_VEILEDERE_HENTER: {
-      return {
+      enhet[action.enhetId] = {
         ...state,
-        [action.enhetId]: { henter: true, hentet: false, hentingFeilet: false },
+        henter: true,
+        hentet: false,
+        hentingFeilet: false,
       };
+      return { ...state, ...enhet };
     }
     case VeiledereActionTypes.HENT_VEILEDERE_HENTET: {
-      return {
+      enhet[action.enhetId] = {
         ...state,
-        [action.enhetId]: {
-          henter: false,
-          hentet: true,
-          hentingFeilet: false,
-          data: action.data,
-        },
+        henter: false,
+        hentet: true,
+        data: action.data,
       };
+      return { ...state, ...enhet };
     }
     case VeiledereActionTypes.HENT_VEILEDERE_FEILET: {
-      return {
+      enhet[action.enhetId] = {
         ...state,
-        [action.enhetId]: { henter: false, hentet: false, hentingFeilet: true },
+        henter: false,
+        hentingFeilet: true,
       };
+      return { ...state, ...enhet };
     }
     default: {
       return state;

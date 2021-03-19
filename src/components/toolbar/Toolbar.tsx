@@ -39,9 +39,12 @@ const VelgBoks = styled(Checkbox)`
   margin-left: 0.5em;
 `;
 
-const IngressRad = styled(Row)`
+const RowStyled = styled(Row)`
   margin-left: 0;
   margin-right: 0;
+`;
+
+const IngressRad = styled(RowStyled)`
   display: flex;
   align-items: center;
 `;

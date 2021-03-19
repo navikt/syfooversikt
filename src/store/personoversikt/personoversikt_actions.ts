@@ -1,54 +1,26 @@
 import { PersonoversiktStatus } from './personoversiktTypes';
 
-export enum PersonoversiktActionTypes {
+export const enum PersonoversiktActionTypes {
   HENT_PERSONOVERSIKT_ENHET_FORESPURT = 'HENT_PERSONOVERSIKT_ENHET_FORESPURT',
   HENT_PERSONOVERSIKT_ENHET_HENTER = 'HENT_PERSONOVERSIKT_ENHET_HENTER',
   HENT_PERSONOVERSIKT_ENHET_HENTET = 'HENT_PERSONOVERSIKT_ENHET_HENTET',
   HENT_PERSONOVERSIKT_ENHET_FEILET = 'HENT_PERSONOVERSIKT_ENHET_FEILET',
 }
 
-export interface HentPersonoversiktForespurtAction {
-  type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT;
-  enhetId: string;
-}
-
-export interface HentPersonoversiktHenterAction {
-  type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER;
-}
-
-export interface HentPersonoversiktHentetAction {
-  type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTET;
-  data: PersonoversiktStatus[];
-}
-
-export interface HentPersonoversiktFeiletAction {
-  type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FEILET;
-}
-
-export type PersonoversiktType =
-  | HentPersonoversiktForespurtAction
-  | HentPersonoversiktHenterAction
-  | HentPersonoversiktHentetAction
-  | HentPersonoversiktFeiletAction;
-
-export const hentPersonoversiktForespurt = (
-  enhetId: string
-): PersonoversiktType => ({
+export const hentPersonoversiktForespurt = (enhetId: string) => ({
   type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT,
   enhetId,
 });
 
-export const hentPersonoversiktHenter = (): PersonoversiktType => ({
+export const hentPersonoversiktHenter = () => ({
   type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTER,
 });
 
-export const hentPersonoversiktHentet = (
-  data: PersonoversiktStatus[]
-): PersonoversiktType => ({
+export const hentPersonoversiktHentet = (data: PersonoversiktStatus[]) => ({
   type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_HENTET,
   data,
 });
 
-export const hentPersonoversiktFeilet = (): PersonoversiktType => ({
+export const hentPersonoversiktFeilet = () => ({
   type: PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FEILET,
 });

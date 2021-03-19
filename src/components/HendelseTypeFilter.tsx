@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithoutRef, ReactElement } from 'react';
+import React, { ComponentPropsWithoutRef, useEffect } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { useDispatch, useSelector } from 'react-redux';
-import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
+import { Checkbox } from 'nav-frontend-skjema';
 import countFilterAction from '../metrics/countFilterAction';
 import { PersonregisterState } from '../store/personregister/personregisterTypes';
 import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
@@ -18,6 +18,7 @@ export const HendelseTekster: any = {
 };
 
 interface Props extends ComponentPropsWithoutRef<any> {
+  onFilterChange: (filter: HendelseTypeFilters) => void;
   personRegister?: PersonregisterState;
 }
 
@@ -68,11 +69,7 @@ interface CheckboksElement {
   tabType: OverviewTabType;
 }
 
-export const HendelseTypeFilter = ({
-  className,
-  personRegister,
-  tabType,
-}: Props): ReactElement => {
+export default ({ className, personRegister, tabType }: Props) => {
   const dispatch = useDispatch();
   const currentHendelseFilters = useSelector(
     (state: ApplicationState) => state.filters.selectedHendelseType
@@ -84,10 +81,13 @@ export const HendelseTypeFilter = ({
 
   const elementer = Object.keys(HendelseTekster)
     .filter((key) => {
-      return !(
+      if (
         HendelseTekster[key] === HendelseTekster.UFORDELTE_BRUKERE &&
         tabType === OverviewTabType.MY_OVERVIEW
-      );
+      ) {
+        return false;
+      }
+      return true;
     })
     .map((key) => {
       const tekst: string = HendelseTekster[key];
@@ -108,15 +108,15 @@ export const HendelseTypeFilter = ({
   };
 
   return (
-    <div className={className}>
+    <div className={...className}>
       <EkspanderbartPanel apen tittel="Hendelse">
-        <CheckboxGruppe>
+        <div>
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
             personRegister
           )}
-        </CheckboxGruppe>
+        </div>
       </EkspanderbartPanel>
     </div>
   );

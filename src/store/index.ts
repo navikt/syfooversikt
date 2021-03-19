@@ -1,4 +1,4 @@
-import { combineReducers, Reducer } from 'redux';
+import { Action, AnyAction, combineReducers, Dispatch } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { all, fork } from 'redux-saga/effects';
 import { ModiacontextState } from './modiacontext/modiacontextTypes';
@@ -45,7 +45,11 @@ export interface ApplicationState {
   sorting: SortingState;
 }
 
-export const rootReducer = (): Reducer =>
+export interface ConnectedReduxProps<A extends Action = AnyAction> {
+  dispatch: Dispatch<A>;
+}
+
+export const rootReducer = () =>
   combineReducers<ApplicationState>({
     router: connectRouter(history),
     changelogs: changelogReducer,

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ReactElement } from 'react';
 
-const SearchIcon = ({ className }: { className: string }): ReactElement => {
+const SearchIcon = ({ className }: { className: string }) => {
   return (
     <svg
       className={className}

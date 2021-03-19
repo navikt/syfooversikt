@@ -3,11 +3,11 @@ import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Column } from 'nav-frontend-grid';
+import Personrad, { PersonRad } from '../../src/components/Personrad';
 import { lenkeTilModiaEnkeltperson } from '../../src/utils/lenkeUtil';
 import { firstCompanyNameFromPersonData } from '../../src/utils/personDataUtil';
 import { testdata, veiledere } from '../data/fellesTestdata';
-import { Skjermingskode } from '../../src/store/personregister/personregisterTypes';
-import { Personrad, StyledPersonRad } from '../../src/components/Personrad';
+import { PersonData } from '../../src/store/personregister/personregisterTypes';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -18,14 +18,10 @@ describe('Personrad', () => {
     navn: testdata.navn1,
     harMotebehovUbehandlet: false,
     harMoteplanleggerUbehandlet: false,
-    skjermingskode: testdata.skjermingskode.ingen as Skjermingskode,
+    skjermingskode: testdata.skjermingskode.ingen,
     markert: false,
-    harOppfolgingsplanLPSBistandUbehandlet: false,
-    tildeltEnhetId: '123',
-    tildeltVeilederIdent: '234',
-    oppfolgingstilfeller: [],
-  };
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  } as PersonData;
+  // tslint:disable-next-line:no-empty
   const checkboxHandler = () => {};
   const component = shallow(
     <Personrad
@@ -39,7 +35,7 @@ describe('Personrad', () => {
   );
 
   it('Skal inneholde PersonRad', () => {
-    expect(component.find(StyledPersonRad)).to.have.length(1);
+    expect(component.find(PersonRad)).to.have.length(1);
   });
 
   it('Skal rendre Column-komponenter med riktig navn, fodselsnummer og skjermingskode', () => {

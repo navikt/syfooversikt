@@ -74,13 +74,14 @@ const veilederenheterReducer: Reducer<VeilederenheterState> = (
       };
     }
     case modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHET: {
-      return action.data.eventType.valueOf() ===
-        CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET
-        ? {
-            ...state,
-            aktivEnhetId: action.data.verdi,
-          }
-        : state;
+      if (
+        action.data.eventType.valueOf() === CONTEXT_EVENT_TYPE.NY_AKTIV_ENHET
+      ) {
+        return {
+          ...state,
+          aktivEnhetId: action.data.verdi,
+        };
+      }
     }
     default: {
       return state;

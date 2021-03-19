@@ -1,11 +1,12 @@
 import {
-  PersonData,
   PersonregisterState,
+  PersonData,
 } from '../store/personregister/personregisterTypes';
+import { isNullOrUndefined } from 'util';
+import { formaterNavn } from './lenkeUtil';
 import { HendelseTypeFilters } from '../store/filters/filterReducer';
 import { firstCompanyNameFromPersonData } from './personDataUtil';
 import { Veileder } from '../store/veiledere/veiledereTypes';
-import { formaterNavn } from './lenkeUtil';
 
 export class Filterable<T> {
   value: T;
@@ -53,7 +54,7 @@ const getBirthDateFromFnr = (fnr: string): string => fnr.slice(0, 2);
 export const filterOnCompany = (
   personregister: PersonregisterState,
   companies: string[]
-): PersonregisterState => {
+) => {
   if (!companies || companies.length === 0) {
     return personregister;
   }
@@ -110,9 +111,11 @@ export const filtrerPersonregister = (
 ): PersonregisterState => {
   if (!filter) return personregister;
 
-  const filterHarVerdier = Object.values(filter).every(Boolean);
+  const erTomtFilter =
+    Object.keys(filter).filter((key) => (filter as any)[key] === true)
+      .length === 0;
 
-  return !filterHarVerdier
+  const nyttFiltrertPersonregister = erTomtFilter
     ? personregister
     : Object.keys(personregister).reduce((cv, fnr) => {
         const personData = personregister[fnr];
@@ -127,13 +130,13 @@ export const filtrerPersonregister = (
           cv[fnr] = personData;
         } else if (
           filter.ufordeltBruker &&
-          (personData.tildeltVeilederIdent === null ||
-            personData.tildeltVeilederIdent === undefined)
+          isNullOrUndefined(personData.tildeltVeilederIdent)
         ) {
           cv[fnr] = personData;
         }
         return cv;
       }, {} as PersonregisterState);
+  return nyttFiltrertPersonregister;
 };
 
 export const filterEventsOnVeileder = (
@@ -141,7 +144,7 @@ export const filterEventsOnVeileder = (
   veilederIdenter: string[]
 ): PersonregisterState => {
   if (!veilederIdenter.length) return personregister;
-  return Object.keys(personregister).reduce((p, fnr) => {
+  const final = Object.keys(personregister).reduce((p, fnr) => {
     if (
       veilederIdenter.find(
         (v) => v === personregister[fnr].tildeltVeilederIdent
@@ -151,6 +154,7 @@ export const filterEventsOnVeileder = (
     }
     return p;
   }, {} as PersonregisterState);
+  return final;
 };
 
 export type SortingType =
@@ -168,7 +172,7 @@ export const getSortedEventsFromSortingType = (
   personregister: PersonregisterState,
   veiledere: Veileder[],
   type: SortingType
-): PersonregisterState => {
+) => {
   if (type === 'NAME_ASC' || type === 'NAME_DESC') {
     return sortEventsOnName(personregister, type);
   } else if (type === 'FNR_ASC' || type === 'FNR_DESC') {
@@ -268,13 +272,30 @@ const sortEventsOnName = (
   personregister: PersonregisterState,
   order: SortingType
 ): PersonregisterState => {
-  const sorted = Object.entries(personregister).sort((a, b) => {
-    const lastNameA: string = formaterNavn(a[1].navn).split(',').shift() || '';
-    const lastNameB: string = formaterNavn(b[1].navn).split(',').shift() || '';
-    return lastNameA.localeCompare(lastNameB);
+  const personRegisterAsArray = Object.keys(personregister).reduce(
+    (currentPersonregisterArray, fnr) => {
+      if (personregister[fnr]) {
+        currentPersonregisterArray.push({ ...personregister[fnr], fnr });
+      }
+      return currentPersonregisterArray;
+    },
+    [] as any[]
+  );
+  const sortedPersonRegisterArray = personRegisterAsArray.sort((a, b) => {
+    if (a && b) {
+      const lastNameA: string = formaterNavn(a.navn).split(',').shift() || '';
+      const lastNameB: string = formaterNavn(b.navn).split(',').shift() || '';
+      if (lastNameA > lastNameB) return order === 'NAME_ASC' ? -1 : 1;
+      if (lastNameA < lastNameB) return order === 'NAME_ASC' ? 1 : -1;
+    }
+    return 0;
   });
-
-  return order === 'NAME_ASC'
-    ? Object.fromEntries(sorted)
-    : Object.fromEntries(sorted.reverse());
+  const sortedRegisterAsMap = sortedPersonRegisterArray.reduce(
+    (personregisterMap, value) => {
+      personregisterMap[value.fnr] = value;
+      return personregisterMap;
+    },
+    {} as PersonregisterState
+  );
+  return sortedRegisterAsMap;
 };

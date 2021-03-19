@@ -36,13 +36,6 @@ For å legge til en ny changelog/veiviser ved ny funksjonalitet:
 
 Klienten vil automatisk fange opp den nye endringen og vise en dialog når bruker laster den nye versjonen første gang.
 
-## Mocha tester i IntelliJ
-
-IDEA genererer run configs for å kjøre testene. Det er viktig å kjøre med samme oppsett som `npm run test` gjør, definert i `package.json`.
-Oppdater Mocha-template i run-configs, og legg til Extra Mocha options:
-
-- `--require dotenv/config --require ts-node/register --require ignore-styles --require jsdom-global/register`
-
 ## Kjøre lokalt
 
 - For å kjøre koden lokalt:
@@ -52,7 +45,6 @@ Oppdater Mocha-template i run-configs, og legg til Extra Mocha options:
   - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
 - Kjør tester med `npm test`
 - Kjør prettier og lint med `npm run prettier-lint`, de kan også kjøres hver for seg
-- Appen finner du [her](http://localhost:8080/minoversikt)
 
 ## Logge på i Q1-miljø
 

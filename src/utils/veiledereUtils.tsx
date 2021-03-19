@@ -3,7 +3,7 @@ import { Veileder } from '../store/veiledere/veiledereTypes';
 export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
   veiledere: Veileder[],
   veilederIdentToBeFirst: string
-): Veileder[] => {
+) => {
   const newVeiledere = [...veiledere];
   const veilederToBeFirstAsList = getAndRemoveVeileder(
     newVeiledere,
@@ -14,9 +14,7 @@ export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
   );
 };
 
-export const sortVeiledereAlphabetically = (
-  veiledere: Veileder[]
-): Veileder[] => {
+export const sortVeiledereAlphabetically = (veiledere: Veileder[]) => {
   return [...veiledere].sort((veileder1, veileder2) => {
     const surname1 = veileder1.etternavn.toLowerCase();
     const surname2 = veileder2.etternavn.toLowerCase();
@@ -29,10 +27,7 @@ export const sortVeiledereAlphabetically = (
   });
 };
 
-const getAndRemoveVeileder = (
-  veiledere: Veileder[],
-  ident: string
-): Veileder[] => {
+const getAndRemoveVeileder = (veiledere: Veileder[], ident: string) => {
   const veilederToRemoveIndex = veiledere.findIndex((veileder) => {
     return veileder.ident === ident;
   });

@@ -1,10 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-export const AlertStripeRod = (
-  melding: string,
-  className?: string
-): ReactElement => (
+export const AlertStripeRod = (melding: string, className?: string) => (
   <AlertStripe className={className} type="feil">
     {melding}
   </AlertStripe>

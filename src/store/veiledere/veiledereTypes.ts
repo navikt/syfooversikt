@@ -8,7 +8,7 @@ export interface VeiledereEnhetState {
   hentet: boolean;
   henter: boolean;
   hentingFeilet: boolean;
-  data?: Veileder[];
+  data: Veileder[];
 }
 
 export interface VeiledereState {
