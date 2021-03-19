@@ -1,11 +1,11 @@
-import React from 'react';
-import { Route, Switch, Redirect } from 'react-router';
+import React, { ReactElement } from 'react';
+import { Redirect, Route, Switch } from 'react-router';
 import OversiktContainer from '../containers/OversiktContainer';
 import { OverviewTabType } from '../konstanter';
-import NavigationBar from '../components/NavigationBar';
-import ChangelogWrapper from '../components/changelog/ChangelogWrapper';
+import { NavigationBar } from '../components/NavigationBar';
+import { ChangelogWrapper } from '../components/changelog/ChangelogWrapper';
 
-export const Landingsside = () => (
+export const Landingsside = (): ReactElement => (
   <div>
     <NavigationBar />
     <Switch>

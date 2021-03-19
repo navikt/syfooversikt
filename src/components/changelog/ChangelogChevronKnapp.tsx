@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';
@@ -38,6 +38,7 @@ interface ChevronKnappProps {
   type?: 'høyre' | 'venstre' | 'opp' | 'ned';
   text?: string;
   visible: boolean;
+
   onClick(): void;
 }
 
@@ -46,7 +47,7 @@ const ChangelogChevronKnapp = ({
   text: tekst,
   visible,
   onClick,
-}: ChevronKnappProps) => {
+}: ChevronKnappProps): ReactElement => {
   const CustomLabel = <ChevronLabel>{tekst}</ChevronLabel>;
   const colorClassname = classNames(visible ? undefined : 'invisible');
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../store';
 import { CONTEXT_EVENT_TYPE } from '../konstanter';
@@ -9,7 +9,6 @@ import {
 } from '../store/modiacontext/modiacontext_actions';
 import { HentAktivEnhetData } from '../store/modiacontext/modiacontextTypes';
 import { hentVeilederinfo } from '../store/veilederinfo/veilederinfo_actions';
-import { VeilederinfoState } from '../store/veilederinfo/veilederinfoTypes';
 import { opprettWebsocketConnection } from './contextHolder';
 import { config } from '../global';
 import ChangeEnhetModal from './ChangeEnhetModal';
@@ -20,17 +19,7 @@ const tekster = {
   },
 };
 
-interface StateProps {
-  veilederinfo: VeilederinfoState;
-}
-
-interface DispatchProps {
-  doHentEnhet: typeof hentAktivEnhet;
-}
-
-type ContextContainerProps = StateProps & DispatchProps;
-
-const Context = () => {
+const Context = (): ReactElement => {
   const veilederinfo = useSelector(
     (state: ApplicationState) => state.veilederinfo
   );
@@ -42,7 +31,7 @@ const Context = () => {
   const [previousEnhet, setPreviousEnhet] = useState('');
   const [nextEnhet, setNextEnhet] = useState('');
 
-  const opprettWSConnection = (props: ContextContainerProps) => {
+  const opprettWSConnection = () => {
     const ident = veilederinfo.data.ident;
 
     opprettWebsocketConnection(ident, (wsCallback) => {
@@ -94,7 +83,7 @@ const Context = () => {
 
   useEffect(() => {
     if (veilederinfo.hentet) {
-      opprettWSConnection({ doHentEnhet, veilederinfo });
+      opprettWSConnection();
     }
   }, [veilederinfo.hentet]);
 

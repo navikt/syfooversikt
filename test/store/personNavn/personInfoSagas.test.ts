@@ -1,15 +1,17 @@
 import { expect } from 'chai';
 import { put, call } from 'redux-saga/effects';
 import { hentPersonInfoSaga } from '../../../src/store/personInfo/personInfoSagas';
-import { PersonInfoActionTypes } from '../../../src/store/personInfo/personInfo_actions';
+import {
+  HentPersonInfoForespurtAction,
+  PersonInfoActionTypes,
+} from '../../../src/store/personInfo/personInfo_actions';
 import { post } from '../../../src/api';
 import { testdata } from '../../data/fellesTestdata';
 
 describe('hentPersonInfoSagas', () => {
-  const requestBody = [{ fnr: testdata.fnr1 }];
-  const forespurtAction = {
+  const forespurtAction: HentPersonInfoForespurtAction = {
     type: PersonInfoActionTypes.HENT_PERSON_INFO_FORESPURT,
-    data: requestBody,
+    data: [{ fnr: testdata.fnr1 }],
   };
   const generator = hentPersonInfoSaga(forespurtAction);
 

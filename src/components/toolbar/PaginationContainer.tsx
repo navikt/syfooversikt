@@ -1,5 +1,5 @@
 import Pagination from '../PaginationRow';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 import {
@@ -34,7 +34,7 @@ interface PaginationContainerProps {
   shouldShowTogglePagination: boolean;
 }
 
-const PaginationContainer = (props: PaginationContainerProps) => {
+const PaginationContainer = (props: PaginationContainerProps): ReactElement => {
   const {
     numberOfItemsPerPage,
     setNumberOfItemsPerPage,
@@ -61,7 +61,7 @@ const PaginationContainer = (props: PaginationContainerProps) => {
         numberOfItems={numberOfItemsTotal}
         startPage={0}
         maxNumberPerPage={numberOfItemsPerPage}
-        onPageChange={(start, end, pageNumber) => {
+        onPageChange={(start, end) => {
           props.setPageInfo({
             firstVisibleIndex: start,
             lastVisibleIndex: end,

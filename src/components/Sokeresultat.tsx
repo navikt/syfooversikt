@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import styled from 'styled-components';
 import Personliste from './Personliste';
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
@@ -56,7 +56,7 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     this.onPageChange = this.onPageChange.bind(this);
   }
 
-  checkboxHandler = (fnr: string) => {
+  checkboxHandler = (fnr: string): void => {
     this.setState((prevState) => {
       const markertePersoner: string[] = personErIkkeMarkert(prevState, fnr)
         ? [...prevState.markertePersoner, fnr]
@@ -72,7 +72,7 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
   componentDidUpdate(
     prevProps: SokeresultatProps,
     currentState: SokeresultatState
-  ) {
+  ): void {
     if (this.props.tabType !== currentState.currentTabType) {
       this.setState({
         alleMarkert: false,
@@ -95,7 +95,7 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     }
   }
 
-  checkAllHandler = (checked: boolean) => {
+  checkAllHandler = (checked: boolean): void => {
     const { personregister } = this.props;
 
     const fnrListe = Object.keys(personregister);
@@ -108,7 +108,7 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     }));
   };
 
-  buttonHandler = (veilederIdent: string) => {
+  buttonHandler = (veilederIdent: string): void => {
     const { aktivEnhetId, tildelVeileder } = this.props;
     const veilederArbeidstakerListe = lagListe(
       this.state.markertePersoner,
@@ -118,14 +118,14 @@ class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
     tildelVeileder(veilederArbeidstakerListe);
   };
 
-  onPageChange = (startItem: number, endItem: number) => {
+  onPageChange = (startItem: number, endItem: number): void => {
     this.setState({
       endItem,
       startItem,
     });
   };
 
-  render() {
+  render(): ReactElement {
     const {
       personregister,
       veiledere,

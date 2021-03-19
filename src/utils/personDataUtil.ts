@@ -4,13 +4,13 @@ import {
 } from '../store/personregister/personregisterTypes';
 import { Veileder } from '../store/veiledere/veiledereTypes';
 
-export const skjermingskode = (person: PersonData) => {
+export const skjermingskode = (person: PersonData): string => {
   return person.skjermingskode && person.skjermingskode !== 'INGEN'
     ? person.skjermingskode.toLowerCase().replace('_', ' ')
     : '';
 };
 
-export const veilederEllerNull = (veileder?: Veileder) => {
+export const veilederEllerNull = (veileder?: Veileder): string | null => {
   if (veileder) {
     return veileder.fornavn === ''
       ? veileder.ident
@@ -21,7 +21,7 @@ export const veilederEllerNull = (veileder?: Veileder) => {
 
 export const mapPersonregisterToCompanyList = (
   personregister: PersonregisterState
-) => {
+): string[] => {
   const allCompanyNames: string[] = [];
   Object.keys(personregister).forEach((fnr) => {
     const personData = personregister[fnr];
@@ -37,6 +37,8 @@ export const companyNamesFromPersonData = (p: PersonData): string[] => {
   return allCompaniesForPerson;
 };
 
-export const firstCompanyNameFromPersonData = (p: PersonData) => {
+export const firstCompanyNameFromPersonData = (
+  p: PersonData
+): string | undefined => {
   return companyNamesFromPersonData(p).shift();
 };

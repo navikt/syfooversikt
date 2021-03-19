@@ -1,15 +1,14 @@
 import { Row } from 'nav-frontend-grid';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import ContextContainer from '../context/ContextContainer';
+import DocumentTitle from 'react-document-title';
 
 interface SideProps {
-  children: object;
+  children: ReactElement;
   tittel: string;
 }
 
-const DocumentTitle = require('react-document-title'); // tslint:disable-line no-var-requires
-
-const Side = ({ tittel = '', children }: SideProps) => {
+const Side = ({ tittel = '', children }: SideProps): ReactElement => {
   return (
     <DocumentTitle
       title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import Personrad from './Personrad';
+import { Personrad } from './Personrad';
 import { Veileder } from '../store/veiledere/veiledereTypes';
 import { veilederEllerNull } from '../utils/personDataUtil';
 import { ApplicationState } from '../store';
@@ -57,7 +57,7 @@ const veilederForPerson = (veiledere: Veileder[], person: PersonData) => {
 export const getVeilederComponent = (
   veiledere: Veileder[],
   personData: PersonData
-) => {
+): ReactElement => {
   const veilederName = veilederEllerNull(
     veilederForPerson(veiledere, personData)
   );
@@ -68,7 +68,7 @@ export const getVeilederComponent = (
   );
 };
 
-const Personliste = (props: PersonlisteProps) => {
+const Personliste = (props: PersonlisteProps): ReactElement => {
   const {
     personregister,
     checkboxHandler,

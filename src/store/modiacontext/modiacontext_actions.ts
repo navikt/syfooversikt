@@ -1,10 +1,6 @@
-import {
-  HentAktivEnhetData,
-  Modiacontext,
-  ModiacontextPayload,
-} from './modiacontextTypes';
+import { HentAktivEnhetData, ModiacontextPayload } from './modiacontextTypes';
 
-export const enum modiacontextActionTypes {
+export enum modiacontextActionTypes {
   PUSH_MODIACONTEXT_FORESPURT = 'PUSH_MODIACONTEXT_FORESPURT',
   PUSH_MODIACONTEXT_FEILET = 'PUSH_MODIACONTEXT_FEILET',
   PUSH_MODIACONTEXT_PUSHET = 'PUSH_MODIACONTEXT_PUSHET',
@@ -12,41 +8,77 @@ export const enum modiacontextActionTypes {
   HENT_AKTIVENHET_FORESPURT = 'HENT_AKTIVENHET_FORESPURT',
   HENT_AKTIVENHET_HENTER = 'HENT_AKTIVENHET_HENTER',
   HENT_AKTIVENHET_FEILET = 'HENT_AKTIVENHET_FEILET',
-  HENT_AKTIVENHET_HENTET = 'HENT_AKTIVENHET_HENTET',
 }
 
-export const hentAktivEnhet = (data: HentAktivEnhetData) => ({
+export interface HentAktivEnhetAction {
+  type: modiacontextActionTypes.HENT_AKTIVENHET_FORESPURT;
+  data: HentAktivEnhetData;
+}
+
+export interface HentAktivEnhetFeiletAction {
+  type: modiacontextActionTypes.HENT_AKTIVENHET_FEILET;
+}
+
+export interface HenterAktivEnhetAction {
+  type: modiacontextActionTypes.HENT_AKTIVENHET_HENTER;
+}
+
+export interface PushModiaContextFeiletAction {
+  type: modiacontextActionTypes.PUSH_MODIACONTEXT_FEILET;
+}
+
+export interface PusherModiaContextAction {
+  type: modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHER;
+}
+
+export interface PushModiaContextAction {
+  type: modiacontextActionTypes.PUSH_MODIACONTEXT_FORESPURT;
+  data: ModiacontextPayload;
+}
+
+export interface ModiaContextPushetAction {
+  type: modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHET;
+  data: ModiacontextPayload;
+}
+
+export type ModiaAction =
+  | HentAktivEnhetAction
+  | HentAktivEnhetFeiletAction
+  | HenterAktivEnhetAction
+  | PushModiaContextFeiletAction
+  | PusherModiaContextAction
+  | PushModiaContextAction
+  | ModiaContextPushetAction;
+
+export const hentAktivEnhet = (
+  data: HentAktivEnhetData
+): HentAktivEnhetAction => ({
   type: modiacontextActionTypes.HENT_AKTIVENHET_FORESPURT,
   data,
 });
 
-export const hentAktivEnhetFeilet = () => ({
+export const hentAktivEnhetFeilet = (): ModiaAction => ({
   type: modiacontextActionTypes.HENT_AKTIVENHET_FEILET,
 });
 
-export const henterAktivEnhet = () => ({
+export const henterAktivEnhet = (): ModiaAction => ({
   type: modiacontextActionTypes.HENT_AKTIVENHET_HENTER,
 });
 
-export const aktivEnhetHentet = (data: Modiacontext) => ({
-  type: modiacontextActionTypes.HENT_AKTIVENHET_HENTET,
-  data,
-});
-
-export const pushModiaContextFeilet = () => ({
+export const pushModiaContextFeilet = (): ModiaAction => ({
   type: modiacontextActionTypes.PUSH_MODIACONTEXT_FEILET,
 });
 
-export const pusherModiaContext = () => ({
+export const pusherModiaContext = (): ModiaAction => ({
   type: modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHER,
 });
 
-export const pushModiaContext = (data: ModiacontextPayload) => ({
+export const pushModiaContext = (data: ModiacontextPayload): ModiaAction => ({
   type: modiacontextActionTypes.PUSH_MODIACONTEXT_FORESPURT,
   data,
 });
 
-export const modiaContextPushet = (data: ModiacontextPayload) => ({
+export const modiaContextPushet = (data: ModiacontextPayload): ModiaAction => ({
   type: modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHET,
   data,
 });

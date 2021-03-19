@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import ModalWrapper from 'nav-frontend-modal';
 import { Knapp } from 'nav-frontend-knapper';
 import styled from 'styled-components';
@@ -47,7 +47,7 @@ const ChangeEnhetModal = ({
   isOpen,
   changeEnhet,
   keepEnhet,
-}: ChangeEnhetModalProps) => {
+}: ChangeEnhetModalProps): ReactElement => {
   return (
     <Modal
       contentLabel="bytt enhet"

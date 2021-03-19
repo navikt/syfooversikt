@@ -46,23 +46,27 @@ export const personregister: PersonregisterState = {
   } as PersonData,
 };
 
-export const personoversikt = [
+export const personoversikt: PersonoversiktStatus[] = [
   {
-    navn: testdata.navn1,
     fnr: testdata.fnr1,
+    navn: testdata.navn1,
     enhet: enhetId,
     veilederIdent: null,
     motebehovUbehandlet: true,
+    moteplanleggerUbehandlet: true,
+    oppfolgingsplanLPSBistandUbehandlet: null,
     oppfolgingstilfeller: [],
-  } as PersonoversiktStatus,
+  },
   {
-    navn: testdata.navn4,
     fnr: testdata.fnr4,
+    navn: testdata.navn4,
     enhet: enhetId,
     veilederIdent,
     motebehovUbehandlet: null,
+    moteplanleggerUbehandlet: false,
+    oppfolgingsplanLPSBistandUbehandlet: false,
     oppfolgingstilfeller: [],
-  } as PersonoversiktStatus,
+  },
 ];
 
 export const enhet = {
