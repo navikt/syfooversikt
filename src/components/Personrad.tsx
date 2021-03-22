@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import { Checkbox } from 'nav-frontend-skjema';
@@ -10,7 +10,6 @@ import {
 import { PersonData } from '../store/personregister/personregisterTypes';
 import {
   skjermingskode,
-  companyNamesFromPersonData,
   firstCompanyNameFromPersonData,
 } from '../utils/personDataUtil';
 
@@ -23,7 +22,7 @@ interface PersonradProps {
   index: number;
 }
 
-export const PersonRad = styled.div<{ index: number; selected: boolean }>`
+export const StyledPersonRad = styled.div<{ index: number; selected: boolean }>`
   display: flex;
   align-items: center;
   padding-right: 0.5em;
@@ -49,7 +48,7 @@ const VelgBoks = styled(Checkbox)`
   padding-bottom: 1em;
 `;
 
-export default (props: PersonradProps) => {
+export const Personrad = (props: PersonradProps): ReactElement => {
   const {
     fnr,
     checkboxHandler,
@@ -60,11 +59,11 @@ export default (props: PersonradProps) => {
   } = props;
 
   return (
-    <PersonRad index={index} selected={kryssAv}>
+    <StyledPersonRad index={index} selected={kryssAv}>
       <Column xs={'1'}>
         <VelgBoks
           label={''}
-          checked={!!kryssAv}
+          checked={kryssAv}
           onChange={() => {
             checkboxHandler(fnr);
           }}
@@ -77,6 +76,6 @@ export default (props: PersonradProps) => {
       <Column xs={'2'}>
         <NoWrapText>{skjermingskode(personData)}</NoWrapText>
       </Column>
-    </PersonRad>
+    </StyledPersonRad>
   );
 };

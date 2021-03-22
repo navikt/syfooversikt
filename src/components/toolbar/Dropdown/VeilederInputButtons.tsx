@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Checkbox, Radio } from 'nav-frontend-skjema';
 import { Veileder } from '../../../store/veiledere/veiledereTypes';
+import { ReactElement } from 'react';
 
 interface VeilederCheckboxProps {
   onChangeHandler: (veileder: Veileder) => void;
@@ -63,7 +64,9 @@ const InputButtons = (props: VeilederCheckboxProps) => {
   );
 };
 
-export const VeilederInputButtons = (props: VeilederCheckboxProps) => {
+export const VeilederInputButtons = (
+  props: VeilederCheckboxProps
+): ReactElement => {
   if (props.isInputGiven) {
     return <InputButtons {...props} />;
   }

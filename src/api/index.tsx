@@ -1,26 +1,15 @@
 import { erProd } from '../utils/miljoUtil';
 
-const getCookie = (name: string) => {
-  const re = new RegExp(`${name}=([^;]+)`);
-  const match = re.exec(document.cookie);
-  return match !== null ? match[1] : '';
-};
-
-const createLogger = () => {
+const log = (...data: unknown[]): void => {
   if (
     window.location.search.indexOf('log=true') > -1 ||
     process.env.NODE_ENV === 'development'
   ) {
-    // tslint:disable-next-line
-    return console.log;
+    console.log(data);
   }
-  // tslint:disable-next-line
-  return () => {};
 };
 
-const log = createLogger();
-
-export const hentLoginUrl = () => {
+export const hentLoginUrl = (): string => {
   if (erProd()) {
     return 'https://loginservice.nais.adeo.no/login';
   }
@@ -28,18 +17,18 @@ export const hentLoginUrl = () => {
   return 'https://loginservice.nais.preprod.local/login';
 };
 
-export const hentRedirectBaseUrl = (windowLocationHref: string) => {
+export const hentRedirectBaseUrl = (): string => {
   if (erProd()) {
     return 'https://syfooversikt.nais.adeo.no';
   }
   return 'https://syfooversikt.nais.preprod.local';
 };
 
-export const lagreRedirectUrlILocalStorage = (href: string) => {
+export const lagreRedirectUrlILocalStorage = (href: string): void => {
   localStorage.setItem('redirecturl', href);
 };
 
-export function get(url: string) {
+export function get(url: string): Promise<any> {
   return fetch(url, {
     credentials: 'include',
   })
@@ -47,9 +36,7 @@ export function get(url: string) {
       if (res.status === 401) {
         log(res, 'Redirect til login');
         lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl(
-          window.location.href
-        )}`;
+        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
       } else if (res.status === 403) {
         window.location.href = `/na`;
       } else if (res.status > 400) {
@@ -66,7 +53,7 @@ export function get(url: string) {
     });
 }
 
-export function post(url: string, body: object) {
+export function post(url: string, body: Record<string, any>): Promise<any> {
   return fetch(url, {
     credentials: 'include',
     method: 'POST',
@@ -79,9 +66,7 @@ export function post(url: string, body: object) {
       if (res.status === 401) {
         log(res, 'Redirect til login');
         lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl(
-          window.location.href
-        )}`;
+        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
         return null;
       } else if (res.status === 403) {
         window.location.href = `/na`;
@@ -95,19 +80,6 @@ export function post(url: string, body: object) {
         }
         return res;
       }
-    })
-    .catch((err) => {
-      log(err);
-      throw err;
-    });
-}
-
-export function getWithoutThrows(url: string) {
-  return fetch(url, {
-    credentials: 'include',
-  })
-    .then((res) => {
-      return res.json();
     })
     .catch((err) => {
       log(err);

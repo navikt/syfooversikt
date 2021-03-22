@@ -3,8 +3,9 @@ import chaiEnzyme from 'chai-enzyme';
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Provider } from 'react-redux';
-import SokeresultatFilter, {
+import {
   HendelseTekster,
+  HendelseTypeFilter,
 } from '../../src/components/HendelseTypeFilter';
 import { store } from '../../src/store';
 import { mount } from 'enzyme';
@@ -13,11 +14,9 @@ chai.use(chaiEnzyme());
 const expect = chai.expect;
 
 describe('SokeresultatFilter', () => {
-  // tslint:disable-next-line:no-empty
-  const callback = () => {};
   const component = mount(
     <Provider store={store}>
-      <SokeresultatFilter onFilterChange={callback} />
+      <HendelseTypeFilter />
     </Provider>
   );
 

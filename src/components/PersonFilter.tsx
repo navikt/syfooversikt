@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import Ekspanderbartpanel, {
-  EkspanderbartpanelProps,
-} from 'nav-frontend-ekspanderbartpanel';
+import React, { ReactElement, useState } from 'react';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -31,14 +29,14 @@ interface PersonFilterProps {
   personregister: PersonregisterState;
 }
 
-export default (props: PersonFilterProps) => {
+export const PersonFilter = (props: PersonFilterProps): ReactElement => {
   const [panelOpen, setPanelOpen] = useState(true);
   const dispatch = useDispatch();
 
   const { personregister } = props;
 
   const togglePanel = () => {
-    setPanelOpen(!!panelOpen);
+    setPanelOpen(panelOpen);
   };
 
   const onBirthDateChange = (birthDates: string[]) => {

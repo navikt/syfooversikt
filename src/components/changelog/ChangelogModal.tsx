@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ModalWrapper from 'nav-frontend-modal';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Changelog } from '../../store/changelog/changelogTypes';
-import NumberIndicator from '../NumberIndicator';
+import { NumberIndicator } from '../NumberIndicator';
 import ChangelogChevronKnapp from './ChangelogChevronKnapp';
 
 interface Props {
   isOpen: boolean;
   changelog?: Changelog;
+
   onClose(didComplete: boolean, version: number): void;
 }
 
@@ -86,7 +87,11 @@ const ChangelogTextField = styled.div`
   }
 `;
 
-const ChangelogModal = ({ onClose, isOpen, changelog }: Props) => {
+const ChangelogModal = ({
+  onClose,
+  isOpen,
+  changelog,
+}: Props): ReactElement => {
   if (!changelog) return <></>;
 
   const [currentPageNumber, setPageNumber] = useState(0);

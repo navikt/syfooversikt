@@ -19,7 +19,7 @@ fs.writeFile(
 );
 
 childProcess.exec(
-  'webpack -p --config webpack.production.config.js',
+  'webpack --config webpack.production.config.js',
   (error, stdout, stderr) => {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);

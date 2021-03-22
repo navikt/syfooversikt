@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import {
   assignUsersToSelectedVeileder,
   filterVeiledereOnInput,
@@ -25,7 +25,7 @@ const dropdownButtonTexts: DropdownButtonTexts = {
   reset: 'Avbryt',
 };
 
-const TildelVeileder = (props: ToolbarWrapperProps) => {
+const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
   const stateFromProps = () => ({
     chosenVeilederIdent: '',
     input: '',

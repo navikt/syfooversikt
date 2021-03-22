@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithoutRef, useEffect } from 'react';
+import React, { ComponentPropsWithoutRef, ReactElement } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { useDispatch, useSelector } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import countFilterAction from '../metrics/countFilterAction';
 import { PersonregisterState } from '../store/personregister/personregisterTypes';
 import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
@@ -18,7 +18,6 @@ export const HendelseTekster: any = {
 };
 
 interface Props extends ComponentPropsWithoutRef<any> {
-  onFilterChange: (filter: HendelseTypeFilters) => void;
   personRegister?: PersonregisterState;
 }
 
@@ -69,7 +68,11 @@ interface CheckboksElement {
   tabType: OverviewTabType;
 }
 
-export default ({ className, personRegister, tabType }: Props) => {
+export const HendelseTypeFilter = ({
+  className,
+  personRegister,
+  tabType,
+}: Props): ReactElement => {
   const dispatch = useDispatch();
   const currentHendelseFilters = useSelector(
     (state: ApplicationState) => state.filters.selectedHendelseType
@@ -81,13 +84,10 @@ export default ({ className, personRegister, tabType }: Props) => {
 
   const elementer = Object.keys(HendelseTekster)
     .filter((key) => {
-      if (
+      return !(
         HendelseTekster[key] === HendelseTekster.UFORDELTE_BRUKERE &&
         tabType === OverviewTabType.MY_OVERVIEW
-      ) {
-        return false;
-      }
-      return true;
+      );
     })
     .map((key) => {
       const tekst: string = HendelseTekster[key];
@@ -108,15 +108,15 @@ export default ({ className, personRegister, tabType }: Props) => {
   };
 
   return (
-    <div className={...className}>
+    <div className={className}>
       <EkspanderbartPanel apen tittel="Hendelse">
-        <div>
+        <CheckboxGruppe>
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
             personRegister
           )}
-        </div>
+        </CheckboxGruppe>
       </EkspanderbartPanel>
     </div>
   );

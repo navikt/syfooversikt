@@ -14,6 +14,8 @@ const mapPersonToState = (person: PersonoversiktStatus) => ({
   tildeltVeilederIdent: person.veilederIdent,
   harMotebehovUbehandlet: person.motebehovUbehandlet,
   harMoteplanleggerUbehandlet: person.moteplanleggerUbehandlet,
+  harOppfolgingsplanLPSBistandUbehandlet:
+    person.oppfolgingsplanLPSBistandUbehandlet,
   oppfolgingstilfeller: [],
 });
 const mapPersonerToState = (liste: PersonoversiktStatus[]) => {

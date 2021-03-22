@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
-import FilterTittel from '../FilterTitle';
+import { FilterTitle } from '../FilterTitle';
 
 const allDates = new Array(31)
   .fill(1)
@@ -24,17 +24,21 @@ const selectableOptions: DateOption[] = allDates.map((v: number) => {
 
 interface BirthDateFilterProps {
   selectedDates: string[];
+
   onSelect(value: string[]): void;
 }
 
-const BirthDateFilter = ({ onSelect, selectedDates }: BirthDateFilterProps) => {
+const BirthDateFilter = ({
+  onSelect,
+  selectedDates,
+}: BirthDateFilterProps): ReactElement => {
   const selectedOptions = selectedDates.map(
     (v) => ({ label: v, value: v } as DateOption)
   );
 
   return (
     <div>
-      <FilterTittel>{texts.title}</FilterTittel>
+      <FilterTitle>{texts.title}</FilterTitle>
       <Select
         placeholder={texts.placeholder}
         options={selectableOptions}

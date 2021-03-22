@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 import styled from 'styled-components';
 import { Input } from 'nav-frontend-skjema';
 import SearchIcon from '../img/icons/SearchIcon';
@@ -32,7 +32,7 @@ const SearchIconBlue = styled(SearchIcon)`
   top: 1.5em;
 `;
 
-const InputWithSearchIcon = (props: InputWithSearchIconProps) => {
+const InputWithSearchIcon = (props: InputWithSearchIconProps): ReactElement => {
   const { autofocus, label, onChange, placeholder, type, value } = props;
   return (
     <InputDiv className="inputWithSearchIcon">
