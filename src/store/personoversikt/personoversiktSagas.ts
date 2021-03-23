@@ -7,7 +7,6 @@ import { PersonoversiktStatus } from './personoversiktTypes';
 import { filterOnEnhet } from '../../utils/hendelseFilteringUtils';
 import { ApplicationState } from '../index';
 import { PersonregisterState } from '../personregister/personregisterTypes';
-import { HentPersonoversiktForespurtAction } from './personoversikt_actions';
 
 export const hentPersonregister = (
   state: ApplicationState
