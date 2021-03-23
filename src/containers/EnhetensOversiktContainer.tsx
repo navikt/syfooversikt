@@ -173,10 +173,10 @@ export const EnhetensOversiktContainer = ({
 const getPropsFromState = (state: ApplicationState) => ({
   personregister: state.personregister,
   aktivEnhetId: state.veilederenheter.aktivEnhetId,
-  aktivEnhetFeilet: state.veilederenheter.hentingFeilet,
+  aktivEnhetFeilet: state.modiacontext.hentingEnhetFeilet,
   aktivVeilederinfo: state.veilederinfo.data,
   henterAlt:
-    state.veilederenheter.henter ||
+    state.modiacontext.henterEnhet ||
     state.veilederinfo.henter ||
     state.personoversikt.henter,
   noeErHentet:

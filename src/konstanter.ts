@@ -1,7 +1,3 @@
-export const CONTEXT_EVENT_TYPE = {
-  NY_AKTIV_ENHET: 'NY_AKTIV_ENHET',
-};
-
 export enum OverviewTabType {
   ENHET_OVERVIEW = 'ENHET_OVERVIEW',
   MY_OVERVIEW = 'MY_OVERVIEW',

@@ -3,10 +3,8 @@ import { ModiacontextState } from './modiacontextTypes';
 import { modiacontextActionTypes } from './modiacontext_actions';
 
 const initiellState: ModiacontextState = {
-  pushet: false,
-  pusher: false,
-  pushingFeilet: false,
   henterEnhet: false,
+  hentetEnhet: false,
   hentingEnhetFeilet: false,
   data: {},
 };
@@ -16,30 +14,6 @@ const modiacontextReducer: Reducer<ModiacontextState> = (
   action
 ) => {
   switch (action.type) {
-    case modiacontextActionTypes.PUSH_MODIACONTEXT_FEILET: {
-      return {
-        ...state,
-        pushet: false,
-        pusher: false,
-        pushingFeilet: true,
-      };
-    }
-    case modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHER: {
-      return {
-        ...state,
-        pushet: false,
-        pusher: true,
-        pushingFeilet: false,
-      };
-    }
-    case modiacontextActionTypes.PUSH_MODIACONTEXT_PUSHET: {
-      return {
-        ...state,
-        pushet: true,
-        pusher: false,
-        pushingFeilet: false,
-      };
-    }
     case modiacontextActionTypes.HENT_AKTIVENHET_FEILET: {
       return {
         ...state,
@@ -51,6 +25,15 @@ const modiacontextReducer: Reducer<ModiacontextState> = (
       return {
         ...state,
         henterEnhet: true,
+        hentetEnhet: false,
+        hentingEnhetFeilet: false,
+      };
+    }
+    case modiacontextActionTypes.HENT_AKTIVENHET_HENTET: {
+      return {
+        ...state,
+        henterEnhet: false,
+        hentetEnhet: true,
         hentingEnhetFeilet: false,
       };
     }

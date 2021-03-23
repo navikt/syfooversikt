@@ -43,7 +43,7 @@ server.engine('html', mustacheExpress());
 
 const modiacontextholderUrl =
   process.env.NAIS_CONTEXT === 'dev'
-    ? 'modiacontextholder.q1'
+    ? 'modiacontextholder.q0'
     : 'modiacontextholder.default';
 
 changelogs.readChangelogDir();

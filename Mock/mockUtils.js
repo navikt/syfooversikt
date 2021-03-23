@@ -80,7 +80,6 @@ const personInfo = readDataFromJsonFile('personInfo.json');
 const personoversiktEnhet = readDataFromJsonFile('personoversiktEnhet.json');
 const veiledere = readDataFromJsonFile('veiledere.json');
 const veilederInfo = readDataFromJsonFile('veilederInfo.json');
-const enheter = readDataFromJsonFile('enheter.json');
 const aktivEnhet = readDataFromJsonFile('aktivEnhet.json');
 
 module.exports = {
@@ -91,6 +90,5 @@ module.exports = {
   personoversiktEnhet: personoversiktEnhet,
   veiledere: veiledere,
   veilederInfo: veilederInfo,
-  enheter: enheter,
   aktivEnhet: aktivEnhet,
 };
