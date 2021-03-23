@@ -43,31 +43,37 @@ export const henterPersonerMedEnhet = (state: any): boolean => {
   );
 };
 
-export function* hentPersonoversikt(
-  action: HentPersonoversiktForespurtAction
-): any {
-  const harHentetPersonerPaEnhetId = yield select(henterPersonerMedEnhet);
-
-  if (action.enhetId !== '' && !harHentetPersonerPaEnhetId) {
-    yield put(actions.hentPersonoversiktHenter());
-    try {
-      const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/personoversikt/enhet/${action.enhetId}`;
-      const data = yield call(get, path);
-      if (data.length > 0) {
-        yield put(actions.hentPersonoversiktHentet(data));
-        yield call(hentNavnForPersonerUtenNavn, data);
-      } else {
-        yield put(actions.hentPersonoversiktHentet([]));
-      }
-    } catch (e) {
-      yield put(actions.hentPersonoversiktFeilet());
+export function* hentPersonoversikt(enhetId: string): any {
+  yield put(actions.hentPersonoversiktHenter());
+  try {
+    const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/personoversikt/enhet/${enhetId}`;
+    const data = yield call(get, path);
+    if (data.length > 0) {
+      yield put(actions.hentPersonoversiktHentet(data));
+      yield call(hentNavnForPersonerUtenNavn, data);
+    } else {
+      yield put(actions.hentPersonoversiktHentet([]));
     }
+  } catch (e) {
+    yield put(actions.hentPersonoversiktFeilet());
+  }
+}
+
+const hentetAktivEnhetId = (state: any): string => {
+  return state.veilederenheter.aktivEnhetId || '';
+};
+
+export function* hentPersonoversiktHvisEnhetHentet(): any {
+  const enhetId = yield select(hentetAktivEnhetId);
+  const harHentetPersonerPaEnhetId = yield select(henterPersonerMedEnhet);
+  if (enhetId !== '' && !harHentetPersonerPaEnhetId) {
+    yield hentPersonoversikt(enhetId);
   }
 }
 
 export default function* personoversiktSagas(): Generator {
   yield takeEvery(
     actions.PersonoversiktActionTypes.HENT_PERSONOVERSIKT_ENHET_FORESPURT,
-    hentPersonoversikt
+    hentPersonoversiktHvisEnhetHentet
   );
 }
