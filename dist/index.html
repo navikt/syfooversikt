@@ -14,7 +14,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    {{#isProd}}
     <script src="https://internarbeidsflatedecorator.nais.adeo.no/internarbeidsflatedecorator/js/head.min.js"></script>
+    {{/isProd}} {{^isProd}}
+    <script src="https://navikt.github.io/internarbeidsflatedecorator/js/head.min.js"></script>
+    {{/isProd}}
     <!-- Hotjar Tracking Code for http://navlab.no/ -->
     <script>
       (function (h, o, t, j, a, r) {
