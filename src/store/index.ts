@@ -18,7 +18,6 @@ import personregisterReducer from './personregister/personregisterReducer';
 
 import modiacontextSagas from './modiacontext/modiacontextSagas';
 import veiledereSagas from './veiledere/veiledereSagas';
-import veilederenheterSagas from './veilederenheter/veilederenheterSagas';
 import veilederinfoSagas from './veilederinfo/veilederinfoSagas';
 import personInfoSagas from './personInfo/personInfoSagas';
 import personoversiktSagas from './personoversikt/personoversiktSagas';
@@ -67,7 +66,6 @@ export function* rootSaga() {
     fork(personoversiktSagas),
     fork(personInfoSagas),
     fork(veilederArbeidstakerSagas),
-    fork(veilederenheterSagas),
     fork(veiledereSagas),
     fork(veilederinfoSagas),
   ]);

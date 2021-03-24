@@ -12,9 +12,10 @@ export function useOversiktData(): OversiktData {
 
   return {
     laster:
-      state.veilederenheter.henter ||
+      state.modiacontext.henterEnhet ||
       state.veilederinfo.henter ||
-      state.personoversikt.henter,
+      state.personoversikt.henter ||
+      state.veilederenheter.aktivEnhetId === '',
     hentingEnhetFeilet: state.modiacontext.hentingEnhetFeilet,
     aktivEnhet: state.veilederenheter.aktivEnhetId,
   };

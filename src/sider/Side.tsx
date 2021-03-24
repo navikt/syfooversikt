@@ -1,6 +1,5 @@
 import { Row } from 'nav-frontend-grid';
 import React, { ReactElement } from 'react';
-import ContextContainer from '../context/ContextContainer';
 import DocumentTitle from 'react-document-title';
 
 interface SideProps {
@@ -14,9 +13,6 @@ const Side = ({ tittel = '', children }: SideProps): ReactElement => {
       title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}
     >
       <div>
-        <Row>
-          <ContextContainer />
-        </Row>
         <Row>{children}</Row>
       </div>
     </DocumentTitle>
