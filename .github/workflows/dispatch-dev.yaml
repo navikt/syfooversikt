@@ -28,6 +28,15 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.gitCommit }}
+      - name: Use Node
+        if: ${{ !env.found_image }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install and build
+        if: ${{ !env.found_image }}
+        run: |
+          npm install && npm run nais-build
       - name: Build and publish Docker image if not already done
         if: ${{ !env.found_image }}
         env:
@@ -42,7 +51,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
