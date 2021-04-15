@@ -46,6 +46,11 @@ const modiacontextholderUrl =
     ? 'modiacontextholder.q0'
     : 'modiacontextholder.default';
 
+const syfopersonHost =
+  process.env.NAIS_CONTEXT === 'dev'
+    ? 'https://syfoperson.dev.intern.nav.no'
+    : 'https://syfoperson.intern.nav.no';
+
 changelogs.readChangelogDir();
 
 const renderApp = () => {
@@ -164,8 +169,7 @@ const startServer = (html) => {
     );
     server.use(
       '/syfoperson/api',
-      proxy('syfoperson.default', {
-        https: false,
+      proxy(syfopersonHost, {
         proxyReqPathResolver: function (req) {
           return `/syfoperson/api${req.url}`;
         },
