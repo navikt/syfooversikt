@@ -46,10 +46,25 @@ const modiacontextholderUrl =
     ? 'modiacontextholder.q0'
     : 'modiacontextholder.default';
 
+const syfomoteadminHost =
+  process.env.NAIS_CONTEXT === 'dev'
+    ? 'https://syfomoteadmin.dev.intern.nav.no'
+    : 'https://syfomoteadmin.intern.nav.no';
+
+const syfooversiktsrvHost =
+  process.env.NAIS_CONTEXT === 'dev'
+    ? 'https://syfooversiktsrv.dev.intern.nav.no'
+    : 'https://syfooversiktsrv.intern.nav.no';
+
 const syfopersonHost =
   process.env.NAIS_CONTEXT === 'dev'
     ? 'https://syfoperson.dev.intern.nav.no'
     : 'https://syfoperson.intern.nav.no';
+
+const syfoveilederHost =
+  process.env.NAIS_CONTEXT === 'dev'
+    ? 'https://syfoveileder.dev.intern.nav.no'
+    : 'https://syfoveileder.intern.nav.no';
 
 changelogs.readChangelogDir();
 
@@ -130,8 +145,7 @@ const startServer = (html) => {
   } else {
     server.use(
       '/api',
-      proxy('syfooversiktsrv.default', {
-        https: false,
+      proxy(syfooversiktsrvHost, {
         proxyReqPathResolver: function (req) {
           return `/api${req.path}`;
         },
@@ -156,8 +170,7 @@ const startServer = (html) => {
     );
     server.use(
       '/syfomoteadmin/api',
-      proxy('syfomoteadmin.default', {
-        https: false,
+      proxy(syfomoteadminHost, {
         proxyReqPathResolver: function (req) {
           return `/syfomoteadmin/api${req.url}`;
         },
@@ -181,8 +194,7 @@ const startServer = (html) => {
     );
     server.use(
       '/syfoveileder/api',
-      proxy('syfoveileder.default', {
-        https: false,
+      proxy(syfoveilederHost, {
         proxyReqPathResolver: function (req) {
           return `/syfoveileder/api${req.url}`;
         },
