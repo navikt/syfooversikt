@@ -20,10 +20,15 @@ export const GrayChevron = styled(Chevron)`
   color: #3e3832;
 `;
 
-export const SortingButton = styled.p`
+interface SortingButtonProps {
+  sortert: boolean;
+}
+
+export const SortingButton = styled.p<SortingButtonProps>`
   cursor: pointer;
   color: ${themes.color.navBla};
   user-select: none;
+  font-weight: ${(props) => (props.sortert ? 'bold' : 'none')};
 `;
 
 export const FlexColumn = styled(Column)`
@@ -68,7 +73,7 @@ interface SortingRowProps {
 
 const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
   const [currentSortingType, setCurrentSortingType] = useState<SortingType>(
-    'NONE'
+    'FNR_ASC'
   );
 
   const onSortingButtonClicked = (
@@ -81,11 +86,25 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
     onSortClick(nextSortingType);
   };
 
-  const chevronType = (sortingTypeAsc: SortingType) => {
+  const chevronType = (
+    sortingTypeAsc: SortingType,
+    sortingTypeDesc: SortingType
+  ) => {
     if (currentSortingType === sortingTypeAsc) {
       return 'opp';
-    }
-    return 'ned';
+    } else if (currentSortingType === sortingTypeDesc) {
+      return 'ned';
+    } else return undefined;
+  };
+
+  const isSorted = (
+    sortingTypeAsc: SortingType,
+    sortingTypeDesc: SortingType
+  ) => {
+    return (
+      currentSortingType === sortingTypeAsc ||
+      currentSortingType === sortingTypeDesc
+    );
   };
 
   const columns: ColumnItem[] = [
@@ -128,11 +147,17 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
               onClick={() =>
                 onSortingButtonClicked(col.sortingTypeAsc, col.sortingTypeDesc)
               }
+              sortert={isSorted(col.sortingTypeAsc, col.sortingTypeDesc)}
             >
               {col.sortingText}
             </SortingButton>
             {col.extraText}
-            <GrayChevron type={chevronType(col.sortingTypeAsc)} />
+
+            {isSorted(col.sortingTypeAsc, col.sortingTypeDesc) && (
+              <GrayChevron
+                type={chevronType(col.sortingTypeAsc, col.sortingTypeDesc)}
+              />
+            )}
           </FlexColumn>
         );
       })}
