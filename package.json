@@ -98,7 +98,7 @@
     "postcss-flexbugs-fixes": "5.0.2",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "6.0.0",
-    "prom-client": "11.1.0",
+    "prom-client": "11.5.3",
     "promise": "8.0.1",
     "promise-polyfill": "6.0.2",
     "react": "17.0.2",
