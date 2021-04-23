@@ -43,8 +43,8 @@ server.engine('html', mustacheExpress());
 
 const modiacontextholderUrl =
   process.env.NAIS_CONTEXT === 'dev'
-    ? 'modiacontextholder.q0'
-    : 'modiacontextholder.default';
+    ? 'https://modiacontextholder-q0.dev.adeo.no'
+    : 'https://modiacontextholder.nais.adeo.no';
 
 const syfomoteadminHost =
   process.env.NAIS_CONTEXT === 'dev'
@@ -158,7 +158,6 @@ const startServer = (html) => {
     server.use(
       '/modiacontextholder/api',
       proxy(modiacontextholderUrl, {
-        https: false,
         proxyReqPathResolver: function (req) {
           return `/modiacontextholder/api${req.url}`;
         },
