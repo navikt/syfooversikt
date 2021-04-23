@@ -9,6 +9,22 @@ const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
 const proxy = require('express-http-proxy');
 
+const envVar = ({ name }) => {
+  const fromEnv = process.env[name];
+  if (fromEnv) {
+    return fromEnv;
+  }
+  throw new Error(`Missing required environment variable ${name}`);
+};
+
+const hosts = {
+  modiacontextholder: envVar({ name: 'MODIACONTEXTHOLDER_HOST' }),
+  syfomoteadmin: envVar({ name: 'SYFOMOTEADMIN_HOST' }),
+  syfooversiktsrv: envVar({ name: 'SYFOOVERSIKTSRV_HOST' }),
+  syfoperson: envVar({ name: 'SYFOPERSON_HOST' }),
+  syfoveileder: envVar({ name: 'SYFOVEILEDER_HOST' }),
+};
+
 // Prometheus metrics
 const setupMetrics = () => {
   const collectDefaultMetrics = prom_client.collectDefaultMetrics;
@@ -40,31 +56,6 @@ const settings =
 server.set('views', `${__dirname}/dist`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
-
-const modiacontextholderUrl =
-  process.env.NAIS_CONTEXT === 'dev'
-    ? 'https://modiacontextholder-q0.dev.adeo.no'
-    : 'https://modiacontextholder.nais.adeo.no';
-
-const syfomoteadminHost =
-  process.env.NAIS_CONTEXT === 'dev'
-    ? 'https://syfomoteadmin.dev.intern.nav.no'
-    : 'https://syfomoteadmin.intern.nav.no';
-
-const syfooversiktsrvHost =
-  process.env.NAIS_CONTEXT === 'dev'
-    ? 'https://syfooversiktsrv.dev.intern.nav.no'
-    : 'https://syfooversiktsrv.intern.nav.no';
-
-const syfopersonHost =
-  process.env.NAIS_CONTEXT === 'dev'
-    ? 'https://syfoperson.dev.intern.nav.no'
-    : 'https://syfoperson.intern.nav.no';
-
-const syfoveilederHost =
-  process.env.NAIS_CONTEXT === 'dev'
-    ? 'https://syfoveileder.dev.intern.nav.no'
-    : 'https://syfoveileder.intern.nav.no';
 
 changelogs.readChangelogDir();
 
@@ -145,7 +136,8 @@ const startServer = (html) => {
   } else {
     server.use(
       '/api',
-      proxy(syfooversiktsrvHost, {
+      proxy(hosts.syfooversiktsrv, {
+        https: true,
         proxyReqPathResolver: function (req) {
           return `/api${req.path}`;
         },
@@ -157,7 +149,8 @@ const startServer = (html) => {
     );
     server.use(
       '/modiacontextholder/api',
-      proxy(modiacontextholderUrl, {
+      proxy(hosts.modiacontextholder, {
+        https: true,
         proxyReqPathResolver: function (req) {
           return `/modiacontextholder/api${req.url}`;
         },
@@ -169,7 +162,8 @@ const startServer = (html) => {
     );
     server.use(
       '/syfomoteadmin/api',
-      proxy(syfomoteadminHost, {
+      proxy(hosts.syfomoteadmin, {
+        https: true,
         proxyReqPathResolver: function (req) {
           return `/syfomoteadmin/api${req.url}`;
         },
@@ -181,7 +175,8 @@ const startServer = (html) => {
     );
     server.use(
       '/syfoperson/api',
-      proxy(syfopersonHost, {
+      proxy(hosts.syfoperson, {
+        https: true,
         proxyReqPathResolver: function (req) {
           return `/syfoperson/api${req.url}`;
         },
@@ -193,7 +188,8 @@ const startServer = (html) => {
     );
     server.use(
       '/syfoveileder/api',
-      proxy(syfoveilederHost, {
+      proxy(hosts.syfoveileder, {
+        https: true,
         proxyReqPathResolver: function (req) {
           return `/syfoveileder/api${req.url}`;
         },

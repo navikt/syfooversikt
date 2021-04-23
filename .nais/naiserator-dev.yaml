@@ -39,3 +39,13 @@ spec:
   env:
     - name: NAIS_CONTEXT
       value: 'dev'
+    - name: MODIACONTEXTHOLDER_HOST
+      value: "modiacontextholder-q0.dev.adeo.no"
+    - name: SYFOMOTEADMIN_HOST
+      value: "syfomoteadmin.dev.intern.nav.no"
+    - name: SYFOOVERSIKTSRV_HOST
+      value: "syfooversiktsrv.dev.intern.nav.no"
+    - name: SYFOPERSON_HOST
+      value: "syfoperson.dev.intern.nav.no"
+    - name: SYFOVEILEDER_HOST
+      value: "syfoveileder.dev.intern.nav.no"
