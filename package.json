@@ -31,7 +31,7 @@
     "@types/classnames": "2.2.3",
     "@types/deep-freeze": "0.1.1",
     "@types/history": "4.7.2",
-    "@types/node": "12.7.4",
+    "@types/node": "12.20.10",
     "@types/react": "17.0.3",
     "@types/react-collapse": "5.0.0",
     "@types/react-document-title": "2.0.4",
