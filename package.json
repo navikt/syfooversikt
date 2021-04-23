@@ -87,7 +87,7 @@
     "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "3.0.4",
     "nav-frontend-typografi-style": "1.0.35",
-    "pnp-webpack-plugin": "1.1.0",
+    "pnp-webpack-plugin": "1.6.4",
     "postcss": "8.2.8",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-preset-env": "6.0.6",
