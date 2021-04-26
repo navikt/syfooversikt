@@ -46,6 +46,6 @@ spec:
     - name: SYFOOVERSIKTSRV_HOST
       value: "syfooversiktsrv.intern.nav.no"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.dev.intern.nav.no"
+      value: "syfoperson.intern.nav.no"
     - name: SYFOVEILEDER_HOST
       value: "syfoveileder.intern.nav.no"
