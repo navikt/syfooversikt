@@ -9,20 +9,37 @@ const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
 const proxy = require('express-http-proxy');
 
-const envVar = ({ name }) => {
+const envVar = ({ name, defaultValue }) => {
   const fromEnv = process.env[name];
   if (fromEnv) {
     return fromEnv;
   }
+  if (typeof defaultValue === 'string') {
+    return defaultValue;
+  }
   throw new Error(`Missing required environment variable ${name}`);
 };
-
 const hosts = {
-  modiacontextholder: envVar({ name: 'MODIACONTEXTHOLDER_HOST' }),
-  syfomoteadmin: envVar({ name: 'SYFOMOTEADMIN_HOST' }),
-  syfooversiktsrv: envVar({ name: 'SYFOOVERSIKTSRV_HOST' }),
-  syfoperson: envVar({ name: 'SYFOPERSON_HOST' }),
-  syfoveileder: envVar({ name: 'SYFOVEILEDER_HOST' }),
+  modiacontextholder: envVar({
+    name: 'MODIACONTEXTHOLDER_HOST',
+    defaultValue: 'https://localhost:8080',
+  }),
+  syfomoteadmin: envVar({
+    name: 'SYFOMOTEADMIN_HOST',
+    defaultValue: 'https://localhost:8080',
+  }),
+  syfooversiktsrv: envVar({
+    name: 'SYFOOVERSIKTSRV_HOST',
+    defaultValue: 'https://localhost:8080',
+  }),
+  syfoperson: envVar({
+    name: 'SYFOPERSON_HOST',
+    defaultValue: 'https://localhost:8080',
+  }),
+  syfoveileder: envVar({
+    name: 'SYFOVEILEDER_HOST',
+    defaultValue: 'https://localhost:8080',
+  }),
 };
 
 // Prometheus metrics
