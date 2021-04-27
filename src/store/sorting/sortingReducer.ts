@@ -3,7 +3,7 @@ import { SortingState } from './sortingTypes';
 import { SortingActionTypes } from './sorting_actions';
 
 const initialState: SortingState = {
-  sortingType: 'NONE',
+  sortingType: 'FNR_ASC',
 };
 
 const sortingReducer: Reducer<SortingState> = (
