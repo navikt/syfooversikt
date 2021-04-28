@@ -9,6 +9,8 @@ const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
 const proxy = require('express-http-proxy');
 
+const localhost = 'https://localhost:8080';
+
 const envVar = ({ name, defaultValue }) => {
   const fromEnv = process.env[name];
   if (fromEnv) {
@@ -22,23 +24,23 @@ const envVar = ({ name, defaultValue }) => {
 const hosts = {
   modiacontextholder: envVar({
     name: 'MODIACONTEXTHOLDER_HOST',
-    defaultValue: 'https://localhost:8080',
+    defaultValue: localhost,
   }),
   syfomoteadmin: envVar({
     name: 'SYFOMOTEADMIN_HOST',
-    defaultValue: 'https://localhost:8080',
+    defaultValue: localhost,
   }),
   syfooversiktsrv: envVar({
     name: 'SYFOOVERSIKTSRV_HOST',
-    defaultValue: 'https://localhost:8080',
+    defaultValue: localhost,
   }),
   syfoperson: envVar({
     name: 'SYFOPERSON_HOST',
-    defaultValue: 'https://localhost:8080',
+    defaultValue: localhost,
   }),
   syfoveileder: envVar({
     name: 'SYFOVEILEDER_HOST',
-    defaultValue: 'https://localhost:8080',
+    defaultValue: localhost,
   }),
 };
 
