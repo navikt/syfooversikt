@@ -9,7 +9,7 @@ const decoratorConfig = (
   return {
     appname: 'Sykefraværsoppfølging',
     fnr: {
-      initialValue: RESET_VALUE,
+      initialValue: undefined,
       display: FnrDisplay.SOKEFELT,
       ignoreWsEvents: true,
       skipModal: true,
