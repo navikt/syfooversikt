@@ -6,10 +6,6 @@ const initiellState: VeilederinfoState = {
   hentet: false,
   henter: false,
   hentingFeilet: false,
-  data: {
-    navn: '',
-    ident: '',
-  },
 };
 
 const veilederinfoReducer: Reducer<VeilederinfoState> = (

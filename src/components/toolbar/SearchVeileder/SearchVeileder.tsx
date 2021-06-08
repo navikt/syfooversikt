@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '../../../utils/veiledereUtils';
 import { filterVeiledereOnInput } from '../../../utils/assignVeilederUtils';
-import { Veilederinfo } from '../../../store/veilederinfo/veilederinfoTypes';
+import { VeilederinfoDTO } from '../../../store/veilederinfo/veilederinfoTypes';
 import { ApplicationState } from '../../../store';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
 import { updateVeilederIdentsFilter } from '../../../store/filters/filter_actions';
@@ -15,7 +15,7 @@ import countFilterAction, {
 } from '../../../metrics/countFilterAction';
 
 interface VeilederIdentsFilterProps {
-  aktivVeilederInfo: Veilederinfo;
+  aktivVeilederInfo?: VeilederinfoDTO;
   veiledere: Veileder[];
 }
 
@@ -72,7 +72,7 @@ const SearchVeileder = (props: VeilederIdentsFilterProps): ReactElement => {
   const lowerCaseInput = input.toLowerCase();
   const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
     props.veiledere,
-    props.aktivVeilederInfo.ident
+    props.aktivVeilederInfo?.ident || ''
   );
   const lowerCasedAndFilteredVeiledere = filterVeiledereOnInput(
     veiledereSortedAlphabetically,
@@ -83,11 +83,11 @@ const SearchVeileder = (props: VeilederIdentsFilterProps): ReactElement => {
     const v1InFilter = selectedVeilederIdents.find((v) => v === v1.ident);
     const v2InFilter = selectedVeilederIdents.find((v) => v === v2.ident);
 
-    if (v1.ident === props.aktivVeilederInfo.ident) {
+    if (v1.ident === props.aktivVeilederInfo?.ident) {
       return -1;
     }
 
-    if (v2.ident === props.aktivVeilederInfo.ident) {
+    if (v2.ident === props.aktivVeilederInfo?.ident) {
       return 1;
     }
 

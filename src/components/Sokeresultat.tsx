@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Personliste from './Personliste';
 import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
 import { PersonregisterState } from '../store/personregister/personregisterTypes';
-import { Veilederinfo } from '../store/veilederinfo/veilederinfoTypes';
+import { VeilederinfoDTO } from '../store/veilederinfo/veilederinfoTypes';
 import { Veileder } from '../store/veiledere/veiledereTypes';
 import { OverviewTabType } from '../konstanter';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
@@ -18,7 +18,7 @@ interface SokeresultatState {
 
 interface SokeresultatProps {
   aktivEnhetId: string;
-  aktivVeilederinfo: Veilederinfo;
+  aktivVeilederinfo?: VeilederinfoDTO;
   personregister: PersonregisterState;
   tildelVeileder: (liste: VeilederArbeidstaker[]) => void;
   veiledere: Veileder[];

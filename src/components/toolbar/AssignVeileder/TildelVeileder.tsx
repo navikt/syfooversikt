@@ -130,7 +130,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
   const lowerCaseInput = state.input.toLowerCase();
   const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
     props.veiledere,
-    props.aktivVeilederInfo.ident
+    props.aktivVeilederInfo?.ident || ''
   );
   const filteredVeiledere = filterVeiledereOnInput(
     veiledereSortedAlphabetically,

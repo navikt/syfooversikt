@@ -5,7 +5,10 @@ import {
 import { PersonoversiktStatus } from '../../src/store/personoversikt/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
-const veilederNavn = 'F_Z101010 E_Z101010';
+const veilederFornavn = 'F_Z101010';
+const veilederEtternavn = 'E_Z101010';
+const veilederNavn = `${veilederFornavn} ${veilederEtternavn}`;
+const veilederEpost = `${veilederFornavn}.${veilederEtternavn}@nav.no`;
 const enhetId = '0316';
 
 export const testdata = {
@@ -76,6 +79,9 @@ export const enhet = {
 export const veilederinfo = {
   navn: veilederNavn,
   ident: veilederIdent,
+  fornavn: veilederFornavn,
+  etternavn: veilederEtternavn,
+  epost: veilederEpost,
 };
 
 export const veiledere = [

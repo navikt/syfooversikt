@@ -127,7 +127,7 @@ export const EnhetensOversiktContainer = ({
 
   if (tabType === OverviewTabType.MY_OVERVIEW) {
     allEvents = allEvents.applyFilter((v) =>
-      filterEventsOnVeileder(v, [aktivVeilederinfo.ident])
+      filterEventsOnVeileder(v, [aktivVeilederinfo?.ident || ''])
     );
   } else {
     allEvents = allEvents.applyFilter((v) =>
