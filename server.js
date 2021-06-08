@@ -5,6 +5,7 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const prom_client = require('prom-client');
+const cookieParser = require("cookie-parser");
 const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
 const proxy = require('express-http-proxy');
@@ -150,18 +151,48 @@ const startServer = (html) => {
     require('./Mock/mockEndepunkter').mockForLokal(server);
   } else {
     server.use(
-      '/api',
-      proxy(hosts.syfooversiktsrv, {
-        https: true,
-        proxyReqPathResolver: function (req) {
-          return `/api${req.path}`;
-        },
-        proxyErrorHandler: function (err, res, next) {
-          console.error('Error in proxy for syfooversiktsrv', err);
-          next(err);
-        },
-      })
+        "/api/get",
+        cookieParser(),
+        proxy(hosts.syfooversiktsrv, {
+          https: true,
+          parseReqBody: false,
+          proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
+            const token = srcReq.cookies["isso-idtoken"];
+            proxyReqOpts.headers["Authorization"] = `Bearer ${token}`;
+            proxyReqOpts.headers["Content-Type"] = "application/json";
+            return proxyReqOpts;
+          },
+          proxyReqPathResolver: function (req) {
+            return `/api${req.path}`;
+          },
+          proxyErrorHandler: function (err, res, next) {
+            console.log("Error in proxy for syfooversiktsrv", err.message);
+            next(err);
+          },
+        })
     );
+
+    server.use(
+        "/api/post",
+        cookieParser(),
+        proxy(hosts.syfooversiktsrv, {
+          https: true,
+          parseReqBody: true,
+          proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
+            const token = srcReq.cookies["isso-idtoken"];
+            proxyReqOpts.headers["Authorization"] = `Bearer ${token}`;
+            return proxyReqOpts;
+          },
+          proxyReqPathResolver: function (req) {
+            return `/api${req.path}`;
+          },
+          proxyErrorHandler: function (err, res, next) {
+            console.log("Error in proxy for syfooversiktsrv", err.message);
+            next(err);
+          },
+        })
+    );
+
     server.use(
       '/modiacontextholder/api',
       proxy(hosts.modiacontextholder, {

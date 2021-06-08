@@ -48,6 +48,7 @@
     "chalk": "2.4.1",
     "classnames": "2.2.6",
     "connected-react-router": "6.5.2",
+    "cookie-parser": "1.4.4",
     "core-js": "3.9.1",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
