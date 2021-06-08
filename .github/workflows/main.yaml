@@ -34,9 +34,6 @@ jobs:
       - name: Run tests
         run: |
           npm run test
-      - name: Security audit
-        run: |
-          npm run sec-audit
       - name: Build
         run: |
           npm run nais-build
