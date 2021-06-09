@@ -17,7 +17,7 @@ describe('veilederinfoSagas', () => {
   });
 
   it('Skal dernest kalle REST-tjenesten', () => {
-    const url = '/syfoveileder/api/v1/veileder/self';
+    const url = '/syfoveileder/api/v2/veileder/self';
     const nesteKall = call(get, url);
     expect(generator.next().value).to.deep.equal(nesteKall);
   });

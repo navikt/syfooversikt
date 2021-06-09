@@ -2,12 +2,8 @@ export const finnMiljoStreng = (): string => {
   return erPreProd() ? '-q1' : '';
 };
 
-export const erProd = (): boolean => {
-  return window.location.href.indexOf('nais.adeo.no') > -1;
-};
-
 export const erPreProd = (): boolean => {
-  return window.location.href.indexOf('nais.preprod.local') > -1;
+  return window.location.href.indexOf('dev.intern.nav.no') > -1;
 };
 
 export const erLokal = (): boolean => {

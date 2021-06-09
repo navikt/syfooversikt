@@ -54,6 +54,26 @@ Oppdater Mocha-template i run-configs, og legg til Extra Mocha options:
 - Kjør prettier og lint med `npm run prettier-lint`, de kan også kjøres hver for seg
 - Appen finner du [her](http://localhost:8080/minoversikt)
 
+Ved første kjøring:
+
+```sh
+$ cp .env.template .env # for å sette opp lokale miljøvariabler
+$ npm install # installerer avhengigheter
+```
+
+Kjøre redis og mock-oauth2-server i docker-compose:
+
+```sh
+$ ./start-dev.sh # starter Redis og mock-oauth2-server (se under for mer info)
+```
+
 ## Logge på i Q1-miljø
 
 Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).
+
+
+## Redis Cache
+
+Brukes for å cache bruker-sessions.
+Lokalt oppsett ligger i `docker-compose.yml`, mens nais-oppsettet ligger i `redis.yaml`.
+Redis pod kan startes manuelt i NAIS ved å kjøre følgdende kommando: `kubectl apply -f .nais/redis.yaml`.

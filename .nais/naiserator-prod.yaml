@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: syfooversikt
-  namespace: default
+  namespace: teamsykefravr
   labels:
     team: teamsykefravr
 spec:
@@ -33,12 +33,33 @@ spec:
     requests:
       cpu: 100m
       memory: 128Mi
-  webproxy: false
+  azure:
+    application:
+      enabled: true
+      tenant: nav.no
+      replyURLs:
+        - "https://syfooversikt.intern.nav.no/oauth2/callback"
+      claims:
+        extra:
+          - "NAVident"
+  envFrom:
+    - secret: syfooversikt-session-key
+  webproxy: true
   ingresses:
-    - "https://syfooversikt.nais.adeo.no"
+    - "https://syfooversikt.intern.nav.no"
   env:
-    - name: NAIS_CONTEXT
-      value: 'prod'
+    - name: NODE_ENV
+      value: 'production'
+    - name: AUTH_REDIRECT_URI
+      value: "https://syfooversikt.intern.nav.no/oauth2/callback"
+    - name: REDIS_HOST
+      value: "syfooversikt-redis"
+    - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
+      value: "6caf260a-5dc3-44b3-a365-b1349f712391"
+    - name: SYFOPERSON_AAD_APP_CLIENT_ID
+      value: "65bd6a4c-e757-487f-9767-619a5307278f"
+    - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
+      value: "920f92f5-987a-4cc0-b619-bed1697889a8"
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder.nais.adeo.no"
     - name: SYFOOVERSIKTSRV_HOST

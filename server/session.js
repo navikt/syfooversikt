@@ -1,0 +1,52 @@
+const connectRedis = require('connect-redis');
+const session = require('express-session');
+const redis = require('redis');
+
+const Config = require('./config.js');
+
+const SESSION_MAX_AGE_MILLIS = 12 * 60 * 60 * 1000;
+
+const SESSION_MAX_AGE_SECONDS = SESSION_MAX_AGE_MILLIS / 1000;
+
+const getRedisStore = () => {
+  const RedisStore = connectRedis(session);
+
+  const redisClient = redis.createClient({
+    host: Config.redis.host,
+    port: Config.redis.port,
+    password: Config.redis.password,
+  });
+  redisClient.unref();
+
+  return new RedisStore({
+    client: redisClient,
+    ttl: SESSION_MAX_AGE_SECONDS,
+    disableTouch: true,
+  });
+};
+
+const setupSession = (app) => {
+  app.set('trust proxy', 1);
+
+  app.use(
+    session({
+      cookie: {
+        maxAge: SESSION_MAX_AGE_MILLIS,
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: Config.isProd,
+      },
+      secret: Config.server.sessionKey,
+      name: Config.server.sessionCookieName,
+      resave: true,
+      saveUninitialized: false,
+      unset: 'destroy',
+      store: getRedisStore(),
+      rolling: true,
+    })
+  );
+};
+
+module.exports = {
+  setupSession: setupSession,
+};

@@ -5,11 +5,12 @@ import { VeiledereActionTypes } from './veiledere_actions';
 import { Veileder } from './veiledereTypes';
 import { ApplicationState } from '../index';
 import { skalHenteReducer } from '../../utils/selectorUtil';
+import { SYFOVEILEDER_ROOT } from '../../utils/apiUrlUtil';
 
 export function* hentVeiledereSaga(enhetId: string) {
   yield put(actions.henterVeiledere(enhetId));
   try {
-    const path = `${process.env.REACT_APP_SYFOVEILEDER_ROOT}/veiledere/enhet/${enhetId}`;
+    const path = `${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${enhetId}`;
     const data: Veileder[] = yield call(get, path);
     yield put(actions.veiledereHentet(enhetId, data));
   } catch (e) {

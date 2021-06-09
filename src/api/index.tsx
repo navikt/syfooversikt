@@ -1,4 +1,5 @@
-import { erProd } from '../utils/miljoUtil';
+export const NAV_CONSUMER_ID_HEADER = 'nav-consumer-id';
+export const NAV_CONSUMER_ID = 'syfooversikt';
 
 const log = (...data: unknown[]): void => {
   if (
@@ -9,34 +10,23 @@ const log = (...data: unknown[]): void => {
   }
 };
 
-export const hentLoginUrl = (): string => {
-  if (erProd()) {
-    return 'https://loginservice.nais.adeo.no/login';
-  }
-  // Preprod
-  return 'https://loginservice.nais.preprod.local/login';
-};
-
-export const hentRedirectBaseUrl = (): string => {
-  if (erProd()) {
-    return 'https://syfooversikt.nais.adeo.no';
-  }
-  return 'https://syfooversikt.nais.preprod.local';
-};
-
 export const lagreRedirectUrlILocalStorage = (href: string): void => {
   localStorage.setItem('redirecturl', href);
 };
 
 export function get(url: string): Promise<any> {
+  const headers = {
+    [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
+  };
   return fetch(url, {
     credentials: 'include',
+    headers,
   })
     .then((res) => {
       if (res.status === 401) {
         log(res, 'Redirect til login');
         lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
+        window.location.href = `/login?redirectTo=${window.location.pathname}`;
       } else if (res.status === 403) {
         window.location.href = `/na`;
       } else if (res.status > 400) {
@@ -66,7 +56,7 @@ export function post(url: string, body: Record<string, any>): Promise<any> {
       if (res.status === 401) {
         log(res, 'Redirect til login');
         lagreRedirectUrlILocalStorage(window.location.href);
-        window.location.href = `${hentLoginUrl()}?redirect=${hentRedirectBaseUrl()}`;
+        window.location.href = `/login?redirectTo=${window.location.pathname}`;
         return null;
       } else if (res.status === 403) {
         window.location.href = `/na`;

@@ -3,11 +3,12 @@ import { get } from '../../api';
 import * as actions from './veilederinfo_actions';
 import { VeilederinfoActionTypes } from './veilederinfo_actions';
 import { VeilederinfoDTO } from './veilederinfoTypes';
+import { SYFOVEILEDER_ROOT } from '../../utils/apiUrlUtil';
 
 export function* hentVeilederinfoSaga() {
   yield put(actions.henterVeilederinfo());
   try {
-    const path = `${process.env.REACT_APP_SYFOVEILEDER_ROOT}/v1/veileder/self`;
+    const path = `${SYFOVEILEDER_ROOT}/v2/veileder/self`;
     const data: VeilederinfoDTO = yield call(get, path);
     yield put(actions.veilederinfoHentet(data));
   } catch (e) {

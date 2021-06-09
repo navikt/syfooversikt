@@ -23,7 +23,7 @@ describe('hentPersonInfoSagas', () => {
   });
 
   it('Skal dernest kalle REST-tjenesten', () => {
-    const url = '/syfoperson/api/person/info';
+    const url = '/syfoperson/api/v2/person/info';
     const nesteKall = call(post, url, forespurtAction.data);
     expect(generator.next().value).to.deep.equal(nesteKall);
   });

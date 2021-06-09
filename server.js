@@ -5,41 +5,12 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const prom_client = require('prom-client');
-const cookieParser = require("cookie-parser");
 const counters = require('./server/counters');
 const changelogs = require('./server/changelogReader');
-const proxy = require('express-http-proxy');
 
-const localhost = 'https://localhost:8080';
+const Auth = require('./server/auth/index');
 
-const envVar = ({ name, defaultValue }) => {
-  const fromEnv = process.env[name];
-  if (fromEnv) {
-    return fromEnv;
-  }
-  if (typeof defaultValue === 'string') {
-    return defaultValue;
-  }
-  throw new Error(`Missing required environment variable ${name}`);
-};
-const hosts = {
-  modiacontextholder: envVar({
-    name: 'MODIACONTEXTHOLDER_HOST',
-    defaultValue: localhost,
-  }),
-  syfooversiktsrv: envVar({
-    name: 'SYFOOVERSIKTSRV_HOST',
-    defaultValue: localhost,
-  }),
-  syfoperson: envVar({
-    name: 'SYFOPERSON_HOST',
-    defaultValue: localhost,
-  }),
-  syfoveileder: envVar({
-    name: 'SYFOVEILEDER_HOST',
-    defaultValue: localhost,
-  }),
-};
+const setupProxy = require('./server/proxy.js');
 
 // Prometheus metrics
 const setupMetrics = () => {
@@ -94,7 +65,9 @@ function nocache(req, res, next) {
   next();
 }
 
-const startServer = (html) => {
+const startServer = async (html) => {
+  const authClient = await Auth.setupAuth(server);
+
   server.use(
     '/syfooversikt/resources',
     express.static(path.resolve(__dirname, 'dist/resources'))
@@ -150,88 +123,7 @@ const startServer = (html) => {
     console.log('Setter opp lokale mock-endepunkter');
     require('./Mock/mockEndepunkter').mockForLokal(server);
   } else {
-    server.use(
-        "/api/get",
-        cookieParser(),
-        proxy(hosts.syfooversiktsrv, {
-          https: true,
-          parseReqBody: false,
-          proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
-            const token = srcReq.cookies["isso-idtoken"];
-            proxyReqOpts.headers["Authorization"] = `Bearer ${token}`;
-            proxyReqOpts.headers["Content-Type"] = "application/json";
-            return proxyReqOpts;
-          },
-          proxyReqPathResolver: function (req) {
-            return `/api${req.path}`;
-          },
-          proxyErrorHandler: function (err, res, next) {
-            console.log("Error in proxy for syfooversiktsrv", err.message);
-            next(err);
-          },
-        })
-    );
-
-    server.use(
-        "/api/post",
-        cookieParser(),
-        proxy(hosts.syfooversiktsrv, {
-          https: true,
-          parseReqBody: true,
-          proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
-            const token = srcReq.cookies["isso-idtoken"];
-            proxyReqOpts.headers["Authorization"] = `Bearer ${token}`;
-            return proxyReqOpts;
-          },
-          proxyReqPathResolver: function (req) {
-            return `/api${req.path}`;
-          },
-          proxyErrorHandler: function (err, res, next) {
-            console.log("Error in proxy for syfooversiktsrv", err.message);
-            next(err);
-          },
-        })
-    );
-
-    server.use(
-      '/modiacontextholder/api',
-      proxy(hosts.modiacontextholder, {
-        https: true,
-        proxyReqPathResolver: function (req) {
-          return `/modiacontextholder/api${req.url}`;
-        },
-        proxyErrorHandler: function (err, res, next) {
-          console.error('Error in proxy for modiacontextholder', err);
-          next(err);
-        },
-      })
-    );
-    server.use(
-      '/syfoperson/api',
-      proxy(hosts.syfoperson, {
-        https: true,
-        proxyReqPathResolver: function (req) {
-          return `/syfoperson/api${req.url}`;
-        },
-        proxyErrorHandler: function (err, res, next) {
-          console.error('Error in proxy for syfoperson', err);
-          next(err);
-        },
-      })
-    );
-    server.use(
-      '/syfoveileder/api',
-      proxy(hosts.syfoveileder, {
-        https: true,
-        proxyReqPathResolver: function (req) {
-          return `/syfoveileder/api${req.url}`;
-        },
-        proxyErrorHandler: function (err, res, next) {
-          console.error('Error in proxy for syfoveileder', err);
-          next(err);
-        },
-      })
-    );
+    server.use(setupProxy(authClient));
   }
 
   const port = process.env.PORT || 8080;
