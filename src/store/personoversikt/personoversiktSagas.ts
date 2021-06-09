@@ -45,7 +45,7 @@ export const henterPersonerMedEnhet = (state: any): boolean => {
 export function* hentPersonoversikt(enhetId: string): any {
   yield put(actions.hentPersonoversiktHenter());
   try {
-    const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/personoversikt/enhet/${enhetId}`;
+    const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/get/v1/personoversikt/enhet/${enhetId}`;
     const data = yield call(get, path);
     if (data.length > 0) {
       yield put(actions.hentPersonoversiktHentet(data));

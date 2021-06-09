@@ -9,7 +9,7 @@ export function* pushBrukerArbeidstakerSaga(
   yield put(actions.pushVeilederArbeidstakerPusher());
   try {
     const body = { tilknytninger: action.data };
-    const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/persontildeling/registrer`;
+    const path = `${process.env.REACT_APP_SYFOOVERSIKTSRVREST_ROOT}/post/v1/persontildeling/registrer`;
     yield call(post, path, body);
     yield put(actions.pushVeilederArbeidstakerPushet(action.data));
   } catch (e) {

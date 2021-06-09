@@ -21,7 +21,7 @@ describe('veilederArbeidstakerSagas', () => {
       data: payload,
     };
     const generator = pushBrukerArbeidstakerSaga(forespurtAction);
-    const url = '/api/v1/persontildeling/registrer';
+    const url = '/api/post/v1/persontildeling/registrer';
 
     it(`dispatch ${veilederArbeidstakerActionTypes.PUSH_VEILEDERARBEIDSTAKER_PUSHER}`, () => {
       const nesteAction = put({

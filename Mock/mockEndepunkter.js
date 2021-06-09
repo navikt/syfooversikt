@@ -16,12 +16,12 @@ function mockForLokal(server) {
     res.send(JSON.stringify(personInfo));
   });
 
-  server.get('/api/v1/personoversikt/enhet/:id', (req, res) => {
+  server.get('/api/get/v1/personoversikt/enhet/:id', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(personoversiktEnhet));
   });
 
-  server.post('/api/v1/persontildeling/registrer', (req, res) => {
+  server.post('/api/post/v1/persontildeling/registrer', (req, res) => {
     res.send();
   });
 
