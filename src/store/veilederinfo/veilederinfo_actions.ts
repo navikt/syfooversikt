@@ -1,4 +1,4 @@
-import { Veilederinfo } from './veilederinfoTypes';
+import { VeilederinfoDTO } from './veilederinfoTypes';
 
 export enum VeilederinfoActionTypes {
   HENT_VEILEDERINFO_FORESPURT = 'HENT_VEILEDERINFO_FORESPURT',
@@ -17,7 +17,7 @@ export interface HenterVeilederinfoAction {
 
 export interface VeilederinfoHentetAction {
   type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET;
-  data: Veilederinfo;
+  data: VeilederinfoDTO;
 }
 
 export interface HentVeilederinfoFeiletAction {
@@ -38,7 +38,7 @@ export const henterVeilederinfo = (): VeilederinfoType => ({
   type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTER,
 });
 
-export const veilederinfoHentet = (data: Veilederinfo): VeilederinfoType => ({
+export const veilederinfoHentet = (data: VeilederinfoDTO): VeilederinfoType => ({
   type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET,
   data,
 });

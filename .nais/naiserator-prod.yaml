@@ -41,8 +41,6 @@ spec:
       value: 'prod'
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder.nais.adeo.no"
-    - name: SYFOMOTEADMIN_HOST
-      value: "syfomoteadmin.intern.nav.no"
     - name: SYFOOVERSIKTSRV_HOST
       value: "syfooversiktsrv.intern.nav.no"
     - name: SYFOPERSON_HOST

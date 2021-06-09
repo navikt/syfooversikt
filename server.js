@@ -26,10 +26,6 @@ const hosts = {
     name: 'MODIACONTEXTHOLDER_HOST',
     defaultValue: localhost,
   }),
-  syfomoteadmin: envVar({
-    name: 'SYFOMOTEADMIN_HOST',
-    defaultValue: localhost,
-  }),
   syfooversiktsrv: envVar({
     name: 'SYFOOVERSIKTSRV_HOST',
     defaultValue: localhost,
@@ -175,19 +171,6 @@ const startServer = (html) => {
         },
         proxyErrorHandler: function (err, res, next) {
           console.error('Error in proxy for modiacontextholder', err);
-          next(err);
-        },
-      })
-    );
-    server.use(
-      '/syfomoteadmin/api',
-      proxy(hosts.syfomoteadmin, {
-        https: true,
-        proxyReqPathResolver: function (req) {
-          return `/syfomoteadmin/api${req.url}`;
-        },
-        proxyErrorHandler: function (err, res, next) {
-          console.error('Error in proxy for syfomoteadmin', err);
           next(err);
         },
       })

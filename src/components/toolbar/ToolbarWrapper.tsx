@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { Veilederinfo } from '../../store/veilederinfo/veilederinfoTypes';
+import { VeilederinfoDTO } from '../../store/veilederinfo/veilederinfoTypes';
 import { Veileder } from '../../store/veiledere/veiledereTypes';
 import { OverviewTabType } from '../../konstanter';
 import Toolbar from './Toolbar';
@@ -8,7 +8,7 @@ import Toolbar from './Toolbar';
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
 export interface ToolbarWrapperProps {
-  aktivVeilederInfo: Veilederinfo;
+  aktivVeilederInfo?: VeilederinfoDTO;
   alleMarkert: boolean;
   numberOfItemsTotal: number;
   buttonHandler: (veilederIdent: string) => void;

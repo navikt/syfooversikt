@@ -4,7 +4,7 @@ import { hentVeilederinfoSaga } from '../../../src/store/veilederinfo/veilederin
 import { get } from '../../../src/api';
 import { VeilederinfoActionTypes } from '../../../src/store/veilederinfo/veilederinfo_actions';
 import { veilederinfo } from '../../data/fellesTestdata';
-import { Veilederinfo } from '../../../src/store/veilederinfo/veilederinfoTypes';
+import { VeilederinfoDTO } from '../../../src/store/veilederinfo/veilederinfoTypes';
 
 describe('veilederinfoSagas', () => {
   const generator = hentVeilederinfoSaga();
@@ -17,13 +17,13 @@ describe('veilederinfoSagas', () => {
   });
 
   it('Skal dernest kalle REST-tjenesten', () => {
-    const url = '/syfomoteadmin/api/internad/veilederinfo';
+    const url = '/syfoveileder/api/v1/veileder/self';
     const nesteKall = call(get, url);
     expect(generator.next().value).to.deep.equal(nesteKall);
   });
 
   it(`Skal dernest sette ${VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET}`, () => {
-    const data: Veilederinfo = veilederinfo;
+    const data: VeilederinfoDTO = veilederinfo;
     const nextPut = put({
       type: VeilederinfoActionTypes.HENT_VEILEDERINFO_HENTET,
       data,

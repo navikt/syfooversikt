@@ -25,7 +25,7 @@ function mockForLokal(server) {
     res.send();
   });
 
-  server.get('/syfomoteadmin/api/internad/veilederinfo', (req, res) => {
+  server.get('/syfoveileder/api/v1/veileder/self', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(mockUtils.veilederInfo));
   });
