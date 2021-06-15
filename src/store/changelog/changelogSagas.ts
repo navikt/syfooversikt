@@ -6,12 +6,12 @@ import {
   fetchChengelogsLoadingAction,
 } from './changelog_actions';
 import { get } from '../../api';
+import { CHANGELOG_ROOT } from '../../utils/apiUrlUtil';
 
 function* getChangelog(): IterableIterator<any> {
   try {
     put(fetchChengelogsLoadingAction());
-    const changeLogPath = process.env.REACT_APP_CHANGELOG_ROOT as string;
-    const data = yield call(get, changeLogPath);
+    const data = yield call(get, CHANGELOG_ROOT);
     if (data) {
       yield put(fetchChangelogsSuccess(data));
     }
