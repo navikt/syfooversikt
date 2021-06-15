@@ -121,7 +121,7 @@
     "react-router-dom": "5.0.1",
     "react-scroll": "1.7.10",
     "react-select": "3.0.8",
-    "redis": "2.8.0",
+    "redis": "3.1.1",
     "redux": "4.0.5",
     "redux-devtools-extension": "2.13.5",
     "redux-saga": "1.1.3",
