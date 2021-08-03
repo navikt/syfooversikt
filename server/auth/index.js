@@ -80,7 +80,7 @@ const setupPassport = async (app, authClient) => {
     '/oauth2/callback',
     passport.authenticate(authName, { failureRedirect: '/login-failed' }),
     (req, res) => {
-      res.redirect(req.session.redirectTo || '/fastlege');
+      res.redirect(req.session.redirectTo || '/enhet');
     }
   );
   app.get('/login-failed', (_req, res) => {
