@@ -108,6 +108,10 @@ const auth = {
   responseMode: 'query',
   tokenEndpointAuthSigningAlg: 'RS256',
 
+  internarbeidsflatedecoratorHost: envVar({
+    name: 'INTERNARBEIDSFLATEDECORATOR_HOST',
+  }),
+
   modiacontextholder: {
     clientId: graphapiClientId,
     host: envVar({
