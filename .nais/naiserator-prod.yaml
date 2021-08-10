@@ -54,6 +54,8 @@ spec:
       value: "https://syfooversikt.intern.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfooversikt-redis"
+    - name: INTERNARBEIDSFLATEDECORATOR_HOST
+      value: "internarbeidsflatedecorator.intern.nav.no"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
       value: "6caf260a-5dc3-44b3-a365-b1349f712391"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
