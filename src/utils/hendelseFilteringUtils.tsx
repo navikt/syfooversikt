@@ -1,10 +1,10 @@
 import {
   PersonData,
   PersonregisterState,
-} from '../store/personregister/personregisterTypes';
-import { HendelseTypeFilters } from '../store/filters/filterReducer';
+} from '@/store/personregister/personregisterTypes';
+import { HendelseTypeFilters } from '@/store/filters/filterReducer';
 import { firstCompanyNameFromPersonData } from './personDataUtil';
-import { Veileder } from '../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 import { formaterNavn } from './lenkeUtil';
 
 export class Filterable<T> {

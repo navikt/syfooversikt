@@ -1,10 +1,18 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
+const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   resolve: {
-    extensions: ['.tsx', '.jsx', '.js', '.ts', '.json'],
+    plugins: [
+      new TsconfigPathsPlugin({
+        extensions,
+      }),
+    ],
+    extensions,
   },
   output: {
     path: path.resolve(__dirname, 'dist/resources'),

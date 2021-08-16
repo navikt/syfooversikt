@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ModalWrapper from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Changelog } from '../../store/changelog/changelogTypes';
+import { Changelog } from '@/store/changelog/changelogTypes';
 import { NumberIndicator } from '../NumberIndicator';
 import ChangelogChevronKnapp from './ChangelogChevronKnapp';
 

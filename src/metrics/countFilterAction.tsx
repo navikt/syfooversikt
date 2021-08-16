@@ -1,5 +1,5 @@
-import { post } from '../api';
-import { HendelseTekster } from '../components/HendelseTypeFilter';
+import { post } from '@/api';
+import { HendelseTekster } from '@/components/HendelseTypeFilter';
 
 export const CounterFilterActionTypes = {
   VEILEDER_SOK: 'veiledersok',

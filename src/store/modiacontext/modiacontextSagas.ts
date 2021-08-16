@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { get } from '../../api';
+import { get } from '@/api';
 import * as actions from './modiacontext_actions';
 import { Modiacontext } from './modiacontextTypes';
-import { MODIACONTEXTHOLDER_ROOT } from '../../utils/apiUrlUtil';
+import { MODIACONTEXTHOLDER_ROOT } from '@/utils/apiUrlUtil';
 
 export function* aktivEnhetSaga() {
   yield put(actions.henterAktivEnhet());

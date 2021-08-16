@@ -3,9 +3,9 @@ import {
   assignUsersToSelectedVeileder,
   filterVeiledereOnInput,
   hasNoCheckedPersoner,
-} from '../../../utils/assignVeilederUtils';
-import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '../../../utils/veiledereUtils';
-import { Veileder } from '../../../store/veiledere/veiledereTypes';
+} from '@/utils/assignVeilederUtils';
+import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';

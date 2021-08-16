@@ -1,11 +1,11 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { PersonregisterState } from '../store/personregister/personregisterTypes';
+import { PersonregisterState } from '@/store/personregister/personregisterTypes';
 import Sokeresultat from '../components/Sokeresultat';
-import { pushVeilederArbeidstakerForespurt } from '../store/veilederArbeidstaker/veilederArbeidstaker_actions';
-import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
-import { HendelseTypeFilter } from '../components/HendelseTypeFilter';
+import { pushVeilederArbeidstakerForespurt } from '@/store/veilederArbeidstaker/veilederArbeidstaker_actions';
+import { VeilederArbeidstaker } from '@/store/veilederArbeidstaker/veilederArbeidstakerTypes';
+import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import {
   Filterable,
   filterEventsOnVeileder,
@@ -14,16 +14,16 @@ import {
   filterOnEnhet,
   filtrerPaaFodselsnummerEllerNavn,
   filtrerPersonregister,
-} from '../utils/hendelseFilteringUtils';
-import { TekstFilter } from '../components/TekstFilter';
-import { ApplicationState } from '../store';
-import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
-import { AlertStripeWarning } from '../components/AlertStripeWarning';
-import { OverviewTabType } from '../konstanter';
-import { hentVeiledere } from '../store/veiledere/veiledere_actions';
-import { PersonFilter } from '../components/PersonFilter';
-import { ClearFilters } from '../components/filters/ClearFilters';
-import { resetAllFilters } from '../store/filters/filter_actions';
+} from '@/utils/hendelseFilteringUtils';
+import { TekstFilter } from '@/components/TekstFilter';
+import { ApplicationState } from '@/store';
+import { AlertStripeRod } from '@/components/AlertStripeAdvarsel';
+import { AlertStripeWarning } from '@/components/AlertStripeWarning';
+import { OverviewTabType } from '@/konstanter';
+import { hentVeiledere } from '@/store/veiledere/veiledere_actions';
+import { PersonFilter } from '@/components/PersonFilter';
+import { ClearFilters } from '@/components/filters/ClearFilters';
+import { resetAllFilters } from '@/store/filters/filter_actions';
 
 const tekster = {
   feil: {

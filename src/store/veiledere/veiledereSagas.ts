@@ -1,11 +1,11 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import { get } from '../../api';
+import { get } from '@/api';
 import * as actions from './veiledere_actions';
 import { VeiledereActionTypes } from './veiledere_actions';
 import { Veileder } from './veiledereTypes';
-import { ApplicationState } from '../index';
-import { skalHenteReducer } from '../../utils/selectorUtil';
-import { SYFOVEILEDER_ROOT } from '../../utils/apiUrlUtil';
+import { ApplicationState } from '@/store';
+import { skalHenteReducer } from '@/utils/selectorUtil';
+import { SYFOVEILEDER_ROOT } from '@/utils/apiUrlUtil';
 
 export function* hentVeiledereSaga(enhetId: string) {
   yield put(actions.henterVeiledere(enhetId));

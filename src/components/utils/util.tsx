@@ -1,5 +1,5 @@
-import { PersonHendelseData } from '../../store/personregister/personregisterTypes';
-import { PersonoversiktStatus } from '../../store/personoversikt/personoversiktTypes';
+import { PersonHendelseData } from '@/store/personregister/personregisterTypes';
+import { PersonoversiktStatus } from '@/store/personoversikt/personoversiktTypes';
 
 export interface FnrMap {
   fnr: string;

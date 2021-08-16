@@ -1,13 +1,13 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import { get } from '../../api';
+import { get } from '@/api';
 import * as actions from './personoversikt_actions';
-import { hentFodselsnummerFraPersonOversikt } from '../../components/utils/util';
+import { hentFodselsnummerFraPersonOversikt } from '@/components/utils/util';
 import * as personInfoActions from '../personInfo/personInfo_actions';
 import { PersonoversiktStatus } from './personoversiktTypes';
-import { filterOnEnhet } from '../../utils/hendelseFilteringUtils';
-import { ApplicationState } from '../index';
+import { filterOnEnhet } from '@/utils/hendelseFilteringUtils';
+import { ApplicationState } from '@/store';
 import { PersonregisterState } from '../personregister/personregisterTypes';
-import { SYFOOVERSIKTSRVREST_ROOT } from '../../utils/apiUrlUtil';
+import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 
 export const hentPersonregister = (
   state: ApplicationState

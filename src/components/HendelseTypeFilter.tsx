@@ -3,12 +3,12 @@ import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import countFilterAction from '../metrics/countFilterAction';
-import { PersonregisterState } from '../store/personregister/personregisterTypes';
-import { filtrerPersonregister } from '../utils/hendelseFilteringUtils';
-import { ApplicationState } from '../store';
-import { HendelseTypeFilters } from '../store/filters/filterReducer';
-import { updateHendelseFilterAction } from '../store/filters/filter_actions';
-import { OverviewTabType } from '../konstanter';
+import { PersonregisterState } from '@/store/personregister/personregisterTypes';
+import { filtrerPersonregister } from '@/utils/hendelseFilteringUtils';
+import { ApplicationState } from '@/store';
+import { HendelseTypeFilters } from '@/store/filters/filterReducer';
+import { updateHendelseFilterAction } from '@/store/filters/filter_actions';
+import { OverviewTabType } from '@/konstanter';
 
 export const HendelseTekster: any = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder

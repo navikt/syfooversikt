@@ -1,9 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { post } from '../../api';
+import { post } from '@/api';
 import * as actions from './personInfo_actions';
 import { HentPersonInfoForespurtAction } from './personInfo_actions';
 import { PersonInfo } from './personInfoTypes';
-import { SYFOPERSONREST_ROOT } from '../../utils/apiUrlUtil';
+import { SYFOPERSONREST_ROOT } from '@/utils/apiUrlUtil';
 
 export function* hentPersonInfoSaga(action: HentPersonInfoForespurtAction) {
   yield put(actions.hentPersonInfoHenter());
