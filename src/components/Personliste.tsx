@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Personrad } from './Personrad';
-import { Veileder } from '../store/veiledere/veiledereTypes';
-import { veilederEllerNull } from '../utils/personDataUtil';
-import { ApplicationState } from '../store';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { veilederEllerNull } from '@/utils/personDataUtil';
+import { ApplicationState } from '@/store';
 import {
   PersonData,
   PersonregisterState,
-} from '../store/personregister/personregisterTypes';
-import { getSortedEventsFromSortingType } from '../utils/hendelseFilteringUtils';
+} from '@/store/personregister/personregisterTypes';
+import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;

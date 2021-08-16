@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import OversiktContainer from '../containers/OversiktContainer';
-import { OverviewTabType } from '../konstanter';
-import { NavigationBar } from '../components/NavigationBar';
-import { ChangelogWrapper } from '../components/changelog/ChangelogWrapper';
+import { OverviewTabType } from '@/konstanter';
+import { NavigationBar } from '@/components/NavigationBar';
+import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
 
 export const Landingsside = (): ReactElement => (
   <div>

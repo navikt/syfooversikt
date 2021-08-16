@@ -1,8 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { VeilederinfoDTO } from '../../store/veilederinfo/veilederinfoTypes';
-import { Veileder } from '../../store/veiledere/veiledereTypes';
-import { OverviewTabType } from '../../konstanter';
+import { VeilederinfoDTO } from '@/store/veilederinfo/veilederinfoTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { OverviewTabType } from '@/konstanter';
 import Toolbar from './Toolbar';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;

@@ -6,12 +6,12 @@ import themes from '../styles/themes';
 import {
   lenkeTilModiaEnkeltperson,
   lenkeTilModiaEnkeltpersonFnr,
-} from '../utils/lenkeUtil';
-import { PersonData } from '../store/personregister/personregisterTypes';
+} from '@/utils/lenkeUtil';
+import { PersonData } from '@/store/personregister/personregisterTypes';
 import {
   skjermingskode,
   firstCompanyNameFromPersonData,
-} from '../utils/personDataUtil';
+} from '@/utils/personDataUtil';
 
 interface PersonradProps {
   fnr: string;

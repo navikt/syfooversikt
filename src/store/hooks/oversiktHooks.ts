@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ApplicationState } from '../index';
+import { ApplicationState } from '@/store';
 
 export interface OversiktData {
   laster: boolean;

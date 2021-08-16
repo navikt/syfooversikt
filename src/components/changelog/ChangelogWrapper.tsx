@@ -1,9 +1,9 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChangelogs } from '../../store/changelog/changelog_actions';
+import { fetchChangelogs } from '@/store/changelog/changelog_actions';
 import ChangelogModal from '../../components/changelog/ChangelogModal';
-import { ApplicationState } from '../../store';
-import { Changelog } from '../../store/changelog/changelogTypes';
+import { ApplicationState } from '@/store';
+import { Changelog } from '@/store/changelog/changelogTypes';
 
 const getPropsFromState = (state: ApplicationState) => ({
   changelogs: state.changelogs.data,

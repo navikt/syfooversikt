@@ -1,11 +1,11 @@
 import React, { Component, ReactElement } from 'react';
 import styled from 'styled-components';
 import Personliste from './Personliste';
-import { VeilederArbeidstaker } from '../store/veilederArbeidstaker/veilederArbeidstakerTypes';
-import { PersonregisterState } from '../store/personregister/personregisterTypes';
-import { VeilederinfoDTO } from '../store/veilederinfo/veilederinfoTypes';
-import { Veileder } from '../store/veiledere/veiledereTypes';
-import { OverviewTabType } from '../konstanter';
+import { VeilederArbeidstaker } from '@/store/veilederArbeidstaker/veilederArbeidstakerTypes';
+import { PersonregisterState } from '@/store/personregister/personregisterTypes';
+import { VeilederinfoDTO } from '@/store/veilederinfo/veilederinfoTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { OverviewTabType } from '@/konstanter';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
 
 interface SokeresultatState {

@@ -5,8 +5,8 @@ import {
   fetchChangelogsSuccess,
   fetchChengelogsLoadingAction,
 } from './changelog_actions';
-import { get } from '../../api';
-import { CHANGELOG_ROOT } from '../../utils/apiUrlUtil';
+import { get } from '@/api';
+import { CHANGELOG_ROOT } from '@/utils/apiUrlUtil';
 
 function* getChangelog(): IterableIterator<any> {
   try {

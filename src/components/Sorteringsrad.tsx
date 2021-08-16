@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
-import { SortingType } from '../utils/hendelseFilteringUtils';
+import { SortingType } from '@/utils/hendelseFilteringUtils';
 import Chevron from 'nav-frontend-chevron';
 
 const tekster = {

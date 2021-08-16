@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { resetAllFilters } from '../../store/filters/filter_actions';
+import { resetAllFilters } from '@/store/filters/filter_actions';
 import themes from '../../styles/themes';
 import SlettIkon from '../common/SlettIkon';
 

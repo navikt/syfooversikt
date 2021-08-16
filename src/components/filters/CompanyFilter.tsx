@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { FilterTitle } from '../FilterTitle';
 import { ValueType } from 'react-select/src/types';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../store';
+import { ApplicationState } from '@/store';
 
 const texts = {
   title: 'Virksomheter',

@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import {
   updateBirthDateFilter,
   updateCompaniesFilter,
-} from '../store/filters/filter_actions';
+} from '@/store/filters/filter_actions';
 import BirthDateFilter from './filters/BirthDateFilter';
 import CompanyFilter from './filters/CompanyFilter';
-import { PersonregisterState } from '../store/personregister/personregisterTypes';
-import { ApplicationState } from '../store';
+import { PersonregisterState } from '@/store/personregister/personregisterTypes';
+import { ApplicationState } from '@/store';
 import countFilterAction, {
   CounterFilterActionTypes,
 } from '../metrics/countFilterAction';
-import { mapPersonregisterToCompanyList } from '../utils/personDataUtil';
+import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 
 const texts = {
   panelTitle: 'Filter',

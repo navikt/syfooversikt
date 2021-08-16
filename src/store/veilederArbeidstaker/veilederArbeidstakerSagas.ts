@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { post } from '../../api';
+import { post } from '@/api';
 import * as actions from './veilederArbeidstaker_actions';
 import { PushVeilederArbeidstakerForespurtAction } from './veilederArbeidstaker_actions';
-import { SYFOOVERSIKTSRVREST_ROOT } from '../../utils/apiUrlUtil';
+import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 
 export function* pushBrukerArbeidstakerSaga(
   action: PushVeilederArbeidstakerForespurtAction

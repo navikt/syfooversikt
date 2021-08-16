@@ -1,6 +1,6 @@
-import { Veileder } from '../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 import { sortVeiledereAlphabetically } from './veiledereUtils';
-import { ToolbarWrapperProps } from '../components/toolbar/ToolbarWrapper';
+import { ToolbarWrapperProps } from '@/components/toolbar/ToolbarWrapper';
 
 export const assignUsersToSelectedVeileder = (
   { buttonHandler, checkAllHandler }: ToolbarWrapperProps,

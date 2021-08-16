@@ -21,6 +21,9 @@
     "noEmit": true,
     "jsx": "react",
     "outDir": "./dist/",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "sourceMap": true,
     "noImplicitAny": true
   },

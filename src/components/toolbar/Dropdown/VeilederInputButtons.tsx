@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Checkbox, Radio } from 'nav-frontend-skjema';
-import { Veileder } from '../../../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 import { ReactElement } from 'react';
 
 interface VeilederCheckboxProps {

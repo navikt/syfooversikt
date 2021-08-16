@@ -1,14 +1,14 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { AlertStripeRod } from '../components/AlertStripeAdvarsel';
-import { hentPersonoversiktForespurt } from '../store/personoversikt/personoversikt_actions';
+import { AlertStripeRod } from '@/components/AlertStripeAdvarsel';
+import { hentPersonoversiktForespurt } from '@/store/personoversikt/personoversikt_actions';
 import { EnhetensOversiktContainer } from './EnhetensOversiktContainer';
-import { OverviewTabType } from '../konstanter';
+import { OverviewTabType } from '@/konstanter';
 import AppSpinner from '../components/AppSpinner';
-import { OversiktData, useOversiktData } from '../store/hooks/oversiktHooks';
-import { hentVeilederinfo } from '../store/veilederinfo/veilederinfo_actions';
-import { hentAktivEnhet } from '../store/modiacontext/modiacontext_actions';
+import { OversiktData, useOversiktData } from '@/store/hooks/oversiktHooks';
+import { hentVeilederinfo } from '@/store/veilederinfo/veilederinfo_actions';
+import { hentAktivEnhet } from '@/store/modiacontext/modiacontext_actions';
 
 const tekster = {
   overskrifter: {

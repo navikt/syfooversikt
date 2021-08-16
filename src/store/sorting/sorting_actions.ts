@@ -1,4 +1,4 @@
-import { SortingType } from '../../utils/hendelseFilteringUtils';
+import { SortingType } from '@/utils/hendelseFilteringUtils';
 
 export enum SortingActionTypes {
   SORT_BRUKERE = 'SORT_BRUKERE',

@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useState, useEffect, ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
-import { Veileder } from '../../../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 import styled from 'styled-components';
 import { Dropdown } from '../Dropdown/Dropdown';
-import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '../../../utils/veiledereUtils';
-import { filterVeiledereOnInput } from '../../../utils/assignVeilederUtils';
-import { VeilederinfoDTO } from '../../../store/veilederinfo/veilederinfoTypes';
-import { ApplicationState } from '../../../store';
+import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
+import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
+import { VeilederinfoDTO } from '@/store/veilederinfo/veilederinfoTypes';
+import { ApplicationState } from '@/store';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
-import { updateVeilederIdentsFilter } from '../../../store/filters/filter_actions';
+import { updateVeilederIdentsFilter } from '@/store/filters/filter_actions';
 import countFilterAction, {
   CounterFilterActionTypes,
 } from '../../../metrics/countFilterAction';

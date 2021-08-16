@@ -1,9 +1,9 @@
 import TildelVeileder from './AssignVeileder/TildelVeileder';
-import { OverviewTabType } from '../../konstanter';
+import { OverviewTabType } from '@/konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
 import { Column, Row } from 'nav-frontend-grid';
 import Sorteringsrad from '../Sorteringsrad';
-import { sortBrukere } from '../../store/sorting/sorting_actions';
+import { sortBrukere } from '@/store/sorting/sorting_actions';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';

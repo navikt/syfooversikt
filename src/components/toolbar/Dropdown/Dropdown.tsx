@@ -2,9 +2,9 @@ import React, { ChangeEvent, ReactElement } from 'react';
 import styled from 'styled-components';
 import InputWithSearchIcon from '../../InputWithSearchIcon';
 import { VeilederInputButtons } from './VeilederInputButtons';
-import { isInputGiven } from '../../../utils/assignVeilederUtils';
+import { isInputGiven } from '@/utils/assignVeilederUtils';
 import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
-import { Veileder } from '../../../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 
 interface DropdownProps {
   buttonTexts: DropdownButtonTexts;

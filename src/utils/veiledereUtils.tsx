@@ -1,4 +1,4 @@
-import { Veileder } from '../store/veiledere/veiledereTypes';
+import { Veileder } from '@/store/veiledere/veiledereTypes';
 
 export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
   veiledere: Veileder[],
