@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import Lenke from 'nav-frontend-lenker';
-import { PersonData } from '@/store/personregister/personregisterTypes';
+import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeFirstLetter } from './stringUtil';
 

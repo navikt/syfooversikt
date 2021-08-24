@@ -1,9 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { VeilederinfoDTO } from '@/store/veilederinfo/veilederinfoTypes';
-import { Veileder } from '@/store/veiledere/veiledereTypes';
-import { OverviewTabType } from '@/konstanter';
 import Toolbar from './Toolbar';
+import { SortingType } from '@/utils/hendelseFilteringUtils';
+import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -14,9 +13,8 @@ export interface ToolbarWrapperProps {
   buttonHandler: (veilederIdent: string) => void;
   checkAllHandler: (checked: boolean) => void;
   onPageChange: (startItem: number, endItem: number) => void;
-  veiledere: Veileder[];
   markertePersoner: string[];
-  tabType: OverviewTabType;
+  setSortingType: (sortingType: SortingType) => void;
 }
 
 const InfoText = styled.div`

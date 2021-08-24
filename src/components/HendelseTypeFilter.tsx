@@ -1,14 +1,14 @@
 import React, { ComponentPropsWithoutRef, ReactElement } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
-import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
-import countFilterAction from '../metrics/countFilterAction';
-import { PersonregisterState } from '@/store/personregister/personregisterTypes';
+import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { filtrerPersonregister } from '@/utils/hendelseFilteringUtils';
-import { ApplicationState } from '@/store';
-import { HendelseTypeFilters } from '@/store/filters/filterReducer';
-import { updateHendelseFilterAction } from '@/store/filters/filter_actions';
 import { OverviewTabType } from '@/konstanter';
+import styled from 'styled-components';
+import { useFilters } from '@/context/filters/FilterContext';
+import { ActionType } from '@/context/filters/filterContextActions';
+import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { useTabType } from '@/context/tab/TabTypeContext';
 
 export const HendelseTekster: any = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -68,19 +68,13 @@ interface CheckboksElement {
   tabType: OverviewTabType;
 }
 
-export const HendelseTypeFilter = ({
-  className,
-  personRegister,
-  tabType,
-}: Props): ReactElement => {
-  const dispatch = useDispatch();
-  const currentHendelseFilters = useSelector(
-    (state: ApplicationState) => state.filters.selectedHendelseType
-  );
+const Container = styled.div`
+  margin-bottom: 1rem;
+`;
 
-  const updateHendelseFilterState = (filters: HendelseTypeFilters) => {
-    dispatch(updateHendelseFilterAction(filters));
-  };
+export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
+  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const { tabType } = useTabType();
 
   const elementer = Object.keys(HendelseTekster)
     .filter((key) => {
@@ -91,24 +85,24 @@ export const HendelseTypeFilter = ({
     })
     .map((key) => {
       const tekst: string = HendelseTekster[key];
-      const checked = isCheckedInState(currentHendelseFilters, tekst);
+      const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
       return { key, tekst, checked } as CheckboksElement;
     });
 
   const onCheckedChange = (element: CheckboksElement, checked: boolean) => {
     const nyttFilter = lagNyttFilter(
-      currentHendelseFilters,
+      filterState.selectedHendelseType,
       element.tekst,
       checked
     );
-    updateHendelseFilterState(nyttFilter);
-    if (checked) {
-      countFilterAction(element.tekst).next();
-    }
+    dispatchFilterAction({
+      type: ActionType.SetSelectedHendelseType,
+      selectedHendelseType: nyttFilter,
+    });
   };
 
   return (
-    <div className={className}>
+    <Container>
       <EkspanderbartPanel apen tittel="Hendelse">
         <CheckboxGruppe>
           {genererHendelseCheckbokser(
@@ -118,7 +112,7 @@ export const HendelseTypeFilter = ({
           )}
         </CheckboxGruppe>
       </EkspanderbartPanel>
-    </div>
+    </Container>
   );
 };
 

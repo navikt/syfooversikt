@@ -1,18 +1,28 @@
 import 'core-js';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-import ModalWrapper from 'nav-frontend-modal';
 import './styles/styles.less';
 import AppRouter from './routers/AppRouter';
-import { store } from './store';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-render(
-  <Provider store={store}>
-    <AppRouter />
-  </Provider>,
-  document.getElementById('maincontent')
-);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 30000,
+    },
+  },
+});
 
-ModalWrapper.setAppElement('#maincontent');
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppRouter />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+}
+
+render(<App />, document.getElementById('maincontent'));

@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import Side from './Side';
 import { Container } from 'nav-frontend-grid';
 
+//todo wut
 export const ManglerTilgangsside = (): ReactElement => (
   <Side tittel="Under utvikling">
     <Container>

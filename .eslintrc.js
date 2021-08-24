@@ -12,6 +12,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'plugin:react-hooks/recommended',
     'prettier', // Make sure this is always the last configuration in the extends array.
   ],
   rules: {

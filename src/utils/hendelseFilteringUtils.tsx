@@ -1,11 +1,11 @@
 import {
   PersonData,
   PersonregisterState,
-} from '@/store/personregister/personregisterTypes';
-import { HendelseTypeFilters } from '@/store/filters/filterReducer';
+} from '../api/types/personregisterTypes';
 import { firstCompanyNameFromPersonData } from './personDataUtil';
-import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { Veileder } from '../api/types/veiledereTypes';
 import { formaterNavn } from './lenkeUtil';
+import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
 export class Filterable<T> {
   value: T;
@@ -127,11 +127,7 @@ export const filtrerPersonregister = (
           cv[fnr] = personData;
         } else if (filter.svartMote && personData.harMoteplanleggerUbehandlet) {
           cv[fnr] = personData;
-        } else if (
-          filter.ufordeltBruker &&
-          (personData.tildeltVeilederIdent === null ||
-            personData.tildeltVeilederIdent === undefined)
-        ) {
+        } else if (filter.ufordeltBruker && !personData.tildeltVeilederIdent) {
           cv[fnr] = personData;
         }
         return cv;

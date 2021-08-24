@@ -6,7 +6,7 @@ import { Column } from 'nav-frontend-grid';
 import { lenkeTilModiaEnkeltperson } from '../../src/utils/lenkeUtil';
 import { firstCompanyNameFromPersonData } from '../../src/utils/personDataUtil';
 import { testdata, veiledere } from '../data/fellesTestdata';
-import { Skjermingskode } from '../../src/store/personregister/personregisterTypes';
+import { Skjermingskode } from '../../src/api/types/personregisterTypes';
 import { Personrad, StyledPersonRad } from '../../src/components/Personrad';
 
 chai.use(chaiEnzyme());

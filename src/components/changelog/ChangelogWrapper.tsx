@@ -1,13 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchChangelogs } from '@/store/changelog/changelog_actions';
-import ChangelogModal from '../../components/changelog/ChangelogModal';
-import { ApplicationState } from '@/store';
-import { Changelog } from '@/store/changelog/changelogTypes';
-
-const getPropsFromState = (state: ApplicationState) => ({
-  changelogs: state.changelogs.data,
-});
+import ChangelogModal from '@/components/changelog/ChangelogModal';
+import { Changelog } from '@/api/types/changelogTypes';
+import { useChangelogsQuery } from '@/react-query/changelogHooks';
 
 interface ChangelogStorage {
   viewed_version: number;
@@ -33,35 +27,33 @@ const saveChangelogVersionViewed = (version = 0) => {
 };
 
 export const ChangelogWrapper = (): ReactElement => {
-  const dispatch = useDispatch();
+  const changelogsQuery = useChangelogsQuery();
   const [showChangelog, setShowChangelog] = useState(false);
-  const [latestChangelog, setLatestChangelog] = useState<Changelog | undefined>(
-    undefined
-  );
 
-  useEffect(() => {
-    dispatch(fetchChangelogs());
-  }, []);
-
-  const { changelogs } = useSelector(getPropsFromState);
-
-  useEffect(() => {
-    if (changelogs.length === 0) return;
-    const lastChangelog = [...changelogs].sort((a, b) => {
+  const latestChangelog = changelogsQuery.data?.sort(
+    (a: Changelog, b: Changelog) => {
       return a.version > b.version ? -1 : 1;
-    })[0];
-
-    if (lastChangelog === undefined) return;
-
-    const storedSettings = getChangelogStorage();
-    if (storedSettings) {
-      setLatestChangelog(lastChangelog);
-      setShowChangelog(storedSettings.viewed_version < lastChangelog.version);
-    } else {
-      setLatestChangelog(lastChangelog);
-      setShowChangelog(true);
     }
-  }, [changelogs]);
+  )[0];
+
+  useEffect(() => {
+    if (changelogsQuery.isSuccess) {
+      const storedSettings = getChangelogStorage();
+      setShowChangelog(
+        storedSettings && latestChangelog
+          ? storedSettings.viewed_version < latestChangelog.version
+          : true
+      );
+    }
+  }, [changelogsQuery.isSuccess, latestChangelog]);
+
+  if (
+    changelogsQuery.isLoading ||
+    changelogsQuery.isError ||
+    !latestChangelog
+  ) {
+    return <></>;
+  }
 
   return (
     <ChangelogModal

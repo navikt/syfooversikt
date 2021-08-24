@@ -2,13 +2,13 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ModalWrapper from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Changelog } from '@/store/changelog/changelogTypes';
+import { Changelog } from '@/api/types/changelogTypes';
 import { NumberIndicator } from '../NumberIndicator';
 import ChangelogChevronKnapp from './ChangelogChevronKnapp';
 
 interface Props {
   isOpen: boolean;
-  changelog?: Changelog;
+  changelog: Changelog;
 
   onClose(didComplete: boolean, version: number): void;
 }
@@ -92,8 +92,6 @@ const ChangelogModal = ({
   isOpen,
   changelog,
 }: Props): ReactElement => {
-  if (!changelog) return <></>;
-
   const [currentPageNumber, setPageNumber] = useState(0);
   const [currentPage, setCurrentPage] = useState(
     changelog.items[currentPageNumber]
@@ -104,7 +102,7 @@ const ChangelogModal = ({
 
   useEffect(() => {
     setCurrentPage(changelog.items[currentPageNumber]);
-  }, [currentPageNumber]);
+  }, [changelog.items, currentPageNumber]);
 
   return (
     <div>

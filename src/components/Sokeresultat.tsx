@@ -1,28 +1,27 @@
-import React, { Component, ReactElement } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import Personliste from './Personliste';
-import { VeilederArbeidstaker } from '@/store/veilederArbeidstaker/veilederArbeidstakerTypes';
-import { PersonregisterState } from '@/store/personregister/personregisterTypes';
-import { VeilederinfoDTO } from '@/store/veilederinfo/veilederinfoTypes';
-import { Veileder } from '@/store/veiledere/veiledereTypes';
-import { OverviewTabType } from '@/konstanter';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
-
-interface SokeresultatState {
-  markertePersoner: string[];
-  alleMarkert: boolean;
-  startItem: number;
-  endItem: number;
-  currentTabType: OverviewTabType;
-}
+import {
+  useAktivVeilederQuery,
+  useTildelVeileder,
+} from '@/react-query/veiledereQueryHooks';
+import { PersonregisterState } from '@/api/types/personregisterTypes';
+import {
+  Filterable,
+  filterOnBirthDates,
+  filterOnCompany,
+  filtrerPaaFodselsnummerEllerNavn,
+  filtrerPersonregister,
+  SortingType,
+} from '@/utils/hendelseFilteringUtils';
+import { useFilters } from '@/context/filters/FilterContext';
+import { useTabType } from '@/context/tab/TabTypeContext';
+import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
 interface SokeresultatProps {
-  aktivEnhetId: string;
-  aktivVeilederinfo?: VeilederinfoDTO;
-  personregister: PersonregisterState;
-  tildelVeileder: (liste: VeilederArbeidstaker[]) => void;
-  veiledere: Veileder[];
-  tabType: OverviewTabType;
+  allEvents: Filterable<PersonregisterState>;
 }
 
 const lagListe = (
@@ -41,140 +40,86 @@ const SokeresultatContainer = styled.div`
   flex: 3;
 `;
 
-class Sokeresultat extends Component<SokeresultatProps, SokeresultatState> {
-  constructor(props: SokeresultatProps) {
-    super(props);
-    this.state = {
-      markertePersoner: [],
-      alleMarkert: false,
-      currentTabType: props.tabType,
-      startItem: 0,
-      endItem: 0,
-    };
-    this.checkboxHandler = this.checkboxHandler.bind(this);
-    this.checkAllHandler = this.checkAllHandler.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
-  }
+const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
+  const { aktivEnhet } = useAktivEnhet();
+  const aktivVeilederQuery = useAktivVeilederQuery();
+  const tildelVeileder = useTildelVeileder();
+  const { filterState } = useFilters();
+  const { tabType } = useTabType();
 
-  checkboxHandler = (fnr: string): void => {
-    this.setState((prevState) => {
-      const markertePersoner: string[] = personErIkkeMarkert(prevState, fnr)
-        ? [...prevState.markertePersoner, fnr]
-        : fjernMarkertPerson(prevState, fnr);
+  const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
+  const [startItem, setStartItem] = useState(0);
+  const [endItem, setEndItem] = useState(0);
+  const [sortingType, setSortingType] = useState<SortingType>('FNR_ASC');
 
-      const alleMarkert =
-        markertePersoner.length ===
-        Object.keys(this.props.personregister).length;
-      return { markertePersoner, alleMarkert };
-    });
+  useEffect(() => {
+    setMarkertePersoner([]);
+  }, [tabType]);
+
+  const filteredEvents = allEvents
+    .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
+    .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
+    .applyFilter((v) =>
+      filtrerPersonregister(v, filterState.selectedHendelseType)
+    )
+    .applyFilter((v) =>
+      filtrerPaaFodselsnummerEllerNavn(v, filterState.tekstFilter)
+    );
+
+  const allFnr = Object.keys(filteredEvents.value);
+
+  const checkboxHandler = (fnr: string): void => {
+    const fnrIndex = markertePersoner.indexOf(fnr);
+    const personIsMarked = fnrIndex !== -1;
+
+    if (personIsMarked) {
+      setMarkertePersoner(markertePersoner.filter((p) => p !== fnr));
+    } else {
+      setMarkertePersoner([...markertePersoner, fnr]);
+    }
   };
 
-  componentDidUpdate(
-    prevProps: SokeresultatProps,
-    currentState: SokeresultatState
-  ): void {
-    if (this.props.tabType !== currentState.currentTabType) {
-      this.setState({
-        alleMarkert: false,
-        markertePersoner: [],
-        currentTabType: this.props.tabType,
-      });
-    }
-
-    const currentRegisterLength = Object.keys(this.props.personregister).length;
-    const previousRegisterLength = Object.keys(prevProps.personregister).length;
-
-    if (
-      currentState.markertePersoner.length > 0 &&
-      currentRegisterLength !== previousRegisterLength
-    ) {
-      this.setState({
-        markertePersoner: [],
-        alleMarkert: false,
-      });
-    }
-  }
-
-  checkAllHandler = (checked: boolean): void => {
-    const { personregister } = this.props;
-
-    const fnrListe = Object.keys(personregister);
-
-    const markertePersoner = checked ? fnrListe : [];
-    const alleMarkert = checked;
-    this.setState(() => ({
-      markertePersoner,
-      alleMarkert,
-    }));
+  const checkAllHandler = (checked: boolean): void => {
+    setMarkertePersoner(checked ? allFnr : []);
   };
 
-  buttonHandler = (veilederIdent: string): void => {
-    const { aktivEnhetId, tildelVeileder } = this.props;
+  const buttonHandler = (veilederIdent: string): void => {
     const veilederArbeidstakerListe = lagListe(
-      this.state.markertePersoner,
+      markertePersoner,
       veilederIdent,
-      aktivEnhetId
+      aktivEnhet || ''
     );
-    tildelVeileder(veilederArbeidstakerListe);
+
+    tildelVeileder.mutate(veilederArbeidstakerListe);
   };
 
-  onPageChange = (startItem: number, endItem: number): void => {
-    this.setState({
-      endItem,
-      startItem,
-    });
+  const onPageChange = (startItem: number, endItem: number): void => {
+    setStartItem(startItem);
+    setEndItem(endItem);
   };
 
-  render(): ReactElement {
-    const {
-      personregister,
-      veiledere,
-      aktivVeilederinfo,
-      tabType,
-    } = this.props;
-
-    const { alleMarkert, markertePersoner, startItem, endItem } = this.state;
-
-    const allFnr = Object.keys(personregister);
-
-    return (
-      <SokeresultatContainer>
-        <ToolbarWrapper
-          numberOfItemsTotal={allFnr.length}
-          onPageChange={this.onPageChange}
-          tabType={tabType}
-          aktivVeilederInfo={aktivVeilederinfo}
-          alleMarkert={alleMarkert}
-          buttonHandler={this.buttonHandler}
-          checkAllHandler={this.checkAllHandler}
-          veiledere={veiledere}
-          markertePersoner={markertePersoner}
-        />
-        <Personliste
-          personregister={personregister}
-          startItem={startItem}
-          endItem={endItem}
-          checkboxHandler={this.checkboxHandler}
-          markertePersoner={markertePersoner}
-          veiledere={veiledere}
-        />
-      </SokeresultatContainer>
-    );
-  }
-}
-
-const personErIkkeMarkert = (prevState: any, fnr: string) => {
   return (
-    prevState.markertePersoner.findIndex((markertPerson: string) => {
-      return markertPerson === fnr;
-    }) === -1
+    <SokeresultatContainer>
+      <ToolbarWrapper
+        numberOfItemsTotal={allFnr.length}
+        onPageChange={onPageChange}
+        aktivVeilederInfo={aktivVeilederQuery.data}
+        alleMarkert={allFnr.length === markertePersoner.length}
+        buttonHandler={buttonHandler}
+        checkAllHandler={checkAllHandler}
+        markertePersoner={markertePersoner}
+        setSortingType={setSortingType}
+      />
+      <Personliste
+        personregister={filteredEvents.value}
+        startItem={startItem}
+        endItem={endItem}
+        checkboxHandler={checkboxHandler}
+        markertePersoner={markertePersoner}
+        sortingType={sortingType}
+      />
+    </SokeresultatContainer>
   );
-};
-
-const fjernMarkertPerson = (prevState: any, fnr: string) => {
-  return prevState.markertePersoner.filter((markertPerson: string) => {
-    return markertPerson !== fnr;
-  });
 };
 
 export default Sokeresultat;
