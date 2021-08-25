@@ -7,7 +7,7 @@ export const erLokal = (): boolean => {
 };
 
 export const finnNaisUrlDefault = (): string => {
-  return erPreProd() ? '.nais.preprod.local' : '.nais.adeo.no';
+  return erPreProd() ? '.dev.intern.nav.no' : '.intern.nav.no';
 };
 
 export const fullNaisUrlDefault = (host: string, path: string): string => {
