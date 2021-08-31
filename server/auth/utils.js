@@ -3,6 +3,12 @@ const OpenIdClient = require("openid-client");
 
 const Config = require("../config.js");
 
+const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 10;
+
+const expired = (oboToken) => {
+  return oboToken.expires_in <= OBO_TOKEN_EXPIRATION_MARGIN_SECONDS;
+};
+
 const getTokenSetById = (tokenSets, id) => {
   if (!(id in tokenSets)) {
     // Should have been initialized by passport
@@ -45,7 +51,7 @@ const getOrRefreshOnBehalfOfToken = async (
     tokenSets[clientId] = newOnBehalfOftoken;
     return newOnBehalfOftoken;
   }
-  if (onBehalfOfToken.expired()) {
+  if (expired(onBehalfOfToken)) {
     console.log(
       "getOrRefreshOnBehalfOfToken: on-behalf-of token has expired, requesting new using refresh_token."
     );
