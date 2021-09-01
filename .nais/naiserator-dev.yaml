@@ -57,9 +57,9 @@ spec:
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
       value: "internarbeidsflatedecorator-q0.dev.intern.nav.no"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
-      value: "f772834b-04d6-43c1-9d4a-de5743354be2"
+      value: "dev-fss.teamsykefravr.syfooversiktsrv"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
-      value: "10ce50ea-d922-48d7-888d-3f8b683d8aab"
+      value: "dev-fss.teamsykefravr.syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-fss.teamsykefravr.syfoveileder"
     - name: MODIACONTEXTHOLDER_HOST
