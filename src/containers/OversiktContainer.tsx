@@ -1,17 +1,16 @@
 import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import { AlertStripeRod } from '@/components/AlertStripe/AlertStripeAdvarsel';
-import { usePersonregisterQuery } from '@/react-query/personregisterHooks';
-import { usePersonoversiktQuery } from '@/react-query/personoversiktHooks';
+import { usePersonregisterQuery } from '@/data/personregisterHooks';
+import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '@/react-query/veiledereQueryHooks';
+} from '@/data/veiledereQueryHooks';
 import AppSpinner from '@/components/AppSpinner';
 import { Oversikt } from '@/containers/Oversikt';
 import { OverviewTabType } from '@/konstanter';
 import { NavigationBar } from '@/components/NavigationBar';
-import { FilterProvider } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 
 const tekster = {
@@ -71,13 +70,11 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
       aktivVeilederQuery.isSuccess
     ) {
       return (
-        <FilterProvider>
-          <Oversikt
-            personregisterData={personregisterQuery.data || []}
-            personoversiktData={personoversiktQuery.data || []}
-            aktivVeilederData={aktivVeilederQuery.data}
-          />
-        </FilterProvider>
+        <Oversikt
+          personregisterData={personregisterQuery.data || []}
+          personoversiktData={personoversiktQuery.data || []}
+          aktivVeilederData={aktivVeilederQuery.data}
+        />
       );
     }
 

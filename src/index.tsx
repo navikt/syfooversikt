@@ -6,6 +6,9 @@ import './styles/styles.less';
 import AppRouter from './routers/AppRouter';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { FilterProvider } from '@/context/filters/FilterContext';
+import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { TabTypeProvider } from '@/context/tab/TabTypeContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,13 +19,19 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppRouter />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <TabTypeProvider>
+      <AktivEnhetProvider>
+        <FilterProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppRouter />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </FilterProvider>
+      </AktivEnhetProvider>
+    </TabTypeProvider>
   );
-}
+};
 
 render(<App />, document.getElementById('maincontent'));

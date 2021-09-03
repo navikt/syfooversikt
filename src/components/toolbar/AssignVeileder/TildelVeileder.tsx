@@ -10,7 +10,7 @@ import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
 import { ToolbarWrapperProps } from '../ToolbarWrapper';
-import { useVeiledereQuery } from '@/react-query/veiledereQueryHooks';
+import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { useTabType } from '@/context/tab/TabTypeContext';
 
 const dropdownButtonTexts: DropdownButtonTexts = {

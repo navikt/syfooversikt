@@ -6,7 +6,7 @@ import ToolbarWrapper from './toolbar/ToolbarWrapper';
 import {
   useAktivVeilederQuery,
   useTildelVeileder,
-} from '@/react-query/veiledereQueryHooks';
+} from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,

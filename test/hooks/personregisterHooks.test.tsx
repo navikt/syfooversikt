@@ -7,9 +7,10 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import personoversiktMockData from '../../Mock/Data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
-import { usePersonregisterQuery } from '../../src/react-query/personregisterHooks';
+import { usePersonregisterQuery } from '../../src/data/personregisterHooks';
 import { PersonregisterData } from '../../src/api/types/personregisterTypes';
 import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -25,7 +26,7 @@ describe('personregisterHooks tests', () => {
     const wrapper = ({ children }: any) => (
       <AktivEnhetContext.Provider
         value={{
-          aktivEnhet: '0316',
+          aktivEnhet: aktivEnhetMockData.aktivEnhet,
           handleAktivEnhetChanged: () => void 0,
         }}
       >

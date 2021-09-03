@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import ChangelogModal from '@/components/changelog/ChangelogModal';
 import { Changelog } from '@/api/types/changelogTypes';
-import { useChangelogsQuery } from '@/react-query/changelogHooks';
+import { useChangelogsQuery } from '@/data/changelogHooks';
 
 interface ChangelogStorage {
   viewed_version: number;

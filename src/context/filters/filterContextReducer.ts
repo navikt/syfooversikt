@@ -7,10 +7,10 @@ import {
   FilterActions,
 } from '@/context/filters/filterContextActions';
 
-export function filterReducer(
+export const filterReducer = (
   state: FilterState,
   action: FilterActions
-): FilterState {
+): FilterState => {
   switch (action.type) {
     case ActionType.SetTekstFilter: {
       return {
@@ -59,4 +59,4 @@ export function filterReducer(
       };
     }
   }
-}
+};

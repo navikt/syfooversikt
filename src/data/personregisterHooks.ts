@@ -2,7 +2,7 @@ import { SYFOPERSONREST_ROOT } from '@/utils/apiUrlUtil';
 import { useQuery } from 'react-query';
 import { post } from '@/api/axios';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
-import { usePersonoversiktQuery } from '@/react-query/personoversiktHooks';
+import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 
 export const personregisterQueryKeys = {
   personregister: 'personregister',

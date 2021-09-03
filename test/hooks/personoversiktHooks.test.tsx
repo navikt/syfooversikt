@@ -4,11 +4,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { stubModiaContext } from '../stubs/stubModiaContext';
-import personoversiktMockData from '../../Mock/Data/personoversiktEnhet.json';
+import personoversiktEnhetMockData from '../../Mock/Data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
-import { usePersonoversiktQuery } from '../../src/react-query/personoversiktHooks';
+import { usePersonoversiktQuery } from '../../src/data/personoversiktHooks';
 import { PersonoversiktStatus } from '../../src/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -23,7 +24,7 @@ describe('personoversiktHooks tests', () => {
     const wrapper = ({ children }: any) => (
       <AktivEnhetContext.Provider
         value={{
-          aktivEnhet: '0316',
+          aktivEnhet: aktivEnhetMockData.aktivEnhet,
           handleAktivEnhetChanged: () => void 0,
         }}
       >
@@ -42,6 +43,6 @@ describe('personoversiktHooks tests', () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const actual: PersonoversiktStatus[] = result.current.data!;
 
-    expect(actual[0].fnr).to.eq(personoversiktMockData[0].fnr);
+    expect(actual[0].fnr).to.eq(personoversiktEnhetMockData[0].fnr);
   });
 });

@@ -9,7 +9,7 @@ import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '@/react-query/veiledereQueryHooks';
+} from '@/data/veiledereQueryHooks';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 

@@ -16,7 +16,7 @@ const FilterContext = React.createContext<{
   dispatch: () => undefined,
 });
 
-function FilterProvider({ children }: FilterProviderProps) {
+const FilterProvider = ({ children }: FilterProviderProps) => {
   const [filterState, dispatch] = React.useReducer(
     filterReducer,
     filterInitialState
@@ -26,12 +26,12 @@ function FilterProvider({ children }: FilterProviderProps) {
       {children}
     </FilterContext.Provider>
   );
-}
+};
 
 const useFilters = () => {
   const context = React.useContext(FilterContext);
   if (context === undefined) {
-    throw new Error('useFilters must be used within a CountProvider');
+    throw new Error('useFilters must be used within a FilterProvider');
   }
   return context;
 };

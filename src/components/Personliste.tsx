@@ -12,7 +12,7 @@ import {
   getSortedEventsFromSortingType,
   SortingType,
 } from '@/utils/hendelseFilteringUtils';
-import { useVeiledereQuery } from '@/react-query/veiledereQueryHooks';
+import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;

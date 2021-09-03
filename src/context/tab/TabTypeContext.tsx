@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { OverviewTabType } from '@/konstanter';
 
 type TabTypeProviderProps = { children: React.ReactNode };
 
 const TabTypeContext = React.createContext<{
   tabType: OverviewTabType;
-  setTabType: Dispatch<SetStateAction<OverviewTabType>>;
+  setTabType: (tabType: OverviewTabType) => void;
 }>({
   tabType: OverviewTabType.ENHET_OVERVIEW,
   setTabType: () => undefined,
 });
 
-function TabTypeProvider({ children }: TabTypeProviderProps) {
+const TabTypeProvider = ({ children }: TabTypeProviderProps) => {
   const [tabType, setTabType] = useState(OverviewTabType.ENHET_OVERVIEW);
 
   return (
@@ -20,7 +20,7 @@ function TabTypeProvider({ children }: TabTypeProviderProps) {
       {children}
     </TabTypeContext.Provider>
   );
-}
+};
 
 const useTabType = () => {
   const context = React.useContext(TabTypeContext);

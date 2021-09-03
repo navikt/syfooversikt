@@ -7,7 +7,7 @@ import {
 } from '../../src/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
 
-function createPersonDataWithName(name: string): PersonData {
+const createPersonDataWithName = (name: string): PersonData => {
   return {
     navn: name,
     harMotebehovUbehandlet: false,
@@ -19,7 +19,7 @@ function createPersonDataWithName(name: string): PersonData {
     tildeltVeilederIdent: '234',
     oppfolgingstilfeller: [],
   };
-}
+};
 
 describe('hendelseFilteringUtils', () => {
   it('Should sort by name descending', () => {

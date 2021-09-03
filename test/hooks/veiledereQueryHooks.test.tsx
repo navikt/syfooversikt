@@ -8,13 +8,14 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '../../src/react-query/veiledereQueryHooks';
+} from '../../src/data/veiledereQueryHooks';
 import { Veileder } from '../../src/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { VeilederinfoDTO } from '../../src/api/types/veilederinfoTypes';
 import veiledere from '../../Mock/Data/veiledere.json';
 import veilederInfo from '../../Mock/Data/veilederInfo.json';
 import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -29,7 +30,7 @@ describe('veiledereQueryHooks tests', () => {
     const wrapper = ({ children }: any) => (
       <AktivEnhetContext.Provider
         value={{
-          aktivEnhet: '0316',
+          aktivEnhet: aktivEnhetMockData.aktivEnhet,
           handleAktivEnhetChanged: () => void 0,
         }}
       >

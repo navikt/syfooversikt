@@ -32,11 +32,11 @@ const StyledCheckbox = styled(Checkbox)`
 const InputButtons = (props: VeilederCheckboxProps) => {
   const { onChangeHandler, filteredVeiledere, selectedVeileders } = props;
 
-  function getVeilederIdentification(veileder: Veileder): string {
+  const getVeilederIdentification = (veileder: Veileder): string => {
     return veileder.fornavn === ''
       ? veileder.ident
       : `${veileder.etternavn}, ${veileder.fornavn}`;
-  }
+  };
 
   return (
     <React.Fragment>

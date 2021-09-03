@@ -9,7 +9,7 @@ import { get, post } from '@/api/axios';
 import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { personoversiktQueryKeys } from '@/react-query/personoversiktHooks';
+import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
 
 export const veiledereQueryKeys = {
   veiledereInfo: 'veiledereInfo',
@@ -53,11 +53,11 @@ export const useTildelVeileder = () => {
 
   return useMutation(postTildelVeileder, {
     onMutate: (liste: VeilederArbeidstaker[]) => {
-      const currentPersonoversikt: PersonoversiktStatus[] =
+      const previousPersonoversikt: PersonoversiktStatus[] =
         queryClient.getQueryData(
           personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
         ) || [];
-      const optimisticlyUpdatedPersonoversikt: PersonoversiktStatus[] = currentPersonoversikt.map(
+      const optimisticlyUpdatedPersonoversikt: PersonoversiktStatus[] = previousPersonoversikt.map(
         (person) => {
           const tilknytning = liste.find(
             (tilknytning) => tilknytning.fnr === person.fnr
@@ -75,8 +75,16 @@ export const useTildelVeileder = () => {
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         () => optimisticlyUpdatedPersonoversikt
       );
+
+      return { previousPersonoversikt };
     },
-    onSuccess: () => {
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData(
+        personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
+        context?.previousPersonoversikt || []
+      );
+    },
+    onSettled: () => {
       queryClient.invalidateQueries(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
       );

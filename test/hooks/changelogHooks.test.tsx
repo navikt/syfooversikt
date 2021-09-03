@@ -4,7 +4,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { Changelog } from '../../src/api/types/changelogTypes';
-import { useChangelogsQuery } from '../../src/react-query/changelogHooks';
+import { useChangelogsQuery } from '../../src/data/changelogHooks';
 import { stubChangelogs } from '../stubs/stubChangelogs';
 
 chai.use(chaiEnzyme());
@@ -26,8 +26,7 @@ describe('changelogHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: Changelog[] = result.current.data!;
+    const actual: Changelog[] = result.current.data || [];
 
     expect(actual[0].date).to.eq('10-09-19');
     expect(actual[0].items.length).to.eq(2);

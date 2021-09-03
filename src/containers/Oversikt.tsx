@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   PersonregisterData,
   PersonregisterState,
@@ -19,7 +19,6 @@ import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { OverviewTabType } from '@/konstanter';
 import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
 import { useTabType } from '@/context/tab/TabTypeContext';
 
 const tekster = {
@@ -56,14 +55,8 @@ export const Oversikt = ({
   personregisterData,
   aktivVeilederData,
 }: OversiktProps) => {
-  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const { filterState } = useFilters();
   const { tabType } = useTabType();
-
-  useEffect(() => {
-    dispatchFilterAction({
-      type: ActionType.ResetFilters,
-    });
-  }, [dispatchFilterAction, tabType]);
 
   const personData: PersonregisterState = toPersonData(
     personoversiktData,
