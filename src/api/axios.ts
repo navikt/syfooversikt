@@ -8,7 +8,7 @@ import {
 } from './errors';
 
 export const NAV_CONSUMER_ID_HEADER = 'nav-consumer-id';
-export const NAV_CONSUMER_ID = 'syfomodiaperson';
+export const NAV_CONSUMER_ID = 'syfooversikt';
 export const NAV_PERSONIDENT_HEADER = 'nav-personident';
 
 export const defaultRequestHeaders = (personIdent?: string): HeadersInit => {
