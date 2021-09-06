@@ -45,9 +45,13 @@ const PaginationRow = ({
   }, [numberOfItems, maxNumberPerPage]);
 
   useEffect(() => {
-    const chunk = getCurrentChunk();
-    onPageChange(chunk.start, chunk.end, currentPage);
-  }, [numberOfItems, currentPage, maxNumberPerPage]);
+    const start = Math.min(currentPage * maxNumberPerPage, numberOfItems);
+    const end = Math.min(
+      (currentPage + 1) * maxNumberPerPage - 1,
+      numberOfItems
+    );
+    onPageChange(start, end, currentPage);
+  }, [onPageChange, numberOfItems, currentPage, maxNumberPerPage]);
 
   const onNextClick = () => {
     const nextPage = Math.min(currentPage + 1, getNumberOfPages());
@@ -58,18 +62,6 @@ const PaginationRow = ({
 
   const onPreviousClick = () => {
     setCurrentPage(Math.max(currentPage - 1, 0));
-  };
-
-  const getCurrentChunk = () => {
-    const start = Math.min(currentPage * maxNumberPerPage, numberOfItems);
-    const end = Math.min(
-      (currentPage + 1) * maxNumberPerPage - 1,
-      numberOfItems
-    );
-    return {
-      start,
-      end,
-    };
   };
 
   return (

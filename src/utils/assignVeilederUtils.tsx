@@ -1,4 +1,4 @@
-import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { Veileder } from '@/api/types/veiledereTypes';
 import { sortVeiledereAlphabetically } from './veiledereUtils';
 import { ToolbarWrapperProps } from '@/components/toolbar/ToolbarWrapper';
 

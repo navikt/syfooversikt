@@ -2,25 +2,34 @@ import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
-import { Provider } from 'react-redux';
 import {
   HendelseTekster,
   HendelseTypeFilter,
 } from '../../src/components/HendelseTypeFilter';
-import { store } from '../../src/store';
 import { mount } from 'enzyme';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
 
 describe('SokeresultatFilter', () => {
-  const component = mount(
-    <Provider store={store}>
-      <HendelseTypeFilter />
-    </Provider>
-  );
+  const queryClient = new QueryClient();
 
   it('Skal inneholde checkbokser med riktige labels', () => {
+    const component = mount(
+      <QueryClientProvider client={queryClient}>
+        <HendelseTypeFilter
+          setSelectedHendelseType={() => void 0}
+          selectedHendelseType={{
+            arbeidsgiverOnskerMote: false,
+            onskerMote: true,
+            svartMote: false,
+            ufordeltBruker: false,
+          }}
+        />
+      </QueryClientProvider>
+    );
+
     expect(
       component.contains(<Checkbox label={'Ønsker møte'} checked={false} />)
     );
@@ -43,6 +52,4 @@ describe('SokeresultatFilter', () => {
       )
     );
   });
-
-  // TODO: test click handling?
 });

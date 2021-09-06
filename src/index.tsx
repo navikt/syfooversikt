@@ -1,18 +1,37 @@
 import 'core-js';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-import ModalWrapper from 'nav-frontend-modal';
 import './styles/styles.less';
 import AppRouter from './routers/AppRouter';
-import { store } from './store';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { FilterProvider } from '@/context/filters/FilterContext';
+import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { TabTypeProvider } from '@/context/tab/TabTypeContext';
 
-render(
-  <Provider store={store}>
-    <AppRouter />
-  </Provider>,
-  document.getElementById('maincontent')
-);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 30000,
+    },
+  },
+});
 
-ModalWrapper.setAppElement('#maincontent');
+const App = () => {
+  return (
+    <TabTypeProvider>
+      <AktivEnhetProvider>
+        <FilterProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppRouter />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </FilterProvider>
+      </AktivEnhetProvider>
+    </TabTypeProvider>
+  );
+};
+
+render(<App />, document.getElementById('maincontent'));

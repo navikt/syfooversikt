@@ -1,5 +1,5 @@
-import Pagination from '../PaginationRow';
-import React, { ReactElement } from 'react';
+import PaginationRow from '../PaginationRow';
+import React, { ReactElement, useCallback } from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 import {
@@ -34,13 +34,24 @@ interface PaginationContainerProps {
   shouldShowTogglePagination: boolean;
 }
 
-const PaginationContainer = (props: PaginationContainerProps): ReactElement => {
-  const {
-    numberOfItemsPerPage,
-    setNumberOfItemsPerPage,
-    numberOfItemsTotal,
-    shouldShowTogglePagination,
-  } = props;
+const PaginationContainer = ({
+  numberOfItemsPerPage,
+  setNumberOfItemsPerPage,
+  numberOfItemsTotal,
+  shouldShowTogglePagination,
+  setPageInfo,
+  onPageChange,
+}: PaginationContainerProps): ReactElement => {
+  const pageChangeCallback = useCallback(
+    (start: number, end: number) => {
+      setPageInfo({
+        firstVisibleIndex: start,
+        lastVisibleIndex: end,
+      });
+      onPageChange(start, end);
+    },
+    [onPageChange, setPageInfo]
+  );
 
   return (
     <Wrapper>
@@ -57,17 +68,11 @@ const PaginationContainer = (props: PaginationContainerProps): ReactElement => {
           {getTogglePaginationText(numberOfItemsPerPage, numberOfItemsTotal)}
         </TogglePagination>
       )}
-      <Pagination
+      <PaginationRow
         numberOfItems={numberOfItemsTotal}
         startPage={0}
         maxNumberPerPage={numberOfItemsPerPage}
-        onPageChange={(start, end) => {
-          props.setPageInfo({
-            firstVisibleIndex: start,
-            lastVisibleIndex: end,
-          });
-          props.onPageChange(start, end);
-        }}
+        onPageChange={pageChangeCallback}
       />
     </Wrapper>
   );

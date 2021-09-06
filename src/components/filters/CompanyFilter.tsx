@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { FilterTitle } from '../FilterTitle';
 import { ValueType } from 'react-select/src/types';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '@/store';
 
 const texts = {
   title: 'Virksomheter',
@@ -19,6 +17,7 @@ interface CompanyOption {
 interface CompantyFilterProps {
   options: string[];
   selectedOptions: string[];
+  selectedCompanies: string[];
   onSelect(arrayOfCompanies: string[]): void;
 }
 
@@ -27,22 +26,19 @@ const companyNamesToOptions = (companies: string[]): CompanyOption[] => {
 };
 
 const CompanyFilter = (props: CompantyFilterProps): ReactElement => {
-  const selectedCompanies = useSelector(
-    (state: ApplicationState) => state.filters.selectedCompanies
-  );
   const allCompanies = props.options;
 
   const [options, setOptions] = useState<CompanyOption[]>(
     companyNamesToOptions(props.options)
   );
   const [selectedOptions, setSelectedOptions] = useState<CompanyOption[]>(
-    companyNamesToOptions(selectedCompanies)
+    companyNamesToOptions(props.selectedCompanies)
   );
 
   useEffect(() => {
     setOptions(companyNamesToOptions(allCompanies));
-    setSelectedOptions(companyNamesToOptions(selectedCompanies));
-  }, [selectedCompanies, allCompanies]);
+    setSelectedOptions(companyNamesToOptions(props.selectedCompanies));
+  }, [props.selectedCompanies, allCompanies]);
 
   return (
     <div>

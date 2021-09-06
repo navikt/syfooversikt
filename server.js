@@ -21,13 +21,6 @@ const setupMetrics = () => {
   const register = new Registry();
 
   register.registerMetric(counters.httpRequestDurationMicroseconds);
-  register.registerMetric(counters.userFilterMotebehovCounter);
-  register.registerMetric(counters.userFilterMoteplanleggerCounter);
-  register.registerMetric(counters.userFilterUfordelteCounter);
-  register.registerMetric(counters.userFilterIkkeAktivitetCounter);
-  register.registerMetric(counters.userFilterVeilederSearchCounter);
-  register.registerMetric(counters.userFilterCompanyCounter);
-  register.registerMetric(counters.userFilterBirthdayCounter);
 
   collectDefaultMetrics({ register });
   return register;

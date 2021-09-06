@@ -1,8 +1,8 @@
 import {
   PersonData,
   PersonregisterState,
-} from '@/store/personregister/personregisterTypes';
-import { Veileder } from '@/store/veiledere/veiledereTypes';
+} from '@/api/types/personregisterTypes';
+import { Veileder } from '@/api/types/veiledereTypes';
 
 export const skjermingskode = (person: PersonData): string => {
   return person.skjermingskode && person.skjermingskode !== 'INGEN'

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { PersonData } from '../../src/store/personregister/personregisterTypes';
+import { PersonData } from '../../src/api/types/personregisterTypes';
 import { skjermingskode } from '../../src/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
 

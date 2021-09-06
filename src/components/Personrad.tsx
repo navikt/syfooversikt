@@ -7,7 +7,7 @@ import {
   lenkeTilModiaEnkeltperson,
   lenkeTilModiaEnkeltpersonFnr,
 } from '@/utils/lenkeUtil';
-import { PersonData } from '@/store/personregister/personregisterTypes';
+import { PersonData } from '@/api/types/personregisterTypes';
 import {
   skjermingskode,
   firstCompanyNameFromPersonData,
@@ -45,7 +45,7 @@ const NoWrapText = styled.p`
 
 const VelgBoks = styled(Checkbox)`
   margin-left: 0.5em;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
 `;
 
 export const Personrad = (props: PersonradProps): ReactElement => {

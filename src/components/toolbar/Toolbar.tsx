@@ -3,14 +3,13 @@ import { OverviewTabType } from '@/konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
 import { Column, Row } from 'nav-frontend-grid';
 import Sorteringsrad from '../Sorteringsrad';
-import { sortBrukere } from '@/store/sorting/sorting_actions';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 import { Checkbox } from 'nav-frontend-skjema';
-import { useDispatch } from 'react-redux';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
 import PaginationContainer from './PaginationContainer';
+import { useTabType } from '@/context/tab/TabTypeContext';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -70,22 +69,17 @@ interface ToolbarProps extends ToolbarWrapperProps {
 }
 
 const Toolbar = (props: ToolbarProps) => {
+  const { tabType } = useTabType();
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
     PAGINATED_NUMBER_OF_ITEMS
   );
-  const dispatch = useDispatch();
-
-  const shouldShowTogglePagination =
-    props.numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS;
 
   return (
     <ToolbarStyled>
       <Innhold>
         <Element>
           <TildelVeileder {...props} />
-          {props.tabType === OverviewTabType.ENHET_OVERVIEW && (
-            <SearchVeileder {...props} />
-          )}
+          {tabType === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
         </Element>
         <PaginationContainer
           numberOfItemsPerPage={numberOfItemsPerPage}
@@ -93,7 +87,9 @@ const Toolbar = (props: ToolbarProps) => {
           onPageChange={props.onPageChange}
           setNumberOfItemsPerPage={setNumberOfItemsPerPage}
           setPageInfo={props.setPageInfo}
-          shouldShowTogglePagination={shouldShowTogglePagination}
+          shouldShowTogglePagination={
+            props.numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS
+          }
         />
       </Innhold>
       <IngressRad>
@@ -110,7 +106,7 @@ const Toolbar = (props: ToolbarProps) => {
         </Column>
         <Sorteringsrad
           onSortClick={(type) => {
-            dispatch(sortBrukere(type));
+            props.setSortingType(type);
           }}
         />
       </IngressRad>

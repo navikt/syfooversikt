@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useFilters } from '@/context/filters/FilterContext';
+import { ActionType } from '@/context/filters/filterContextActions';
 
 const tekster = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -54,15 +56,35 @@ const NavigationBarContent = styled.div`
   }
 `;
 
-export const NavigationBar = (): ReactElement => (
-  <NavigationBarDiv>
-    <NavigationBarContent>
-      <LinkStyled activeClassName="active" to={'/minoversikt'}>
-        {tekster.minOversikt}
-      </LinkStyled>
-      <LinkStyled activeClassName="active" to={'/enhet'}>
-        {tekster.enhetensOversikt}
-      </LinkStyled>
-    </NavigationBarContent>
-  </NavigationBarDiv>
-);
+export const NavigationBar = (): ReactElement => {
+  const { dispatch } = useFilters();
+
+  return (
+    <NavigationBarDiv>
+      <NavigationBarContent>
+        <LinkStyled
+          activeClassName="active"
+          to={'/minoversikt'}
+          onClick={() =>
+            dispatch({
+              type: ActionType.ResetFilters,
+            })
+          }
+        >
+          {tekster.minOversikt}
+        </LinkStyled>
+        <LinkStyled
+          activeClassName="active"
+          to={'/enhet'}
+          onClick={() =>
+            dispatch({
+              type: ActionType.ResetFilters,
+            })
+          }
+        >
+          {tekster.enhetensOversikt}
+        </LinkStyled>
+      </NavigationBarContent>
+    </NavigationBarDiv>
+  );
+};

@@ -1,24 +1,26 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Personrad } from './Personrad';
-import { Veileder } from '@/store/veiledere/veiledereTypes';
+import { Veileder } from '@/api/types/veiledereTypes';
 import { veilederEllerNull } from '@/utils/personDataUtil';
-import { ApplicationState } from '@/store';
 import {
   PersonData,
   PersonregisterState,
-} from '@/store/personregister/personregisterTypes';
-import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
+} from '@/api/types/personregisterTypes';
+import {
+  getSortedEventsFromSortingType,
+  SortingType,
+} from '@/utils/hendelseFilteringUtils';
+import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
   checkboxHandler: (fnr: string) => void;
   markertePersoner: string[];
-  veiledere: Veileder[];
   startItem: number;
   endItem: number;
+  sortingType: SortingType;
 }
 
 export const VeilederNavn = styled.label`
@@ -68,13 +70,15 @@ export const getVeilederComponent = (
   );
 };
 
-const Personliste = (props: PersonlisteProps): ReactElement => {
-  const {
-    personregister,
-    checkboxHandler,
-    markertePersoner,
-    veiledere,
-  } = props;
+const Personliste = ({
+  personregister,
+  checkboxHandler,
+  markertePersoner,
+  startItem,
+  endItem,
+  sortingType,
+}: PersonlisteProps): ReactElement => {
+  const veiledereQuery = useVeiledereQuery();
 
   const paginatePersonregister = (
     register: PersonregisterState,
@@ -90,28 +94,18 @@ const Personliste = (props: PersonlisteProps): ReactElement => {
       }, {} as PersonregisterState);
   };
 
-  const brukerSorting = useSelector((state: ApplicationState) => state.sorting);
-
   const sortedPersonregister = getSortedEventsFromSortingType(
     personregister,
-    veiledere,
-    brukerSorting.sortingType
+    veiledereQuery.data || [],
+    sortingType
   );
   const paginatedPersonregister = paginatePersonregister(
     sortedPersonregister,
-    props.startItem,
-    props.endItem
+    startItem,
+    endItem
   );
 
   const fnrListe = Object.keys(paginatedPersonregister);
-
-  const isVeilederDataLoaded = useSelector((state: ApplicationState) => {
-    const aktivEnhet = state.veilederenheter.aktivEnhetId;
-    if (aktivEnhet && state.veiledere[aktivEnhet]) {
-      return state.veiledere[aktivEnhet].hentet;
-    }
-    return false;
-  });
 
   return (
     <>
@@ -121,13 +115,10 @@ const Personliste = (props: PersonlisteProps): ReactElement => {
             index={idx}
             key={idx}
             fnr={fnr}
-            veilederName={
-              isVeilederDataLoaded ? (
-                getVeilederComponent(veiledere, personregister[fnr])
-              ) : (
-                <div />
-              )
-            }
+            veilederName={getVeilederComponent(
+              veiledereQuery.data || [],
+              personregister[fnr]
+            )}
             personData={personregister[fnr]}
             checkboxHandler={checkboxHandler}
             kryssAv={erMarkert(markertePersoner, fnr)}
