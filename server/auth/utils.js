@@ -3,7 +3,7 @@ const OpenIdClient = require("openid-client");
 
 const Config = require("../config.js");
 
-const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 10;
+const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 60;
 
 const expired = (oboToken) => {
   return oboToken.expires_in <= OBO_TOKEN_EXPIRATION_MARGIN_SECONDS;
