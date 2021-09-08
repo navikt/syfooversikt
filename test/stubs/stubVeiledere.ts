@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { SYFOVEILEDER_ROOT } from '../../src/utils/apiUrlUtil';
-import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
-import veiledereMockData from '../../Mock/Data/veiledere.json';
+import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import veiledereMockData from '../../mock/data/veiledere.json';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 

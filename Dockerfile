@@ -1,9 +1,12 @@
-FROM node
+FROM node:14-alpine
+WORKDIR /syfooversikt
 
-WORKDIR /usr/src/app
-COPY . .
+COPY server.js package.json ./
 
-RUN npm install express path mustache-express promise prom-client dotenv jsdom request
+COPY node_modules ./node_modules
+COPY dist ./dist
+COPY changelogs ./changelogs
+COPY server ./server
 
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

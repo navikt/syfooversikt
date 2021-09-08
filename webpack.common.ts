@@ -1,11 +1,17 @@
-const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
+const path = require('path');
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/static',
+  },
   resolve: {
     plugins: [
       new TsconfigPathsPlugin({
@@ -13,9 +19,6 @@ module.exports = {
       }),
     ],
     extensions,
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist/resources'),
   },
   module: {
     rules: [
@@ -64,6 +67,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      filename: 'index.html',
+    }),
+    new CleanWebpackPlugin(),
     new Dotenv({
       path: './.env',
       safe: false,

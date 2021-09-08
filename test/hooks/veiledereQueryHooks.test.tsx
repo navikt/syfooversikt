@@ -12,10 +12,10 @@ import {
 import { Veileder } from '../../src/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { VeilederinfoDTO } from '../../src/api/types/veilederinfoTypes';
-import veiledere from '../../Mock/Data/veiledere.json';
-import veilederInfo from '../../Mock/Data/veilederInfo.json';
+import veiledere from '../../mock/data/veiledere.json';
+import veilederInfo from '../../mock/data/veilederInfo.json';
 import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
+import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

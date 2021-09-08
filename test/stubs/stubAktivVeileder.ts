@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SYFOVEILEDER_ROOT } from '../../src/utils/apiUrlUtil';
-import veilederInfoMockData from '../../Mock/Data/veilederInfo.json';
+import veilederInfoMockData from '../../mock/data/veilederInfo.json';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
