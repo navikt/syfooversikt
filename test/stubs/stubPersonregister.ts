@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SYFOPERSONREST_ROOT } from '../../src/utils/apiUrlUtil';
-import personregisterMockData from '../../Mock/Data/personInfo.json';
+import personregisterMockData from '../../mock/data/personInfo.json';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 

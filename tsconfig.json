@@ -25,7 +25,7 @@
       "@/*": ["./src/*"]
     },
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": false
   },
   "include": ["./src/**/*"],
 }

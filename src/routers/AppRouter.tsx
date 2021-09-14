@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import Side from '../sider/Side';
 import { ManglerTilgangsside } from '@/sider/ManglerTilgangside';
 import Decorator from '../decorator/Decorator';
-import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
+import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
 
 const AppRouter = (): ReactElement => {
   return (

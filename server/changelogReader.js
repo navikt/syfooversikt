@@ -1,67 +1,70 @@
 const fs = require('fs');
 const path = require('path');
 
-function isImage(filename) {
-  return ['png', 'jpg', 'jpeg', 'gif'].indexOf(filename.split('.').pop()) >= 0;
-}
-
 function isJson(filename) {
   return filename.split('.').pop() === 'json';
 }
 
-const changeLogCache = [];
-exports.changeLogCache = changeLogCache;
+const readSingleFile = (changelogDir, file, versionNumber) => {
+  const fileversion = Number.parseInt(versionNumber);
 
-function readChangelog(changelogDir, versionCode) {
-  console.log('Reading changelog dir: ' + changelogDir);
-  const dir = fs.readdirSync(changelogDir);
-  dir.forEach((file) => {
-    if (isImage(file) || !isJson(file)) {
-      return;
-    }
-    const ext = file.split('.').pop();
-    const fileversion = Number.parseInt(changelogDir.split(path.sep).pop());
-    if (!Number.isInteger(fileversion)) {
-      throw new Error(
-        `Invalid version, expected an integer but got ${fileversion}`
-      );
-    }
-    if (ext !== 'json') {
-      throw new Error(`Invalid changelog format, expected json but got ${ext}`);
-    }
-    const json = fs.readFileSync(path.join(changelogDir, file), {
-      encoding: 'UTF-8',
-    });
-    const changeLogObj = JSON.parse(json);
-    const changeLogItems = changeLogObj.items.map((item) => ({
-      ...item,
-      image: item.image
-        ? `/syfooversikt/changelogs/image/${fileversion}/${item.image}`
-        : undefined,
-    }));
-    changeLogCache.push({
-      ...changeLogObj,
-      version: fileversion,
-      items: changeLogItems,
-    });
+  if (!Number.isInteger(fileversion)) {
+    throw new Error(
+      `Invalid version, expected an integer but got ${fileversion}`
+    );
+  }
+
+  const json = fs.readFileSync(path.join(changelogDir, file), {
+    encoding: 'utf8',
   });
-}
 
-function readDir(dirname) {
-  fs.readdir(dirname, (err, files) => {
-    if (err) {
-      console.error(err);
-    } else {
-      files.forEach((file) => {
-        const obj = fs.lstatSync(path.join(dirname, file));
-        if (obj.isDirectory()) {
-          readChangelog(path.join(dirname, file));
-        }
-      });
-    }
-  });
-}
+  const changeLogObj = JSON.parse(json);
 
-exports.readChangelogDir = function () {
-  readDir(path.join(__dirname, '../changelogs'));
+  const changeLogItems = changeLogObj.items.map((item) => ({
+    ...item,
+    image: item.image
+      ? `/syfooversikt/changelogs/image/${fileversion}/${item.image}`
+      : undefined,
+  }));
+
+  return {
+    ...changeLogObj,
+    version: fileversion,
+    items: changeLogItems,
+  };
 };
+
+const readChangelogsInDirectory = (changelogDir) => {
+  const dir = fs.readdirSync(changelogDir);
+
+  const versionNumber = changelogDir.split(path.sep).pop();
+
+  if (!versionNumber) {
+    throw new Error(`No version number`);
+  }
+
+  return dir
+    .filter((file) => isJson(file))
+    .map((file) => readSingleFile(changelogDir, file, versionNumber));
+};
+
+const getChangelogs = () => {
+  const dirname = path.join(__dirname, '../changelogs');
+
+  const changelogs = [];
+  fs.readdirSync(dirname)
+    .filter((file) => {
+      const obj = fs.lstatSync(path.join(dirname, file));
+      return obj.isDirectory();
+    })
+    .forEach((file) => {
+      const changelogsInDir = readChangelogsInDirectory(
+        path.join(dirname, file)
+      );
+      changelogs.push(...changelogsInDir);
+    });
+
+  return changelogs;
+};
+
+module.exports = getChangelogs;

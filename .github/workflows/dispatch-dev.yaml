@@ -36,7 +36,7 @@ jobs:
       - name: Install and build
         if: ${{ !env.found_image }}
         run: |
-          npm install && npm run nais-build
+          npm install && npm run build && npm prune --production
       - name: Build and publish Docker image if not already done
         if: ${{ !env.found_image }}
         env:
