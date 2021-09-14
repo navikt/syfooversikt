@@ -26,6 +26,15 @@ const saveChangelogVersionViewed = (version = 0) => {
   );
 };
 
+const isOldNews = (date: Date) => {
+  const MONTH_THRESHOLD = 2;
+  const today = new Date();
+
+  date.setMonth(date.getMonth() + MONTH_THRESHOLD);
+
+  return today > date;
+};
+
 export const ChangelogWrapper = (): ReactElement => {
   const changelogsQuery = useChangelogsQuery();
   const [showChangelog, setShowChangelog] = useState(false);
@@ -37,13 +46,15 @@ export const ChangelogWrapper = (): ReactElement => {
   )[0];
 
   useEffect(() => {
-    if (changelogsQuery.isSuccess) {
+    if (changelogsQuery.isSuccess && latestChangelog) {
       const storedSettings = getChangelogStorage();
-      setShowChangelog(
-        storedSettings && latestChangelog
-          ? storedSettings.viewed_version < latestChangelog.version
-          : true
-      );
+      if (!isOldNews(new Date(latestChangelog.date))) {
+        setShowChangelog(
+          storedSettings && latestChangelog
+            ? storedSettings.viewed_version < latestChangelog.version
+            : true
+        );
+      }
     }
   }, [changelogsQuery.isSuccess, latestChangelog]);
 
