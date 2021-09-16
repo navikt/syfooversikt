@@ -3,6 +3,7 @@ import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { minutesToMillis } from '@/utils/timeUtils';
 
 export const personoversiktQueryKeys = {
   personoversikt: ['personoversikt'],
@@ -27,6 +28,7 @@ export const usePersonoversiktQuery = () => {
     fetchPersonoversikt,
     {
       enabled: !!aktivEnhet,
+      staleTime: minutesToMillis(5),
     }
   );
 };
