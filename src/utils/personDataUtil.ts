@@ -2,21 +2,11 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { Veileder } from '@/api/types/veiledereTypes';
 
 export const skjermingskode = (person: PersonData): string => {
   return person.skjermingskode && person.skjermingskode !== 'INGEN'
     ? person.skjermingskode.toLowerCase().replace('_', ' ')
     : '';
-};
-
-export const veilederEllerNull = (veileder?: Veileder): string | null => {
-  if (veileder) {
-    return veileder.fornavn === ''
-      ? veileder.ident
-      : `${veileder.etternavn}, ${veileder.fornavn}`;
-  }
-  return null;
 };
 
 export const mapPersonregisterToCompanyList = (

@@ -6,10 +6,11 @@ import chaiEnzyme from 'chai-enzyme';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import personoversiktEnhetMockData from '../../mock/data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
-import { usePersonoversiktQuery } from '../../src/data/personoversiktHooks';
-import { PersonoversiktStatus } from '../../src/api/types/personoversiktTypes';
-import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -22,16 +23,18 @@ describe('personoversiktHooks tests', () => {
     stubPersonoversikt();
 
     const wrapper = ({ children }: any) => (
-      <AktivEnhetContext.Provider
-        value={{
-          aktivEnhet: aktivEnhetMockData.aktivEnhet,
-          handleAktivEnhetChanged: () => void 0,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </AktivEnhetContext.Provider>
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
     );
 
     const { result, waitFor } = renderHook(() => usePersonoversiktQuery(), {

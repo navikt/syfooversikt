@@ -10,7 +10,10 @@ import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
 import { ToolbarWrapperProps } from '../ToolbarWrapper';
-import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
+import {
+  useAktivVeilederQuery,
+  useVeiledereQuery,
+} from '@/data/veiledereQueryHooks';
 import { useTabType } from '@/context/tab/TabTypeContext';
 
 const dropdownButtonTexts: DropdownButtonTexts = {
@@ -20,6 +23,7 @@ const dropdownButtonTexts: DropdownButtonTexts = {
 
 const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
   const veiledereQuery = useVeiledereQuery();
+  const aktivVeilederQuery = useAktivVeilederQuery();
 
   const [chosenVeilederIdent, setChosenVeilederIdent] = useState('');
   const [input, setInput] = useState('');
@@ -87,7 +91,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
 
   const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
     veiledereQuery?.data || [],
-    props.aktivVeilederInfo?.ident || ''
+    aktivVeilederQuery.data?.ident || ''
   );
   const filteredVeiledere = filterVeiledereOnInput(
     veiledereSortedAlphabetically,

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Personrad } from './Personrad';
 import { Veileder } from '@/api/types/veiledereTypes';
-import { veilederEllerNull } from '@/utils/personDataUtil';
 import {
   PersonData,
   PersonregisterState,
@@ -13,6 +12,7 @@ import {
   SortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
+import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
@@ -47,27 +47,26 @@ const erMarkert = (markertePersoner: string[], fnr: string) => {
   );
 };
 
-const veilederForPerson = (veiledere: Veileder[], person: PersonData) => {
-  if (person.tildeltVeilederIdent) {
-    return veiledere.find((veileder) => {
-      return veileder.ident === person.tildeltVeilederIdent;
-    });
-  }
-  return undefined;
-};
-
 export const getVeilederComponent = (
   veiledere: Veileder[],
   personData: PersonData
 ): ReactElement => {
-  const veilederName = veilederEllerNull(
-    veilederForPerson(veiledere, personData)
-  );
-  return veilederName === null ? (
-    <UfordeltBrukerEtikett />
-  ) : (
-    <VeilederNavn>{veilederName}</VeilederNavn>
-  );
+  const tildeltVeilederIdent = personData.tildeltVeilederIdent;
+
+  if (tildeltVeilederIdent) {
+    const tildeltVeileder = veiledere.find(
+      (v) => v.ident === tildeltVeilederIdent
+    );
+    if (!tildeltVeileder || !tildeltVeileder.fornavn) {
+      return <VeilederNavn>{tildeltVeilederIdent}</VeilederNavn>;
+    } else {
+      return (
+        <VeilederNavn>{`${tildeltVeileder.etternavn}, ${tildeltVeileder.fornavn}`}</VeilederNavn>
+      );
+    }
+  }
+
+  return <UfordeltBrukerEtikett />;
 };
 
 const Personliste = ({
@@ -106,6 +105,10 @@ const Personliste = ({
   );
 
   const fnrListe = Object.keys(paginatedPersonregister);
+
+  if (!fnrListe.length) {
+    return <EmptyDrawer />;
+  }
 
   return (
     <>

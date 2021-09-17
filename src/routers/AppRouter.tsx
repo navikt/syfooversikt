@@ -7,6 +7,7 @@ import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
 import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
+import { ErrorBoundary } from '@/components/error/ErrorBoundary';
 
 const AppRouter = (): ReactElement => {
   return (
@@ -14,24 +15,26 @@ const AppRouter = (): ReactElement => {
       <>
         <Decorator />
         <Side tittel="Sykefraværsoppfølging">
-          <Switch>
-            <Route exact path="/na" component={ManglerTilgangsside} />
-            <Route
-              exact
-              path={'/enhet'}
-              render={() => (
-                <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
-              )}
-            />
-            <Route
-              exact
-              path={'/minoversikt'}
-              render={() => (
-                <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
-              )}
-            />
-            <Redirect exact from="/" to="/enhet" />
-          </Switch>
+          <ErrorBoundary context="appRouter">
+            <Switch>
+              <Route exact path="/na" component={ManglerTilgangsside} />
+              <Route
+                exact
+                path={'/enhet'}
+                render={() => (
+                  <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
+                )}
+              />
+              <Route
+                exact
+                path={'/minoversikt'}
+                render={() => (
+                  <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
+                )}
+              />
+              <Redirect exact from="/" to="/enhet" />
+            </Switch>
+          </ErrorBoundary>
         </Side>
         <ChangelogWrapper />
       </>

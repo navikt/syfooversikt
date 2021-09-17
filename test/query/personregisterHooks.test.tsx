@@ -7,10 +7,11 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import personoversiktMockData from '../../mock/data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
-import { usePersonregisterQuery } from '../../src/data/personregisterHooks';
-import { PersonregisterData } from '../../src/api/types/personregisterTypes';
-import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import { usePersonregisterQuery } from '@/data/personregisterHooks';
+import { PersonregisterData } from '@/api/types/personregisterTypes';
+import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -24,16 +25,18 @@ describe('personregisterHooks tests', () => {
     stubPersonregister();
 
     const wrapper = ({ children }: any) => (
-      <AktivEnhetContext.Provider
-        value={{
-          aktivEnhet: aktivEnhetMockData.aktivEnhet,
-          handleAktivEnhetChanged: () => void 0,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </AktivEnhetContext.Provider>
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
     );
 
     const { result, waitFor } = renderHook(() => usePersonregisterQuery(), {
