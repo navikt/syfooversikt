@@ -64,11 +64,7 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
       return <AppSpinner />;
     }
 
-    if (
-      personoversiktQuery.isSuccess &&
-      personregisterQuery.isSuccess &&
-      aktivVeilederQuery.isSuccess
-    ) {
+    if (personoversiktQuery.isSuccess && aktivVeilederQuery.isSuccess) {
       return (
         <Oversikt
           personregisterData={personregisterQuery.data || []}

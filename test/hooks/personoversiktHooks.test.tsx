@@ -4,12 +4,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { stubModiaContext } from '../stubs/stubModiaContext';
-import personoversiktEnhetMockData from '../../Mock/Data/personoversiktEnhet.json';
+import personoversiktEnhetMockData from '../../mock/data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { usePersonoversiktQuery } from '../../src/data/personoversiktHooks';
 import { PersonoversiktStatus } from '../../src/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../Mock/Data/aktivEnhet.json';
+import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;

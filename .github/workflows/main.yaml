@@ -36,7 +36,10 @@ jobs:
           npm run test
       - name: Build
         run: |
-          npm run nais-build
+          npm run build
+      - name: Prune
+        run: |
+          npm prune --production
       - name: Login to Github Package Registry
         env:
           DOCKER_USERNAME: x-access-token

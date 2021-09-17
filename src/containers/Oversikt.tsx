@@ -4,7 +4,6 @@ import {
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
 import { toPersonData } from '@/utils/toPersondata';
-import { AlertStripeWarning } from '@/components/AlertStripe/AlertStripeWarning';
 import { PersonFilter } from '@/components/PersonFilter';
 import Sokeresultat from '@/components/Sokeresultat';
 import styled from 'styled-components';
@@ -20,6 +19,7 @@ import { OverviewTabType } from '@/konstanter';
 import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 const tekster = {
   hentetIngenPersoner: 'Det er ingen personer knyttet til enhet med hendelser',
@@ -28,6 +28,11 @@ const tekster = {
 const SokeresultatFiltre = styled.div`
   margin-right: 2rem;
   width: 18em;
+`;
+
+export const AlertStripeWithSpacing = styled(AlertStripe)`
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 `;
 
 const OversiktContainerInnhold = styled.div`
@@ -74,20 +79,23 @@ export const Oversikt = ({
     filterEventsOnVeileder(personData, eventFilterValue)
   );
 
-  if (Object.keys(allEvents.value).length === 0) {
-    return AlertStripeWarning(tekster.hentetIngenPersoner);
-  }
-
   return (
-    <OversiktContainerInnhold>
-      <SokeresultatFiltre>
-        <ClearFiltersButton />
-        <TekstFilter />
-        <HendelseTypeFilter personRegister={allEvents.value} />
+    <div>
+      {Object.keys(allEvents.value).length === 0 && (
+        <AlertStripeWithSpacing type={'advarsel'}>
+          {tekster.hentetIngenPersoner}
+        </AlertStripeWithSpacing>
+      )}
+      <OversiktContainerInnhold>
+        <SokeresultatFiltre>
+          <ClearFiltersButton />
+          <TekstFilter />
+          <HendelseTypeFilter personRegister={allEvents.value} />
 
-        <PersonFilter personregister={personData} />
-      </SokeresultatFiltre>
-      <Sokeresultat allEvents={allEvents} />
-    </OversiktContainerInnhold>
+          <PersonFilter personregister={personData} />
+        </SokeresultatFiltre>
+        <Sokeresultat allEvents={allEvents} />
+      </OversiktContainerInnhold>
+    </div>
   );
 };

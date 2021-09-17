@@ -9,12 +9,14 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { FilterProvider } from '@/context/filters/FilterContext';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { TabTypeProvider } from '@/context/tab/TabTypeContext';
+import { minutesToMillis } from '@/utils/timeUtils';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 30000,
+      cacheTime: minutesToMillis(60),
+      staleTime: minutesToMillis(30),
     },
   },
 });
