@@ -2,12 +2,10 @@ import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
 import { SortingType } from '@/utils/hendelseFilteringUtils';
-import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
 export interface ToolbarWrapperProps {
-  aktivVeilederInfo?: VeilederinfoDTO;
   alleMarkert: boolean;
   numberOfItemsTotal: number;
   buttonHandler: (veilederIdent: string) => void;

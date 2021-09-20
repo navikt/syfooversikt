@@ -3,6 +3,10 @@ import { useQuery } from 'react-query';
 import { post } from '@/api/axios';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { ApiErrorException } from '@/api/errors';
+import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
+import { useNotifications } from '@/context/notification/NotificationContext';
+import { useAsyncError } from '@/data/useAsyncError';
 
 export const personregisterQueryKeys = {
   personregister: 'personregister',
@@ -10,6 +14,8 @@ export const personregisterQueryKeys = {
 
 export const usePersonregisterQuery = () => {
   const personoversiktQuery = usePersonoversiktQuery();
+  const { displayNotification, clearNotification } = useNotifications();
+  const throwError = useAsyncError();
 
   const fnrListe =
     personoversiktQuery.data &&
@@ -30,5 +36,15 @@ export const usePersonregisterQuery = () => {
 
   return useQuery(personregisterQueryKeys.personregister, fetchPersonregister, {
     enabled: !!fnrListe,
+    onError: (error) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        throwError(error);
+      } else {
+        displayNotification(FetchPersonregisterFailed);
+      }
+    },
+    onSuccess: () => {
+      clearNotification('fetchPersonregisterFailed');
+    },
   });
 };

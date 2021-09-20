@@ -8,14 +8,15 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '../../src/data/veiledereQueryHooks';
-import { Veileder } from '../../src/api/types/veiledereTypes';
+} from '@/data/veiledereQueryHooks';
+import { Veileder } from '@/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
-import { VeilederinfoDTO } from '../../src/api/types/veilederinfoTypes';
+import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import veiledere from '../../mock/data/veiledere.json';
 import veilederInfo from '../../mock/data/veilederInfo.json';
-import { AktivEnhetContext } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -28,16 +29,18 @@ describe('veiledereQueryHooks tests', () => {
     stubVeiledere();
 
     const wrapper = ({ children }: any) => (
-      <AktivEnhetContext.Provider
-        value={{
-          aktivEnhet: aktivEnhetMockData.aktivEnhet,
-          handleAktivEnhetChanged: () => void 0,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </AktivEnhetContext.Provider>
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
     );
 
     const { result, waitFor } = renderHook(() => useVeiledereQuery(), {
@@ -57,7 +60,11 @@ describe('veiledereQueryHooks tests', () => {
     stubAktivVeileder();
 
     const wrapper = ({ children }: any) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <NotificationProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </NotificationProvider>
     );
 
     const { result, waitFor } = renderHook(() => useAktivVeilederQuery(), {

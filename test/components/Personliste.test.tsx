@@ -3,10 +3,11 @@ import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount } from 'enzyme';
 import Personliste from '../../src/components/Personliste';
-import { Personrad } from '../../src/components/Personrad';
+import { Personrad } from '@/components/Personrad';
 import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { AktivEnhetProvider } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -18,18 +19,20 @@ describe('Personliste', () => {
 
   it('Skal rendre 2 personrader', () => {
     const component = mount(
-      <QueryClientProvider client={queryClient}>
-        <AktivEnhetProvider>
-          <Personliste
-            personregister={personregister}
-            checkboxHandler={checkboxHandler}
-            markertePersoner={markertePersoner}
-            startItem={0}
-            endItem={1}
-            sortingType={'FNR_DESC'}
-          />
-        </AktivEnhetProvider>
-      </QueryClientProvider>
+      <NotificationProvider>
+        <QueryClientProvider client={queryClient}>
+          <AktivEnhetProvider>
+            <Personliste
+              personregister={personregister}
+              checkboxHandler={checkboxHandler}
+              markertePersoner={markertePersoner}
+              startItem={0}
+              endItem={1}
+              sortingType={'FNR_DESC'}
+            />
+          </AktivEnhetProvider>
+        </QueryClientProvider>
+      </NotificationProvider>
     );
 
     expect(component.find(Personrad)).to.have.length(2);

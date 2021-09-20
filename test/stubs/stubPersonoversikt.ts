@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { SYFOOVERSIKTSRVREST_ROOT } from '../../src/utils/apiUrlUtil';
+import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import personoversiktMockData from '../../mock/data/personoversiktEnhet.json';
 import axios from 'axios';

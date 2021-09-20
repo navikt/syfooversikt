@@ -3,6 +3,10 @@ import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { useNotifications } from '@/context/notification/NotificationContext';
+import { FetchPersonoversiktFailed } from '@/context/notification/Notifications';
+import { ApiErrorException } from '@/api/errors';
+import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 
 export const personoversiktQueryKeys = {
@@ -15,6 +19,8 @@ export const personoversiktQueryKeys = {
 
 export const usePersonoversiktQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
+  const { displayNotification, clearNotification } = useNotifications();
+  const throwError = useAsyncError();
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonoversiktStatus[]>(
@@ -29,6 +35,16 @@ export const usePersonoversiktQuery = () => {
     {
       enabled: !!aktivEnhet,
       staleTime: minutesToMillis(5),
+      onError: (error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchPersonoversiktFailed);
+        }
+      },
+      onSuccess: () => {
+        clearNotification('fetchPersonoversiktFailed');
+      },
     }
   );
 };

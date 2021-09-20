@@ -3,8 +3,8 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import { Changelog } from '../../src/api/types/changelogTypes';
-import { useChangelogsQuery } from '../../src/data/changelogHooks';
+import { Changelog } from '@/api/types/changelogTypes';
+import { useChangelogsQuery } from '@/data/changelogHooks';
 import { stubChangelogs } from '../stubs/stubChangelogs';
 
 chai.use(chaiEnzyme());
