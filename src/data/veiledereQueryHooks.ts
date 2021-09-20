@@ -10,6 +10,14 @@ import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
+import { useNotifications } from '@/context/notification/NotificationContext';
+import {
+  FetchAktivVeilederFailed,
+  FetchVeiledereFailed,
+  TildelVeilederFailed,
+} from '@/context/notification/Notifications';
+import { useAsyncError } from '@/data/useAsyncError';
+import { ApiErrorException } from '@/api/errors';
 
 export const veiledereQueryKeys = {
   veiledereInfo: 'veiledereInfo',
@@ -22,6 +30,8 @@ export const veiledereQueryKeys = {
 
 export const useVeiledereQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
+  const { displayNotification, clearNotification } = useNotifications();
+  const throwError = useAsyncError();
 
   const fetchVeiledere = () =>
     get<Veileder[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${aktivEnhet}`);
@@ -31,20 +41,46 @@ export const useVeiledereQuery = () => {
     fetchVeiledere,
     {
       enabled: !!aktivEnhet,
+      onError: (error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchVeiledereFailed);
+        }
+      },
+      onSuccess: () => {
+        clearNotification('fetchVeiledereFailed');
+      },
     }
   );
 };
 
 export const useAktivVeilederQuery = () => {
+  const { displayNotification, clearNotification } = useNotifications();
+  const throwError = useAsyncError();
+
   const fetchVeilederInfo = () =>
     get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
 
-  return useQuery(veiledereQueryKeys.veiledereInfo, fetchVeilederInfo);
+  return useQuery(veiledereQueryKeys.veiledereInfo, fetchVeilederInfo, {
+    onError: (error) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        throwError(error);
+      } else {
+        displayNotification(FetchAktivVeilederFailed);
+      }
+    },
+    onSuccess: () => {
+      clearNotification('fetchAktivVeilederFailed');
+    },
+  });
 };
 
 export const useTildelVeileder = () => {
   const queryClient = useQueryClient();
   const { aktivEnhet } = useAktivEnhet();
+  const { displayNotification, clearNotification } = useNotifications();
+  const throwError = useAsyncError();
 
   const path = `${SYFOOVERSIKTSRVREST_ROOT}/v2/persontildeling/registrer`;
 
@@ -53,6 +89,8 @@ export const useTildelVeileder = () => {
 
   return useMutation(postTildelVeileder, {
     onMutate: (liste: VeilederArbeidstaker[]) => {
+      clearNotification('tildelVeilederFailed');
+
       const previousPersonoversikt: PersonoversiktStatus[] =
         queryClient.getQueryData(
           personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
@@ -78,7 +116,12 @@ export const useTildelVeileder = () => {
 
       return { previousPersonoversikt };
     },
-    onError: (err, newTodo, context) => {
+    onError: (error, newVeileder, context) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        throwError(error);
+      } else {
+        displayNotification(TildelVeilederFailed);
+      }
       queryClient.setQueryData(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         context?.previousPersonoversikt || []

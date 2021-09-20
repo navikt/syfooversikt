@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import Personliste from './Personliste';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
-import {
-  useAktivVeilederQuery,
-  useTildelVeileder,
-} from '@/data/veiledereQueryHooks';
+import { useTildelVeileder } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,
@@ -47,7 +44,6 @@ const SokeresultatContainer = styled.div`
 
 const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const { aktivEnhet } = useAktivEnhet();
-  const aktivVeilederQuery = useAktivVeilederQuery();
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { tabType } = useTabType();
@@ -110,7 +106,6 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
       <ToolbarWrapper
         numberOfItemsTotal={allFnr.length}
         onPageChange={onPageChange}
-        aktivVeilederInfo={aktivVeilederQuery.data}
         alleMarkert={allFnr.length === markertePersoner.length}
         buttonHandler={buttonHandler}
         checkAllHandler={checkAllHandler}

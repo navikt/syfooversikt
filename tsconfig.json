@@ -27,5 +27,4 @@
     "sourceMap": true,
     "noImplicitAny": false
   },
-  "include": ["./src/**/*"],
 }

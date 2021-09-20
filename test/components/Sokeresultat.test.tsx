@@ -3,16 +3,13 @@ import chaiEnzyme from 'chai-enzyme';
 import { mount } from 'enzyme';
 import React from 'react';
 import Sokeresultat from '../../src/components/Sokeresultat';
-import {
-  markertePersoner,
-  personregister,
-  veilederinfo,
-} from '../data/fellesTestdata';
+import { markertePersoner, personregister } from '../data/fellesTestdata';
 import Toolbar from '../../src/components/toolbar/Toolbar';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Personliste from '../../src/components/Personliste';
-import { Filterable } from '../../src/utils/hendelseFilteringUtils';
-import { AktivEnhetProvider } from '../../src/context/aktivEnhet/AktivEnhetContext';
+import { Filterable } from '@/utils/hendelseFilteringUtils';
+import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -25,11 +22,13 @@ describe('Sokeresultat', () => {
   const queryClient = new QueryClient();
 
   const component = mount(
-    <QueryClientProvider client={queryClient}>
-      <AktivEnhetProvider>
-        <Sokeresultat allEvents={new Filterable(personregister)} />
-      </AktivEnhetProvider>
-    </QueryClientProvider>
+    <NotificationProvider>
+      <QueryClientProvider client={queryClient}>
+        <AktivEnhetProvider>
+          <Sokeresultat allEvents={new Filterable(personregister)} />
+        </AktivEnhetProvider>
+      </QueryClientProvider>
+    </NotificationProvider>
   );
 
   it('Skal inneholde knapperad', () => {
@@ -38,7 +37,6 @@ describe('Sokeresultat', () => {
         <Toolbar
           numberOfItemsTotal={10}
           onPageChange={emptyBlock}
-          aktivVeilederInfo={veilederinfo}
           alleMarkert={false}
           buttonHandler={emptyBlock}
           checkAllHandler={emptyBlock}

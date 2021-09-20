@@ -14,16 +14,12 @@ import {
   Filterable,
   filterEventsOnVeileder,
 } from '@/utils/hendelseFilteringUtils';
-import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { OverviewTabType } from '@/konstanter';
 import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import AlertStripe from 'nav-frontend-alertstriper';
-
-const tekster = {
-  hentetIngenPersoner: 'Det er ingen personer knyttet til enhet med hendelser',
-};
+import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 2rem;
@@ -52,14 +48,13 @@ const OversiktContainerInnhold = styled.div`
 interface OversiktProps {
   personoversiktData: PersonoversiktStatus[];
   personregisterData: PersonregisterData[];
-  aktivVeilederData: VeilederinfoDTO;
 }
 
 export const Oversikt = ({
   personoversiktData,
   personregisterData,
-  aktivVeilederData,
 }: OversiktProps) => {
+  const aktivVeilederQuery = useAktivVeilederQuery();
   const { filterState } = useFilters();
   const { tabType } = useTabType();
 
@@ -70,7 +65,7 @@ export const Oversikt = ({
 
   const eventFilterValue =
     tabType === OverviewTabType.MY_OVERVIEW
-      ? [aktivVeilederData.ident]
+      ? [aktivVeilederQuery.data?.ident || '']
       : filterState.selectedVeilederIdents;
 
   const allEvents = new Filterable<PersonregisterState>(
@@ -80,21 +75,16 @@ export const Oversikt = ({
   );
 
   return (
-    <div>
-      {Object.keys(allEvents.value).length === 0 && (
-        <AlertStripeWithSpacing type={'advarsel'}>
-          {tekster.hentetIngenPersoner}
-        </AlertStripeWithSpacing>
-      )}
-      <OversiktContainerInnhold>
-        <SokeresultatFiltre>
-          <ClearFiltersButton />
-          <TekstFilter />
-          <HendelseTypeFilter personRegister={allEvents.value} />
-          <PersonFilter personregister={personData} />
-        </SokeresultatFiltre>
-        <Sokeresultat allEvents={allEvents} />
-      </OversiktContainerInnhold>
-    </div>
+    <OversiktContainerInnhold>
+      <SokeresultatFiltre>
+        <ClearFiltersButton />
+        <TekstFilter />
+        <HendelseTypeFilter personRegister={allEvents.value} />
+
+        <PersonFilter personregister={personData} />
+      </SokeresultatFiltre>
+
+      <Sokeresultat allEvents={allEvents} />
+    </OversiktContainerInnhold>
   );
 };
