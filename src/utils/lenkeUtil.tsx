@@ -3,6 +3,11 @@ import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeFirstLetter } from './stringUtil';
+import { trackOnClick } from '@/amplitude/amplitude';
+
+const texts = {
+  trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
+};
 
 const lenkeTilModiaBasertPaaFnr = (fnr: string, personData: PersonData) => {
   let path = `/sykefravaer/${fnr}`;
@@ -39,7 +44,10 @@ export const lenkeTilModiaEnkeltperson = (
   fnr: string
 ): ReactElement => {
   return (
-    <Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)}>
+    <Lenke
+      onClick={() => trackOnClick(texts.trackingLabelNavigateToModiaPerson)}
+      href={lenkeTilModiaBasertPaaFnr(fnr, personData)}
+    >
       {formaterNavn(personData.navn)}
     </Lenke>
   );
@@ -53,5 +61,12 @@ export const lenkeTilModiaEnkeltpersonFnr = (
   if (hasPersonName) {
     return fnr;
   }
-  return <Lenke href={lenkeTilModiaBasertPaaFnr(fnr, personData)}>{fnr}</Lenke>;
+  return (
+    <Lenke
+      onClick={() => trackOnClick(texts.trackingLabelNavigateToModiaPerson)}
+      href={lenkeTilModiaBasertPaaFnr(fnr, personData)}
+    >
+      {fnr}
+    </Lenke>
+  );
 };

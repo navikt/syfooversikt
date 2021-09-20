@@ -10,6 +10,9 @@ import { FilterProvider } from '@/context/filters/FilterContext';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { TabTypeProvider } from '@/context/tab/TabTypeContext';
 import { minutesToMillis } from '@/utils/timeUtils';
+import { initAmplitude } from '@/amplitude/amplitude';
+
+initAmplitude();
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -19,10 +19,15 @@ import {
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
 }
+
+const texts = {
+  trackingLabelTildelVeileder: 'Tildeler veileder',
+};
 
 const lagListe = (
   markertePersoner: string[],
@@ -84,6 +89,8 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   };
 
   const buttonHandler = (veilederIdent: string): void => {
+    trackOnClick(texts.trackingLabelTildelVeileder);
+
     const veilederArbeidstakerListe = lagListe(
       markertePersoner,
       veilederIdent,

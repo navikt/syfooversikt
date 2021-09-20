@@ -91,7 +91,6 @@ export const Oversikt = ({
           <ClearFiltersButton />
           <TekstFilter />
           <HendelseTypeFilter personRegister={allEvents.value} />
-
           <PersonFilter personregister={personData} />
         </SokeresultatFiltre>
         <Sokeresultat allEvents={allEvents} />

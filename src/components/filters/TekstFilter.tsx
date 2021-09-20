@@ -5,10 +5,16 @@ import { Undertittel } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const FilterContainer = styled.div`
   margin-bottom: 1rem;
 `;
+
+const texts = {
+  undertittel: 'Navn / Fødselsnummer',
+  placeholder: 'Søk på navn eller fødselsnummer',
+};
 
 export const TekstFilter = (): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
@@ -17,8 +23,9 @@ export const TekstFilter = (): ReactElement => {
     <FilterContainer>
       <Panel>
         <Input
-          label={<Undertittel>Navn / Fødselsnummer</Undertittel>}
-          placeholder={'Søk på navn eller fødselsnummer'}
+          label={<Undertittel>{texts.undertittel}</Undertittel>}
+          placeholder={texts.placeholder}
+          onBlur={() => trackOnClick(texts.placeholder)}
           value={filterState.tekstFilter}
           onChange={(e) => {
             dispatchFilterAction({
