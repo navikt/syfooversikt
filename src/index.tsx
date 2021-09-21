@@ -14,6 +14,9 @@ import { Integrations } from '@sentry/tracing';
 import { ErrorBoundary } from '@/components/error/ErrorBoundary';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { minutesToMillis } from '@/utils/timeUtils';
+import { initAmplitude } from '@/amplitude/amplitude';
+
+initAmplitude();
 
 const queryClient = new QueryClient({
   defaultOptions: {

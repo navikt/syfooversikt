@@ -4,6 +4,7 @@ import { DecoratorProps } from './decoratorProps';
 import decoratorConfig from './decoratorConfig';
 import { fullNaisUrlDefault } from '@/utils/miljoUtil';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { setAmplitudeUserProperties } from '@/amplitude/amplitude';
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   'internarbeidsflatefs'
@@ -19,6 +20,7 @@ const Decorator = () => {
   };
 
   const handleChangeEnhet = (nyEnhet: string) => {
+    setAmplitudeUserProperties(nyEnhet);
     handleAktivEnhetChanged(nyEnhet);
   };
 

@@ -3,11 +3,12 @@ import chaiEnzyme from 'chai-enzyme';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Column } from 'nav-frontend-grid';
-import { lenkeTilModiaEnkeltperson } from '../../src/utils/lenkeUtil';
 import { firstCompanyNameFromPersonData } from '../../src/utils/personDataUtil';
 import { testdata, veiledere } from '../data/fellesTestdata';
 import { Skjermingskode } from '../../src/api/types/personregisterTypes';
 import { Personrad, StyledPersonRad } from '../../src/components/Personrad';
+import Lenke from 'nav-frontend-lenker';
+import { formaterNavn } from '../../src/utils/lenkeUtil';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -49,9 +50,7 @@ describe('Personrad', () => {
       )
     ).to.equal(true);
     expect(
-      component.contains(
-        <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData, fnr)}</Column>
-      )
+      component.find(Lenke).contains(formaterNavn(personData.navn))
     ).to.equal(true);
   });
 });

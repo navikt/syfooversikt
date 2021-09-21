@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
+import { trackOnClick } from '@/amplitude/amplitude';
 
 const tekster = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -65,22 +66,24 @@ export const NavigationBar = (): ReactElement => {
         <LinkStyled
           activeClassName="active"
           to={'/minoversikt'}
-          onClick={() =>
+          onClick={() => {
+            trackOnClick(tekster.minOversikt);
             dispatch({
               type: ActionType.ResetFilters,
-            })
-          }
+            });
+          }}
         >
           {tekster.minOversikt}
         </LinkStyled>
         <LinkStyled
           activeClassName="active"
           to={'/enhet'}
-          onClick={() =>
+          onClick={() => {
+            trackOnClick(tekster.enhetensOversikt);
             dispatch({
               type: ActionType.ResetFilters,
-            })
-          }
+            });
+          }}
         >
           {tekster.enhetensOversikt}
         </LinkStyled>
