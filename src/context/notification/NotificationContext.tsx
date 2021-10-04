@@ -27,10 +27,9 @@ export const NotificationProvider = ({
       value={{
         notifications,
         displayNotification: (notification) => {
-          const updatedNotifications = [
-            ...new Set([...notifications, notification]),
-          ];
-          setNotifications(updatedNotifications);
+          if (!notifications.includes(notification)) {
+            setNotifications([...notifications, notification]);
+          }
         },
         clearNotification: (type: NotificationType) => {
           setNotifications(notifications.filter((n) => n.type !== type));

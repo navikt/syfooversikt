@@ -10,6 +10,7 @@ import Personliste from '../../src/components/Personliste';
 import { Filterable } from '@/utils/hendelseFilteringUtils';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
+import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
@@ -20,6 +21,7 @@ const emptyBlock = () => {
 
 describe('Sokeresultat', () => {
   const queryClient = new QueryClient();
+  stubAktivVeileder();
 
   const component = mount(
     <NotificationProvider>
