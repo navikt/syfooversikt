@@ -59,7 +59,7 @@ spec:
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
       value: "dev-fss.teamsykefravr.syfooversiktsrv"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
-      value: "dev-fss.teamsykefravr.syfoperson"
+      value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoveileder"
     - name: MODIACONTEXTHOLDER_HOST
