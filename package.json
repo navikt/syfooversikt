@@ -14,8 +14,7 @@
     "prettier": "prettier --write src/**/*.ts*",
     "prettier-check": "prettier --check src/**/*.ts*",
     "prettier-lint": "npm-run-all prettier lint",
-    "test": "mocha --require @babel/polyfill --require ./test/babel-register.js --require ignore-styles --require jsdom-global/register ./test/setup.tsx ./test/**/*.tsx ./test/**/*.ts",
-    "sec-audit": "npm audit --audit-level=moderate"
+    "test": "mocha --require @babel/polyfill --require ./test/babel-register.js --require ignore-styles --require jsdom-global/register ./test/setup.tsx ./test/**/*.tsx ./test/**/*.ts"
   },
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
