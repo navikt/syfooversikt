@@ -17,7 +17,7 @@ export const initAmplitude = () => {
     apiEndpoint: 'amplitude.nav.no/collect-auto',
     saveEvents: false,
     includeUtm: true,
-    includeReferrer: true,
+    includeReferrer: false,
     platform: window.location.toString(),
   });
 };
