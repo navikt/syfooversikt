@@ -69,7 +69,7 @@ export const get = <ResponseData>(
 
 export const post = <ResponseData>(
   url: string,
-  data: Record<string, any>,
+  data: Record<string, unknown> | Record<string, unknown>[],
   personIdent?: string
 ): Promise<ResponseData> => {
   return axios

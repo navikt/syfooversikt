@@ -33,7 +33,7 @@ const StyledNumberIndicator = styled.div<IndicatorProps>`
   height: 0.625rem;
   border-radius: 50%;
   background-color: #99c2e8;
-  ${(props: any) =>
+  ${(props) =>
     props.selected &&
     css`
       background-color: #0067c5;

@@ -1,9 +1,9 @@
 import {
   PersonData,
   PersonregisterState,
-} from '../api/types/personregisterTypes';
+} from '@/api/types/personregisterTypes';
 import { firstCompanyNameFromPersonData } from './personDataUtil';
-import { Veileder } from '../api/types/veiledereTypes';
+import { Veileder } from '@/api/types/veiledereTypes';
 import { formaterNavn } from './lenkeUtil';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
@@ -111,8 +111,7 @@ export const filtrerPersonregister = (
   if (!filter) return personregister;
 
   const erTomtFilter =
-    Object.keys(filter).filter((key) => (filter as any)[key] === true)
-      .length === 0;
+    Object.keys(filter).filter((key) => filter[key] === true).length === 0;
 
   return erTomtFilter
     ? personregister

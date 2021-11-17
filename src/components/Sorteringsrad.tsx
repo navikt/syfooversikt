@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
@@ -61,7 +61,7 @@ type XsType =
 
 interface ColumnItem {
   sortingText: string;
-  extraText: any;
+  extraText: ReactNode;
   sortingTypeAsc: SortingType;
   sortingTypeDesc: SortingType;
   xs: XsType;
