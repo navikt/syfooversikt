@@ -18,15 +18,7 @@ describe('SokeresultatFilter', () => {
   it('Skal inneholde checkbokser med riktige labels', () => {
     const component = mount(
       <QueryClientProvider client={queryClient}>
-        <HendelseTypeFilter
-          setSelectedHendelseType={() => void 0}
-          selectedHendelseType={{
-            arbeidsgiverOnskerMote: false,
-            onskerMote: true,
-            svartMote: false,
-            ufordeltBruker: false,
-          }}
-        />
+        <HendelseTypeFilter />
       </QueryClientProvider>
     );
 

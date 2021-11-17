@@ -15,10 +15,10 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier', // Make sure this is always the last configuration in the extends array.
   ],
+  plugins: ['unused-imports'],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    //TODO: Consider removing these
-    '@typescript-eslint/no-explicit-any': 'off',
+    'unused-imports/no-unused-imports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };

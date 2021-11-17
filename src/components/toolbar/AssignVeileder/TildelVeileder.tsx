@@ -78,7 +78,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
     }
   };
 
-  const onBlur = (e: any) => {
+  const onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     const currentTarget = e.currentTarget;
     setTimeout(() => {
       if (!currentTarget.contains(document.activeElement)) {

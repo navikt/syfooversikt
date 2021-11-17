@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
@@ -15,14 +15,14 @@ const texts = {
   trackingLabel: 'HendelseFilter',
 };
 
-export const HendelseTekster: any = {
+export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ønsker bistand',
   MOTEPLANLEGGER_SVAR: 'Svar møteplanlegger', // Svar fra møteplanlegger
   MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
 };
 
-interface Props extends ComponentPropsWithoutRef<any> {
+interface Props {
   personRegister?: PersonregisterState;
 }
 
