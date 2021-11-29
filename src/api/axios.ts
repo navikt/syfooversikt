@@ -7,7 +7,7 @@ import {
   networkError,
 } from './errors';
 
-export const NAV_CONSUMER_ID_HEADER = 'nav-consumer-id';
+export const NAV_CONSUMER_ID_HEADER = 'Nav-Consumer-Id';
 export const NAV_CONSUMER_ID = 'syfooversikt';
 export const NAV_PERSONIDENT_HEADER = 'nav-personident';
 
