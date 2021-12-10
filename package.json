@@ -9,6 +9,8 @@
   "scripts": {
     "start": "webpack serve --config webpack.dev.ts",
     "build": "webpack --config webpack.prod.ts",
+    "lint-and-typecheck": "npm run lint && npm run typecheck",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src  --ext .ts  --ext .tsx  --ext .js  --ext .jsx",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --write src/**/*.ts*",
