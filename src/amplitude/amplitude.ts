@@ -2,6 +2,7 @@ import amplitude from 'amplitude-js';
 
 export const texts = {
   click: 'Klikker på:',
+  load: 'Laster side:',
 };
 
 const combineEventData = (eventData?: Record<string, string>) => {
@@ -41,4 +42,8 @@ export const trackOnClick = (
 ) => {
   const trackingName = `${texts.click} ${elementName}`;
   amplitude?.getInstance().logEvent(trackingName, combineEventData(eventData));
+};
+
+export const trackPageLoad = (pageName: string) => {
+  trackEvent(`${texts.load} ${pageName}`);
 };
