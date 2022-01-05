@@ -1,14 +1,11 @@
-import Enzyme from 'enzyme';
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import path from 'path';
+import MutationObserver from '@sheerun/mutationobserver-shim';
 
 const dotEnvPath = path.resolve('.env');
 
 require('dotenv').config({
   path: dotEnvPath,
 });
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { JSDOM } = require('jsdom');
 
@@ -47,4 +44,5 @@ const localS = {
 (global as any).window.APP_SETTINGS = {
   APP_ROOT: '/syfooversikt',
 };
+window.MutationObserver = MutationObserver;
 copyProps(window, global);

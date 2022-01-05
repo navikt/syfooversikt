@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { formaterNavn } from '../../src/utils/lenkeUtil';
+import { formaterNavn } from '@/utils/lenkeUtil';
 
 describe('lenkeUtil', () => {
   describe('formaterNavn', () => {

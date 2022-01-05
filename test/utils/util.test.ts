@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { PersonHendelseData } from '../../src/api/types/personregisterTypes';
+import { PersonHendelseData } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
-import { Fodselsnummer } from '../../src/api/types/personInfoTypes';
-import { hentFodselsnummerFraPersonHendelseListe } from '../../src/components/utils/util';
+import { Fodselsnummer } from '@/api/types/personInfoTypes';
+import { hentFodselsnummerFraPersonHendelseListe } from '@/components/utils/util';
 
 describe('utils', () => {
   describe('hentFodselsnummerFraPersonHendelseListe', () => {

@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import { getSortedEventsFromSortingType } from '../../src/utils/hendelseFilteringUtils';
+import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import {
   PersonData,
   PersonregisterState,
   Skjermingskode,
-} from '../../src/api/types/personregisterTypes';
+} from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
 
 const createPersonDataWithName = (name: string): PersonData => {

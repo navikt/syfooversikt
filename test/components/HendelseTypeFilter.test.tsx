@@ -1,47 +1,41 @@
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
 import React from 'react';
-import { Checkbox } from 'nav-frontend-skjema';
-import {
-  HendelseTekster,
-  HendelseTypeFilter,
-} from '../../src/components/HendelseTypeFilter';
-import { mount } from 'enzyme';
+import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { render } from '@testing-library/react';
+import { expect } from 'chai';
 
-chai.use(chaiEnzyme());
-const expect = chai.expect;
-
-describe('SokeresultatFilter', () => {
+describe('HendelseTypeFilter', () => {
   const queryClient = new QueryClient();
 
   it('Skal inneholde checkbokser med riktige labels', () => {
-    const component = mount(
+    const component = render(
       <QueryClientProvider client={queryClient}>
         <HendelseTypeFilter />
       </QueryClientProvider>
     );
 
-    expect(
-      component.contains(<Checkbox label={'Ønsker møte'} checked={false} />)
-    );
-    expect(
-      component.contains(
-        <Checkbox label={'Svar møteplanlegger'} checked={false} />
-      )
-    );
-    expect(
-      component.contains(
-        <Checkbox label={'Ufordelte brukere'} checked={false} />
-      )
-    );
-    expect(
-      component.contains(
-        <Checkbox
-          label={HendelseTekster.ARBEIDSGIVER_BISTAND}
-          checked={false}
-        />
-      )
-    );
+    const onskerMoteCheckbox = component.getByRole('checkbox', {
+      name: /Ønsker møte/,
+      checked: false,
+    });
+    expect(onskerMoteCheckbox).to.exist;
+
+    const svarMoteCheckbox = component.getByRole('checkbox', {
+      name: /Svar møteplanlegger/,
+      checked: false,
+    });
+    expect(svarMoteCheckbox).to.exist;
+
+    const ufordelteCheckbox = component.getByRole('checkbox', {
+      name: /Ufordelte brukere/,
+      checked: false,
+    });
+    expect(ufordelteCheckbox).to.exist;
+
+    const arbeidsgiverCheckbox = component.getByRole('checkbox', {
+      name: /Arbeidsgiver ønsker bistand/,
+      checked: false,
+    });
+    expect(arbeidsgiverCheckbox).to.exist;
   });
 });

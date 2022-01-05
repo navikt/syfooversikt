@@ -1,56 +1,45 @@
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { mount } from 'enzyme';
 import React from 'react';
 import Sokeresultat from '../../src/components/Sokeresultat';
-import { markertePersoner, personregister } from '../data/fellesTestdata';
-import Toolbar from '../../src/components/toolbar/Toolbar';
+import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Personliste from '../../src/components/Personliste';
 import { Filterable } from '@/utils/hendelseFilteringUtils';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
+import { render, RenderResult } from '@testing-library/react';
+import { expect } from 'chai';
 
-chai.use(chaiEnzyme());
-const expect = chai.expect;
-
-const emptyBlock = () => {
-  // empty
-};
+let queryClient: QueryClient;
+let component: RenderResult;
 
 describe('Sokeresultat', () => {
-  const queryClient = new QueryClient();
-  stubAktivVeileder();
-
-  const component = mount(
-    <NotificationProvider>
-      <QueryClientProvider client={queryClient}>
-        <AktivEnhetProvider>
-          <Sokeresultat allEvents={new Filterable(personregister)} />
-        </AktivEnhetProvider>
-      </QueryClientProvider>
-    </NotificationProvider>
-  );
-
-  it('Skal inneholde knapperad', () => {
-    expect(
-      component.contains(
-        <Toolbar
-          numberOfItemsTotal={10}
-          onPageChange={emptyBlock}
-          alleMarkert={false}
-          buttonHandler={emptyBlock}
-          checkAllHandler={emptyBlock}
-          markertePersoner={markertePersoner}
-          setPageInfo={emptyBlock}
-          setSortingType={() => void 0}
-        />
-      )
+  beforeEach(() => {
+    queryClient = new QueryClient();
+    stubAktivVeileder();
+    component = render(
+      <NotificationProvider>
+        <QueryClientProvider client={queryClient}>
+          <AktivEnhetProvider>
+            <Sokeresultat allEvents={new Filterable(personregister)} />
+          </AktivEnhetProvider>
+        </QueryClientProvider>
+      </NotificationProvider>
     );
   });
 
+  it('Skal inneholde knapperad', () => {
+    expect(component.getByRole('button', { name: 'Tildel veileder' })).to.exist;
+    expect(component.getByRole('button', { name: 'Søk veileder (0)' })).to
+      .exist;
+    const velgAlleCheckbox = component.getByRole('checkbox', {
+      name: 'Velg alle',
+      checked: false,
+    });
+    expect(velgAlleCheckbox).to.exist;
+  });
+
   it('Skal inneholde liste av personer', () => {
-    expect(component.find(Personliste)).to.have.length(1);
+    expect(component.getByRole('link', { name: 'Et Navn' })).to.exist;
+    expect(component.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
   });
 });

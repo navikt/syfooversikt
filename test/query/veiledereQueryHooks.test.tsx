@@ -1,8 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
 import { stubVeiledere } from '../stubs/stubVeiledere';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import {
@@ -17,9 +15,7 @@ import veilederInfo from '../../mock/data/veilederInfo.json';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+import { expect } from 'chai';
 
 describe('veiledereQueryHooks tests', () => {
   const queryClient = new QueryClient();
