@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 import {
   accessDeniedError,
   ApiErrorException,
@@ -13,8 +13,10 @@ export const NAV_CONSUMER_ID_HEADER = 'Nav-Consumer-Id';
 export const NAV_CONSUMER_ID = 'syfooversikt';
 export const NAV_PERSONIDENT_HEADER = 'nav-personident';
 
-export const defaultRequestHeaders = (personIdent?: string): HeadersInit => {
-  const headers: Record<string, string> = {
+export const defaultRequestHeaders = (
+  personIdent?: string
+): AxiosRequestHeaders => {
+  const headers: AxiosRequestHeaders = {
     'Content-Type': 'application/json',
     [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
     [NAV_CALL_ID_HEADER]: `${NAV_CONSUMER_ID}-${generateUUID()}`,

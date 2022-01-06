@@ -1,8 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import personoversiktMockData from '../../mock/data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
@@ -12,9 +10,7 @@ import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+import { expect } from 'chai';
 
 describe('personregisterHooks tests', () => {
   const queryClient = new QueryClient();

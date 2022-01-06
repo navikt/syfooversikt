@@ -1,20 +1,20 @@
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { shallow } from 'enzyme';
+import { expect } from 'chai';
 import React from 'react';
-import Sorteringsrad, {
-  SortingButton,
-} from '../../src/components/Sorteringsrad';
+import Sorteringsrad from '../../src/components/Sorteringsrad';
+import { render, RenderResult } from '@testing-library/react';
 
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+let component: RenderResult;
 
 describe('Sorteringsrad', () => {
-  const kolonneForVeilederTekst = 'Veileder';
-  const component = shallow(<Sorteringsrad onSortClick={(type) => void 0} />);
+  beforeEach(() => {
+    component = render(<Sorteringsrad onSortClick={() => void 0} />);
+  });
 
-  it('Skal rendre navn, fodselsnummer, veilederident og veiledernavn Column-komponenter', () => {
-    expect(component.find(SortingButton)).to.have.length(4);
-    expect(component.contains(kolonneForVeilederTekst)).to.equal(true);
+  it('Skal rendre navn, fodselsnummer, virksomhet og veileder', () => {
+    expect(component.getByText('Etternavn')).to.exist;
+    expect(component.getByText(', Fornavn')).to.exist;
+    expect(component.getByText('Fødselsnummer')).to.exist;
+    expect(component.getByText('Virksomhet')).to.exist;
+    expect(component.getByText('Veileder')).to.exist;
   });
 });

@@ -1,16 +1,11 @@
 import React from 'react';
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { mount } from 'enzyme';
 import Personliste from '../../src/components/Personliste';
-import { Personrad } from '@/components/Personrad';
 import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+import { render } from '@testing-library/react';
+import { expect } from 'chai';
 
 describe('Personliste', () => {
   const queryClient = new QueryClient();
@@ -18,7 +13,7 @@ describe('Personliste', () => {
   const checkboxHandler = () => void 0;
 
   it('Skal rendre 2 personrader', () => {
-    const component = mount(
+    const component = render(
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           <AktivEnhetProvider>
@@ -35,6 +30,7 @@ describe('Personliste', () => {
       </NotificationProvider>
     );
 
-    expect(component.find(Personrad)).to.have.length(2);
+    expect(component.getByRole('link', { name: 'Et Navn' })).to.exist;
+    expect(component.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
   });
 });

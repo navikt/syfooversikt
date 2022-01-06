@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { CHANGELOG_ROOT } from '../../src/utils/apiUrlUtil';
+import { CHANGELOG_ROOT } from '@/utils/apiUrlUtil';
 import axios from 'axios';
 import changelogsMockData from '../../mock/data/changelogs.json';
 import { nockBasePath } from './nockDefaults';

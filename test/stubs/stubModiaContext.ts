@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { MODIACONTEXTHOLDER_ROOT } from '../../src/utils/apiUrlUtil';
+import { MODIACONTEXTHOLDER_ROOT } from '@/utils/apiUrlUtil';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';

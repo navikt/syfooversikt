@@ -1,8 +1,8 @@
 import {
   PersonData,
   PersonregisterState,
-} from '../../src/api/types/personregisterTypes';
-import { PersonoversiktStatus } from '../../src/api/types/personoversiktTypes';
+} from '@/api/types/personregisterTypes';
+import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
 const veilederFornavn = 'F_Z101010';
