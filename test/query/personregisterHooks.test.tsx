@@ -20,7 +20,7 @@ describe('personregisterHooks tests', () => {
     stubPersonoversikt();
     stubPersonregister();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -41,9 +41,9 @@ describe('personregisterHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: PersonregisterData[] = result.current.data!;
+    const actual: PersonregisterData[] | undefined = result.current.data;
 
-    expect(actual[0].fnr).to.eq(personoversiktMockData[0].fnr);
+    expect(actual).to.not.be.undefined;
+    expect(actual?.[0].fnr).to.eq(personoversiktMockData[0].fnr);
   });
 });

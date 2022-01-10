@@ -24,7 +24,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -45,8 +45,7 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: Veileder[] = result.current.data!;
+    const actual: Veileder[] = result.current.data || [];
 
     expect(actual[0].ident).to.eq(veiledere[0].ident);
   });
@@ -55,7 +54,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubAktivVeileder();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           {children}
@@ -69,9 +68,9 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: VeilederinfoDTO = result.current.data!;
+    const actual: VeilederinfoDTO | undefined = result.current.data;
 
-    expect(actual.ident).to.eq(veilederInfo.ident);
+    expect(actual).to.not.be.undefined;
+    expect(actual?.ident).to.eq(veilederInfo.ident);
   });
 });

@@ -1,13 +1,13 @@
 import path from 'path';
 import MutationObserver from '@sheerun/mutationobserver-shim';
+import { config } from 'dotenv';
+import { JSDOM } from 'jsdom';
 
 const dotEnvPath = path.resolve('.env');
 
-require('dotenv').config({
+config({
   path: dotEnvPath,
 });
-
-const { JSDOM } = require('jsdom');
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;

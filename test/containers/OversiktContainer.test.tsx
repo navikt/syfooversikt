@@ -12,7 +12,7 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import { stubVeiledere } from '../stubs/stubVeiledere';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { FetchVeiledereFailed } from '@/context/notification/Notifications';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 
 describe('OversiktContainer', () => {
@@ -25,7 +25,7 @@ describe('OversiktContainer', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = render(
+    render(
       <MemoryRouter initialEntries={['/enhet']}>
         <Route path="/enhet">
           <NotificationContext.Provider
@@ -50,6 +50,6 @@ describe('OversiktContainer', () => {
       </MemoryRouter>
     );
 
-    expect(wrapper.getByText(FetchVeiledereFailed.message)).to.exist;
+    expect(screen.getByText(FetchVeiledereFailed.message)).to.exist;
   });
 });

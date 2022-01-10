@@ -12,7 +12,7 @@ describe('changelogHooks tests', () => {
   it('loads changelogs correctly', async () => {
     stubChangelogs();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 

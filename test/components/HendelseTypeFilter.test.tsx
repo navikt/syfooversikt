@@ -1,38 +1,38 @@
 import React from 'react';
 import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 
-describe('HendelseTypeFilter', () => {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+describe('HendelseTypeFilter', () => {
   it('Skal inneholde checkbokser med riktige labels', () => {
-    const component = render(
+    render(
       <QueryClientProvider client={queryClient}>
         <HendelseTypeFilter />
       </QueryClientProvider>
     );
 
-    const onskerMoteCheckbox = component.getByRole('checkbox', {
+    const onskerMoteCheckbox = screen.getByRole('checkbox', {
       name: /Ønsker møte/,
       checked: false,
     });
     expect(onskerMoteCheckbox).to.exist;
 
-    const svarMoteCheckbox = component.getByRole('checkbox', {
+    const svarMoteCheckbox = screen.getByRole('checkbox', {
       name: /Svar møteplanlegger/,
       checked: false,
     });
     expect(svarMoteCheckbox).to.exist;
 
-    const ufordelteCheckbox = component.getByRole('checkbox', {
+    const ufordelteCheckbox = screen.getByRole('checkbox', {
       name: /Ufordelte brukere/,
       checked: false,
     });
     expect(ufordelteCheckbox).to.exist;
 
-    const arbeidsgiverCheckbox = component.getByRole('checkbox', {
+    const arbeidsgiverCheckbox = screen.getByRole('checkbox', {
       name: /Arbeidsgiver ønsker bistand/,
       checked: false,
     });

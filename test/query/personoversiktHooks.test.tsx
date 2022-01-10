@@ -18,7 +18,7 @@ describe('personoversiktHooks tests', () => {
     stubModiaContext();
     stubPersonoversikt();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -39,8 +39,7 @@ describe('personoversiktHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: PersonoversiktStatus[] = result.current.data!;
+    const actual: PersonoversiktStatus[] = result.current.data || [];
 
     expect(actual[0].fnr).to.eq(personoversiktEnhetMockData[0].fnr);
   });
