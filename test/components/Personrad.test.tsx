@@ -2,11 +2,10 @@ import React from 'react';
 import { testdata, veiledere } from '../data/fellesTestdata';
 import { Skjermingskode } from '@/api/types/personregisterTypes';
 import { Personrad } from '@/components/Personrad';
-import { render, RenderResult } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { formaterNavn } from '@/utils/lenkeUtil';
 
-const fnr = testdata.fnr1;
 const personData = {
   navn: testdata.navn1,
   harMotebehovUbehandlet: false,
@@ -18,27 +17,22 @@ const personData = {
   tildeltVeilederIdent: '234',
   oppfolgingstilfeller: [],
 };
-const checkboxHandler = () => void 0;
-let component: RenderResult;
 
 describe('Personrad', () => {
-  beforeEach(() => {
-    component = render(
+  it('Skal rendre riktig navn, fodselsnummer og skjermingskode', () => {
+    render(
       <Personrad
         index={1}
-        fnr={fnr}
+        fnr={testdata.fnr1}
         veilederName={`${veiledere[0].etternavn}, ${veiledere[0].fornavn}`}
         personData={personData}
-        checkboxHandler={checkboxHandler}
+        checkboxHandler={() => void 0}
         kryssAv={false}
       />
     );
-  });
-
-  it('Skal rendre riktig navn, fodselsnummer og skjermingskode', () => {
-    expect(component.getByRole('link', { name: formaterNavn(personData.navn) }))
-      .to.exist;
-    expect(component.getByText(testdata.fnr1)).to.exist;
-    expect(component.getByText('diskresjonsmerket')).to.exist;
+    expect(screen.getByRole('link', { name: formaterNavn(personData.navn) })).to
+      .exist;
+    expect(screen.getByText(testdata.fnr1)).to.exist;
+    expect(screen.getByText('diskresjonsmerket')).to.exist;
   });
 });

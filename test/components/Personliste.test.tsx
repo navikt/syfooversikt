@@ -4,22 +4,21 @@ import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 
-describe('Personliste', () => {
-  const queryClient = new QueryClient();
-  const markertePersoner = ['123', '234'];
-  const checkboxHandler = () => void 0;
+const queryClient = new QueryClient();
+const markertePersoner = ['123', '234'];
 
+describe('Personliste', () => {
   it('Skal rendre 2 personrader', () => {
-    const component = render(
+    render(
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           <AktivEnhetProvider>
             <Personliste
               personregister={personregister}
-              checkboxHandler={checkboxHandler}
+              checkboxHandler={() => void 0}
               markertePersoner={markertePersoner}
               startItem={0}
               endItem={1}
@@ -30,7 +29,7 @@ describe('Personliste', () => {
       </NotificationProvider>
     );
 
-    expect(component.getByRole('link', { name: 'Et Navn' })).to.exist;
-    expect(component.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
   });
 });
