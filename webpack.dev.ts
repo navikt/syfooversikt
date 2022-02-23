@@ -1,7 +1,7 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 import mockEndepunkter from './mock/mockEndepunkter';
+
 const express = require('express');
 const Auth = require('./server/auth/index.js');
 const path = require('path');
@@ -35,19 +35,13 @@ module.exports = merge(common, {
       directory: path.join(__dirname, 'dist'),
     },
     port: 8080,
-    onAfterSetupMiddleware: function (devServer) {
+    setupMiddlewares: (middlewares, devServer) => {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');
       }
 
       setupDev(devServer.app, devServer.compiler);
+      return middlewares;
     },
   },
-  plugins: [
-    new ForkTsCheckerWebpackPlugin({
-      eslint: {
-        files: './src/**/*.{ts,tsx,js,jsx}',
-      },
-    }),
-  ],
 });
