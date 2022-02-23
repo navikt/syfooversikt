@@ -1,30 +1,24 @@
 import React from 'react';
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { mount } from 'enzyme';
 import Personliste from '../../src/components/Personliste';
-import { Personrad } from '@/components/Personrad';
 import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
+import { render, screen } from '@testing-library/react';
+import { expect } from 'chai';
 
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+const queryClient = new QueryClient();
+const markertePersoner = ['123', '234'];
 
 describe('Personliste', () => {
-  const queryClient = new QueryClient();
-  const markertePersoner = ['123', '234'];
-  const checkboxHandler = () => void 0;
-
   it('Skal rendre 2 personrader', () => {
-    const component = mount(
+    render(
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           <AktivEnhetProvider>
             <Personliste
               personregister={personregister}
-              checkboxHandler={checkboxHandler}
+              checkboxHandler={() => void 0}
               markertePersoner={markertePersoner}
               startItem={0}
               endItem={1}
@@ -35,6 +29,7 @@ describe('Personliste', () => {
       </NotificationProvider>
     );
 
-    expect(component.find(Personrad)).to.have.length(2);
+    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
   });
 });

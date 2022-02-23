@@ -57,7 +57,7 @@ spec:
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
       value: "internarbeidsflatedecorator.intern.nav.no"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
-      value: "prod-fss.teamsykefravr.syfooversiktsrv"
+      value: "prod-gcp.teamsykefravr.syfooversiktsrv"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID

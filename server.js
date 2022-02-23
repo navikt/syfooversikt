@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const helmet = require('helmet');
 const path = require('path');
 const prometheus = require('prom-client');
 const getChangelogs = require('./server/changelogReader.js');
@@ -24,6 +25,11 @@ const httpRequestDurationMicroseconds = new prometheus.Histogram({
 const server = express();
 
 server.use(express.json());
+server.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+);
 
 function nocache(req, res, next) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');

@@ -1,6 +1,3 @@
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
-import { mount } from 'enzyme';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -13,12 +10,10 @@ import { stubPersonregister } from '../stubs/stubPersonregister';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { stubVeiledere } from '../stubs/stubVeiledere';
-import { NotificationBar } from '@/components/error/NotificationBar';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { FetchVeiledereFailed } from '@/context/notification/Notifications';
-
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+import { render, screen } from '@testing-library/react';
+import { expect } from 'chai';
 
 describe('OversiktContainer', () => {
   const queryClient = new QueryClient();
@@ -30,7 +25,7 @@ describe('OversiktContainer', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = mount(
+    render(
       <MemoryRouter initialEntries={['/enhet']}>
         <Route path="/enhet">
           <NotificationContext.Provider
@@ -55,7 +50,6 @@ describe('OversiktContainer', () => {
       </MemoryRouter>
     );
 
-    const notifications = wrapper.find(NotificationBar);
-    expect(notifications.text()).to.contain(FetchVeiledereFailed.message);
+    expect(screen.getByText(FetchVeiledereFailed.message)).to.exist;
   });
 });

@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { SYFOVEILEDER_ROOT } from '../../src/utils/apiUrlUtil';
+import { SYFOVEILEDER_ROOT } from '@/utils/apiUrlUtil';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import veiledereMockData from '../../mock/data/veiledere.json';
 import axios from 'axios';

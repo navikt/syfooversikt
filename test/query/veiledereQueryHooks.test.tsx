@@ -1,8 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import chai from 'chai';
-import chaiEnzyme from 'chai-enzyme';
 import { stubVeiledere } from '../stubs/stubVeiledere';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import {
@@ -17,9 +15,7 @@ import veilederInfo from '../../mock/data/veilederInfo.json';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-
-chai.use(chaiEnzyme());
-const expect = chai.expect;
+import { expect } from 'chai';
 
 describe('veiledereQueryHooks tests', () => {
   const queryClient = new QueryClient();
@@ -28,7 +24,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -49,8 +45,7 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: Veileder[] = result.current.data!;
+    const actual: Veileder[] = result.current.data || [];
 
     expect(actual[0].ident).to.eq(veiledere[0].ident);
   });
@@ -59,7 +54,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubAktivVeileder();
 
-    const wrapper = ({ children }: any) => (
+    const wrapper = ({ children }) => (
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           {children}
@@ -73,9 +68,9 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const actual: VeilederinfoDTO = result.current.data!;
+    const actual: VeilederinfoDTO | undefined = result.current.data;
 
-    expect(actual.ident).to.eq(veilederInfo.ident);
+    expect(actual).to.not.be.undefined;
+    expect(actual?.ident).to.eq(veilederInfo.ident);
   });
 });

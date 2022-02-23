@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { PersonData } from '../../src/api/types/personregisterTypes';
-import { skjermingskode } from '../../src/utils/personDataUtil';
+import { PersonData } from '@/api/types/personregisterTypes';
+import { skjermingskode } from '@/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
 
 const INGEN = '';

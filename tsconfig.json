@@ -10,7 +10,7 @@
     "target": "ES2019",
     "lib": ["es2019", "dom"],
     "allowJs": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -25,6 +25,6 @@
       "@/*": ["./src/*"]
     },
     "sourceMap": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
   },
 }
