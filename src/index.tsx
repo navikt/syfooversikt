@@ -15,6 +15,7 @@ import { ErrorBoundary } from '@/components/error/ErrorBoundary';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { initAmplitude } from '@/amplitude/amplitude';
+import { isClientError } from '@/api/errors';
 
 initAmplitude();
 
@@ -24,6 +25,13 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       cacheTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),
+      retry: (failureCount, error) => {
+        if (isClientError(error)) {
+          return false;
+        }
+
+        return failureCount < 3;
+      },
     },
   },
 });
