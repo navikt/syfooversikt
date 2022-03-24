@@ -92,18 +92,6 @@ export const filterOnBirthDates = (
     }, {} as PersonregisterState);
 };
 
-export const filterOnEnhet = (
-  personregister: PersonregisterState,
-  enhetId: string
-): PersonregisterState => {
-  return Object.keys(personregister).reduce((person, fnr) => {
-    if (personregister[fnr].tildeltEnhetId === enhetId) {
-      person[fnr] = personregister[fnr];
-    }
-    return person;
-  }, {} as PersonregisterState);
-};
-
 export const filtrerPersonregister = (
   personregister: PersonregisterState,
   filter?: HendelseTypeFilters
