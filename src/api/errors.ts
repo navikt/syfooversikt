@@ -49,3 +49,8 @@ export const networkError = (error: Error): ApiError => ({
   message: error.message,
   defaultErrorMsg: defaultErrorTexts.networkError,
 });
+
+export const isClientError = (error: unknown): boolean =>
+  error instanceof ApiErrorException &&
+  !!error.code &&
+  error.code.toString().startsWith('4');
