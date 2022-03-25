@@ -45,7 +45,7 @@ const BirthDateFilter = ({
         isMulti
         value={selectedOptions}
         closeMenuOnSelect={false}
-        onChange={(v: ValueType<DateOption>) => {
+        onChange={(v: ValueType<DateOption, boolean>) => {
           const arrayOfSelectedOptions = (v as DateOption[]) || [];
           const arrayOfStrings =
             arrayOfSelectedOptions.map((option) => option.value) || [];

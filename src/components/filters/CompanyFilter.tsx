@@ -49,7 +49,7 @@ const CompanyFilter = (props: CompantyFilterProps): ReactElement => {
         value={selectedOptions}
         placeholder={texts.placeholder}
         options={options}
-        onChange={(v: ValueType<CompanyOption>) => {
+        onChange={(v: ValueType<CompanyOption, boolean>) => {
           const arrayOfSelectedOptions = (v as CompanyOption[]) || [];
           const arrayOfStrings =
             arrayOfSelectedOptions.map((option) => option.value) || [];
