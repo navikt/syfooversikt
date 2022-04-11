@@ -17,7 +17,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     harOppfolgingsplanLPSBistandUbehandlet: false,
     tildeltEnhetId: '123',
     tildeltVeilederIdent: '234',
-    oppfolgingstilfeller: [],
+    latestOppfolgingstilfelle: undefined,
   };
 };
 

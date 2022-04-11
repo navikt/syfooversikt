@@ -3,10 +3,10 @@ import {
   PersonregisterData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 export const toPersonData = (
-  personoversiktData: PersonoversiktStatus[],
+  personoversiktData: PersonOversiktStatusDTO[],
   personregisterData: PersonregisterData[]
 ): PersonregisterState => {
   const personDataList: Record<string, PersonData> = {};
@@ -25,7 +25,7 @@ export const toPersonData = (
       markert: false,
       tildeltEnhetId: person.enhet,
       tildeltVeilederIdent: person.veilederIdent || '',
-      oppfolgingstilfeller: person.oppfolgingstilfeller,
+      latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
     };
   });
 

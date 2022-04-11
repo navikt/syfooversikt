@@ -5,8 +5,7 @@
     "veilederIdent": null,
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
-    "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "oppfolgingsplanLPSBistandUbehandlet": null
   },
   {
     "fnr": "99999922222",
@@ -14,8 +13,7 @@
     "veilederIdent": null,
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
-    "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "oppfolgingsplanLPSBistandUbehandlet": null
   },
   {
     "fnr": "99999933333",
@@ -24,8 +22,7 @@
     "veilederIdent": "Z101010",
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": true,
-    "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "oppfolgingsplanLPSBistandUbehandlet": null
   },
   {
     "fnr": "99999944444",
@@ -35,12 +32,16 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": [
-      {
-        "virksomhetsnummer": "12345",
-        "virksomhetsnavn": "EGJ Security"
-      }
-    ]
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654321",
+          "virksomhetsnavn": "NAV Security"
+        }
+      ]
+    }
   },
   {
     "fnr": "18999955555",
@@ -50,12 +51,16 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": true,
-    "oppfolgingstilfeller": [
-      {
-        "virksomhetsnummer": "12345",
-        "virksomhetsnavn": "JML Investments"
-      }
-    ]
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999966666",
@@ -65,7 +70,7 @@
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   },
   {
     "fnr": "99999955556",
@@ -75,7 +80,7 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   },
   {
     "fnr": "99999966667",
@@ -85,7 +90,7 @@
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   },
   {
     "fnr": "99999966668",
@@ -95,7 +100,7 @@
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   },
   {
     "fnr": "99999966669",
@@ -105,7 +110,7 @@
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   },
   {
     "fnr": "99999966670",
@@ -115,6 +120,6 @@
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": true,
-    "oppfolgingstilfeller": []
+    "latestOppfolgingstilfelle": null
   }
 ]
