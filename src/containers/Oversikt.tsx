@@ -15,7 +15,7 @@ import {
   filterEventsOnVeileder,
 } from '@/utils/hendelseFilteringUtils';
 import { OverviewTabType } from '@/konstanter';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -46,7 +46,7 @@ const OversiktContainerInnhold = styled.div`
 `;
 
 interface OversiktProps {
-  personoversiktData: PersonoversiktStatus[];
+  personoversiktData: PersonOversiktStatusDTO[];
   personregisterData: PersonregisterData[];
 }
 

@@ -5,7 +5,7 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import personoversiktEnhetMockData from '../../mock/data/personoversiktEnhet.json';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -39,7 +39,7 @@ describe('personoversiktHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    const actual: PersonoversiktStatus[] = result.current.data || [];
+    const actual: PersonOversiktStatusDTO[] = result.current.data || [];
 
     expect(actual[0].fnr).to.eq(personoversiktEnhetMockData[0].fnr);
   });

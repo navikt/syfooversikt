@@ -2,7 +2,7 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
 const veilederFornavn = 'F_Z101010';
@@ -48,7 +48,7 @@ export const personregister: PersonregisterState = {
   } as PersonData,
 };
 
-export const personoversikt: PersonoversiktStatus[] = [
+export const personoversikt: PersonOversiktStatusDTO[] = [
   {
     fnr: testdata.fnr1,
     navn: testdata.navn1,
@@ -57,7 +57,6 @@ export const personoversikt: PersonoversiktStatus[] = [
     motebehovUbehandlet: true,
     moteplanleggerUbehandlet: true,
     oppfolgingsplanLPSBistandUbehandlet: null,
-    oppfolgingstilfeller: [],
   },
   {
     fnr: testdata.fnr4,
@@ -67,7 +66,6 @@ export const personoversikt: PersonoversiktStatus[] = [
     motebehovUbehandlet: null,
     moteplanleggerUbehandlet: false,
     oppfolgingsplanLPSBistandUbehandlet: false,
-    oppfolgingstilfeller: [],
   },
 ];
 

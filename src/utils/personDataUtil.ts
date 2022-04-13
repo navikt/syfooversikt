@@ -22,8 +22,12 @@ export const mapPersonregisterToCompanyList = (
 
 export const companyNamesFromPersonData = (p: PersonData): string[] => {
   const allCompaniesForPerson: string[] = [];
-  const events = p.oppfolgingstilfeller || [];
-  events.forEach((v) => allCompaniesForPerson.push(v.virksomhetsnavn));
+  p.latestOppfolgingstilfelle?.virksomhetList.forEach((virksomhet) => {
+    const virksomhetsnavn = virksomhet.virksomhetsnavn;
+    if (virksomhetsnavn !== undefined) {
+      allCompaniesForPerson.push(virksomhetsnavn);
+    }
+  });
   return allCompaniesForPerson;
 };
 

@@ -24,8 +24,8 @@ const getAllFnrFromPersonregister = (personregister: PersonregisterState) =>
 
 const hasCompany = (personData: PersonData) =>
   personData &&
-  personData.oppfolgingstilfeller &&
-  personData.oppfolgingstilfeller.length;
+  personData.latestOppfolgingstilfelle &&
+  personData.latestOppfolgingstilfelle.virksomhetList.length;
 
 export const filtrerPaaFodselsnummerEllerNavn = (
   personregister: PersonregisterState,
@@ -64,9 +64,11 @@ export const filterOnCompany = (
     .filter((fnr) => {
       const personData = personregister[fnr];
       return (
-        personData.oppfolgingstilfeller.filter(
-          (oppfolgingstilfelle) =>
-            companies.indexOf(oppfolgingstilfelle.virksomhetsnavn) !== -1
+        personData.latestOppfolgingstilfelle &&
+        personData.latestOppfolgingstilfelle.virksomhetList.filter(
+          (virksomhet) =>
+            virksomhet.virksomhetsnavn &&
+            companies.indexOf(virksomhet.virksomhetsnavn) !== -1
         ).length > 0
       );
     })

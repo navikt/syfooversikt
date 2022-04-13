@@ -7,7 +7,7 @@ import { Veileder } from '@/api/types/veiledereTypes';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import { get, post } from '@/api/axios';
 import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
 import { useNotifications } from '@/context/notification/NotificationContext';
@@ -91,11 +91,11 @@ export const useTildelVeileder = () => {
     onMutate: (liste: VeilederArbeidstaker[]) => {
       clearNotification('tildelVeilederFailed');
 
-      const previousPersonoversikt: PersonoversiktStatus[] =
+      const previousPersonoversikt: PersonOversiktStatusDTO[] =
         queryClient.getQueryData(
           personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
         ) || [];
-      const optimisticlyUpdatedPersonoversikt: PersonoversiktStatus[] = previousPersonoversikt.map(
+      const optimisticlyUpdatedPersonoversikt: PersonOversiktStatusDTO[] = previousPersonoversikt.map(
         (person) => {
           const tilknytning = liste.find(
             (tilknytning) => tilknytning.fnr === person.fnr

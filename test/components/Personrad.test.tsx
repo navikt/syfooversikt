@@ -15,7 +15,6 @@ const personData = {
   harOppfolgingsplanLPSBistandUbehandlet: false,
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
-  oppfolgingstilfeller: [],
 };
 
 describe('Personrad', () => {

@@ -1,4 +1,4 @@
-export interface PersonoversiktStatus {
+export interface PersonOversiktStatusDTO {
   fnr: string;
   navn: string;
   enhet: string;
@@ -6,12 +6,16 @@ export interface PersonoversiktStatus {
   motebehovUbehandlet: boolean | null;
   moteplanleggerUbehandlet: boolean | null;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
-  oppfolgingstilfeller: Oppfolgingstilfelle[] | [];
+  latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
 }
 
-export interface Oppfolgingstilfelle {
+export interface OppfolgingstilfelleDTO {
+  oppfolgingstilfelleStart: Date;
+  oppfolgingstilfelleEnd: Date;
+  virksomhetList: OppfolgingstilfelleVirksomhetDTO[];
+}
+
+export interface OppfolgingstilfelleVirksomhetDTO {
   virksomhetsnummer: string;
-  virksomhetsnavn: string;
-  fom: Date;
-  tom: Date;
+  virksomhetsnavn?: string;
 }

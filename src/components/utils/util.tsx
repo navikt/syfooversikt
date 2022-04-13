@@ -1,5 +1,5 @@
 import { PersonHendelseData } from '@/api/types/personregisterTypes';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 export interface FnrMap {
   fnr: string;
@@ -14,7 +14,7 @@ export const hentFodselsnummerFraPersonHendelseListe = (
 };
 
 export const hentFodselsnummerFraPersonOversikt = (
-  personListe: PersonoversiktStatus[]
+  personListe: PersonOversiktStatusDTO[]
 ): FnrMap[] => {
   return personListe?.map((person) => ({
     fnr: person.fnr,

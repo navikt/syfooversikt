@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { PersonoversiktStatus } from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -23,7 +23,7 @@ export const usePersonoversiktQuery = () => {
   const throwError = useAsyncError();
 
   const fetchPersonoversikt = () => {
-    const personoversiktData = get<PersonoversiktStatus[]>(
+    const personoversiktData = get<PersonOversiktStatusDTO[]>(
       `${SYFOOVERSIKTSRVREST_ROOT}/v2/personoversikt/enhet/${aktivEnhet}`
     );
     return personoversiktData || [];
