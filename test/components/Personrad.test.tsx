@@ -23,7 +23,7 @@ describe('Personrad', () => {
       <Personrad
         index={1}
         fnr={testdata.fnr1}
-        veilederName={`${veiledere[0].etternavn}, ${veiledere[0].fornavn}`}
+        veilederName={`${veiledere[0]?.etternavn}, ${veiledere[0]?.fornavn}`}
         personData={personData}
         checkboxHandler={() => void 0}
         kryssAv={false}

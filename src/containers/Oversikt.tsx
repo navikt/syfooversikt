@@ -18,17 +18,11 @@ import { OverviewTabType } from '@/konstanter';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 2rem;
   width: 18em;
-`;
-
-export const AlertStripeWithSpacing = styled(AlertStripe)`
-  margin-bottom: 1rem;
-  margin-top: 1rem;
 `;
 
 const OversiktContainerInnhold = styled.div`

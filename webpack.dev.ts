@@ -6,15 +6,15 @@ const express = require('express');
 const Auth = require('./server/auth/index.js');
 const path = require('path');
 
-const setupDev = async (app, compiler) => {
+const setupDev = async (app: any, compiler: any) => {
   await Auth.setupAuth(app);
 
   mockEndepunkter(app);
   app.use('/static', express.static(path.resolve(__dirname, 'dist')));
 
-  app.use('*', (req, res) => {
+  app.use('*', (req: any, res: any) => {
     const filename = path.join(compiler.outputPath, 'index.html');
-    compiler.outputFileSystem.readFile(filename, (err, result) => {
+    compiler.outputFileSystem.readFile(filename, (err: any, result: any) => {
       if (err) {
         res.status(404).sendFile(path.resolve(__dirname, 'public/error.html'));
         return;
@@ -35,7 +35,7 @@ module.exports = merge(common, {
       directory: path.join(__dirname, 'dist'),
     },
     port: 8080,
-    setupMiddlewares: (middlewares, devServer) => {
+    setupMiddlewares: (middlewares: any, devServer: any) => {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');
       }

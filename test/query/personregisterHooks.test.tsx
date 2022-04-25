@@ -20,7 +20,7 @@ describe('personregisterHooks tests', () => {
     stubPersonoversikt();
     stubPersonregister();
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: never) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -44,6 +44,8 @@ describe('personregisterHooks tests', () => {
     const actual: PersonregisterData[] | undefined = result.current.data;
 
     expect(actual).to.not.be.undefined;
-    expect(actual?.[0].fnr).to.eq(personoversiktMockData[0].fnr);
+    if (actual) {
+      expect(actual[0]?.fnr).to.eq(personoversiktMockData[0]?.fnr);
+    }
   });
 });

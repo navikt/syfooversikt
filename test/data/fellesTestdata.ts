@@ -5,10 +5,6 @@ import {
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
-const veilederFornavn = 'F_Z101010';
-const veilederEtternavn = 'E_Z101010';
-const veilederNavn = `${veilederFornavn} ${veilederEtternavn}`;
-const veilederEpost = `${veilederFornavn}.${veilederEtternavn}@nav.no`;
 const enhetId = '0316';
 
 export const testdata = {
@@ -72,14 +68,6 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
 export const enhet = {
   enhetId: '0101',
   navn: 'Enhet',
-};
-
-export const veilederinfo = {
-  navn: veilederNavn,
-  ident: veilederIdent,
-  fornavn: veilederFornavn,
-  etternavn: veilederEtternavn,
-  epost: veilederEpost,
 };
 
 export const veiledere = [

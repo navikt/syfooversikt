@@ -8,11 +8,11 @@ const personoversiktEnhet = (generatedPersons: any) => [
   ...mockUtils.generatePersonoversiktEnhetFromPersons(generatedPersons),
 ];
 
-export const mockPersonoversikt = (server, generatedPersons) => {
+export const mockPersonoversikt = (server: any, generatedPersons: any) => {
   server.get(
     `${PERSONOVERSIKT_ROOT}/enhet/:id`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(personoversiktEnhet(generatedPersons)));
     }

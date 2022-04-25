@@ -18,7 +18,7 @@ describe('personoversiktHooks tests', () => {
     stubModiaContext();
     stubPersonoversikt();
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: never) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -41,6 +41,7 @@ describe('personoversiktHooks tests', () => {
 
     const actual: PersonOversiktStatusDTO[] = result.current.data || [];
 
-    expect(actual[0].fnr).to.eq(personoversiktEnhetMockData[0].fnr);
+    expect(actual[0]).to.not.be.undefined;
+    expect(actual[0]?.fnr).to.eq(personoversiktEnhetMockData[0]?.fnr);
   });
 });

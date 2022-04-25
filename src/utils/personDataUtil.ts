@@ -12,23 +12,19 @@ export const skjermingskode = (person: PersonData): string => {
 export const mapPersonregisterToCompanyList = (
   personregister: PersonregisterState
 ): string[] => {
-  const allCompanyNames: string[] = [];
-  Object.keys(personregister).forEach((fnr) => {
-    const personData = personregister[fnr];
-    allCompanyNames.push(...companyNamesFromPersonData(personData));
-  });
+  const allCompanyNames = Object.entries(
+    personregister
+  ).flatMap(([, persondata]) => companyNamesFromPersonData(persondata));
+
   return [...new Set(allCompanyNames)].filter((v) => v && v.length > 0);
 };
 
 export const companyNamesFromPersonData = (p: PersonData): string[] => {
-  const allCompaniesForPerson: string[] = [];
-  p.latestOppfolgingstilfelle?.virksomhetList.forEach((virksomhet) => {
-    const virksomhetsnavn = virksomhet.virksomhetsnavn;
-    if (virksomhetsnavn !== undefined) {
-      allCompaniesForPerson.push(virksomhetsnavn);
-    }
-  });
-  return allCompaniesForPerson;
+  return p.latestOppfolgingstilfelle
+    ? (p.latestOppfolgingstilfelle.virksomhetList
+        .map(({ virksomhetsnavn }) => virksomhetsnavn)
+        .filter((v) => !!v) as string[])
+    : [];
 };
 
 export const firstCompanyNameFromPersonData = (
