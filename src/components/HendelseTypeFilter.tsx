@@ -81,15 +81,14 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
-  const elementer = Object.keys(HendelseTekster)
-    .filter((key) => {
+  const elementer = Object.entries(HendelseTekster)
+    .filter(([, tekst]) => {
       return !(
-        HendelseTekster[key] === HendelseTekster.UFORDELTE_BRUKERE &&
+        tekst === HendelseTekster.UFORDELTE_BRUKERE &&
         tabType === OverviewTabType.MY_OVERVIEW
       );
     })
-    .map((key) => {
-      const tekst: string = HendelseTekster[key];
+    .map(([key, tekst]) => {
       const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
       return { key, tekst, checked } as CheckboksElement;
     });

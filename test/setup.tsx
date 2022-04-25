@@ -1,4 +1,5 @@
 import path from 'path';
+// @ts-ignore
 import MutationObserver from '@sheerun/mutationobserver-shim';
 import { config } from 'dotenv';
 import { JSDOM } from 'jsdom';

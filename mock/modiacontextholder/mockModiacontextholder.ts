@@ -29,11 +29,11 @@ const aktivEnhet = {
   aktivEnhet: '0316',
 };
 
-export const mockModiacontextholder = (server) => {
+export const mockModiacontextholder = (server: any) => {
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/decorator`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(saksbehandler));
     }
@@ -42,7 +42,7 @@ export const mockModiacontextholder = (server) => {
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/context/aktivbruker`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(aktivBruker));
     }
@@ -51,7 +51,7 @@ export const mockModiacontextholder = (server) => {
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/context/aktivenhet`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(aktivEnhet));
     }
@@ -60,7 +60,7 @@ export const mockModiacontextholder = (server) => {
   server.post(
     `${MODIACONTEXTHOLDER_ROOT}/context`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.send().status(204);
     }
   );

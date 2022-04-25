@@ -84,13 +84,9 @@ const Personliste = ({
     startItem: number,
     endItem: number
   ) => {
-    const allFnr = Object.keys(register);
-    return allFnr
-      .slice(startItem, endItem + 1)
-      .reduce((slicedPersonregister, fnr) => {
-        slicedPersonregister[fnr] = personregister[fnr];
-        return slicedPersonregister;
-      }, {} as PersonregisterState);
+    return Object.fromEntries(
+      Object.entries(register).slice(startItem, endItem + 1)
+    );
   };
 
   const sortedPersonregister = getSortedEventsFromSortingType(
@@ -104,15 +100,15 @@ const Personliste = ({
     endItem
   );
 
-  const fnrListe = Object.keys(paginatedPersonregister);
+  const personListe = Object.entries(paginatedPersonregister);
 
-  if (!fnrListe.length) {
+  if (!personListe.length) {
     return <EmptyDrawer />;
   }
 
   return (
     <>
-      {fnrListe.map((fnr: string, idx: number) => {
+      {personListe.map(([fnr, persondata], idx) => {
         return (
           <Personrad
             index={idx}
@@ -120,9 +116,9 @@ const Personliste = ({
             fnr={fnr}
             veilederName={getVeilederComponent(
               veiledereQuery.data || [],
-              personregister[fnr]
+              persondata
             )}
-            personData={personregister[fnr]}
+            personData={persondata}
             checkboxHandler={checkboxHandler}
             kryssAv={erMarkert(markertePersoner, fnr)}
           />

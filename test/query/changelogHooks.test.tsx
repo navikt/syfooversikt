@@ -12,7 +12,7 @@ describe('changelogHooks tests', () => {
   it('loads changelogs correctly', async () => {
     stubChangelogs();
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: never) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
@@ -24,7 +24,8 @@ describe('changelogHooks tests', () => {
 
     const actual: Changelog[] = result.current.data || [];
 
-    expect(actual[0].date).to.eq('10-09-19');
-    expect(actual[0].items.length).to.eq(2);
+    expect(actual[0]).to.not.be.undefined;
+    expect(actual[0]?.date).to.eq('10-09-19');
+    expect(actual[0]?.items.length).to.eq(2);
   });
 });

@@ -104,6 +104,10 @@ const ChangelogModal = ({
     setCurrentPage(changelog.items[currentPageNumber]);
   }, [changelog.items, currentPageNumber]);
 
+  if (!currentPage) {
+    return <></>;
+  }
+
   return (
     <div>
       <ModalStyled

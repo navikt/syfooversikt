@@ -9,7 +9,7 @@ const mockUtils = require('./mockUtils.js');
 const express = require('express');
 const generatedPersons = mockUtils.generatePersons(50);
 
-const mockEndepunkter = (server) => {
+const mockEndepunkter = (server: any) => {
   server.use(express.json());
   server.use(express.urlencoded());
 

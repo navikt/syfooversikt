@@ -34,9 +34,9 @@ describe('hendelseFilteringUtils', () => {
       'NAME_ASC'
     );
 
-    expect(Object.values(result)[0].navn).to.deep.equal('Agnes Agnes');
-    expect(Object.values(result)[1].navn).to.deep.equal('Bjarne Bjarne');
-    expect(Object.values(result)[2].navn).to.deep.equal('Camilla Camilla');
+    expect(Object.values(result)[0]?.navn).to.deep.equal('Agnes Agnes');
+    expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
+    expect(Object.values(result)[2]?.navn).to.deep.equal('Camilla Camilla');
   });
 
   it('Should sort by name ascending', () => {
@@ -51,8 +51,8 @@ describe('hendelseFilteringUtils', () => {
       'NAME_DESC'
     );
 
-    expect(Object.values(result)[0].navn).to.deep.equal('Camilla Camilla');
-    expect(Object.values(result)[1].navn).to.deep.equal('Bjarne Bjarne');
-    expect(Object.values(result)[2].navn).to.deep.equal('Agnes Agnes');
+    expect(Object.values(result)[0]?.navn).to.deep.equal('Camilla Camilla');
+    expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
+    expect(Object.values(result)[2]?.navn).to.deep.equal('Agnes Agnes');
   });
 });

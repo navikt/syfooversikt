@@ -8,11 +8,11 @@ const personInfo = (generatedPersons: any) => [
   ...generatedPersons,
 ];
 
-export const mockSyfoperson = (server, generatedPersons) => {
+export const mockSyfoperson = (server: any, generatedPersons: any) => {
   server.post(
     `${SYFOPERSON_ROOT}/person/info`,
     Auth.ensureAuthenticated(),
-    (req, res) => {
+    (req: any, res: any) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(personInfo(generatedPersons)));
     }

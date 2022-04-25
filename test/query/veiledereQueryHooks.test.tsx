@@ -24,7 +24,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: never) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -47,14 +47,15 @@ describe('veiledereQueryHooks tests', () => {
 
     const actual: Veileder[] = result.current.data || [];
 
-    expect(actual[0].ident).to.eq(veiledere[0].ident);
+    expect(actual[0]).to.not.be.undefined;
+    expect(actual[0]?.ident).to.eq(veiledere[0]?.ident);
   });
 
   it('loads aktiv veileder correctly', async () => {
     stubModiaContext();
     stubAktivVeileder();
 
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: never) => (
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           {children}

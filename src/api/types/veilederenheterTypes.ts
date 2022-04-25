@@ -6,7 +6,3 @@ export interface Veilederenhet {
 export interface Veilederenheter {
   enhetliste: Veilederenhet[];
 }
-
-export interface VeilederenheterState {
-  readonly aktivEnhetId: string;
-}
