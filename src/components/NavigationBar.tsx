@@ -64,7 +64,7 @@ export const NavigationBar = (): ReactElement => {
     <NavigationBarDiv>
       <NavigationBarContent>
         <LinkStyled
-          activeClassName="active"
+          className={({ isActive }) => (isActive ? 'active' : '')}
           to={'/minoversikt'}
           onClick={() => {
             trackOnClick(tekster.minOversikt);
@@ -76,7 +76,7 @@ export const NavigationBar = (): ReactElement => {
           {tekster.minOversikt}
         </LinkStyled>
         <LinkStyled
-          activeClassName="active"
+          className={({ isActive }) => (isActive ? 'active' : '')}
           to={'/enhet'}
           onClick={() => {
             trackOnClick(tekster.enhetensOversikt);
