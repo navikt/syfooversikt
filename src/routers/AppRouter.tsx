@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Redirect, Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Side from '../sider/Side';
 import { ManglerTilgangsside } from '@/sider/ManglerTilgangside';
 import Decorator from '../decorator/Decorator';
@@ -16,24 +15,22 @@ const AppRouter = (): ReactElement => {
         <Decorator />
         <Side tittel="Sykefraværsoppfølging">
           <ErrorBoundary context="appRouter">
-            <Switch>
-              <Route exact path="/na" component={ManglerTilgangsside} />
+            <Routes>
+              <Route path="/na" element={ManglerTilgangsside} />
               <Route
-                exact
                 path={'/enhet'}
-                render={() => (
+                element={
                   <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
-                )}
+                }
               />
               <Route
-                exact
                 path={'/minoversikt'}
-                render={() => (
+                element={
                   <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
-                )}
+                }
               />
-              <Redirect exact from="/" to="/enhet" />
-            </Switch>
+              <Route path="/" element={<Navigate to="/enhet" />} />
+            </Routes>
           </ErrorBoundary>
         </Side>
         <ChangelogWrapper />

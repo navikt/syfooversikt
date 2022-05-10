@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { NotificationContext } from '@/context/notification/NotificationContext';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
@@ -27,26 +27,33 @@ describe('OversiktContainer', () => {
 
     render(
       <MemoryRouter initialEntries={['/enhet']}>
-        <Route path="/enhet">
-          <NotificationContext.Provider
-            value={{
-              notifications: [FetchVeiledereFailed],
-              displayNotification: () => void 0,
-              clearNotification: () => void 0,
-            }}
-          >
-            <AktivEnhetContext.Provider
-              value={{
-                aktivEnhet: aktivEnhetMockData.aktivEnhet,
-                handleAktivEnhetChanged: () => void 0,
-              }}
-            >
-              <QueryClientProvider client={queryClient}>
-                <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
-              </QueryClientProvider>
-            </AktivEnhetContext.Provider>
-          </NotificationContext.Provider>
-        </Route>
+        <Routes>
+          <Route
+            path="/enhet"
+            element={
+              <NotificationContext.Provider
+                value={{
+                  notifications: [FetchVeiledereFailed],
+                  displayNotification: () => void 0,
+                  clearNotification: () => void 0,
+                }}
+              >
+                <AktivEnhetContext.Provider
+                  value={{
+                    aktivEnhet: aktivEnhetMockData.aktivEnhet,
+                    handleAktivEnhetChanged: () => void 0,
+                  }}
+                >
+                  <QueryClientProvider client={queryClient}>
+                    <OversiktContainer
+                      tabType={OverviewTabType.ENHET_OVERVIEW}
+                    />
+                  </QueryClientProvider>
+                </AktivEnhetContext.Provider>
+              </NotificationContext.Provider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     );
 
