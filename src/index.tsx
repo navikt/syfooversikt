@@ -1,7 +1,7 @@
 import 'core-js';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './styles/styles.less';
 import AppRouter from './routers/AppRouter';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -61,4 +61,8 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById('maincontent'));
+const container =
+  document.getElementById('maincontent') || new DocumentFragment();
+const root = createRoot(container);
+
+root.render(<App />);

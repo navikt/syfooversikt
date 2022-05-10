@@ -16,7 +16,7 @@ const AppRouter = (): ReactElement => {
         <Side tittel="Sykefraværsoppfølging">
           <ErrorBoundary context="appRouter">
             <Routes>
-              <Route path="/na" element={ManglerTilgangsside} />
+              <Route path="/na" element={<ManglerTilgangsside />} />
               <Route
                 path={'/enhet'}
                 element={
