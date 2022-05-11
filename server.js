@@ -9,6 +9,7 @@ const getChangelogs = require('./server/changelogReader.js');
 const Auth = require('./server/auth/index');
 
 const setupProxy = require('./server/proxy.js');
+const unleashRoutes = require("./server/routes/unleashRoutes");
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -46,6 +47,9 @@ const setupServer = async () => {
 
   server.use('/static', express.static(DIST_DIR));
 
+  const unleashRoutes = require('./server/routes/unleashRoutes');
+  server.use('/unleash', unleashRoutes);
+
   server.use(setupProxy(authClient));
 
   server.get('/syfooversikt/changelogs', (req, res) => {
@@ -65,9 +69,6 @@ const setupServer = async () => {
       );
     }
   );
-
-  const unleashRoutes = require('./server/routes/unleashRoutes');
-  server.use('/unleash', unleashRoutes);
 
   server.get('/health/isAlive', (req, res) => {
     res.sendStatus(200);

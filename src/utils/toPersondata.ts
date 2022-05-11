@@ -25,6 +25,7 @@ export const toPersonData = (
       markert: false,
       tildeltEnhetId: person.enhet,
       tildeltVeilederIdent: person.veilederIdent || '',
+      dialogmotekandidat: person?.dialogmotekandidat,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
     };
   });

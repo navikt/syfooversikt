@@ -1,4 +1,4 @@
-import { ToggleNames } from '@/data/unleash/types/unleash_types';
+import { ToggleNames } from '../../src/data/unleash/types/unleash_types';
 
 export const unleashMock = Object.values(ToggleNames).reduce(
   (accumulator, toggleName) => {
