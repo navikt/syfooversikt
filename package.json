@@ -97,6 +97,7 @@
     "redis": "3.1.1",
     "regenerator-runtime": "0.13.9",
     "styled-components": "5.3.5",
+    "unleash-client": "3.10.2",
     "webpack-merge": "5.8.0"
   },
   "devDependencies": {

@@ -66,6 +66,9 @@ const setupServer = async () => {
     }
   );
 
+  const unleashRoutes = require('./server/routes/unleashRoutes');
+  server.use('/unleash', unleashRoutes);
+
   server.get('/health/isAlive', (req, res) => {
     res.sendStatus(200);
   });
