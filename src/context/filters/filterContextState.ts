@@ -3,6 +3,7 @@ export interface HendelseTypeFilters {
   onskerMote: boolean;
   svartMote: boolean;
   ufordeltBruker: boolean;
+  dialogmotekandidat: boolean;
 }
 
 export interface FilterState {
@@ -25,5 +26,6 @@ export const filterInitialState = {
     onskerMote: false,
     svartMote: false,
     ufordeltBruker: false,
+    dialogmotekandidat: false,
   },
 };

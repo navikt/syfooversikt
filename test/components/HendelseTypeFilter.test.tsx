@@ -3,15 +3,40 @@ import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
+import { NotificationProvider } from '@/context/notification/NotificationContext';
+import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
+import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
+import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
+import { unleashMock } from '../../mock/unleash/unleashMock';
+import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 
 const queryClient = new QueryClient();
 
 describe('HendelseTypeFilter', () => {
   it('Skal inneholde checkbokser med riktige labels', () => {
+    queryClient.setQueryData(
+      veiledereQueryKeys.veiledereInfo,
+      () => veilederMock
+    );
+    queryClient.setQueryData(
+      unleashQueryKeys.toggles(aktivEnhetMockData.aktivEnhet, 'Z101010'),
+      () => unleashMock
+    );
+
     render(
-      <QueryClientProvider client={queryClient}>
-        <HendelseTypeFilter />
-      </QueryClientProvider>
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <HendelseTypeFilter />
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
     );
 
     const onskerMoteCheckbox = screen.getByRole('checkbox', {
@@ -37,5 +62,11 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(arbeidsgiverCheckbox).to.exist;
+
+    const dialogmotekandidatCheckbox = screen.getByRole('checkbox', {
+      name: /Kandidat til dialogmøte/,
+      checked: false,
+    });
+    expect(dialogmotekandidatCheckbox).to.exist;
   });
 });
