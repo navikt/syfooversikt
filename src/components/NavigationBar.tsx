@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { MoteoversiktLink } from '@/components/MoteoversiktLink';
 
 const tekster = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -57,6 +58,11 @@ const NavigationBarContent = styled.div`
   }
 `;
 
+const MoteoversiktLinkContent = styled.div`
+  align-self: center;
+  margin-left: auto;
+`;
+
 export const NavigationBar = (): ReactElement => {
   const { dispatch } = useFilters();
 
@@ -87,6 +93,9 @@ export const NavigationBar = (): ReactElement => {
         >
           {tekster.enhetensOversikt}
         </LinkStyled>
+        <MoteoversiktLinkContent>
+          <MoteoversiktLink />
+        </MoteoversiktLinkContent>
       </NavigationBarContent>
     </NavigationBarDiv>
   );
