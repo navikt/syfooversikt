@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 let router = express.Router();
-const { initialize, Strategy } = require("unleash-client");
+const { initialize, Strategy } = require('unleash-client');
 
 class ByEnhetAndEnvironment extends Strategy {
   constructor() {
-    super("byEnhetAndEnvironment");
+    super('byEnhetAndEnvironment');
   }
 
   isEnabled(parameters, context) {
-    if (process.env.NAIS_CONTEXT === "dev") {
+    if (process.env.NAIS_CONTEXT === 'dev') {
       return true;
     }
     if (!context.valgtEnhet) {
@@ -17,7 +17,7 @@ class ByEnhetAndEnvironment extends Strategy {
 
     const valgtEnhetMatches =
       parameters.valgtEnhet.indexOf(context.valgtEnhet) !== -1;
-    const environmentEnabled = parameters.tilgjengeligIProd === "true";
+    const environmentEnabled = parameters.tilgjengeligIProd === 'true';
 
     return valgtEnhetMatches && environmentEnabled;
   }
@@ -25,7 +25,7 @@ class ByEnhetAndEnvironment extends Strategy {
 
 class ByUserId extends Strategy {
   constructor() {
-    super("byUserId");
+    super('byUserId');
   }
 
   isEnabled(parameters, context) {
@@ -38,13 +38,13 @@ class ByUserId extends Strategy {
 }
 
 const unleash = initialize({
-  url: "https://unleash.nais.io/api/",
-  appName: "syfomodiaperson",
+  url: 'https://unleash.nais.io/api/',
+  appName: 'syfooversikt',
   environment: process.env.NAIS_CONTEXT,
   strategies: [new ByEnhetAndEnvironment(), new ByUserId()],
 });
 
-router.post("/toggles", (req, res) => {
+router.post('/toggles', (req, res) => {
   const toggles = req.body.toggles;
   const unleashToggles = toggles.reduce((acc, toggle) => {
     acc[toggle] = unleash.isEnabled(toggle, {
