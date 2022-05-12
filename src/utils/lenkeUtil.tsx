@@ -12,7 +12,9 @@ const texts = {
 const lenkeTilModiaBasertPaaFnr = (fnr: string, personData: PersonData) => {
   let path = `/sykefravaer/${fnr}`;
   const skalTilMoteoversikt =
-    personData.harMotebehovUbehandlet || personData.harMoteplanleggerUbehandlet;
+    personData.harMotebehovUbehandlet ||
+    personData.harMoteplanleggerUbehandlet ||
+    personData.dialogmotekandidat;
   const skalTilOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
   if (skalTilOppfolgingsplanOversikt) {
