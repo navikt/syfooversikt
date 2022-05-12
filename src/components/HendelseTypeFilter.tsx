@@ -10,6 +10,8 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const texts = {
   trackingLabel: 'HendelseFilter',
@@ -20,6 +22,7 @@ export const HendelseTekster = {
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ønsker bistand',
   MOTEPLANLEGGER_SVAR: 'Svar møteplanlegger', // Svar fra møteplanlegger
   MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
+  DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte', // Er Kandidat til dialogmøte
 };
 
 interface Props {
@@ -35,6 +38,7 @@ const enkeltFilterFraTekst = (
     onskerMote: false,
     svartMote: false,
     ufordeltBruker: false,
+    dialogmotekandidat: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -51,6 +55,8 @@ const lagNyttFilter = (
   if (tekst === HendelseTekster.MOTEPLANLEGGER_SVAR) filter.svartMote = checked;
   if (tekst === HendelseTekster.UFORDELTE_BRUKERE)
     filter.ufordeltBruker = checked;
+  if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
+    filter.dialogmotekandidat = checked;
   return filter;
 };
 
@@ -63,6 +69,8 @@ const isCheckedInState = (
   if (tekst === HendelseTekster.MOTEBEHOV) return state.onskerMote;
   if (tekst === HendelseTekster.MOTEPLANLEGGER_SVAR) return state.svartMote;
   if (tekst === HendelseTekster.UFORDELTE_BRUKERE) return state.ufordeltBruker;
+  if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
+    return state.dialogmotekandidat;
   return false;
 };
 
@@ -77,14 +85,28 @@ const Container = styled.div`
   margin-bottom: 1rem;
 `;
 
+const getHendelsetekster = (visDialogmotekandidat: boolean) => {
+  if (visDialogmotekandidat) {
+    return HendelseTekster;
+  }
+  const { DIALOGMOTEKANDIDAT, ...hendelseTekster } = HendelseTekster;
+  return hendelseTekster;
+};
+
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
-  const elementer = Object.entries(HendelseTekster)
+  const { isFeatureEnabled } = useFeatureToggles();
+  const visDialogmotekandidat: boolean = isFeatureEnabled(
+    ToggleNames.dialogmotekandidat
+  );
+  const hendelseTekster = getHendelsetekster(visDialogmotekandidat);
+
+  const elementer = Object.entries(hendelseTekster)
     .filter(([, tekst]) => {
       return !(
-        tekst === HendelseTekster.UFORDELTE_BRUKERE &&
+        tekst === hendelseTekster.UFORDELTE_BRUKERE &&
         tabType === OverviewTabType.MY_OVERVIEW
       );
     })

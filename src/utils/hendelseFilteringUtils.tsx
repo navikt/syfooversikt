@@ -102,6 +102,8 @@ export const filtrerPersonregister = (
       return true;
     } else if (filter.svartMote && personData.harMoteplanleggerUbehandlet) {
       return true;
+    } else if (filter.dialogmotekandidat && personData.dialogmotekandidat) {
+      return true;
     } else if (filter.ufordeltBruker && !personData.tildeltVeilederIdent) {
       return true;
     }
