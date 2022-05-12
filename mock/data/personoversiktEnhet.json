@@ -5,7 +5,9 @@
     "veilederIdent": null,
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
-    "oppfolgingsplanLPSBistandUbehandlet": null
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": null,
+    "motestatus": null
   },
   {
     "fnr": "99999922222",
@@ -13,7 +15,9 @@
     "veilederIdent": null,
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
-    "oppfolgingsplanLPSBistandUbehandlet": null
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": null,
+    "motestatus": null
   },
   {
     "fnr": "99999933333",
@@ -22,7 +26,9 @@
     "veilederIdent": "Z101010",
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": true,
-    "oppfolgingsplanLPSBistandUbehandlet": null
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": null,
+    "motestatus": null
   },
   {
     "fnr": "99999944444",
@@ -32,6 +38,8 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": null,
+    "motestatus": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -51,6 +59,8 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": true,
+    "dialogmotekandidat": null,
+    "motestatus": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -65,12 +75,23 @@
   {
     "fnr": "99999966666",
     "navn": "",
-    "enhet": "0317",
+    "enhet": "0316",
     "veilederIdent": "Z202020",
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "latestOppfolgingstilfelle": null
+    "dialogmotekandidat": true,
+    "motestatus": "NYTT_TID_STED",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999955556",
@@ -80,37 +101,81 @@
     "motebehovUbehandlet": true,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "latestOppfolgingstilfelle": null
+    "dialogmotekandidat": true,
+    "motestatus": "INNKALT",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999966667",
     "navn": "",
-    "enhet": "0317",
+    "enhet": "0316",
     "veilederIdent": "Z202020",
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "latestOppfolgingstilfelle": null
+    "dialogmotekandidat": true,
+    "motestatus": "AVLYST",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999966668",
     "navn": "",
-    "enhet": "0317",
+    "enhet": "0316",
     "veilederIdent": "Z202020",
     "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
-    "latestOppfolgingstilfelle": null
+    "dialogmotekandidat": true,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999966669",
     "navn": "",
-    "enhet": "0317",
+    "enhet": "0316",
     "veilederIdent": "Z202020",
     "motebehovUbehandlet": null,
-    "moteplanleggerUbehandlet": true,
-    "oppfolgingsplanLPSBistandUbehandlet": null,
-    "latestOppfolgingstilfelle": null
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": true,
+    "dialogmotekandidat": false,
+    "motestatus": "FERDIGSTILT",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999966670",
@@ -118,8 +183,199 @@
     "enhet": "0316",
     "veilederIdent": "Z202020",
     "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": true,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": false,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966671",
+    "navn": "",
+    "enhet": "0316",
+    "veilederIdent": "Z202020",
+    "motebehovUbehandlet": null,
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": true,
+    "dialogmotekandidat": null,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966672",
+    "navn": "",
+    "enhet": "0316",
+    "veilederIdent": "Z202020",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": true,
+    "dialogmotekandidat": null,
+    "motestatus": null,
     "latestOppfolgingstilfelle": null
+  },
+  {
+    "fnr": "99999966673",
+    "navn": "Kandidat Endringsen",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": true,
+    "motestatus": "NYTT_TID_STED",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966674",
+    "navn": "Kandidat Innkaltsen",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": true,
+    "motestatus": "INNKALT",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966675",
+    "navn": "Kandidat Avlystsen",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": true,
+    "motestatus": "AVLYST",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966676",
+    "navn": "Kandidat Kandidatsen",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": true,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966677",
+    "navn": "Ikke Viseson",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": false,
+    "motestatus": "FERDIGSTILT",
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966678",
+    "navn": "Ikke Visesen",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": false,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
+  },
+  {
+    "fnr": "99999966678",
+    "navn": "Ikke Viseby",
+    "enhet": "0316",
+    "veilederIdent": "Z101010",
+    "motebehovUbehandlet": null,
+    "moteplanleggerUbehandlet": null,
+    "oppfolgingsplanLPSBistandUbehandlet": null,
+    "dialogmotekandidat": null,
+    "motestatus": null,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        }
+      ]
+    }
   }
 ]

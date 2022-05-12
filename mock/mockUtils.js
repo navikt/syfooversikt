@@ -71,6 +71,8 @@ const generatePersonoversiktEnhetFromPersons = (persons) => {
       motebehovUbehandlet: null,
       moteplanleggerUbehandlet: true,
       oppfolgingsplanLPSBistandUbehandlet: null,
+      dialogmotekandidat: undefined,
+      motestatus: undefined,
     };
   });
 };

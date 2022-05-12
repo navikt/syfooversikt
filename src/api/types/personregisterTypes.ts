@@ -11,6 +11,7 @@ export interface PersonData {
   markert: boolean;
   tildeltEnhetId: string;
   tildeltVeilederIdent: string;
+  dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
 }
 

@@ -1,3 +1,10 @@
+export enum MoteStatusType {
+  INNKALT = 'INNKALT',
+  AVLYST = 'AVLYST',
+  FERDIGSTILT = 'FERDIGSTILT',
+  NYTT_TID_STED = 'NYTT_TID_STED',
+}
+
 export interface PersonOversiktStatusDTO {
   fnr: string;
   navn: string;
@@ -6,6 +13,8 @@ export interface PersonOversiktStatusDTO {
   motebehovUbehandlet: boolean | null;
   moteplanleggerUbehandlet: boolean | null;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
+  dialogmotekandidat: boolean | undefined;
+  motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
 }
 

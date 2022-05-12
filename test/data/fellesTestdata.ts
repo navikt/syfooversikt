@@ -53,6 +53,8 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     moteplanleggerUbehandlet: true,
     oppfolgingsplanLPSBistandUbehandlet: null,
+    dialogmotekandidat: undefined,
+    motestatus: undefined,
   },
   {
     fnr: testdata.fnr4,
@@ -62,6 +64,8 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: null,
     moteplanleggerUbehandlet: false,
     oppfolgingsplanLPSBistandUbehandlet: false,
+    dialogmotekandidat: undefined,
+    motestatus: undefined,
   },
 ];
 

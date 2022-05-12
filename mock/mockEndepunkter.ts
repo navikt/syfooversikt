@@ -4,6 +4,7 @@ import { mockSyfoveileder } from './syfoveileder/mockSyfoveileder';
 import { mockPersonoversikt } from './personoversikt/mockPersonoversikt';
 import { mockPersontildeling } from './persontildeling/mockPersontildeling';
 import { mockChangelogs } from './changelogs/mockChangelogs';
+import { mockUnleash } from './unleash/mockUnleash';
 
 const mockUtils = require('./mockUtils.js');
 const express = require('express');
@@ -20,6 +21,7 @@ const mockEndepunkter = (server: any) => {
     mockSyfoperson,
     mockSyfoveileder,
     mockChangelogs,
+    mockUnleash,
   ].forEach((func) => {
     func(server, generatedPersons);
   });

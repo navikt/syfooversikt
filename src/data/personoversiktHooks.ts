@@ -1,5 +1,8 @@
 import { useQuery } from 'react-query';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
+import {
+  MoteStatusType,
+  PersonOversiktStatusDTO,
+} from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -8,6 +11,43 @@ import { FetchPersonoversiktFailed } from '@/context/notification/Notifications'
 import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
+import { useMemo } from 'react';
+
+const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
+  return (
+    personOversiktStatus.motebehovUbehandlet ||
+    personOversiktStatus.moteplanleggerUbehandlet ||
+    personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet
+  );
+};
+
+const isKandidatAndNotStartedDialogmote = (
+  personOversiktStatus: PersonOversiktStatusDTO
+) => {
+  return (
+    personOversiktStatus.dialogmotekandidat &&
+    (!personOversiktStatus.motestatus ||
+      personOversiktStatus.motestatus == MoteStatusType.AVLYST)
+  );
+};
+
+const filteredPersonOversiktStatusList = (
+  personOversiktStatusList: PersonOversiktStatusDTO[],
+  visDialogmotekandidat: boolean
+): PersonOversiktStatusDTO[] => {
+  if (visDialogmotekandidat) {
+    return personOversiktStatusList.filter(
+      (personOversiktStatus) =>
+        isUbehandlet(personOversiktStatus) ||
+        isKandidatAndNotStartedDialogmote(personOversiktStatus)
+    );
+  }
+  return personOversiktStatusList.filter((personOversiktStatus) =>
+    isUbehandlet(personOversiktStatus)
+  );
+};
 
 export const personoversiktQueryKeys = {
   personoversikt: ['personoversikt'],
@@ -22,6 +62,11 @@ export const usePersonoversiktQuery = () => {
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
+  const { isFeatureEnabled } = useFeatureToggles();
+  const visDialogmotekandidat: boolean = isFeatureEnabled(
+    ToggleNames.dialogmotekandidat
+  );
+
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
       `${SYFOOVERSIKTSRVREST_ROOT}/v2/personoversikt/enhet/${aktivEnhet}`
@@ -29,7 +74,7 @@ export const usePersonoversiktQuery = () => {
     return personoversiktData || [];
   };
 
-  return useQuery(
+  const query = useQuery(
     personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
     fetchPersonoversikt,
     {
@@ -47,4 +92,15 @@ export const usePersonoversiktQuery = () => {
       },
     }
   );
+
+  return {
+    ...query,
+    data: useMemo(
+      () =>
+        query.data
+          ? filteredPersonOversiktStatusList(query.data, visDialogmotekandidat)
+          : [],
+      [query.data, visDialogmotekandidat]
+    ),
+  };
 };
