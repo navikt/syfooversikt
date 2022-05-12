@@ -48,6 +48,8 @@ spec:
   ingresses:
     - "https://syfooversikt.intern.nav.no"
   env:
+    - name: NAIS_CONTEXT
+      value: "prod"
     - name: NODE_ENV
       value: 'production'
     - name: AUTH_REDIRECT_URI
