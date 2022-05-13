@@ -17,7 +17,8 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/static',
+    // publicPath: '/static',
+    // publicPath: '/static',
   },
   resolve: {
     plugins: [
@@ -71,11 +72,11 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'remote',
+      name: 'syfooversikt',
       filename: 'remoteEntry.js',
       remotes: {
-        AppExposed:
-          'AppExposed@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
+        AppExposedApp:
+          'AppExposedApp@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
       },
       exposes: {},
       // 'shared': dependenciesShared,

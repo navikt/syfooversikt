@@ -31,7 +31,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'eval-source-map',
   output: {
-    publicPath: '',
+    publicPath: '/',
   },
   devServer: {
     static: {
