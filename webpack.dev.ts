@@ -30,6 +30,9 @@ const setupDev = async (app: any, compiler: any) => {
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'eval-source-map',
+  output: {
+    publicPath: '',
+  },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),

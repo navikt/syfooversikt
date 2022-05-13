@@ -4,6 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
 const path = require('path');
+const { ModuleFederationPlugin } = require('webpack').container;
+
+const dependencies = require('./package.json').dependencies;
+const dependenciesShared = {
+  ...dependencies['react'],
+  ...dependencies['react-dom'],
+};
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
@@ -63,6 +70,16 @@ module.exports = {
     ],
   },
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'remote',
+      filename: 'remoteEntry.js',
+      remotes: {
+        appexposed:
+          'appexposed@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
+      },
+      exposes: {},
+      // 'shared': dependenciesShared,
+    }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html',
