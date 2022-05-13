@@ -74,11 +74,14 @@ module.exports = {
       name: 'remote',
       filename: 'remoteEntry.js',
       remotes: {
-        appexposed:
-          'appexposed@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
+        AppExposed:
+          'AppExposed@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
       },
       exposes: {},
       // 'shared': dependenciesShared,
+      shared: {
+        ...dependencies,
+      },
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
