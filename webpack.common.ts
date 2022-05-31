@@ -17,7 +17,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    // publicPath: '/static',
+    publicPath: 'auto',
     // publicPath: '/static',
   },
   resolve: {
@@ -72,21 +72,22 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'app1',
-      library: { type: 'var', name: 'app1' },
-      filename: 'remoteEntry.js',
+      // name: 'app1',
+      // library: { type: 'var', name: 'app1' },
+      // filename: 'remoteEntry.js',
       remotes: {
-        app2: 'app2',
-        // app2: 'app2@http://localhost:8081/remoteEntry.js',
+        // app2: 'app2',
+        // app2: 'AppExposed@http://localhost:8081/remoteEntry.js',
+        app2: 'app2@http://localhost:8081/remoteEntry.js',
         // appExposed: 'appExposed@http://localhost:8081/remoteEntry.js',
       },
-      exposes: {},
+      // exposes: {},
       // 'shared': dependenciesShared,
       // shared: {
       //   ...dependencies,
       // },
       shared: {
-        // ...dependencies,
+        ...dependencies,
         react: {
           singleton: true,
           eager: true,
@@ -102,7 +103,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html',
-      app2RemoteEntry: 'http://localhost:8081/remoteEntry.js',
+      // chunks: ["main"]
+      // app2RemoteEntry: 'http://localhost:8081/remoteEntry.js',
     }),
     new CleanWebpackPlugin(),
     new Dotenv({
