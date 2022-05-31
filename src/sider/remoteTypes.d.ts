@@ -1,7 +1,7 @@
 ///<reference types="react" />
 
-declare module 'AppExposedApp/AppExposed' {
-  const AppExposedApp: React.ComponentType;
+declare module 'app2/AppExposed' {
+  const app2: React.ComponentType;
 
-  export default AppExposedApp;
+  export default app2;
 }

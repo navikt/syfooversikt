@@ -2,7 +2,7 @@ import React, { lazy, ReactElement } from 'react';
 import Side from './Side';
 import { Container } from 'nav-frontend-grid';
 
-const AppExposed = lazy(() => import('AppExposedApp/AppExposed'));
+const AppExposed = lazy(() => import('app2/AppExposed'));
 
 //todo wut
 export const ManglerTilgangsside = (): ReactElement => (

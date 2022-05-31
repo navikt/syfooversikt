@@ -72,21 +72,37 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'syfooversikt',
+      name: 'app1',
+      library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
       remotes: {
-        AppExposedApp:
-          'AppExposedApp@https://finnfastlege.dev.intern.nav.no/static/remoteEntry.js',
+        app2: 'app2',
+        // app2: 'app2@http://localhost:8081/remoteEntry.js',
+        // appExposed: 'appExposed@http://localhost:8081/remoteEntry.js',
       },
       exposes: {},
       // 'shared': dependenciesShared,
+      // shared: {
+      //   ...dependencies,
+      // },
       shared: {
-        ...dependencies,
+        // ...dependencies,
+        react: {
+          singleton: true,
+          eager: true,
+          requiredVersion: dependencies.react,
+        },
+        'react-dom': {
+          singleton: true,
+          eager: true,
+          requiredVersion: dependencies['react-dom'],
+        },
       },
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html',
+      app2RemoteEntry: 'http://localhost:8081/remoteEntry.js',
     }),
     new CleanWebpackPlugin(),
     new Dotenv({
