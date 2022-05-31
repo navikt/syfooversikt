@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Side from '../sider/Side';
-import { ManglerTilgangsside } from '@/sider/ManglerTilgangside';
 import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
@@ -16,7 +15,6 @@ const AppRouter = (): ReactElement => {
         <Side tittel="Sykefraværsoppfølging">
           <ErrorBoundary context="appRouter">
             <Routes>
-              <Route path="/na" element={<ManglerTilgangsside />} />
               <Route
                 path={'/enhet'}
                 element={
