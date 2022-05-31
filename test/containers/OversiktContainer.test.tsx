@@ -14,6 +14,7 @@ import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { FetchVeiledereFailed } from '@/context/notification/Notifications';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
+import { enhetOversiktRoutePath } from '@/routers/AppRouter';
 
 describe('OversiktContainer', () => {
   const queryClient = new QueryClient();
@@ -26,10 +27,10 @@ describe('OversiktContainer', () => {
     stubVeiledere();
 
     render(
-      <MemoryRouter initialEntries={['/enhet']}>
+      <MemoryRouter initialEntries={[enhetOversiktRoutePath]}>
         <Routes>
           <Route
-            path="/enhet"
+            path={enhetOversiktRoutePath}
             element={
               <NotificationContext.Provider
                 value={{

@@ -5,6 +5,10 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { MoteoversiktLink } from '@/components/MoteoversiktLink';
+import {
+  enhetOversiktRoutePath,
+  minOversiktRoutePathRoutePath,
+} from '@/routers/AppRouter';
 
 const tekster = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -71,7 +75,7 @@ export const NavigationBar = (): ReactElement => {
       <NavigationBarContent>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
-          to={'/minoversikt'}
+          to={minOversiktRoutePathRoutePath}
           onClick={() => {
             trackOnClick(tekster.minOversikt);
             dispatch({
@@ -83,7 +87,7 @@ export const NavigationBar = (): ReactElement => {
         </LinkStyled>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
-          to={'/enhet'}
+          to={enhetOversiktRoutePath}
           onClick={() => {
             trackOnClick(tekster.enhetensOversikt);
             dispatch({
