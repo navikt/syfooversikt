@@ -1,16 +1,16 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const readDataFromJsonFile = (filename) => {
+const readDataFromJsonFile = (filename: any) => {
   const rawData = fs.readFileSync(path.join(__dirname, `/Data/${filename}`));
   return JSON.parse(rawData.toString());
 };
 
-const getRandomInt = (max) => {
+const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-const randomChoice = (choices) => {
+const randomChoice = (choices: string[]) => {
   const index = Math.floor(Math.random() * choices.length);
   return choices[index];
 };
@@ -29,7 +29,7 @@ const generateName = () => {
     'Nektarin',
     'Mandarin',
     'Persimon',
-  ];
+  ] as string[];
   const f = [
     'Rød',
     'Gul',
@@ -43,12 +43,18 @@ const generateName = () => {
     'Turkis',
     'Fiolett',
     'Infrarød',
-  ];
+  ] as string[];
 
   return `${randomChoice(f)} ${randomChoice(e)}`;
 };
 
-const generatePerson = () => {
+interface MockPerson {
+  name: string;
+  fnr: string;
+  skjermingskode: string;
+}
+
+export const generatePerson = (): MockPerson => {
   const name = generateName();
   const fnr = getRandomInt(31999999999).toString().padStart(11, '0');
   return {
@@ -58,11 +64,13 @@ const generatePerson = () => {
   };
 };
 
-const generatePersons = (amount) =>
+export const generatePersons = (amount: number) =>
   new Array(amount).fill({}).map((_) => generatePerson());
 
-const generatePersonoversiktEnhetFromPersons = (persons) => {
-  return persons.map((person) => {
+export const generatePersonoversiktEnhetFromPersons = (
+  persons: MockPerson[]
+) => {
+  return persons.map((person: MockPerson) => {
     return {
       fnr: person.fnr,
       navn: generateName(),
@@ -77,19 +85,10 @@ const generatePersonoversiktEnhetFromPersons = (persons) => {
   });
 };
 
-const personInfo = readDataFromJsonFile('personInfo.json');
-const personoversiktEnhet = readDataFromJsonFile('personoversiktEnhet.json');
-const veiledere = readDataFromJsonFile('veiledere.json');
-const veilederInfo = readDataFromJsonFile('veilederInfo.json');
-const aktivEnhet = readDataFromJsonFile('aktivEnhet.json');
-
-module.exports = {
-  generatePersons: generatePersons,
-  generatePersonoversiktEnhetFromPersons: generatePersonoversiktEnhetFromPersons,
-  generatePerson: generatePerson,
-  personInfo: personInfo,
-  personoversiktEnhet: personoversiktEnhet,
-  veiledere: veiledere,
-  veilederInfo: veilederInfo,
-  aktivEnhet: aktivEnhet,
-};
+export const personInfo = readDataFromJsonFile('personInfo.json');
+export const personoversiktEnhet = readDataFromJsonFile(
+  'personoversiktEnhet.json'
+);
+export const veiledere = readDataFromJsonFile('veiledere.json');
+export const veilederInfo = readDataFromJsonFile('veilederInfo.json');
+export const aktivEnhet = readDataFromJsonFile('aktivEnhet.json');

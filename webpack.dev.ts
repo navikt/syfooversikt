@@ -1,18 +1,44 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common');
+import * as express from 'express';
+import * as path from 'path';
+import { merge } from 'webpack-merge';
+import * as Webpack from 'webpack';
+import * as WebpackDevServer from 'webpack-dev-server';
+
+import common from './webpack.common';
 import mockEndepunkter from './mock/mockEndepunkter';
+import * as Auth from './server/auth';
 
-const express = require('express');
-const Auth = require('./server/auth/index.js');
-const path = require('path');
+const devConfig: Webpack.Configuration = {
+  mode: 'development',
+  devtool: 'eval-source-map',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 8080,
+    setupMiddlewares: (
+      middlewares: WebpackDevServer.Middleware[],
+      devServer: WebpackDevServer
+    ) => {
+      setupDev(devServer);
+      return middlewares;
+    },
+  },
+};
 
-const setupDev = async (app: any, compiler: any) => {
+const setupDev = async (devServer: WebpackDevServer) => {
+  const app = devServer.app;
+  if (!app) {
+    throw new Error('webpack-dev-server is not defined');
+  }
+  const compiler = devServer.compiler;
+
   await Auth.setupAuth(app);
 
   mockEndepunkter(app);
   app.use('/static', express.static(path.resolve(__dirname, 'dist')));
 
-  app.use('*', (req: any, res: any) => {
+  app.use('*', (req: express.Request, res: express.Response) => {
     const filename = path.join(compiler.outputPath, 'index.html');
     compiler.outputFileSystem.readFile(filename, (err: any, result: any) => {
       if (err) {
@@ -27,21 +53,4 @@ const setupDev = async (app: any, compiler: any) => {
   });
 };
 
-module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'eval-source-map',
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    port: 8080,
-    setupMiddlewares: (middlewares: any, devServer: any) => {
-      if (!devServer) {
-        throw new Error('webpack-dev-server is not defined');
-      }
-
-      setupDev(devServer.app, devServer.compiler);
-      return middlewares;
-    },
-  },
-});
+export default merge(common, devConfig);

@@ -1,12 +1,13 @@
 import { PERSONTILDELING_ROOT } from '../../src/apiConstants';
+import express from 'express';
 
-const Auth = require('../../server/auth/index.js');
+import { ensureAuthenticated } from '../../server/auth';
 
-export const mockPersontildeling = (server: any) => {
+export const mockPersontildeling = (server: express.Application) => {
   server.post(
     `${PERSONTILDELING_ROOT}/registrer`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.send();
     }
   );

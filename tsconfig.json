@@ -25,6 +25,7 @@
       "@/*": ["./src/*"]
     },
     "sourceMap": true,
+    "noImplicitAny": true,
     "noUncheckedIndexedAccess": true
   },
 }

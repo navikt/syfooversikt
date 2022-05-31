@@ -1,13 +1,14 @@
 import { SYFOVEILEDER_ROOT } from '../../src/apiConstants';
+import express from 'express';
 
-const mockUtils = require('../mockUtils.js');
-const Auth = require('../../server/auth/index.js');
+import * as mockUtils from '../mockUtils';
+import { ensureAuthenticated } from '../../server/auth';
 
-export const mockSyfoveileder = (server: any) => {
+export const mockSyfoveileder = (server: express.Application) => {
   server.get(
     `${SYFOVEILEDER_ROOT}/veileder/self`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(mockUtils.veilederInfo));
     }
@@ -15,8 +16,8 @@ export const mockSyfoveileder = (server: any) => {
 
   server.get(
     `${SYFOVEILEDER_ROOT}/veiledere/enhet/:enhet`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
 
       res.send(JSON.stringify(mockUtils.veiledere));

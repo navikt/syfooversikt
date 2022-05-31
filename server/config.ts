@@ -1,13 +1,16 @@
-const path = require('path');
-
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
-const hasEnvVar = (name) => {
+const hasEnvVar = (name: any) => {
   return process.env[name] !== undefined;
 };
 
-const envVar = ({ name, defaultValue }) => {
+interface EnvVarType {
+  name: any;
+  defaultValue?: any;
+}
+
+const envVar = ({ name, defaultValue }: EnvVarType) => {
   const fromEnv = process.env[name];
   if (fromEnv) {
     return fromEnv;
@@ -25,21 +28,28 @@ const envVar = ({ name, defaultValue }) => {
   throw new Error(`Missing required environment variable ${name}`);
 };
 
-const isDev = envVar({ name: 'NODE_ENV' }) === 'development';
-const isProd = envVar({ name: 'NODE_ENV' }) === 'production';
+export const isDev = envVar({ name: 'NODE_ENV' }) === 'development';
+export const isProd = envVar({ name: 'NODE_ENV' }) === 'production';
 
 const graphapiClientId = 'https://graph.microsoft.com';
 
 const tokenSetSelfId = 'self';
 const tokenSetGraphId = 'graph';
 
-const tokenSetIdType = {
+export const tokenSetIdType = {
   self: tokenSetSelfId,
   graph: tokenSetGraphId,
 };
 
+export interface ExternalAppConfig {
+  clientId: string;
+  host: string;
+  tokenSetId?: any;
+  removePathPrefix?: boolean;
+}
+
 // Config used internally in the server
-const server = {
+export const server = {
   host: envVar({ name: 'HOST', defaultValue: 'localhost' }),
   port: Number.parseInt(envVar({ name: 'PORT', defaultValue: '8080' })),
   proxy: envVar({
@@ -61,7 +71,7 @@ const server = {
 };
 
 // For auth
-const auth = {
+export const auth = {
   discoverUrl: envVar({
     name: 'AZURE_APP_WELL_KNOWN_URL',
     defaultValue: {
@@ -148,20 +158,11 @@ const auth = {
   },
 };
 
-const redis = {
+export const redis = {
   host: envVar({ name: 'REDIS_HOST', defaultValue: '' }),
   port: Number.parseInt(envVar({ name: 'REDIS_PORT', defaultValue: '6379' })),
   password: envVar({
     name: 'REDIS_PASSWORD',
     defaultValue: { dev: '', prod: '' },
   }),
-};
-
-module.exports = {
-  tokenSetIdType: tokenSetIdType,
-  auth: auth,
-  redis: redis,
-  server: server,
-  isDev: isDev,
-  isProd: isProd,
 };

@@ -1,11 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-function isJson(filename) {
+const isJson = (filename: any) => {
   return filename.split('.').pop() === 'json';
-}
+};
 
-const readSingleFile = (changelogDir, file, versionNumber) => {
+const readSingleFile = (changelogDir: any, file: any, versionNumber: any) => {
   const fileversion = Number.parseInt(versionNumber);
 
   if (!Number.isInteger(fileversion)) {
@@ -20,7 +20,7 @@ const readSingleFile = (changelogDir, file, versionNumber) => {
 
   const changeLogObj = JSON.parse(json);
 
-  const changeLogItems = changeLogObj.items.map((item) => ({
+  const changeLogItems = changeLogObj.items.map((item: any) => ({
     ...item,
     image: item.image
       ? `/syfooversikt/changelogs/image/${fileversion}/${item.image}`
@@ -34,7 +34,7 @@ const readSingleFile = (changelogDir, file, versionNumber) => {
   };
 };
 
-const readChangelogsInDirectory = (changelogDir) => {
+const readChangelogsInDirectory = (changelogDir: any) => {
   const dir = fs.readdirSync(changelogDir);
 
   const versionNumber = changelogDir.split(path.sep).pop();
@@ -44,20 +44,20 @@ const readChangelogsInDirectory = (changelogDir) => {
   }
 
   return dir
-    .filter((file) => isJson(file))
-    .map((file) => readSingleFile(changelogDir, file, versionNumber));
+    .filter((file: any) => isJson(file))
+    .map((file: any) => readSingleFile(changelogDir, file, versionNumber));
 };
 
-const getChangelogs = () => {
+export const getChangelogs = () => {
   const dirname = path.join(__dirname, '../changelogs');
 
-  const changelogs = [];
+  const changelogs = [] as any[];
   fs.readdirSync(dirname)
-    .filter((file) => {
+    .filter((file: any) => {
       const obj = fs.lstatSync(path.join(dirname, file));
       return obj.isDirectory();
     })
-    .forEach((file) => {
+    .forEach((file: any) => {
       const changelogsInDir = readChangelogsInDirectory(
         path.join(dirname, file)
       );
@@ -66,5 +66,3 @@ const getChangelogs = () => {
 
   return changelogs;
 };
-
-module.exports = getChangelogs;
