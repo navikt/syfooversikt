@@ -7,6 +7,9 @@ import { OverviewTabType } from '@/konstanter';
 import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
 import { ErrorBoundary } from '@/components/error/ErrorBoundary';
 
+export const minOversiktRoutePathRoutePath = '/minoversikt';
+export const enhetOversiktRoutePath = '/enhet';
+
 const AppRouter = (): ReactElement => {
   return (
     <BrowserRouter basename="/">
@@ -16,18 +19,21 @@ const AppRouter = (): ReactElement => {
           <ErrorBoundary context="appRouter">
             <Routes>
               <Route
-                path={'/enhet'}
+                path={enhetOversiktRoutePath}
                 element={
                   <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
                 }
               />
               <Route
-                path={'/minoversikt'}
+                path={minOversiktRoutePathRoutePath}
                 element={
                   <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
                 }
               />
-              <Route path="/" element={<Navigate to="/enhet" />} />
+              <Route
+                path="*"
+                element={<Navigate to={enhetOversiktRoutePath} />}
+              />
             </Routes>
           </ErrorBoundary>
         </Side>
