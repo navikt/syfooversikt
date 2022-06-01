@@ -1,15 +1,12 @@
-require('dotenv').config();
+import express from 'express';
+import helmet from 'helmet';
+import path from 'path';
+import prometheus from 'prom-client';
+import { getChangelogs } from './server/changelogReader';
 
-const express = require('express');
-const helmet = require('helmet');
-const path = require('path');
-const prometheus = require('prom-client');
-const getChangelogs = require('./server/changelogReader.js');
-
-const Auth = require('./server/auth/index');
-
-const setupProxy = require('./server/proxy.js');
-const unleashRoutes = require("./server/routes/unleashRoutes");
+import { setupAuth } from './server/auth';
+import { setupProxy } from './server/proxy';
+import { getUnleashToggles } from './server/routes/unleashRoutes';
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -25,30 +22,42 @@ const httpRequestDurationMicroseconds = new prometheus.Histogram({
 
 const server = express();
 
-server.use(express.json());
+server.use(express.json() as any);
 server.use(
-    helmet({
-      contentSecurityPolicy: false,
-    })
+  helmet({
+    contentSecurityPolicy: false,
+  }) as any
 );
 
-function nocache(req, res, next) {
+const nocache = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
   next();
-}
+};
 
 const setupServer = async () => {
-  const authClient = await Auth.setupAuth(server);
+  const authClient = await setupAuth(server);
 
   const DIST_DIR = path.join(__dirname, 'dist');
   const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
   server.use('/static', express.static(DIST_DIR));
 
-  const unleashRoutes = require('./server/routes/unleashRoutes');
-  server.use('/unleash', unleashRoutes);
+  server.post('/unleash/toggles', (req, res) => {
+    const toggles = req.body.toggles;
+    const unleashToggles = getUnleashToggles(
+      toggles,
+      req.query.valgtEnhet,
+      req.query.userId
+    );
+
+    res.status(200).send(unleashToggles);
+  });
 
   server.use(setupProxy(authClient));
 
@@ -58,7 +67,7 @@ const setupServer = async () => {
 
   server.get(
     '/syfooversikt/changelogs/image/:changelogId/:imageName',
-    (req, res) => {
+    (req: any, res) => {
       res.sendFile(
         path.join(
           __dirname,

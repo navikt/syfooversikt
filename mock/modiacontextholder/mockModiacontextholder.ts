@@ -1,6 +1,6 @@
+import express from 'express';
+import { ensureAuthenticated } from '../../server/auth';
 import { MODIACONTEXTHOLDER_ROOT } from '../../src/apiConstants';
-
-const Auth = require('../../server/auth/index.js');
 
 const saksbehandler = {
   ident: 'Z999999',
@@ -29,11 +29,11 @@ const aktivEnhet = {
   aktivEnhet: '0316',
 };
 
-export const mockModiacontextholder = (server: any) => {
+export const mockModiacontextholder = (server: express.Application) => {
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/decorator`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(saksbehandler));
     }
@@ -41,8 +41,8 @@ export const mockModiacontextholder = (server: any) => {
 
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/context/aktivbruker`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(aktivBruker));
     }
@@ -50,8 +50,8 @@ export const mockModiacontextholder = (server: any) => {
 
   server.get(
     `${MODIACONTEXTHOLDER_ROOT}/context/aktivenhet`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(aktivEnhet));
     }
@@ -59,8 +59,8 @@ export const mockModiacontextholder = (server: any) => {
 
   server.post(
     `${MODIACONTEXTHOLDER_ROOT}/context`,
-    Auth.ensureAuthenticated(),
-    (req: any, res: any) => {
+    ensureAuthenticated(),
+    (req: express.Request, res: express.Response) => {
       res.send().status(204);
     }
   );

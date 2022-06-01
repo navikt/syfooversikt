@@ -1,8 +1,9 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import { merge } from 'webpack-merge';
+import common from './webpack.common';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Configuration as WebpackConfiguration } from 'webpack';
 
-module.exports = merge(common, {
+const productionConfig: WebpackConfiguration = {
   mode: 'production',
   devtool: 'source-map',
   module: {
@@ -43,4 +44,6 @@ module.exports = merge(common, {
       filename: 'styles.css',
     }),
   ],
-});
+};
+
+export default merge(common, productionConfig);

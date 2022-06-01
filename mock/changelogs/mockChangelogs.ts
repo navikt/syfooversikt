@@ -1,14 +1,18 @@
-const getChangelogs = require('../../server/changelogReader');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { getChangelogs } from '../../server/changelogReader';
 
-export const mockChangelogs = (server: any) => {
-  server.get('/syfooversikt/changelogs', (req: any, res: any) => {
-    res.send(getChangelogs());
-  });
+export const mockChangelogs = (server: express.Application) => {
+  server.get(
+    '/syfooversikt/changelogs',
+    (req: express.Request, res: express.Response) => {
+      res.send(getChangelogs());
+    }
+  );
 
   server.get(
     '/syfooversikt/changelogs/image/:changelogId/:imageName',
-    (req: any, res: any) => {
+    (req: any, res: express.Response) => {
       res.sendFile(
         path.join(
           __dirname,

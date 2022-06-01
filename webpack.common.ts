@@ -1,11 +1,13 @@
-const Dotenv = require('dotenv-webpack');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
-const path = require('path');
+import path from 'path';
+import { Configuration } from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
-module.exports = {
+const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
+
+const commonConfig: Configuration = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
     filename: '[name].bundle.js',
@@ -74,3 +76,5 @@ module.exports = {
     }),
   ],
 };
+
+export default commonConfig;
