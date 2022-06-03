@@ -9,8 +9,8 @@ const texts = {
   trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
 };
 
-const lenkeTilModiaBasertPaaFnr = (fnr: string, personData: PersonData) => {
-  let path = `/sykefravaer/${fnr}`;
+const lenkeTilModia = (personData: PersonData) => {
+  let path = `/sykefravaer`;
   const skalTilMoteoversikt =
     personData.harMotebehovUbehandlet ||
     personData.harMoteplanleggerUbehandlet ||
@@ -43,12 +43,17 @@ export const formaterNavn = (navn?: string): string => {
 
 export const lenkeTilModiaEnkeltperson = (
   personData: PersonData,
-  fnr: string
-): ReactElement => {
+  onClick: () => void
+) => {
   return (
     <Lenke
-      onClick={() => trackOnClick(texts.trackingLabelNavigateToModiaPerson)}
-      href={lenkeTilModiaBasertPaaFnr(fnr, personData)}
+      onClick={(event) => {
+        event.preventDefault();
+        trackOnClick(texts.trackingLabelNavigateToModiaPerson);
+        onClick();
+        window.location.href = lenkeTilModia(personData);
+      }}
+      href={lenkeTilModia(personData)}
     >
       {formaterNavn(personData.navn)}
     </Lenke>
@@ -57,7 +62,8 @@ export const lenkeTilModiaEnkeltperson = (
 
 export const lenkeTilModiaEnkeltpersonFnr = (
   personData: PersonData,
-  fnr: string
+  fnr: string,
+  onClick: () => void
 ): ReactElement | string => {
   const hasPersonName = personData.navn && personData.navn.length > 0;
   if (hasPersonName) {
@@ -65,8 +71,12 @@ export const lenkeTilModiaEnkeltpersonFnr = (
   }
   return (
     <Lenke
-      onClick={() => trackOnClick(texts.trackingLabelNavigateToModiaPerson)}
-      href={lenkeTilModiaBasertPaaFnr(fnr, personData)}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick();
+        window.location.href = lenkeTilModia(personData);
+      }}
+      href={lenkeTilModia(personData)}
     >
       {fnr}
     </Lenke>
