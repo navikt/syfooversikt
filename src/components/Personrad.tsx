@@ -12,6 +12,7 @@ import {
   skjermingskode,
   firstCompanyNameFromPersonData,
 } from '@/utils/personDataUtil';
+import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 
 interface PersonradProps {
   fnr: string;
@@ -58,6 +59,12 @@ export const Personrad = (props: PersonradProps): ReactElement => {
     index,
   } = props;
 
+  const aktivBruker = useAktivBruker();
+
+  const onClick = () => {
+    aktivBruker.mutate(fnr);
+  };
+
   return (
     <StyledPersonRad index={index} selected={kryssAv}>
       <Column xs={'1'}>
@@ -69,8 +76,10 @@ export const Personrad = (props: PersonradProps): ReactElement => {
           }}
         />
       </Column>
-      <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData, fnr)}</Column>
-      <Column xs={'2'}>{lenkeTilModiaEnkeltpersonFnr(personData, fnr)}</Column>
+      <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData, onClick)}</Column>
+      <Column xs={'2'}>
+        {lenkeTilModiaEnkeltpersonFnr(personData, fnr, onClick)}
+      </Column>
       <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
       <Column xs={'2'}>{veilederName}</Column>
       <Column xs={'2'}>
