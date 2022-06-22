@@ -5,6 +5,7 @@ export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 export interface PersonData {
   navn: string;
   harMotebehovUbehandlet: boolean;
+  harDialogmotesvar: boolean;
   harMoteplanleggerUbehandlet: boolean;
   harOppfolgingsplanLPSBistandUbehandlet: boolean;
   skjermingskode: Skjermingskode;

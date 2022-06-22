@@ -81,6 +81,7 @@ export const generatePersonoversiktEnhetFromPersons = (
       oppfolgingsplanLPSBistandUbehandlet: null,
       dialogmotekandidat: undefined,
       motestatus: undefined,
+      dialogmotesvarUbehandlet: false,
     };
   });
 };

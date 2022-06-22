@@ -7,7 +7,8 @@
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
-    "motestatus": null
+    "motestatus": null,
+    "dialogmotesvarUbehandlet": false
   },
   {
     "fnr": "99999922222",
@@ -17,7 +18,8 @@
     "moteplanleggerUbehandlet": null,
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
-    "motestatus": null
+    "motestatus": null,
+    "dialogmotesvarUbehandlet": false
   },
   {
     "fnr": "99999933333",
@@ -28,7 +30,8 @@
     "moteplanleggerUbehandlet": true,
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
-    "motestatus": null
+    "motestatus": null,
+    "dialogmotesvarUbehandlet": false
   },
   {
     "fnr": "99999944444",
@@ -40,6 +43,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -61,6 +65,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": true,
     "dialogmotekandidat": null,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -82,6 +87,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "NYTT_TID_STED",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -103,6 +109,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "INNKALT",
+    "dialogmotesvarUbehandlet": true,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -124,6 +131,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "AVLYST",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -145,6 +153,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -166,6 +175,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": true,
     "dialogmotekandidat": false,
     "motestatus": "FERDIGSTILT",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -187,6 +197,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": false,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -208,6 +219,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": true,
     "dialogmotekandidat": null,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -229,6 +241,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": true,
     "dialogmotekandidat": null,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": null
   },
   {
@@ -241,6 +254,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "NYTT_TID_STED",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -262,6 +276,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "INNKALT",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -283,6 +298,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": "AVLYST",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -304,6 +320,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": true,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -325,6 +342,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": false,
     "motestatus": "FERDIGSTILT",
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -346,6 +364,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": false,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -367,6 +386,7 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
     "motestatus": null,
+    "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",

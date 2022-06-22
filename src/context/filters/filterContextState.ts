@@ -4,6 +4,7 @@ export interface HendelseTypeFilters {
   svartMote: boolean;
   ufordeltBruker: boolean;
   dialogmotekandidat: boolean;
+  dialogmotesvar: boolean;
 }
 
 export interface FilterState {
@@ -15,7 +16,7 @@ export interface FilterState {
   selectedHendelseType: HendelseTypeFilters;
 }
 
-export const filterInitialState = {
+export const filterInitialState: FilterState = {
   tekstFilter: '',
   selectedVeilederIdents: [],
   selectedOptions: [],
@@ -27,5 +28,6 @@ export const filterInitialState = {
     svartMote: false,
     ufordeltBruker: false,
     dialogmotekandidat: false,
+    dialogmotesvar: false,
   },
 };

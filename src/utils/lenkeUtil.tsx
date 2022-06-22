@@ -14,6 +14,7 @@ const lenkeTilModia = (personData: PersonData) => {
   const skalTilMoteoversikt =
     personData.harMotebehovUbehandlet ||
     personData.harMoteplanleggerUbehandlet ||
+    personData.harDialogmotesvar ||
     personData.dialogmotekandidat;
   const skalTilOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;

@@ -23,7 +23,7 @@ const hasCompany = (personData: PersonData) =>
   personData.latestOppfolgingstilfelle?.virksomhetList &&
   personData.latestOppfolgingstilfelle.virksomhetList.length > 0;
 
-export const filtrerPaaFodselsnummerEllerNavn = (
+export const filterOnFodselsnummerOrName = (
   personregister: PersonregisterState,
   sok: string
 ): PersonregisterState => {
@@ -78,7 +78,7 @@ export const filterOnBirthDates = (
   return Object.fromEntries(filtered);
 };
 
-export const filtrerPersonregister = (
+export const filterOnPersonregister = (
   personregister: PersonregisterState,
   filter?: HendelseTypeFilters
 ): PersonregisterState => {
@@ -105,6 +105,8 @@ export const filtrerPersonregister = (
     } else if (filter.dialogmotekandidat && personData.dialogmotekandidat) {
       return true;
     } else if (filter.ufordeltBruker && !personData.tildeltVeilederIdent) {
+      return true;
+    } else if (filter.dialogmotesvar && personData.harDialogmotesvar) {
       return true;
     }
   });

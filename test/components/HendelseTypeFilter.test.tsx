@@ -68,5 +68,11 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(dialogmotekandidatCheckbox).to.exist;
+
+    const dialogmotesvarCheckbox = screen.getByRole('checkbox', {
+      name: /Svar dialogmøte/,
+      checked: false,
+    });
+    expect(dialogmotesvarCheckbox).to.exist;
   });
 });

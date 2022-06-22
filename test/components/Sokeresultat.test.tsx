@@ -8,6 +8,8 @@ import { NotificationProvider } from '@/context/notification/NotificationContext
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
+import { FilterContext } from '@/context/filters/FilterContext';
+import { FilterState } from '@/context/filters/filterContextState';
 
 let queryClient: QueryClient;
 
@@ -43,5 +45,42 @@ describe('Sokeresultat', () => {
     renderSokeresultat();
     expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
     expect(screen.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
+  });
+
+  it('Filters søkeresultat by motedatasvar', () => {
+    const filterSetMotedatasvar: FilterState = {
+      tekstFilter: '',
+      selectedVeilederIdents: [],
+      selectedOptions: [],
+      selectedCompanies: [],
+      selectedBirthDates: [],
+      selectedHendelseType: {
+        arbeidsgiverOnskerMote: false,
+        onskerMote: false,
+        svartMote: false,
+        ufordeltBruker: false,
+        dialogmotekandidat: false,
+        dialogmotesvar: true,
+      },
+    };
+
+    render(
+      <NotificationProvider>
+        <QueryClientProvider client={queryClient}>
+          <FilterContext.Provider
+            value={{
+              filterState: filterSetMotedatasvar,
+              dispatch: () => undefined,
+            }}
+          >
+            <AktivEnhetProvider>
+              <Sokeresultat allEvents={new Filterable(personregister)} />
+            </AktivEnhetProvider>
+          </FilterContext.Provider>
+        </QueryClientProvider>
+      </NotificationProvider>
+    );
+    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
+    expect(screen.queryByRole('link', { name: 'Et Annet Navn' })).to.not.exist;
   });
 });

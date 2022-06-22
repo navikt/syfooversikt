@@ -21,6 +21,16 @@ class ByEnhetAndEnvironment extends unleashClient.Strategy {
   }
 }
 
+class ByEnvironment extends unleashClient.Strategy {
+  constructor() {
+    super('byEnvironment');
+  }
+
+  isEnabled(parameters: any, context: any) {
+    return parameters.miljø.includes(process.env.NAIS_CONTEXT);
+  }
+}
+
 class ByUserId extends unleashClient.Strategy {
   constructor() {
     super('byUserId');
@@ -39,7 +49,11 @@ const unleash = unleashClient.initialize({
   url: 'https://unleash.nais.io/api/',
   appName: 'syfooversikt',
   environment: process.env.NAIS_CONTEXT,
-  strategies: [new ByEnhetAndEnvironment(), new ByUserId()],
+  strategies: [
+    new ByEnhetAndEnvironment(),
+    new ByUserId(),
+    new ByEnvironment(),
+  ],
 });
 
 export const getUnleashToggles = (

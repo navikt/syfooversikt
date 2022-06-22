@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
-import { filtrerPersonregister } from '@/utils/hendelseFilteringUtils';
+import { filterOnPersonregister } from '@/utils/hendelseFilteringUtils';
 import { OverviewTabType } from '@/konstanter';
 import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
@@ -20,9 +20,10 @@ const texts = {
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ønsker bistand',
-  MOTEPLANLEGGER_SVAR: 'Svar møteplanlegger', // Svar fra møteplanlegger
+  MOTEPLANLEGGER_SVAR: 'Svar møteplanlegger',
   MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
-  DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte', // Er Kandidat til dialogmøte
+  DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
+  DIALOGMOTESVAR: 'Svar dialogmøte',
 };
 
 interface Props {
@@ -39,6 +40,7 @@ const enkeltFilterFraTekst = (
     svartMote: false,
     ufordeltBruker: false,
     dialogmotekandidat: false,
+    dialogmotesvar: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -57,6 +59,7 @@ const lagNyttFilter = (
     filter.ufordeltBruker = checked;
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
     filter.dialogmotekandidat = checked;
+  if (tekst === HendelseTekster.DIALOGMOTESVAR) filter.dialogmotesvar = checked;
   return filter;
 };
 
@@ -71,6 +74,7 @@ const isCheckedInState = (
   if (tekst === HendelseTekster.UFORDELTE_BRUKERE) return state.ufordeltBruker;
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
     return state.dialogmotekandidat;
+  if (tekst === HendelseTekster.DIALOGMOTESVAR) return state.dialogmotesvar;
   return false;
 };
 
@@ -102,6 +106,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
     ToggleNames.dialogmotekandidat
   );
   const hendelseTekster = getHendelsetekster(visDialogmotekandidat);
+  const ikkeVisDialogmoteSvar = !isFeatureEnabled(ToggleNames.dialogmotesvar);
 
   const elementer = Object.entries(hendelseTekster)
     .filter(([, tekst]) => {
@@ -135,6 +140,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
+            ikkeVisDialogmoteSvar,
             personRegister
           )}
         </CheckboxGruppe>
@@ -146,12 +152,18 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
+  ikkeVisDialogmotesvar: boolean,
   personRegister?: PersonregisterState
 ) => {
   return elementer.map((checkboksElement) => {
+    if (
+      ikkeVisDialogmotesvar &&
+      checkboksElement.tekst == HendelseTekster.DIALOGMOTESVAR
+    )
+      return null;
     const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
     const antall = Object.keys(
-      filtrerPersonregister(personRegister || {}, filter)
+      filterOnPersonregister(personRegister || {}, filter)
     ).length;
     const labelNode = (
       <div>

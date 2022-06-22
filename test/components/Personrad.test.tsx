@@ -11,6 +11,7 @@ const personData = {
   navn: testdata.navn1,
   harMotebehovUbehandlet: false,
   harMoteplanleggerUbehandlet: false,
+  harDialogmotesvar: false,
   skjermingskode: testdata.skjermingskode.diskresjonsmerket as Skjermingskode,
   markert: false,
   harOppfolgingsplanLPSBistandUbehandlet: false,
