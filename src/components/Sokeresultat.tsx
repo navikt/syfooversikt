@@ -9,8 +9,8 @@ import {
   Filterable,
   filterOnBirthDates,
   filterOnCompany,
-  filtrerPaaFodselsnummerEllerNavn,
-  filtrerPersonregister,
+  filterOnFodselsnummerOrName,
+  filterOnPersonregister,
   SortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
@@ -61,10 +61,10 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
     .applyFilter((v) =>
-      filtrerPersonregister(v, filterState.selectedHendelseType)
+      filterOnPersonregister(v, filterState.selectedHendelseType)
     )
     .applyFilter((v) =>
-      filtrerPaaFodselsnummerEllerNavn(v, filterState.tekstFilter)
+      filterOnFodselsnummerOrName(v, filterState.tekstFilter)
     );
 
   const allFnr = Object.keys(filteredEvents.value);

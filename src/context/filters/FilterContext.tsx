@@ -36,4 +36,4 @@ const useFilters = () => {
   return context;
 };
 
-export { FilterProvider, useFilters };
+export { FilterProvider, useFilters, FilterContext };

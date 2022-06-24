@@ -12,6 +12,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     navn: name,
     harMotebehovUbehandlet: false,
     harMoteplanleggerUbehandlet: false,
+    harDialogmotesvar: false,
     skjermingskode: testdata.skjermingskode.ingen as Skjermingskode,
     markert: false,
     harOppfolgingsplanLPSBistandUbehandlet: false,

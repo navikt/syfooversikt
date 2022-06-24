@@ -5,4 +5,5 @@ export type Toggles = {
 // See https://unleash.nais.io/#/features (syfomodiaperson)
 export enum ToggleNames {
   dialogmotekandidat = 'syfo.dialogmote.kandidat',
+  dialogmotesvar = 'syfo.dialogmote.svar',
 }

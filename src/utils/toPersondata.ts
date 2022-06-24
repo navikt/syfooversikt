@@ -18,6 +18,7 @@ export const toPersonData = (
     personDataList[person.fnr] = {
       navn: person.navn || matchingPersonRegister?.navn || '',
       harMotebehovUbehandlet: person.motebehovUbehandlet || false,
+      harDialogmotesvar: person.dialogmotesvarUbehandlet,
       harMoteplanleggerUbehandlet: person.moteplanleggerUbehandlet || false,
       harOppfolgingsplanLPSBistandUbehandlet:
         person.oppfolgingsplanLPSBistandUbehandlet || false,
