@@ -18,7 +18,6 @@ import { useMemo } from 'react';
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
     personOversiktStatus.motebehovUbehandlet ||
-    personOversiktStatus.moteplanleggerUbehandlet ||
     personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet ||
     personOversiktStatus.dialogmotesvarUbehandlet
   );

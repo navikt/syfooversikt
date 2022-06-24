@@ -12,7 +12,6 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.egenAnsatt,
         markert: false,
       } as PersonData;
@@ -25,7 +24,6 @@ describe('personDataUtils', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
-        harMoteplanleggerUbehandlet: false,
         skjermingskode: testdata.skjermingskode.ingen,
         markert: false,
       } as PersonData;

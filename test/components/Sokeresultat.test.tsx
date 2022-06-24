@@ -57,7 +57,6 @@ describe('Sokeresultat', () => {
       selectedHendelseType: {
         arbeidsgiverOnskerMote: false,
         onskerMote: false,
-        svartMote: false,
         ufordeltBruker: false,
         dialogmotekandidat: false,
         dialogmotesvar: true,
