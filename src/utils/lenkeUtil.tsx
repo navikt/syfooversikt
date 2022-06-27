@@ -13,7 +13,6 @@ const lenkeTilModia = (personData: PersonData) => {
   let path = `/sykefravaer`;
   const skalTilMoteoversikt =
     personData.harMotebehovUbehandlet ||
-    personData.harMoteplanleggerUbehandlet ||
     personData.harDialogmotesvar ||
     personData.dialogmotekandidat;
   const skalTilOppfolgingsplanOversikt =

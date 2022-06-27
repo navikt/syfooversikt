@@ -77,7 +77,6 @@ export const generatePersonoversiktEnhetFromPersons = (
       enhet: '0316',
       veilederIdent: 'Z202020',
       motebehovUbehandlet: null,
-      moteplanleggerUbehandlet: true,
       oppfolgingsplanLPSBistandUbehandlet: null,
       dialogmotekandidat: undefined,
       motestatus: undefined,

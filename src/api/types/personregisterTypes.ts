@@ -6,7 +6,6 @@ export interface PersonData {
   navn: string;
   harMotebehovUbehandlet: boolean;
   harDialogmotesvar: boolean;
-  harMoteplanleggerUbehandlet: boolean;
   harOppfolgingsplanLPSBistandUbehandlet: boolean;
   skjermingskode: Skjermingskode;
   markert: boolean;

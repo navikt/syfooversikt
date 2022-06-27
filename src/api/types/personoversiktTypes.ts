@@ -12,7 +12,6 @@ export interface PersonOversiktStatusDTO {
   veilederIdent: string | null;
   motebehovUbehandlet: boolean | null;
   dialogmotesvarUbehandlet: boolean;
-  moteplanleggerUbehandlet: boolean | null;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
   dialogmotekandidat: boolean | undefined;
   motestatus: MoteStatusType | undefined;

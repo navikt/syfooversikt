@@ -20,7 +20,6 @@ const texts = {
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ønsker bistand',
-  MOTEPLANLEGGER_SVAR: 'Svar møteplanlegger',
   MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
@@ -37,7 +36,6 @@ const enkeltFilterFraTekst = (
   const filter: HendelseTypeFilters = {
     arbeidsgiverOnskerMote: false,
     onskerMote: false,
-    svartMote: false,
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
@@ -54,7 +52,6 @@ const lagNyttFilter = (
   if (tekst === HendelseTekster.ARBEIDSGIVER_BISTAND)
     filter.arbeidsgiverOnskerMote = checked;
   if (tekst === HendelseTekster.MOTEBEHOV) filter.onskerMote = checked;
-  if (tekst === HendelseTekster.MOTEPLANLEGGER_SVAR) filter.svartMote = checked;
   if (tekst === HendelseTekster.UFORDELTE_BRUKERE)
     filter.ufordeltBruker = checked;
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
@@ -70,7 +67,6 @@ const isCheckedInState = (
   if (tekst === HendelseTekster.ARBEIDSGIVER_BISTAND)
     return state.arbeidsgiverOnskerMote;
   if (tekst === HendelseTekster.MOTEBEHOV) return state.onskerMote;
-  if (tekst === HendelseTekster.MOTEPLANLEGGER_SVAR) return state.svartMote;
   if (tekst === HendelseTekster.UFORDELTE_BRUKERE) return state.ufordeltBruker;
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
     return state.dialogmotekandidat;

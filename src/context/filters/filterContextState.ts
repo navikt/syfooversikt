@@ -1,7 +1,6 @@
 export interface HendelseTypeFilters {
   arbeidsgiverOnskerMote: boolean;
   onskerMote: boolean;
-  svartMote: boolean;
   ufordeltBruker: boolean;
   dialogmotekandidat: boolean;
   dialogmotesvar: boolean;
@@ -25,7 +24,6 @@ export const filterInitialState: FilterState = {
   selectedHendelseType: {
     arbeidsgiverOnskerMote: false,
     onskerMote: false,
-    svartMote: false,
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
