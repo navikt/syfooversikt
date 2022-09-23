@@ -11,8 +11,6 @@ import { FetchPersonoversiktFailed } from '@/context/notification/Notifications'
 import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { ToggleNames } from '@/data/unleash/types/unleash_types';
 import { useMemo } from 'react';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
@@ -34,18 +32,12 @@ const isKandidatAndNotStartedDialogmote = (
 };
 
 const filteredPersonOversiktStatusList = (
-  personOversiktStatusList: PersonOversiktStatusDTO[],
-  visDialogmotekandidat: boolean
+  personOversiktStatusList: PersonOversiktStatusDTO[]
 ): PersonOversiktStatusDTO[] => {
-  if (visDialogmotekandidat) {
-    return personOversiktStatusList.filter(
-      (personOversiktStatus) =>
-        isUbehandlet(personOversiktStatus) ||
-        isKandidatAndNotStartedDialogmote(personOversiktStatus)
-    );
-  }
-  return personOversiktStatusList.filter((personOversiktStatus) =>
-    isUbehandlet(personOversiktStatus)
+  return personOversiktStatusList.filter(
+    (personOversiktStatus) =>
+      isUbehandlet(personOversiktStatus) ||
+      isKandidatAndNotStartedDialogmote(personOversiktStatus)
   );
 };
 
@@ -61,11 +53,6 @@ export const usePersonoversiktQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
-
-  const { isFeatureEnabled } = useFeatureToggles();
-  const visDialogmotekandidat: boolean = isFeatureEnabled(
-    ToggleNames.dialogmotekandidat
-  );
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
@@ -96,11 +83,8 @@ export const usePersonoversiktQuery = () => {
   return {
     ...query,
     data: useMemo(
-      () =>
-        query.data
-          ? filteredPersonOversiktStatusList(query.data, visDialogmotekandidat)
-          : [],
-      [query.data, visDialogmotekandidat]
+      () => (query.data ? filteredPersonOversiktStatusList(query.data) : []),
+      [query.data]
     ),
   };
 };
