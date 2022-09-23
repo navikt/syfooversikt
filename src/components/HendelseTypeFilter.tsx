@@ -84,30 +84,17 @@ interface CheckboksElement {
 const Container = styled.div`
   margin-bottom: 1rem;
 `;
-
-const getHendelsetekster = (visDialogmotekandidat: boolean) => {
-  if (visDialogmotekandidat) {
-    return HendelseTekster;
-  }
-  const { DIALOGMOTEKANDIDAT, ...hendelseTekster } = HendelseTekster;
-  return hendelseTekster;
-};
-
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
   const { isFeatureEnabled } = useFeatureToggles();
-  const visDialogmotekandidat: boolean = isFeatureEnabled(
-    ToggleNames.dialogmotekandidat
-  );
-  const hendelseTekster = getHendelsetekster(visDialogmotekandidat);
   const ikkeVisDialogmoteSvar = !isFeatureEnabled(ToggleNames.dialogmotesvar);
 
-  const elementer = Object.entries(hendelseTekster)
+  const elementer = Object.entries(HendelseTekster)
     .filter(([, tekst]) => {
       return !(
-        tekst === hendelseTekster.UFORDELTE_BRUKERE &&
+        tekst === HendelseTekster.UFORDELTE_BRUKERE &&
         tabType === OverviewTabType.MY_OVERVIEW
       );
     })
