@@ -13,6 +13,7 @@ import {
   firstCompanyNameFromPersonData,
 } from '@/utils/personDataUtil';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
+import { getWeeksSinceDate } from '@/utils/dateUtils';
 
 interface PersonradProps {
   fnr: string;
@@ -65,6 +66,12 @@ export const Personrad = (props: PersonradProps): ReactElement => {
     aktivBruker.mutate(fnr);
   };
 
+  const startDatoOppfolgingstilfelle =
+    personData.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
+  const oppfolgingstilfelleLengthInWeeks = !!startDatoOppfolgingstilfelle
+    ? `Uke ${getWeeksSinceDate(startDatoOppfolgingstilfelle)}`
+    : 'Ukjent';
+
   return (
     <StyledPersonRad index={index} selected={kryssAv}>
       <Column xs={'1'}>
@@ -82,6 +89,7 @@ export const Personrad = (props: PersonradProps): ReactElement => {
       </Column>
       <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
       <Column xs={'2'}>{veilederName}</Column>
+      <Column xs={'1'}>{oppfolgingstilfelleLengthInWeeks}</Column>
       <Column xs={'2'}>
         <NoWrapText>{skjermingskode(personData)}</NoWrapText>
       </Column>

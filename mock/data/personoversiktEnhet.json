@@ -28,7 +28,17 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
     "motestatus": null,
-    "dialogmotesvarUbehandlet": false
+    "dialogmotesvarUbehandlet": false,
+    "latestOppfolgingstilfelle": {
+      "oppfolgingstilfelleStart": "2022-10-25",
+      "oppfolgingstilfelleEnd": "2022-12-31",
+      "virksomhetList": [
+        {
+          "virksomhetsnummer": "987654321",
+          "virksomhetsnavn": "NAV Security"
+        }
+      ]
+    }
   },
   {
     "fnr": "99999944444",
@@ -41,7 +51,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
-      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleStart": "2022-08-03",
       "oppfolgingstilfelleEnd": "2022-12-31",
       "virksomhetList": [
         {
@@ -62,7 +72,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
-      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleStart": "2022-08-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
       "virksomhetList": [
         {
@@ -146,7 +156,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
-      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleStart": "2022-05-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
       "virksomhetList": [
         {
@@ -167,7 +177,7 @@
     "motestatus": "FERDIGSTILT",
     "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": {
-      "oppfolgingstilfelleStart": "2022-01-01",
+      "oppfolgingstilfelleStart": "2022-10-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
       "virksomhetList": [
         {
