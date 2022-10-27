@@ -13,7 +13,7 @@ const tekster = {
   overskriftBruker: 'Bruker',
   overskriftVeileder: 'Veileder',
   virksomhet: 'Virksomhet',
-  uke: 'Uke',
+  varighetSykefravar: 'Varighet sykefravær',
 };
 
 export const GrayChevron = styled(Chevron)`
@@ -138,7 +138,7 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
       xs: '2',
     },
     {
-      sortingText: tekster.uke,
+      sortingText: tekster.varighetSykefravar,
       extraText: null,
       sortingTypeAsc: 'UKE_ASC',
       sortingTypeDesc: 'UKE_DESC',

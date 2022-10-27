@@ -69,7 +69,7 @@ export const Personrad = (props: PersonradProps): ReactElement => {
   const startDatoOppfolgingstilfelle =
     personData.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
   const oppfolgingstilfelleLengthInWeeks = !!startDatoOppfolgingstilfelle
-    ? `Uke ${getWeeksSinceDate(startDatoOppfolgingstilfelle)}`
+    ? `${getWeeksSinceDate(startDatoOppfolgingstilfelle)} uker`
     : 'Ukjent';
 
   return (
