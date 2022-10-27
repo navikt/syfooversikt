@@ -109,6 +109,7 @@ const Toolbar = (props: ToolbarProps) => {
             props.setSortingType(type);
           }}
         />
+        <Column xs={'2'} />
       </IngressRad>
     </ToolbarStyled>
   );

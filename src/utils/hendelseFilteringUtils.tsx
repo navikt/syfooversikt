@@ -135,6 +135,8 @@ export type SortingType =
   | 'COMPANY_DESC'
   | 'VEILEDER_ASC'
   | 'VEILEDER_DESC'
+  | 'UKE_ASC'
+  | 'UKE_DESC'
   | 'NONE';
 
 export const getSortedEventsFromSortingType = (
@@ -150,6 +152,8 @@ export const getSortedEventsFromSortingType = (
     return sortEventsOnCompanyName(personregister, type);
   } else if (type === 'VEILEDER_ASC' || type === 'VEILEDER_DESC') {
     return sortEventsOnVeileder(personregister, veiledere, type);
+  } else if (type === 'UKE_ASC' || type === 'UKE_DESC') {
+    return sortEventsOnWeek(personregister, type);
   }
   return personregister;
 };
@@ -231,4 +235,25 @@ const sortEventsOnName = (
   return order === 'NAME_ASC'
     ? Object.fromEntries(sorted)
     : Object.fromEntries(sorted.reverse());
+};
+
+const sortEventsOnWeek = (
+  personregister: PersonregisterState,
+  order: SortingType
+): PersonregisterState => {
+  const sorted = Object.entries(personregister).sort(
+    ([, persondataA], [, persondataB]) => {
+      const startDateA =
+        persondataA.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
+      const startDateB =
+        persondataB.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
+      if (!startDateA) return order === 'UKE_ASC' ? -1 : 1;
+      if (!startDateB) return order === 'UKE_ASC' ? 1 : -1;
+      if (startDateA > startDateB) return order === 'UKE_ASC' ? -1 : 1;
+      if (startDateA < startDateB) return order === 'UKE_ASC' ? 1 : -1;
+      return 0;
+    }
+  );
+
+  return Object.fromEntries(sorted);
 };
