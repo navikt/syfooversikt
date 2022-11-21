@@ -21,6 +21,9 @@
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
   "dependencies": {
+    "@navikt/ds-css": "1.5.9",
+    "@navikt/ds-css-internal": "1.5.9",
+    "@navikt/ds-react": "1.5.9",
     "@navikt/fnrvalidator": "1.1.3",
     "@navikt/navspa": "3.0.1",
     "@sentry/react": "6.19.7",

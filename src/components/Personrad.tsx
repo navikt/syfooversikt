@@ -8,12 +8,10 @@ import {
   lenkeTilModiaEnkeltpersonFnr,
 } from '@/utils/lenkeUtil';
 import { PersonData } from '@/api/types/personregisterTypes';
-import {
-  skjermingskode,
-  firstCompanyNameFromPersonData,
-} from '@/utils/personDataUtil';
+import { skjermingskode } from '@/utils/personDataUtil';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { getWeeksSinceDate } from '@/utils/dateUtils';
+import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
 
 interface PersonradProps {
   fnr: string;
@@ -87,7 +85,9 @@ export const Personrad = (props: PersonradProps): ReactElement => {
       <Column xs={'2'}>
         {lenkeTilModiaEnkeltpersonFnr(personData, fnr, onClick)}
       </Column>
-      <Column xs={'2'}>{firstCompanyNameFromPersonData(personData)}</Column>
+      <Column xs={'2'}>
+        <PersonRadVirksomhetColumn personData={personData} />
+      </Column>
       <Column xs={'2'}>{veilederName}</Column>
       <Column xs={'1'}>{oppfolgingstilfelleLengthInWeeks}</Column>
       <Column xs={'2'}>

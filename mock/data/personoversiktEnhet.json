@@ -36,6 +36,18 @@
         {
           "virksomhetsnummer": "987654321",
           "virksomhetsnavn": "NAV Security"
+        },
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        },
+        {
+          "virksomhetsnummer": "987654320",
+          "virksomhetsnavn": "Annen Virksomhet AS"
+        },
+        {
+          "virksomhetsnummer": "987654328",
+          "virksomhetsnavn": "Bolle Og Brus"
         }
       ]
     }
@@ -57,6 +69,14 @@
         {
           "virksomhetsnummer": "987654321",
           "virksomhetsnavn": "NAV Security"
+        },
+        {
+          "virksomhetsnummer": "987654322",
+          "virksomhetsnavn": "NAV Investments"
+        },
+        {
+          "virksomhetsnummer": "987654324",
+          "virksomhetsnavn": "Kompani & Co. AS"
         }
       ]
     }
@@ -78,7 +98,12 @@
         {
           "virksomhetsnummer": "987654322",
           "virksomhetsnavn": "NAV Investments"
+        },
+        {
+          "virksomhetsnummer": "987654321",
+          "virksomhetsnavn": "NAV Security"
         }
+
       ]
     }
   },
@@ -183,6 +208,10 @@
         {
           "virksomhetsnummer": "987654322",
           "virksomhetsnavn": "NAV Investments"
+        },
+        {
+          "virksomhetsnummer": "987654321",
+          "virksomhetsnavn": "NAV Security"
         }
       ]
     }
