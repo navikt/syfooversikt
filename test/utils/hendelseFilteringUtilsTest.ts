@@ -19,6 +19,9 @@ const createPersonDataWithName = (name: string): PersonData => {
     tildeltVeilederIdent: '234',
     dialogmotekandidat: undefined,
     latestOppfolgingstilfelle: undefined,
+    aktivitetskrav: null,
+    aktivitetskravUpdatedAt: null,
+    aktivitetskravStoppunkt: null,
   };
 };
 

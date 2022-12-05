@@ -23,6 +23,7 @@ export const HendelseTekster = {
   MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
+  AKTIVITETSKRAV: 'Aktivitetskrav',
 };
 
 interface Props {
@@ -39,6 +40,7 @@ const enkeltFilterFraTekst = (
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
+    aktivitetskrav: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -57,6 +59,7 @@ const lagNyttFilter = (
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
     filter.dialogmotekandidat = checked;
   if (tekst === HendelseTekster.DIALOGMOTESVAR) filter.dialogmotesvar = checked;
+  if (tekst === HendelseTekster.AKTIVITETSKRAV) filter.aktivitetskrav = checked;
   return filter;
 };
 
@@ -71,6 +74,7 @@ const isCheckedInState = (
   if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
     return state.dialogmotekandidat;
   if (tekst === HendelseTekster.DIALOGMOTESVAR) return state.dialogmotesvar;
+  if (tekst === HendelseTekster.AKTIVITETSKRAV) return state.aktivitetskrav;
   return false;
 };
 
@@ -89,7 +93,12 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { tabType } = useTabType();
 
   const { isFeatureEnabled } = useFeatureToggles();
-  const ikkeVisDialogmoteSvar = !isFeatureEnabled(ToggleNames.dialogmotesvar);
+  const isDialogmoteSvarTurnedOff = !isFeatureEnabled(
+    ToggleNames.dialogmotesvar
+  );
+  const isAktivitetskravTurnedOff = !isFeatureEnabled(
+    ToggleNames.aktivitetskrav
+  );
 
   const elementer = Object.entries(HendelseTekster)
     .filter(([, tekst]) => {
@@ -123,7 +132,8 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
-            ikkeVisDialogmoteSvar,
+            isDialogmoteSvarTurnedOff,
+            isAktivitetskravTurnedOff,
             personRegister
           )}
         </CheckboxGruppe>
@@ -135,13 +145,16 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
-  ikkeVisDialogmotesvar: boolean,
+  isDialogmotesvarTurnedOff: boolean,
+  isAktivitetskravTurnedOff: boolean,
   personRegister?: PersonregisterState
 ) => {
   return elementer.map((checkboksElement) => {
     if (
-      ikkeVisDialogmotesvar &&
-      checkboksElement.tekst == HendelseTekster.DIALOGMOTESVAR
+      (isDialogmotesvarTurnedOff &&
+        checkboksElement.tekst == HendelseTekster.DIALOGMOTESVAR) ||
+      (isAktivitetskravTurnedOff &&
+        checkboksElement.tekst == HendelseTekster.AKTIVITETSKRAV)
     )
       return null;
     const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);

@@ -68,5 +68,11 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(dialogmotesvarCheckbox).to.exist;
+
+    const aktivitetskravCheckbox = screen.getByRole('checkbox', {
+      name: /Aktivitetskrav/,
+      checked: false,
+    });
+    expect(aktivitetskravCheckbox).to.exist;
   });
 });

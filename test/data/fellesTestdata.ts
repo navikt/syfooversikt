@@ -2,7 +2,10 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
+import {
+  AktivitetskravStatus,
+  PersonOversiktStatusDTO,
+} from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
 const enhetId = '0316';
@@ -33,6 +36,9 @@ export const personregister: PersonregisterState = {
     skjermingskode: testdata.skjermingskode.ingen,
     markert: false,
     tildeltVeilederIdent: 'Z999999',
+    aktivitetskrav: AktivitetskravStatus.NY,
+    aktivitetskravUpdatedAt: new Date(),
+    aktivitetskravStoppunkt: new Date(),
   } as PersonData,
   [testdata.fnr2]: {
     navn: testdata.navn2,
@@ -41,6 +47,9 @@ export const personregister: PersonregisterState = {
     skjermingskode: testdata.skjermingskode.egenAnsatt,
     markert: false,
     tildeltVeilederIdent: 'Z999999',
+    aktivitetskrav: null,
+    aktivitetskravUpdatedAt: null,
+    aktivitetskravStoppunkt: null,
   } as PersonData,
 };
 
@@ -55,6 +64,9 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     oppfolgingsplanLPSBistandUbehandlet: null,
     dialogmotekandidat: undefined,
     motestatus: undefined,
+    aktivitetskrav: null,
+    aktivitetskravUpdatedAt: null,
+    aktivitetskravStoppunkt: null,
   },
   {
     fnr: testdata.fnr4,
@@ -66,6 +78,9 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     oppfolgingsplanLPSBistandUbehandlet: false,
     dialogmotekandidat: undefined,
     motestatus: undefined,
+    aktivitetskrav: null,
+    aktivitetskravUpdatedAt: null,
+    aktivitetskravStoppunkt: null,
   },
 ];
 

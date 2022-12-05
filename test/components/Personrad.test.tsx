@@ -1,13 +1,13 @@
 import React from 'react';
 import { testdata, veiledere } from '../data/fellesTestdata';
-import { Skjermingskode } from '@/api/types/personregisterTypes';
+import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { Personrad } from '@/components/Personrad';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { formaterNavn } from '@/utils/lenkeUtil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-const personData = {
+const personData: PersonData = {
   navn: testdata.navn1,
   harMotebehovUbehandlet: false,
   harDialogmotesvar: false,
@@ -16,6 +16,9 @@ const personData = {
   harOppfolgingsplanLPSBistandUbehandlet: false,
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
+  aktivitetskrav: null,
+  aktivitetskravUpdatedAt: null,
+  aktivitetskravStoppunkt: null,
 };
 
 let queryClient: QueryClient;

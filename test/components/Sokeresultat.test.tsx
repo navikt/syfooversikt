@@ -60,6 +60,7 @@ describe('Sokeresultat', () => {
         ufordeltBruker: false,
         dialogmotekandidat: false,
         dialogmotesvar: true,
+        aktivitetskrav: false,
       },
     };
 

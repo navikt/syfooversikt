@@ -4,6 +4,7 @@ import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeFirstLetter } from './stringUtil';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { hasActiveAktivitetskravStatus } from '@/utils/personDataUtil';
 
 const texts = {
   trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
@@ -11,16 +12,19 @@ const texts = {
 
 const lenkeTilModia = (personData: PersonData) => {
   let path = `/sykefravaer`;
-  const skalTilMoteoversikt =
+  const isGoingToMoteoversikt =
     personData.harMotebehovUbehandlet ||
     personData.harDialogmotesvar ||
     personData.dialogmotekandidat;
-  const skalTilOppfolgingsplanOversikt =
+  const isGoingToOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
-  if (skalTilOppfolgingsplanOversikt) {
+  const isGoingToAktivitetskrav = hasActiveAktivitetskravStatus(personData);
+  if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
-  } else if (skalTilMoteoversikt) {
+  } else if (isGoingToMoteoversikt) {
     path = `${path}/moteoversikt`;
+  } else if (isGoingToAktivitetskrav) {
+    path = `${path}/aktivitetskrav`;
   }
   return fullNaisUrlDefault('syfomodiaperson', path);
 };

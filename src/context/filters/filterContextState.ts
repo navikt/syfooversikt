@@ -4,6 +4,7 @@ export interface HendelseTypeFilters {
   ufordeltBruker: boolean;
   dialogmotekandidat: boolean;
   dialogmotesvar: boolean;
+  aktivitetskrav: boolean;
 }
 
 export interface FilterState {
@@ -27,5 +28,6 @@ export const filterInitialState: FilterState = {
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
+    aktivitetskrav: false,
   },
 };

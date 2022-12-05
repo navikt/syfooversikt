@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
 import {
+  AktivitetskravStatus,
   MoteStatusType,
   PersonOversiktStatusDTO,
 } from '@/api/types/personoversiktTypes';
@@ -31,13 +32,23 @@ const isKandidatAndNotStartedDialogmote = (
   );
 };
 
+const needsAktivitetskravVurdering = (
+  personOversiktStatus: PersonOversiktStatusDTO
+) => {
+  return (
+    personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
+    personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT
+  );
+};
+
 const filteredPersonOversiktStatusList = (
   personOversiktStatusList: PersonOversiktStatusDTO[]
 ): PersonOversiktStatusDTO[] => {
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      isKandidatAndNotStartedDialogmote(personOversiktStatus)
+      isKandidatAndNotStartedDialogmote(personOversiktStatus) ||
+      needsAktivitetskravVurdering(personOversiktStatus)
   );
 };
 
