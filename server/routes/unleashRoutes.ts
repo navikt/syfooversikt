@@ -1,23 +1,36 @@
 import * as unleashClient from 'unleash-client';
 
-class ByEnhetAndEnvironment extends unleashClient.Strategy {
+class ByDevEnhet extends unleashClient.Strategy {
   constructor() {
-    super('byEnhetAndEnvironment');
+    super('byDevEnhet');
   }
 
   isEnabled(parameters: any, context: any) {
-    if (process.env.NAIS_CONTEXT === 'dev') {
-      return true;
-    }
     if (!context.valgtEnhet) {
       return false;
     }
 
     const valgtEnhetMatches =
-      parameters.valgtEnhet.indexOf(context.valgtEnhet) !== -1;
-    const environmentEnabled = parameters.tilgjengeligIProd === 'true';
+      parameters.enheter.indexOf(context.valgtEnhet) !== -1;
 
-    return valgtEnhetMatches && environmentEnabled;
+    return valgtEnhetMatches && process.env.NAIS_CONTEXT === 'dev';
+  }
+}
+
+class ByProdEnhet extends unleashClient.Strategy {
+  constructor() {
+    super('byProdEnhet');
+  }
+
+  isEnabled(parameters: any, context: any) {
+    if (!context.valgtEnhet) {
+      return false;
+    }
+
+    const valgtEnhetMatches =
+      parameters.enheter.indexOf(context.valgtEnhet) !== -1;
+
+    return valgtEnhetMatches && process.env.NAIS_CONTEXT === 'prod';
   }
 }
 
@@ -50,7 +63,8 @@ const unleash = unleashClient.initialize({
   appName: 'syfooversikt',
   environment: process.env.NAIS_CONTEXT,
   strategies: [
-    new ByEnhetAndEnvironment(),
+    new ByDevEnhet(),
+    new ByProdEnhet(),
     new ByUserId(),
     new ByEnvironment(),
   ],
