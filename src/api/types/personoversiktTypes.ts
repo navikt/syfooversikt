@@ -6,6 +6,15 @@ export enum MoteStatusType {
   LUKKET = 'LUKKET',
 }
 
+export enum AktivitetskravStatus {
+  NY = 'NY',
+  AVVENT = 'AVVENT',
+  UNNTAK = 'UNNTAK',
+  OPPFYLT = 'OPPFYLT',
+  AUTOMATISK_OPPFYLT = 'AUTOMATISK_OPPFYLT',
+  STANS = 'STANS',
+}
+
 export interface PersonOversiktStatusDTO {
   fnr: string;
   navn: string;
@@ -17,6 +26,9 @@ export interface PersonOversiktStatusDTO {
   dialogmotekandidat: boolean | undefined;
   motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
+  aktivitetskrav: AktivitetskravStatus | null;
+  aktivitetskravStoppunkt: Date | null;
+  aktivitetskravUpdatedAt: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {

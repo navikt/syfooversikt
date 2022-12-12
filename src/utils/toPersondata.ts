@@ -27,6 +27,9 @@ export const toPersonData = (
       tildeltVeilederIdent: person.veilederIdent || '',
       dialogmotekandidat: person?.dialogmotekandidat,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
+      aktivitetskrav: person.aktivitetskrav,
+      aktivitetskravStoppunkt: person.aktivitetskravStoppunkt,
+      aktivitetskravUpdatedAt: person.aktivitetskravUpdatedAt,
     };
   });
 

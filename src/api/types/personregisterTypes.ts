@@ -1,4 +1,7 @@
-import { OppfolgingstilfelleDTO } from './personoversiktTypes';
+import {
+  AktivitetskravStatus,
+  OppfolgingstilfelleDTO,
+} from './personoversiktTypes';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 
@@ -13,6 +16,9 @@ export interface PersonData {
   tildeltVeilederIdent: string;
   dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
+  aktivitetskrav: AktivitetskravStatus | null;
+  aktivitetskravStoppunkt: Date | null;
+  aktivitetskravUpdatedAt: Date | null;
 }
 
 export interface PersonregisterState {

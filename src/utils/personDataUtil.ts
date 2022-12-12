@@ -2,6 +2,7 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
+import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
 export const skjermingskode = (person: PersonData): string => {
   return person.skjermingskode && person.skjermingskode !== 'INGEN'
@@ -31,4 +32,11 @@ export const firstCompanyNameFromPersonData = (
   p: PersonData
 ): string | undefined => {
   return companyNamesFromPersonData(p).shift();
+};
+
+export const hasActiveAktivitetskravStatus = (personData: PersonData) => {
+  return (
+    personData.aktivitetskrav === AktivitetskravStatus.NY ||
+    personData.aktivitetskrav === AktivitetskravStatus.AVVENT
+  );
 };

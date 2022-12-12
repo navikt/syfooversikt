@@ -138,6 +138,9 @@
     "dialogmotekandidat": true,
     "motestatus": "INNKALT",
     "dialogmotesvarUbehandlet": true,
+    "aktivitetskrav": "NY",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -159,6 +162,9 @@
     "dialogmotekandidat": true,
     "motestatus": "AVLYST",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "STANS",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -180,6 +186,9 @@
     "dialogmotekandidat": true,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AVVENT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-05-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -201,6 +210,9 @@
     "dialogmotekandidat": false,
     "motestatus": "FERDIGSTILT",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "UNNTAK",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-10-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -226,6 +238,9 @@
     "dialogmotekandidat": false,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AUTOMATISK_OPPFYLT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -247,6 +262,9 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "NY",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -268,7 +286,10 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
-    "latestOppfolgingstilfelle": null
+    "latestOppfolgingstilfelle": null,
+    "aktivitetskrav": "OPPFYLT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01"
   },
   {
     "fnr": "99999966673",
@@ -280,6 +301,9 @@
     "dialogmotekandidat": true,
     "motestatus": "NYTT_TID_STED",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AVVENT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-10-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -301,6 +325,9 @@
     "dialogmotekandidat": true,
     "motestatus": "INNKALT",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "NY",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -322,6 +349,9 @@
     "dialogmotekandidat": true,
     "motestatus": "AVLYST",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AVVENT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2020-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
