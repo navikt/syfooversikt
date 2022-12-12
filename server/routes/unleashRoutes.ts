@@ -44,6 +44,19 @@ class ByEnvironment extends unleashClient.Strategy {
   }
 }
 
+class ByEnvironmentToggle extends unleashClient.Strategy {
+  constructor() {
+    super('byEnvironmentToggle');
+  }
+
+  isEnabled(parameters: any) {
+    return (
+      (parameters.dev === 'true' && process.env.NAIS_CONTEXT === 'dev') ||
+      (parameters.prod === 'true' && process.env.NAIS_CONTEXT === 'prod')
+    );
+  }
+}
+
 class ByUserId extends unleashClient.Strategy {
   constructor() {
     super('byUserId');
@@ -67,6 +80,7 @@ const unleash = unleashClient.initialize({
     new ByProdEnhet(),
     new ByUserId(),
     new ByEnvironment(),
+    new ByEnvironmentToggle(),
   ],
 });
 
