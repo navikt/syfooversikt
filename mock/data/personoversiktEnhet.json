@@ -91,6 +91,9 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AVVENT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "2022-12-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-08-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -117,6 +120,9 @@
     "dialogmotekandidat": true,
     "motestatus": "NYTT_TID_STED",
     "dialogmotesvarUbehandlet": false,
+    "aktivitetskrav": "AVVENT",
+    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravUpdatedAt":  "1984-01-19",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",

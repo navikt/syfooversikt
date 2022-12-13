@@ -1,13 +1,18 @@
 import {
   PersonData,
   PersonregisterState,
+  ReadableSkjermingskodeMap,
+  Skjermingskode,
 } from '@/api/types/personregisterTypes';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
-export const skjermingskode = (person: PersonData): string => {
-  return person.skjermingskode && person.skjermingskode !== 'INGEN'
-    ? person.skjermingskode.toLowerCase().replace('_', ' ')
-    : '';
+const readableSkjermingskoder: ReadableSkjermingskodeMap = {
+  INGEN: 'ingen',
+  DISKRESJONSMERKET: 'diskresjonsmerket',
+  EGEN_ANSATT: 'egen ansatt',
+};
+export const getReadableSkjermingskode = (skjermingskode: Skjermingskode) => {
+  return readableSkjermingskoder[skjermingskode];
 };
 
 export const mapPersonregisterToCompanyList = (

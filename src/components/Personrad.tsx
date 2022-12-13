@@ -8,10 +8,10 @@ import {
   lenkeTilModiaEnkeltpersonFnr,
 } from '@/utils/lenkeUtil';
 import { PersonData } from '@/api/types/personregisterTypes';
-import { skjermingskode } from '@/utils/personDataUtil';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { getWeeksSinceDate } from '@/utils/dateUtils';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
+import { Labels } from '@/components/Labels';
 
 interface PersonradProps {
   fnr: string;
@@ -35,12 +35,6 @@ export const StyledPersonRad = styled.div<{ index: number; selected: boolean }>`
       ? { backgroundColor: 'white' }
       : { backgroundColor: themes.color.navLysGra };
   }};
-`;
-
-const NoWrapText = styled.p`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `;
 
 const VelgBoks = styled(Checkbox)`
@@ -91,7 +85,7 @@ export const Personrad = (props: PersonradProps): ReactElement => {
       <Column xs={'2'}>{veilederName}</Column>
       <Column xs={'1'}>{oppfolgingstilfelleLengthInWeeks}</Column>
       <Column xs={'2'}>
-        <NoWrapText>{skjermingskode(personData)}</NoWrapText>
+        <Labels personData={personData} />
       </Column>
     </StyledPersonRad>
   );
