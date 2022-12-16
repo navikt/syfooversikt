@@ -12,7 +12,7 @@
   {
     "fnr": "99999933333",
     "navn": "Korrupt Bolle",
-    "skjermingskode": "INGEN"
+    "skjermingskode": "DISKRESJONSMERKET"
   },
   {
     "fnr": "99999944444",
@@ -27,6 +27,11 @@
   {
     "fnr": "99999966666",
     "navn": "Gulv Heisen",
-    "skjermingskode": "INGEN"
+    "skjermingskode": "EGEN_ANSATT"
+  },
+  {
+    "fnr": "99999955556",
+    "navn": "Skjerm Visen",
+    "skjermingskode": "EGEN_ANSATT"
   }
 ]

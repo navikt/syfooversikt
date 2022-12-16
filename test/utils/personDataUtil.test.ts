@@ -1,18 +1,21 @@
 import { expect } from 'chai';
-import { PersonData } from '@/api/types/personregisterTypes';
 import {
+  PersonData,
+  ReadableSkjermingskode,
+} from '@/api/types/personregisterTypes';
+import {
+  getReadableSkjermingskode,
   hasActiveAktivitetskravStatus,
-  skjermingskode,
 } from '@/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
-const INGEN = '';
-const EGEN_ANSATT = 'egen ansatt';
+const INGEN: ReadableSkjermingskode = 'ingen';
+const EGEN_ANSATT: ReadableSkjermingskode = 'egen ansatt';
 
 describe('personDataUtils', () => {
-  describe('skjermingskode', () => {
-    it('Skal returnere en string med skjermingskode med små bokstaver og mellomrom hvis koden ikke er INGEN', () => {
+  describe('getReadableSkjermingskode', () => {
+    it('returns string with lowercase letters and underscore removed', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
@@ -20,11 +23,11 @@ describe('personDataUtils', () => {
         markert: false,
       } as PersonData;
 
-      const returnertString = skjermingskode(person);
+      const returnertString = getReadableSkjermingskode(person.skjermingskode);
 
       expect(returnertString).to.equal(EGEN_ANSATT);
     });
-    it('Skal returnere en tom string hvis koden er INGEN', () => {
+    it('returns lowercase "ingen" if kode is "INGEN"', () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
@@ -32,7 +35,7 @@ describe('personDataUtils', () => {
         markert: false,
       } as PersonData;
 
-      const returnertString = skjermingskode(person);
+      const returnertString = getReadableSkjermingskode(person.skjermingskode);
 
       expect(returnertString).to.equal(INGEN);
     });
