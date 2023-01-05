@@ -4,6 +4,7 @@ import { getReadableSkjermingskode } from '@/utils/personDataUtil';
 import styled from 'styled-components';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { EtikettFokus } from 'nav-frontend-etiketter';
+import { toReadableDate } from '@/utils/dateUtils';
 
 const LabelColumnWrapper = styled.div`
   padding: 0.5em 0;
@@ -33,7 +34,7 @@ export const Labels = ({ personData }: LabelColumnProps) => {
 
       {showAktivitetskrav && (
         <EtikettFokus mini>
-          {`Avventer (${personData.aktivitetskravUpdatedAt})`}
+          {`Avventer (${toReadableDate(personData.aktivitetskravUpdatedAt)})`}
         </EtikettFokus>
       )}
     </LabelColumnWrapper>
