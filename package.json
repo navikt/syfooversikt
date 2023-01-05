@@ -47,6 +47,7 @@
     "classnames": "2.3.1",
     "connect-redis": "4.0.4",
     "core-js": "3.21.1",
+    "dayjs": "1.11.7",
     "dotenv": "8.6.0",
     "dotenv-expand": "5.1.0",
     "express": "4.17.3",
