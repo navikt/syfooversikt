@@ -43,8 +43,8 @@ describe('Sokeresultat', () => {
 
   it('Skal inneholde liste av personer', () => {
     renderSokeresultat();
-    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
-    expect(screen.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et Annet' })).to.exist;
   });
 
   it('Filters søkeresultat by motedatasvar', () => {
@@ -80,7 +80,7 @@ describe('Sokeresultat', () => {
         </QueryClientProvider>
       </NotificationProvider>
     );
-    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
-    expect(screen.queryByRole('link', { name: 'Et Annet Navn' })).to.not.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
+    expect(screen.queryByRole('link', { name: 'Navn, Et Annet' })).to.not.exist;
   });
 });

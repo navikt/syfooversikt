@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
-import { capitalizeFirstLetter } from './stringUtil';
+import { capitalizeHyphenatedWords } from './stringUtil';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { hasActiveAktivitetskravStatus } from '@/utils/personDataUtil';
 
@@ -29,20 +29,16 @@ const lenkeTilModia = (personData: PersonData) => {
   return fullNaisUrlDefault('syfomodiaperson', path);
 };
 
-export const formaterNavn = (navn?: string): string => {
+export const formatNameCorrectly = (navn?: string): string => {
   if (!navn) return '';
   const nameList = navn.split(' ');
 
-  let fullName = '';
+  if (nameList.length > 1) {
+    const lastName = nameList.pop() || '';
+    nameList.unshift(`${lastName},`);
+  }
 
-  nameList.forEach((name, idx) => {
-    if (idx > 0) {
-      const spacing = ' ';
-      fullName = fullName.concat(spacing);
-    }
-    fullName = fullName.concat(capitalizeFirstLetter(name));
-  });
-  return fullName;
+  return nameList.map(capitalizeHyphenatedWords).join(' ');
 };
 
 export const lenkeTilModiaEnkeltperson = (
@@ -59,7 +55,7 @@ export const lenkeTilModiaEnkeltperson = (
       }}
       href={lenkeTilModia(personData)}
     >
-      {formaterNavn(personData.navn)}
+      {formatNameCorrectly(personData.navn)}
     </Lenke>
   );
 };
