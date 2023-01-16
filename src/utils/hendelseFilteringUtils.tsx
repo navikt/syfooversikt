@@ -166,6 +166,27 @@ export const getSortedEventsFromSortingType = (
   return personregister;
 };
 
+const sortVeiledereByLastName = (
+  persondataA: PersonData,
+  persondataB: PersonData,
+  veiledere: Veileder[],
+  order: SortingType
+) => {
+  const veilederA = veiledere.find(
+    (v) => persondataA.tildeltVeilederIdent === v.ident
+  );
+  const veilederB = veiledere.find(
+    (v) => persondataB.tildeltVeilederIdent === v.ident
+  );
+
+  const lastNameA = veilederA?.etternavn || '';
+  const lastNameB = veilederB?.etternavn || '';
+
+  if (lastNameA > lastNameB) return order === 'VEILEDER_ASC' ? -1 : 1;
+  if (lastNameA < lastNameB) return order === 'VEILEDER_ASC' ? 1 : -1;
+  return 0;
+};
+
 const sortEventsOnVeileder = (
   personregister: PersonregisterState,
   veiledere: Veileder[],
@@ -173,17 +194,12 @@ const sortEventsOnVeileder = (
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
-      const veilederIdentA =
-        veiledere.find((v) => persondataA.tildeltVeilederIdent === v.ident) ||
-        '';
-      const veilederIdentB =
-        veiledere.find((v) => persondataB.tildeltVeilederIdent === v.ident) ||
-        '';
-      if (veilederIdentA > veilederIdentB)
-        return order === 'VEILEDER_ASC' ? -1 : 1;
-      if (veilederIdentA < veilederIdentB)
-        return order === 'VEILEDER_ASC' ? 1 : -1;
-      return 0;
+      return sortVeiledereByLastName(
+        persondataA,
+        persondataB,
+        veiledere,
+        order
+      );
     }
   );
 
