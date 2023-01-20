@@ -1,13 +1,14 @@
 import React from 'react';
 import Personliste from '../../src/components/Personliste';
 import { personregister } from '../data/fellesTestdata';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
+import { testQueryClient } from '../testQueryClient';
 
-const queryClient = new QueryClient();
+const queryClient = testQueryClient();
 const markertePersoner = ['123', '234'];
 
 describe('Personliste', () => {

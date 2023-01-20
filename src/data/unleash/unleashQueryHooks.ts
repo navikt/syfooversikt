@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { post } from '@/api/axios';
 import { UNLEASH_ROOT } from '@/apiConstants';
 import { ToggleNames, Toggles } from '@/data/unleash/types/unleash_types';

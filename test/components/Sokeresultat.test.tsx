@@ -1,7 +1,7 @@
 import React from 'react';
 import Sokeresultat from '../../src/components/Sokeresultat';
 import { personregister } from '../data/fellesTestdata';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Filterable } from '@/utils/hendelseFilteringUtils';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -10,6 +10,7 @@ import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { FilterContext } from '@/context/filters/FilterContext';
 import { FilterState } from '@/context/filters/filterContextState';
+import { testQueryClient } from '../testQueryClient';
 
 let queryClient: QueryClient;
 
@@ -26,7 +27,7 @@ const renderSokeresultat = () =>
 
 describe('Sokeresultat', () => {
   beforeEach(() => {
-    queryClient = new QueryClient();
+    queryClient = testQueryClient();
     stubAktivVeileder();
   });
 

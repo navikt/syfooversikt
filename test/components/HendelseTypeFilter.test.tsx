@@ -1,6 +1,6 @@
 import React from 'react';
 import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -10,8 +10,9 @@ import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
 import { unleashMock } from '../../mock/unleash/unleashMock';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
+import { testQueryClient } from '../testQueryClient';
 
-const queryClient = new QueryClient();
+const queryClient = testQueryClient();
 
 describe('HendelseTypeFilter', () => {
   it('Skal inneholde checkbokser med riktige labels', () => {

@@ -2,7 +2,7 @@ import {
   SYFOOVERSIKTSRVREST_ROOT,
   SYFOVEILEDER_ROOT,
 } from '@/utils/apiUrlUtil';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import { get, post } from '@/api/axios';
@@ -20,7 +20,7 @@ import { useAsyncError } from '@/data/useAsyncError';
 import { ApiErrorException } from '@/api/errors';
 
 export const veiledereQueryKeys = {
-  veiledereInfo: 'veiledereInfo',
+  veiledereInfo: ['veiledereInfo'],
   veiledere: ['veiledere'],
   veiledereForEnhet: (enhetId?: string) => [
     ...veiledereQueryKeys.veiledere,
