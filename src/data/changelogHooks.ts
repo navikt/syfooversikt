@@ -1,10 +1,10 @@
 import { CHANGELOG_ROOT } from '@/utils/apiUrlUtil';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Changelog } from '@/api/types/changelogTypes';
 import { get } from '@/api/axios';
 
 export const changelogsQueryKeys = {
-  changelogs: 'changelogs',
+  changelogs: ['changelogs'],
 };
 
 export const useChangelogsQuery = () => {

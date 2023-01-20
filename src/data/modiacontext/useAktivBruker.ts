@@ -1,6 +1,6 @@
 import { post } from '@/api/axios';
 import { MODIACONTEXTHOLDER_ROOT } from '@/apiConstants';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 const NY_AKTIV_BRUKER = 'NY_AKTIV_BRUKER';
 

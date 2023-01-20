@@ -5,8 +5,9 @@ import { Personrad } from '@/components/Personrad';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { formatNameCorrectly } from '@/utils/lenkeUtil';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import { testQueryClient } from '../testQueryClient';
 
 let queryClient: QueryClient;
 
@@ -26,7 +27,7 @@ const renderPersonrad = (personData: PersonData) =>
 
 describe('Personrad', () => {
   beforeEach(() => {
-    queryClient = new QueryClient();
+    queryClient = testQueryClient();
   });
 
   it('Skal rendre riktig navn, fodselsnummer og skjermingskode', () => {

@@ -1,5 +1,5 @@
 import { SYFOPERSONREST_ROOT } from '@/utils/apiUrlUtil';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { post } from '@/api/axios';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
@@ -9,7 +9,7 @@ import { useNotifications } from '@/context/notification/NotificationContext';
 import { useAsyncError } from '@/data/useAsyncError';
 
 export const personregisterQueryKeys = {
-  personregister: 'personregister',
+  personregister: ['personregister'],
 };
 
 export const usePersonregisterQuery = () => {

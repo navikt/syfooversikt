@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { NotificationContext } from '@/context/notification/NotificationContext';
@@ -15,9 +15,10 @@ import { FetchVeiledereFailed } from '@/context/notification/Notifications';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { enhetOversiktRoutePath } from '@/routers/AppRouter';
+import { testQueryClient } from '../testQueryClient';
 
 describe('OversiktContainer', () => {
-  const queryClient = new QueryClient();
+  const queryClient = testQueryClient();
 
   it('Skal vise notifikasjon ved feilende apikall', async () => {
     stubPersonoversikt();
