@@ -29,7 +29,7 @@ describe('Personliste', () => {
       </NotificationProvider>
     );
 
-    expect(screen.getByRole('link', { name: 'Et Navn' })).to.exist;
-    expect(screen.getByRole('link', { name: 'Et Annet Navn' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et Annet' })).to.exist;
   });
 });

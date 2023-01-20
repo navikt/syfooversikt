@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { capitalizeFirstLetter } from '@/utils/stringUtil';
+import { uppercaseFirstLetter } from '@/utils/stringUtil';
 
 describe('stringUtil', () => {
-  describe('capitalizeFirstLetter', () => {
+  describe('uppercaseFirstLetter', () => {
     it('Should capitalize word', () => {
       const name = 'name';
       const expected = 'Name';
-      const result = capitalizeFirstLetter(name);
+      const result = uppercaseFirstLetter(name);
 
       expect(result).to.deep.equal(expected);
     });

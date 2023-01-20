@@ -4,7 +4,7 @@ import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { Personrad } from '@/components/Personrad';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
-import { formaterNavn } from '@/utils/lenkeUtil';
+import { formatNameCorrectly } from '@/utils/lenkeUtil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
@@ -46,8 +46,9 @@ describe('Personrad', () => {
     };
     renderPersonrad(personData);
 
-    expect(screen.getByRole('link', { name: formaterNavn(personData.navn) })).to
-      .exist;
+    expect(
+      screen.getByRole('link', { name: formatNameCorrectly(personData.navn) })
+    ).to.exist;
     expect(screen.getByText(testdata.fnr1)).to.exist;
     expect(screen.getByText('diskresjonsmerket')).to.exist;
   });

@@ -7,7 +7,6 @@ import {
   hasActiveAktivitetskravStatus,
 } from './personDataUtil';
 import { Veileder } from '@/api/types/veiledereTypes';
-import { formaterNavn } from './lenkeUtil';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
 export class Filterable<T> {
@@ -250,8 +249,9 @@ const sortEventsOnName = (
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
-      const lastNameA = formaterNavn(persondataA.navn).split(',').shift() || '';
-      const lastNameB = formaterNavn(persondataB.navn).split(',').shift() || '';
+      const lastNameA = persondataA.navn.split(' ').pop() || '';
+      const lastNameB = persondataB.navn.split(' ').pop() || '';
+
       return lastNameA.localeCompare(lastNameB);
     }
   );
