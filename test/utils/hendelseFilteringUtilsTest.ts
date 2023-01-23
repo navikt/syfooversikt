@@ -20,7 +20,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     dialogmotekandidat: undefined,
     latestOppfolgingstilfelle: undefined,
     aktivitetskrav: null,
-    aktivitetskravUpdatedAt: null,
+    aktivitetskravSistVurdert: null,
     aktivitetskravStoppunkt: null,
   };
 };

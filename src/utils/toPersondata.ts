@@ -29,7 +29,7 @@ export const toPersonData = (
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       aktivitetskrav: person.aktivitetskrav,
       aktivitetskravStoppunkt: person.aktivitetskravStoppunkt,
-      aktivitetskravUpdatedAt: person.aktivitetskravUpdatedAt,
+      aktivitetskravSistVurdert: person.aktivitetskravSistVurdert,
     };
   });
 

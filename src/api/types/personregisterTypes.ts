@@ -26,7 +26,7 @@ export interface PersonData {
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
   aktivitetskravStoppunkt: Date | null;
-  aktivitetskravUpdatedAt: Date | null;
+  aktivitetskravSistVurdert: Date | null;
 }
 
 export interface PersonregisterState {

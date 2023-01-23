@@ -37,7 +37,7 @@ export const personregister: PersonregisterState = {
     markert: false,
     tildeltVeilederIdent: 'Z999999',
     aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravUpdatedAt: new Date(),
+    aktivitetskravSistVurdert: new Date(),
     aktivitetskravStoppunkt: new Date(),
   } as PersonData,
   [testdata.fnr2]: {
@@ -48,7 +48,7 @@ export const personregister: PersonregisterState = {
     markert: false,
     tildeltVeilederIdent: 'Z999999',
     aktivitetskrav: null,
-    aktivitetskravUpdatedAt: null,
+    aktivitetskravSistVurdert: null,
     aktivitetskravStoppunkt: null,
   } as PersonData,
 };
@@ -65,7 +65,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     dialogmotekandidat: undefined,
     motestatus: undefined,
     aktivitetskrav: null,
-    aktivitetskravUpdatedAt: null,
+    aktivitetskravSistVurdert: null,
     aktivitetskravStoppunkt: null,
   },
   {
@@ -79,7 +79,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     dialogmotekandidat: undefined,
     motestatus: undefined,
     aktivitetskrav: null,
-    aktivitetskravUpdatedAt: null,
+    aktivitetskravSistVurdert: null,
     aktivitetskravStoppunkt: null,
   },
 ];
