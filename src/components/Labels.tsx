@@ -34,7 +34,7 @@ export const Labels = ({ personData }: LabelColumnProps) => {
 
       {showAktivitetskrav && (
         <EtikettFokus mini>
-          {`Avventer (${toReadableDate(personData.aktivitetskravUpdatedAt)})`}
+          {`Avventer (${toReadableDate(personData.aktivitetskravSistVurdert)})`}
         </EtikettFokus>
       )}
     </LabelColumnWrapper>
