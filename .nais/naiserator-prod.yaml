@@ -64,8 +64,10 @@ spec:
       value: "prod-gcp.teamsykefravr.syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoveileder"
+    - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
+      value: "prod-fss.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder.nais.adeo.no"
+      value: "modiacontextholder.intern.nav.no"
     - name: SYFOOVERSIKTSRV_HOST
       value: "syfooversiktsrv.intern.nav.no"
     - name: SYFOPERSON_HOST

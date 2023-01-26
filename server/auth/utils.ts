@@ -2,6 +2,7 @@ import HttpsProxyAgent from 'https-proxy-agent';
 import OpenIdClient from 'openid-client';
 
 import * as Config from '../config';
+import { tokenSetSelf } from '../config';
 
 const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 60;
 
@@ -23,45 +24,28 @@ const getTokenSetById = (tokenSets: any, id: any) => {
 export const getOrRefreshOnBehalfOfToken = async (
   authClient: OpenIdClient.Client,
   tokenSets: any,
-  tokenSetId: any,
   clientId: string
 ) => {
-  const selfToken = getTokenSetById(tokenSets, 'self');
+  const selfToken = getTokenSetById(tokenSets, tokenSetSelf);
   if (!selfToken) {
     throw Error(
       'getOrRefreshOnBehalfOfToken: Missing self-token in tokenSets. This should have been set by the middleware.'
     );
   }
   const onBehalfOfToken = getTokenSetById(tokenSets, clientId);
-  if (!onBehalfOfToken) {
+  if (!onBehalfOfToken || expired(onBehalfOfToken)) {
     const token = await getOrRefreshSelfTokenIfExpired(
       authClient,
       selfToken,
       tokenSets
     );
-    const newOnBehalfOftoken = await requestOnBehalfOfToken(
+    const onBehalfOftoken = await requestOnBehalfOfToken(
       authClient,
       token,
-      tokenSetId,
       clientId
     );
-    tokenSets[clientId] = newOnBehalfOftoken;
-    return newOnBehalfOftoken;
-  }
-  if (expired(onBehalfOfToken)) {
-    const token = await getOrRefreshSelfTokenIfExpired(
-      authClient,
-      selfToken,
-      tokenSets
-    );
-    const refreshedOnBehalfOfToken = await requestOnBehalfOfToken(
-      authClient,
-      token,
-      tokenSetId,
-      clientId
-    );
-    tokenSets[clientId] = refreshedOnBehalfOfToken;
-    return refreshedOnBehalfOfToken;
+    tokenSets[clientId] = onBehalfOftoken;
+    return onBehalfOftoken;
   }
   return tokenSets[clientId];
 };
@@ -73,23 +57,15 @@ const getOrRefreshSelfTokenIfExpired = async (
 ) => {
   if (selfToken.expired()) {
     const refreshedSelfToken = await authClient.refresh(selfToken);
-    tokenSets[Config.tokenSetIdType.self] = refreshedSelfToken;
+    tokenSets[tokenSetSelf] = refreshedSelfToken;
     return refreshedSelfToken;
   }
   return selfToken;
 };
 
-const getScope = (tokenSetId: any, clientId: string) => {
-  if (tokenSetId === Config.tokenSetIdType.graph) {
-    return `${clientId}/.default`;
-  }
-  return `api://${clientId}/.default`;
-};
-
 const requestOnBehalfOfToken = async (
   authClient: OpenIdClient.Client,
   tokenSet: any,
-  tokenSetId: any,
   clientId: string
 ) => {
   if (!tokenSet.access_token) {
@@ -103,7 +79,7 @@ const requestOnBehalfOfToken = async (
       'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
     grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
     requested_token_use: 'on_behalf_of',
-    scope: getScope(tokenSetId, clientId),
+    scope: `api://${clientId}/.default`,
   };
   return await authClient.grant(grantBody);
 };
