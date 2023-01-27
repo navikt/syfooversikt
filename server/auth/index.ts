@@ -7,6 +7,7 @@ import * as AuthUtils from './utils';
 import * as Config from '../config';
 
 import dotenv from 'dotenv';
+import { tokenSetSelf } from '../config';
 dotenv.config();
 
 export const ensureAuthenticated = () => {
@@ -38,7 +39,7 @@ const getStrategy = async (authClient: OpenIdClient.Client) => {
       if (!tokenSet.expired()) {
         return done(null, {
           tokenSets: {
-            [Config.tokenSetIdType.self]: tokenSet,
+            [tokenSetSelf]: tokenSet,
           },
         });
       }
