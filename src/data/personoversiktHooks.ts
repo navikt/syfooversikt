@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import {
-  AktivitetskravStatus,
   MoteStatusType,
   PersonOversiktStatusDTO,
 } from '@/api/types/personoversiktTypes';
@@ -32,14 +31,15 @@ const isKandidatAndNotStartedDialogmote = (
   );
 };
 
-const needsAktivitetskravVurdering = (
+// TODO: Only show these for veiledere with access to aktivitetskrav
+/*const needsAktivitetskravVurdering = (
   personOversiktStatus: PersonOversiktStatusDTO
 ) => {
   return (
     personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
     personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT
   );
-};
+};*/
 
 const filteredPersonOversiktStatusList = (
   personOversiktStatusList: PersonOversiktStatusDTO[]
@@ -47,8 +47,8 @@ const filteredPersonOversiktStatusList = (
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      isKandidatAndNotStartedDialogmote(personOversiktStatus) ||
-      needsAktivitetskravVurdering(personOversiktStatus)
+      isKandidatAndNotStartedDialogmote(personOversiktStatus)
+    /*|| needsAktivitetskravVurdering(personOversiktStatus)*/
   );
 };
 
