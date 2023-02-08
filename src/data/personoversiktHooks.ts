@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+  AktivitetskravStatus,
   MoteStatusType,
   PersonOversiktStatusDTO,
 } from '@/api/types/personoversiktTypes';
@@ -12,6 +13,8 @@ import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
@@ -31,24 +34,25 @@ const isKandidatAndNotStartedDialogmote = (
   );
 };
 
-// TODO: Only show these for veiledere with access to aktivitetskrav
-/*const needsAktivitetskravVurdering = (
+const needsAktivitetskravVurdering = (
   personOversiktStatus: PersonOversiktStatusDTO
 ) => {
   return (
     personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
     personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT
   );
-};*/
+};
 
 const filteredPersonOversiktStatusList = (
-  personOversiktStatusList: PersonOversiktStatusDTO[]
+  personOversiktStatusList: PersonOversiktStatusDTO[],
+  isAktivitetskravTurnedOn: boolean
 ): PersonOversiktStatusDTO[] => {
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      isKandidatAndNotStartedDialogmote(personOversiktStatus)
-    /*|| needsAktivitetskravVurdering(personOversiktStatus)*/
+      isKandidatAndNotStartedDialogmote(personOversiktStatus) ||
+      (isAktivitetskravTurnedOn &&
+        needsAktivitetskravVurdering(personOversiktStatus))
   );
 };
 
@@ -64,6 +68,9 @@ export const usePersonoversiktQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
+
+  const { isFeatureEnabled } = useFeatureToggles();
+  const isAktivitetskravTurnedOn = isFeatureEnabled(ToggleNames.aktivitetskrav);
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
@@ -94,8 +101,14 @@ export const usePersonoversiktQuery = () => {
   return {
     ...query,
     data: useMemo(
-      () => (query.data ? filteredPersonOversiktStatusList(query.data) : []),
-      [query.data]
+      () =>
+        query.data
+          ? filteredPersonOversiktStatusList(
+              query.data,
+              isAktivitetskravTurnedOn
+            )
+          : [],
+      [query.data, isAktivitetskravTurnedOn]
     ),
   };
 };
