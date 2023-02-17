@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   AktivitetskravStatus,
-  MoteStatusType,
   PersonOversiktStatusDTO,
 } from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
@@ -20,17 +19,8 @@ const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
     personOversiktStatus.motebehovUbehandlet ||
     personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet ||
-    personOversiktStatus.dialogmotesvarUbehandlet
-  );
-};
-
-const isKandidatAndNotStartedDialogmote = (
-  personOversiktStatus: PersonOversiktStatusDTO
-) => {
-  return (
-    personOversiktStatus.dialogmotekandidat &&
-    (!personOversiktStatus.motestatus ||
-      personOversiktStatus.motestatus == MoteStatusType.AVLYST)
+    personOversiktStatus.dialogmotesvarUbehandlet ||
+    personOversiktStatus.dialogmotekandidat
   );
 };
 
@@ -50,7 +40,6 @@ const filteredPersonOversiktStatusList = (
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      isKandidatAndNotStartedDialogmote(personOversiktStatus) ||
       (isAktivitetskravTurnedOn &&
         needsAktivitetskravVurdering(personOversiktStatus))
   );
