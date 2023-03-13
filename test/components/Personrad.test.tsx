@@ -43,7 +43,7 @@ describe('Personrad', () => {
       tildeltVeilederIdent: '234',
       aktivitetskrav: null,
       aktivitetskravSistVurdert: null,
-      aktivitetskravStoppunkt: null,
+      aktivitetskravActive: false,
     };
     renderPersonrad(personData);
 
@@ -65,7 +65,7 @@ describe('Personrad', () => {
       tildeltVeilederIdent: '234',
       aktivitetskrav: AktivitetskravStatus.AVVENT,
       aktivitetskravSistVurdert: new Date('2022-12-01'),
-      aktivitetskravStoppunkt: new Date('2022-12-01'),
+      aktivitetskravActive: true,
     };
     renderPersonrad(personData);
 

@@ -4,7 +4,6 @@ import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeHyphenatedWords } from './stringUtil';
 import { trackOnClick } from '@/amplitude/amplitude';
-import { hasActiveAktivitetskravStatus } from '@/utils/personDataUtil';
 
 const texts = {
   trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
@@ -18,7 +17,7 @@ export const lenkeTilModia = (personData: PersonData) => {
     personData.dialogmotekandidat;
   const isGoingToOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
-  const isGoingToAktivitetskrav = hasActiveAktivitetskravStatus(personData);
+  const isGoingToAktivitetskrav = personData.aktivitetskravActive;
   if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
   } else if (isGoingToMoteoversikt) {

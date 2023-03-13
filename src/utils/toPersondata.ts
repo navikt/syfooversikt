@@ -28,8 +28,8 @@ export const toPersonData = (
       dialogmotekandidat: person?.dialogmotekandidat,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       aktivitetskrav: person.aktivitetskrav,
-      aktivitetskravStoppunkt: person.aktivitetskravStoppunkt,
       aktivitetskravSistVurdert: person.aktivitetskravSistVurdert,
+      aktivitetskravActive: person.aktivitetskravActive,
     };
   });
 

@@ -2,10 +2,7 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import {
-  firstCompanyNameFromPersonData,
-  hasActiveAktivitetskravStatus,
-} from './personDataUtil';
+import { firstCompanyNameFromPersonData } from './personDataUtil';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
@@ -108,10 +105,7 @@ export const filterOnPersonregister = (
       return true;
     } else if (filter.dialogmotesvar && personData.harDialogmotesvar) {
       return true;
-    } else if (
-      filter.aktivitetskrav &&
-      hasActiveAktivitetskravStatus(personData)
-    ) {
+    } else if (filter.aktivitetskrav && personData.aktivitetskravActive) {
       return true;
     }
   });

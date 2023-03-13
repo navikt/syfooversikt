@@ -1,8 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  AktivitetskravStatus,
-  PersonOversiktStatusDTO,
-} from '@/api/types/personoversiktTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -14,7 +11,6 @@ import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { ToggleNames } from '@/data/unleash/types/unleash_types';
-import dayjs from 'dayjs';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
@@ -25,18 +21,6 @@ const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   );
 };
 
-const needsAktivitetskravVurdering = (
-  personOversiktStatus: PersonOversiktStatusDTO
-) => {
-  const arenaCutoff = dayjs('2023-03-10');
-  return (
-    (personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
-      personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT) &&
-    !!personOversiktStatus.aktivitetskravStoppunkt &&
-    dayjs(personOversiktStatus.aktivitetskravStoppunkt).isAfter(arenaCutoff)
-  );
-};
-
 const filteredPersonOversiktStatusList = (
   personOversiktStatusList: PersonOversiktStatusDTO[],
   isAktivitetskravTurnedOn: boolean
@@ -44,8 +28,7 @@ const filteredPersonOversiktStatusList = (
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      (isAktivitetskravTurnedOn &&
-        needsAktivitetskravVurdering(personOversiktStatus))
+      (isAktivitetskravTurnedOn && personOversiktStatus.aktivitetskravActive)
   );
 };
 
