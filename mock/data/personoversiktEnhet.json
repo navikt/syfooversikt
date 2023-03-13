@@ -145,7 +145,7 @@
     "motestatus": "INNKALT",
     "dialogmotesvarUbehandlet": true,
     "aktivitetskrav": "NY",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravStoppunkt": "2023-03-15",
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",

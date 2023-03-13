@@ -9,6 +9,7 @@ import {
 } from '@/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import dayjs from 'dayjs';
 
 const INGEN: ReadableSkjermingskode = 'ingen';
 const EGEN_ANSATT: ReadableSkjermingskode = 'egen ansatt';
@@ -42,9 +43,10 @@ describe('personDataUtils', () => {
   });
 
   describe('hasAktivAktivitetskravStatus', () => {
-    it('return true if AktivitetskravStatus is NY', () => {
+    it('return true if AktivitetskravStatus is NY and stoppunkt after arena cutoff', () => {
       const person = {
         aktivitetskrav: AktivitetskravStatus.NY,
+        aktivitetskravStoppunkt: dayjs('2023-03-11').toDate(),
       } as PersonData;
 
       const isActive = hasActiveAktivitetskravStatus(person);
@@ -52,14 +54,46 @@ describe('personDataUtils', () => {
       expect(isActive).to.equal(true);
     });
 
-    it('return true if AktivitetskravStatus is AVVENT', () => {
+    it('return true if AktivitetskravStatus is AVVENT and stoppunkt after arena cutoff', () => {
+      const person = {
+        aktivitetskrav: AktivitetskravStatus.AVVENT,
+        aktivitetskravStoppunkt: dayjs('2023-03-11').toDate(),
+      } as PersonData;
+
+      const isActive = hasActiveAktivitetskravStatus(person);
+
+      expect(isActive).to.equal(true);
+    });
+    it('return false if AktivitetskravStatus is NY and stoppunkt equal arena cutoff', () => {
+      const person = {
+        aktivitetskrav: AktivitetskravStatus.NY,
+        aktivitetskravStoppunkt: dayjs('2023-03-10').toDate(),
+      } as PersonData;
+
+      const isActive = hasActiveAktivitetskravStatus(person);
+
+      expect(isActive).to.equal(false);
+    });
+
+    it('return false if AktivitetskravStatus is AVVENT and stoppunkt before arena cutoff', () => {
+      const person = {
+        aktivitetskrav: AktivitetskravStatus.AVVENT,
+        aktivitetskravStoppunkt: dayjs('2023-03-09').toDate(),
+      } as PersonData;
+
+      const isActive = hasActiveAktivitetskravStatus(person);
+
+      expect(isActive).to.equal(false);
+    });
+
+    it('return false if AktivitetskravStatus is AVVENT and stoppunkt missing', () => {
       const person = {
         aktivitetskrav: AktivitetskravStatus.AVVENT,
       } as PersonData;
 
       const isActive = hasActiveAktivitetskravStatus(person);
 
-      expect(isActive).to.equal(true);
+      expect(isActive).to.equal(false);
     });
 
     it('return false if AktivitetskravStatus is OPPFYLT', () => {

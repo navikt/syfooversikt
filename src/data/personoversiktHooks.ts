@@ -14,6 +14,7 @@ import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { ToggleNames } from '@/data/unleash/types/unleash_types';
+import dayjs from 'dayjs';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
@@ -27,9 +28,12 @@ const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
 const needsAktivitetskravVurdering = (
   personOversiktStatus: PersonOversiktStatusDTO
 ) => {
+  const arenaCutoff = dayjs('2023-03-10');
   return (
-    personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
-    personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT
+    (personOversiktStatus.aktivitetskrav === AktivitetskravStatus.NY ||
+      personOversiktStatus.aktivitetskrav === AktivitetskravStatus.AVVENT) &&
+    !!personOversiktStatus.aktivitetskravStoppunkt &&
+    dayjs(personOversiktStatus.aktivitetskravStoppunkt).isAfter(arenaCutoff)
   );
 };
 
