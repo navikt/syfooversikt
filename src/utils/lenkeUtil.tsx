@@ -10,7 +10,7 @@ const texts = {
   trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
 };
 
-const lenkeTilModia = (personData: PersonData) => {
+export const lenkeTilModia = (personData: PersonData) => {
   let path = `/sykefravaer`;
   const isGoingToMoteoversikt =
     personData.harMotebehovUbehandlet ||
@@ -51,7 +51,6 @@ export const lenkeTilModiaEnkeltperson = (
         event.preventDefault();
         trackOnClick(texts.trackingLabelNavigateToModiaPerson);
         onClick();
-        window.location.href = lenkeTilModia(personData);
       }}
       href={lenkeTilModia(personData)}
     >
@@ -74,7 +73,6 @@ export const lenkeTilModiaEnkeltpersonFnr = (
       onClick={(event) => {
         event.preventDefault();
         onClick();
-        window.location.href = lenkeTilModia(personData);
       }}
       href={lenkeTilModia(personData)}
     >

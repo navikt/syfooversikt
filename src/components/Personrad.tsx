@@ -4,6 +4,7 @@ import { Column } from 'nav-frontend-grid';
 import { Checkbox } from 'nav-frontend-skjema';
 import themes from '../styles/themes';
 import {
+  lenkeTilModia,
   lenkeTilModiaEnkeltperson,
   lenkeTilModiaEnkeltpersonFnr,
 } from '@/utils/lenkeUtil';
@@ -55,7 +56,11 @@ export const Personrad = (props: PersonradProps): ReactElement => {
   const aktivBruker = useAktivBruker();
 
   const onClick = () => {
-    aktivBruker.mutate(fnr);
+    aktivBruker.mutate(fnr, {
+      onSuccess: () => {
+        window.location.href = lenkeTilModia(personData);
+      },
+    });
   };
 
   const startDatoOppfolgingstilfelle =
