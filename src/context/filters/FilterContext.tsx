@@ -5,6 +5,7 @@ import {
 } from '@/context/filters/filterContextState';
 import { filterReducer } from '@/context/filters/filterContextReducer';
 import { FilterActions } from '@/context/filters/filterContextActions';
+import { useEffect } from 'react';
 
 type FilterProviderProps = { children: React.ReactNode };
 
@@ -17,10 +18,15 @@ const FilterContext = React.createContext<{
 });
 
 const FilterProvider = ({ children }: FilterProviderProps) => {
-  const [filterState, dispatch] = React.useReducer(
-    filterReducer,
-    filterInitialState
-  );
+  const storeKey = 'filters';
+  const storedFilters = sessionStorage.getItem(storeKey);
+  const initialState =
+    storedFilters === null ? filterInitialState : JSON.parse(storedFilters);
+  const [filterState, dispatch] = React.useReducer(filterReducer, initialState);
+  useEffect(() => {
+    sessionStorage.setItem(storeKey, JSON.stringify(filterState));
+  }, [filterState]);
+
   return (
     <FilterContext.Provider value={{ filterState, dispatch }}>
       {children}

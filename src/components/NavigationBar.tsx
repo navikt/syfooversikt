@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { MoteoversiktLink } from '@/components/MoteoversiktLink';
 import {
@@ -68,32 +66,20 @@ const MoteoversiktLinkContent = styled.div`
 `;
 
 export const NavigationBar = (): ReactElement => {
-  const { dispatch } = useFilters();
-
   return (
     <NavigationBarDiv>
       <NavigationBarContent>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={minOversiktRoutePathRoutePath}
-          onClick={() => {
-            trackOnClick(tekster.minOversikt);
-            dispatch({
-              type: ActionType.ResetFilters,
-            });
-          }}
+          onClick={() => trackOnClick(tekster.minOversikt)}
         >
           {tekster.minOversikt}
         </LinkStyled>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={enhetOversiktRoutePath}
-          onClick={() => {
-            trackOnClick(tekster.enhetensOversikt);
-            dispatch({
-              type: ActionType.ResetFilters,
-            });
-          }}
+          onClick={() => trackOnClick(tekster.enhetensOversikt)}
         >
           {tekster.enhetensOversikt}
         </LinkStyled>

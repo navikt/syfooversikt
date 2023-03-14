@@ -17,6 +17,7 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { OverviewTabType } from '@/konstanter';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
@@ -57,12 +58,18 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
     setMarkertePersoner([]);
   }, [tabType]);
 
+  const selectedHendelsetypeFilter =
+    tabType === OverviewTabType.MY_OVERVIEW
+      ? {
+          ...filterState.selectedHendelseType,
+          ufordeltBruker: false,
+        }
+      : filterState.selectedHendelseType;
+
   const filteredEvents = allEvents
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
-    .applyFilter((v) =>
-      filterOnPersonregister(v, filterState.selectedHendelseType)
-    )
+    .applyFilter((v) => filterOnPersonregister(v, selectedHendelsetypeFilter))
     .applyFilter((v) =>
       filterOnFodselsnummerOrName(v, filterState.tekstFilter)
     );
