@@ -13,6 +13,7 @@ export enum AktivitetskravStatus {
   OPPFYLT = 'OPPFYLT',
   AUTOMATISK_OPPFYLT = 'AUTOMATISK_OPPFYLT',
   STANS = 'STANS',
+  IKKE_OPPFYLT = 'IKKE_OPPFYLT',
 }
 
 export interface PersonOversiktStatusDTO {
@@ -27,8 +28,8 @@ export interface PersonOversiktStatusDTO {
   motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravStoppunkt: Date | null;
   aktivitetskravSistVurdert: Date | null;
+  aktivitetskravActive: boolean;
 }
 
 export interface OppfolgingstilfelleDTO {

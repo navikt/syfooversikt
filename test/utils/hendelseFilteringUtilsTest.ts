@@ -21,7 +21,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     latestOppfolgingstilfelle: undefined,
     aktivitetskrav: null,
     aktivitetskravSistVurdert: null,
-    aktivitetskravStoppunkt: null,
+    aktivitetskravActive: false,
   };
 };
 

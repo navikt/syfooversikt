@@ -25,8 +25,8 @@ export interface PersonData {
   dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravStoppunkt: Date | null;
   aktivitetskravSistVurdert: Date | null;
+  aktivitetskravActive: boolean;
 }
 
 export interface PersonregisterState {

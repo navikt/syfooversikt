@@ -92,7 +92,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "AVVENT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": true,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-08-01",
@@ -121,7 +121,7 @@
     "motestatus": "NYTT_TID_STED",
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "AVVENT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "1984-01-19T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -145,7 +145,7 @@
     "motestatus": "INNKALT",
     "dialogmotesvarUbehandlet": true,
     "aktivitetskrav": "NY",
-    "aktivitetskravStoppunkt": "2023-03-15",
+    "aktivitetskravActive": true,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -169,7 +169,7 @@
     "motestatus": "AVLYST",
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "STANS",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -193,7 +193,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "AVVENT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-05-01",
@@ -217,7 +217,7 @@
     "motestatus": "FERDIGSTILT",
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "UNNTAK",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-10-01",
@@ -245,7 +245,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "AUTOMATISK_OPPFYLT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -269,7 +269,7 @@
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "NY",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -294,7 +294,7 @@
     "dialogmotesvarUbehandlet": false,
     "latestOppfolgingstilfelle": null,
     "aktivitetskrav": "OPPFYLT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826"
   },
   {
@@ -307,8 +307,8 @@
     "dialogmotekandidat": false,
     "motestatus": "NYTT_TID_STED",
     "dialogmotesvarUbehandlet": false,
-    "aktivitetskrav": "AVVENT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskrav": "IKKE_OPPFYLT",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-10-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -332,7 +332,7 @@
     "motestatus": "INNKALT",
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "NY",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2022-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
@@ -356,7 +356,7 @@
     "motestatus": "AVLYST",
     "dialogmotesvarUbehandlet": false,
     "aktivitetskrav": "AVVENT",
-    "aktivitetskravStoppunkt": "2023-01-10",
+    "aktivitetskravActive": false,
     "aktivitetskravSistVurdert":  "2020-12-01T10:12:05.913826",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",

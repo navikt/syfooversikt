@@ -4,8 +4,6 @@ import {
   ReadableSkjermingskodeMap,
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import dayjs from 'dayjs';
 
 const readableSkjermingskoder: ReadableSkjermingskodeMap = {
   INGEN: 'ingen',
@@ -38,14 +36,4 @@ export const firstCompanyNameFromPersonData = (
   p: PersonData
 ): string | undefined => {
   return companyNamesFromPersonData(p).shift();
-};
-
-export const hasActiveAktivitetskravStatus = (personData: PersonData) => {
-  const arenaCutoff = dayjs('2023-03-10');
-  return (
-    (personData.aktivitetskrav === AktivitetskravStatus.NY ||
-      personData.aktivitetskrav === AktivitetskravStatus.AVVENT) &&
-    !!personData.aktivitetskravStoppunkt &&
-    dayjs(personData.aktivitetskravStoppunkt).isAfter(arenaCutoff)
-  );
 };
