@@ -9,8 +9,6 @@ import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
@@ -22,13 +20,12 @@ const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
 };
 
 const filteredPersonOversiktStatusList = (
-  personOversiktStatusList: PersonOversiktStatusDTO[],
-  isAktivitetskravTurnedOn: boolean
+  personOversiktStatusList: PersonOversiktStatusDTO[]
 ): PersonOversiktStatusDTO[] => {
   return personOversiktStatusList.filter(
     (personOversiktStatus) =>
       isUbehandlet(personOversiktStatus) ||
-      (isAktivitetskravTurnedOn && personOversiktStatus.aktivitetskravActive)
+      personOversiktStatus.aktivitetskravActive
   );
 };
 
@@ -44,9 +41,6 @@ export const usePersonoversiktQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
-
-  const { isFeatureEnabled } = useFeatureToggles();
-  const isAktivitetskravTurnedOn = isFeatureEnabled(ToggleNames.aktivitetskrav);
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
@@ -77,14 +71,8 @@ export const usePersonoversiktQuery = () => {
   return {
     ...query,
     data: useMemo(
-      () =>
-        query.data
-          ? filteredPersonOversiktStatusList(
-              query.data,
-              isAktivitetskravTurnedOn
-            )
-          : [],
-      [query.data, isAktivitetskravTurnedOn]
+      () => (query.data ? filteredPersonOversiktStatusList(query.data) : []),
+      [query.data]
     ),
   };
 };

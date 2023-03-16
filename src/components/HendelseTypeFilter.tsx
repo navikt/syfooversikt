@@ -10,8 +10,6 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { trackOnClick } from '@/amplitude/amplitude';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const texts = {
   trackingLabel: 'HendelseFilter',
@@ -92,14 +90,6 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
-  const { isFeatureEnabled } = useFeatureToggles();
-  const isDialogmoteSvarTurnedOff = !isFeatureEnabled(
-    ToggleNames.dialogmotesvar
-  );
-  const isAktivitetskravTurnedOff = !isFeatureEnabled(
-    ToggleNames.aktivitetskrav
-  );
-
   const elementer = Object.entries(HendelseTekster)
     .filter(([, tekst]) => {
       return !(
@@ -132,8 +122,6 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
-            isDialogmoteSvarTurnedOff,
-            isAktivitetskravTurnedOff,
             personRegister
           )}
         </CheckboxGruppe>
@@ -145,18 +133,9 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
-  isDialogmotesvarTurnedOff: boolean,
-  isAktivitetskravTurnedOff: boolean,
   personRegister?: PersonregisterState
 ) => {
   return elementer.map((checkboksElement) => {
-    if (
-      (isDialogmotesvarTurnedOff &&
-        checkboksElement.tekst == HendelseTekster.DIALOGMOTESVAR) ||
-      (isAktivitetskravTurnedOff &&
-        checkboksElement.tekst == HendelseTekster.AKTIVITETSKRAV)
-    )
-      return null;
     const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
     const antall = Object.keys(
       filterOnPersonregister(personRegister || {}, filter)

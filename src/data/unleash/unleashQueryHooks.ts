@@ -32,7 +32,7 @@ export const useFeatureToggles = () => {
     }
   );
   const isFeatureEnabled = (toggle: ToggleNames): boolean => {
-    return query.data ? query.data[toggle] : false;
+    return query.data ? !!query.data[toggle] : false;
   };
 
   return {
