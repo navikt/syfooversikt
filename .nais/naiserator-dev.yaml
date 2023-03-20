@@ -38,8 +38,6 @@ spec:
       allowAllUsers: true
       enabled: true
       tenant: trygdeetaten.no
-      replyURLs:
-        - "https://syfooversikt.dev.intern.nav.no/oauth2/callback"
       claims:
         extra:
           - "NAVident"
@@ -48,13 +46,14 @@ spec:
   webproxy: true
   ingresses:
     - "https://syfooversikt.dev.intern.nav.no"
+    - "https://syfooversikt.intern.dev.nav.no"
   env:
     - name: NAIS_CONTEXT
       value: "dev"
     - name: NODE_ENV
       value: 'production'
     - name: AUTH_REDIRECT_URI
-      value: "https://syfooversikt.dev.intern.nav.no/oauth2/callback"
+      value: "https://syfooversikt.intern.dev.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfooversikt-redis"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
@@ -70,8 +69,8 @@ spec:
     - name: MODIACONTEXTHOLDER_HOST
       value: "modiacontextholder-q1.dev.intern.nav.no"
     - name: SYFOOVERSIKTSRV_HOST
-      value: "syfooversiktsrv.dev.intern.nav.no"
+      value: "syfooversiktsrv.intern.dev.nav.no"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.dev.intern.nav.no"
+      value: "syfoperson.intern.dev.nav.no"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.dev.intern.nav.no"
+      value: "syfoveileder.intern.dev.nav.no"
