@@ -16,11 +16,12 @@ module.exports = {
     'plugin:testing-library/react',
     'prettier', // Make sure this is always the last configuration in the extends array.
   ],
-  plugins: ['unused-imports'],
+  plugins: ['unused-imports', 'no-only-tests'],
   ignorePatterns: ['test/setup.tsx', 'test/babel-register.js'],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     'unused-imports/no-unused-imports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-only-tests/no-only-tests': 'error',
   },
 };
