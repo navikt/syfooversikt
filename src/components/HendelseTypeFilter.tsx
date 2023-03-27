@@ -10,6 +10,8 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const texts = {
   trackingLabel: 'HendelseFilter',
@@ -22,6 +24,7 @@ export const HendelseTekster = {
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
   AKTIVITETSKRAV: 'Aktivitetskrav',
+  BEHANDLERDIALOG: 'Dialog med behandler',
 };
 
 interface Props {
@@ -39,6 +42,7 @@ const enkeltFilterFraTekst = (
     dialogmotekandidat: false,
     dialogmotesvar: false,
     aktivitetskrav: false,
+    behandlerdialog: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -58,6 +62,8 @@ const lagNyttFilter = (
     filter.dialogmotekandidat = checked;
   if (tekst === HendelseTekster.DIALOGMOTESVAR) filter.dialogmotesvar = checked;
   if (tekst === HendelseTekster.AKTIVITETSKRAV) filter.aktivitetskrav = checked;
+  if (tekst === HendelseTekster.BEHANDLERDIALOG)
+    filter.behandlerdialog = checked;
   return filter;
 };
 
@@ -73,6 +79,7 @@ const isCheckedInState = (
     return state.dialogmotekandidat;
   if (tekst === HendelseTekster.DIALOGMOTESVAR) return state.dialogmotesvar;
   if (tekst === HendelseTekster.AKTIVITETSKRAV) return state.aktivitetskrav;
+  if (tekst === HendelseTekster.BEHANDLERDIALOG) return state.behandlerdialog;
   return false;
 };
 
@@ -89,6 +96,9 @@ const Container = styled.div`
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
+
+  const { isFeatureEnabled } = useFeatureToggles();
+  const isBehandlerdialogActive = isFeatureEnabled(ToggleNames.behandlerdialog);
 
   const elementer = Object.entries(HendelseTekster)
     .filter(([, tekst]) => {
@@ -122,6 +132,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
+            isBehandlerdialogActive,
             personRegister
           )}
         </CheckboxGruppe>
@@ -133,9 +144,17 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
+  isBehandlerdialogActive: boolean,
   personRegister?: PersonregisterState
 ) => {
   return elementer.map((checkboksElement) => {
+    if (
+      !isBehandlerdialogActive &&
+      checkboksElement.tekst === HendelseTekster.BEHANDLERDIALOG
+    ) {
+      return null;
+    }
+
     const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
     const antall = Object.keys(
       filterOnPersonregister(personRegister || {}, filter)

@@ -3,4 +3,6 @@ export type Toggles = {
 };
 
 // See https://unleash.nais.io/#/features (syfomodiaperson)
-export enum ToggleNames {}
+export enum ToggleNames {
+  behandlerdialog = 'syfo.behandlerdialog',
+}

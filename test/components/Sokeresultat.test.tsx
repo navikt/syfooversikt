@@ -62,6 +62,7 @@ describe('Sokeresultat', () => {
         dialogmotekandidat: false,
         dialogmotesvar: true,
         aktivitetskrav: false,
+        behandlerdialog: false,
       },
     };
 
