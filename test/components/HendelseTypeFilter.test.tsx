@@ -11,6 +11,7 @@ import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
 import { unleashMock } from '../../mock/unleash/unleashMock';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const queryClient = testQueryClient();
 
@@ -75,5 +76,47 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(aktivitetskravCheckbox).to.exist;
+
+    const behandlerdialogCheckbox = screen.getByRole('checkbox', {
+      name: /Dialog med behandler/,
+      checked: false,
+    });
+    expect(behandlerdialogCheckbox).to.exist;
+  });
+
+  it('Skal ikke inneholde checkbox for behandlerdialog hvis togglet bort', () => {
+    queryClient.setQueryData(
+      veiledereQueryKeys.veiledereInfo,
+      () => veilederMock
+    );
+    queryClient.setQueryData(
+      unleashQueryKeys.toggles(aktivEnhetMockData.aktivEnhet, 'Z101010'),
+      () => {
+        return {
+          [ToggleNames.behandlerdialog]: false,
+        };
+      }
+    );
+
+    render(
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <HendelseTypeFilter />
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
+    );
+
+    const behandlerdialogCheckbox = screen.queryByRole('checkbox', {
+      name: /Melding fra behandler/,
+      checked: false,
+    });
+    expect(behandlerdialogCheckbox).to.not.exist;
   });
 });
