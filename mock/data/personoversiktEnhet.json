@@ -94,6 +94,7 @@
     "aktivitetskrav": "AVVENT",
     "aktivitetskravActive": true,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": "2023-04-01",
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-08-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -122,6 +123,7 @@
     "aktivitetskrav": "AVVENT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "1984-01-19T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -146,6 +148,7 @@
     "aktivitetskrav": "NY",
     "aktivitetskravActive": true,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -170,6 +173,7 @@
     "aktivitetskrav": "STANS",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -194,6 +198,7 @@
     "aktivitetskrav": "AVVENT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-05-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -218,6 +223,7 @@
     "aktivitetskrav": "UNNTAK",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-10-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -246,6 +252,7 @@
     "aktivitetskrav": "AUTOMATISK_OPPFYLT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -270,6 +277,7 @@
     "aktivitetskrav": "NY",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -294,7 +302,8 @@
     "latestOppfolgingstilfelle": null,
     "aktivitetskrav": "OPPFYLT",
     "aktivitetskravActive": false,
-    "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826"
+    "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null
   },
   {
     "fnr": "99999966673",
@@ -309,6 +318,7 @@
     "aktivitetskrav": "IKKE_OPPFYLT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-10-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -333,6 +343,7 @@
     "aktivitetskrav": "NY",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -357,6 +368,7 @@
     "aktivitetskrav": "AVVENT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2020-12-01T10:12:05.913826",
+    "aktivitetskravVurderingFrist": null,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",

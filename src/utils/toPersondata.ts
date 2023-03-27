@@ -30,6 +30,7 @@ export const toPersonData = (
       aktivitetskrav: person.aktivitetskrav,
       aktivitetskravSistVurdert: person.aktivitetskravSistVurdert,
       aktivitetskravActive: person.aktivitetskravActive,
+      aktivitetskravVurderingFrist: person.aktivitetskravVurderingFrist,
     };
   });
 
