@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { EtikettFokus } from 'nav-frontend-etiketter';
 import { toReadableDate } from '@/utils/dateUtils';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { ToggleNames } from '@/data/unleash/types/unleash_types';
 
 const LabelColumnWrapper = styled.div`
   padding: 0.5em 0;
@@ -23,6 +25,13 @@ export const Labels = ({ personData }: LabelColumnProps) => {
     personData.skjermingskode && personData.skjermingskode !== 'INGEN';
   const showAktivitetskrav =
     personData.aktivitetskrav === AktivitetskravStatus.AVVENT;
+  const { isFeatureEnabled } = useFeatureToggles();
+  const showAvventerFrist = isFeatureEnabled(
+    ToggleNames.aktivitetskravVurderingFrist
+  );
+  const avventerDato = showAvventerFrist
+    ? personData.aktivitetskravVurderingFrist
+    : personData.aktivitetskravSistVurdert;
 
   return (
     <LabelColumnWrapper>
@@ -34,7 +43,9 @@ export const Labels = ({ personData }: LabelColumnProps) => {
 
       {showAktivitetskrav && (
         <EtikettFokus mini>
-          {`Avventer (${toReadableDate(personData.aktivitetskravSistVurdert)})`}
+          {avventerDato
+            ? `Avventer (${toReadableDate(avventerDato)})`
+            : 'Avventer'}
         </EtikettFokus>
       )}
     </LabelColumnWrapper>

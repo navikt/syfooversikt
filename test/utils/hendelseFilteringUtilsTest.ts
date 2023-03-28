@@ -22,6 +22,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskrav: null,
     aktivitetskravSistVurdert: null,
     aktivitetskravActive: false,
+    aktivitetskravVurderingFrist: null,
   };
 };
 
