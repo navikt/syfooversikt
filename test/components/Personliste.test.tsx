@@ -7,6 +7,7 @@ import { NotificationProvider } from '@/context/notification/NotificationContext
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { testQueryClient } from '../testQueryClient';
+import { MemoryRouter } from 'react-router-dom';
 
 const queryClient = testQueryClient();
 const markertePersoner = ['123', '234'];
@@ -23,11 +24,11 @@ describe('Personliste', () => {
               markertePersoner={markertePersoner}
               startItem={0}
               endItem={1}
-              sortingType={'FNR_DESC'}
             />
           </AktivEnhetProvider>
         </QueryClientProvider>
-      </NotificationProvider>
+      </NotificationProvider>,
+      { wrapper: MemoryRouter }
     );
 
     expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;

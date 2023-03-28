@@ -24,6 +24,7 @@ const Innhold = styled.section`
 const Element = styled.div`
   display: flex;
   align-items: center;
+
   & > div:not(:nth-child(2)) {
     padding: 0.5em;
   }
@@ -34,6 +35,7 @@ const VelgBoks = styled(Checkbox)`
     margin: 0;
     padding: 0;
   }
+
   margin: 0;
   margin-left: 0.5em;
 `;
@@ -104,11 +106,7 @@ const Toolbar = (props: ToolbarProps) => {
             }}
           />
         </Column>
-        <Sorteringsrad
-          onSortClick={(type) => {
-            props.setSortingType(type);
-          }}
-        />
+        <Sorteringsrad />
         <Column xs={'2'} />
       </IngressRad>
     </ToolbarStyled>

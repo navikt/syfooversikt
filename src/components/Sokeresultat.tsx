@@ -11,7 +11,6 @@ import {
   filterOnCompany,
   filterOnFodselsnummerOrName,
   filterOnPersonregister,
-  SortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
@@ -52,7 +51,6 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(0);
-  const [sortingType, setSortingType] = useState<SortingType>('FNR_ASC');
 
   useEffect(() => {
     setMarkertePersoner([]);
@@ -117,7 +115,6 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         buttonHandler={buttonHandler}
         checkAllHandler={checkAllHandler}
         markertePersoner={markertePersoner}
-        setSortingType={setSortingType}
       />
       <Personliste
         personregister={filteredEvents.value}
@@ -125,7 +122,6 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         endItem={endItem}
         checkboxHandler={checkboxHandler}
         markertePersoner={markertePersoner}
-        sortingType={sortingType}
       />
     </SokeresultatContainer>
   );

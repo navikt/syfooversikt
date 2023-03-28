@@ -11,6 +11,7 @@ import { expect } from 'chai';
 import { FilterContext } from '@/context/filters/FilterContext';
 import { FilterState } from '@/context/filters/filterContextState';
 import { testQueryClient } from '../testQueryClient';
+import { MemoryRouter } from 'react-router-dom';
 
 let queryClient: QueryClient;
 
@@ -22,7 +23,8 @@ const renderSokeresultat = () =>
           <Sokeresultat allEvents={new Filterable(personregister)} />
         </AktivEnhetProvider>
       </QueryClientProvider>
-    </NotificationProvider>
+    </NotificationProvider>,
+    { wrapper: MemoryRouter }
   );
 
 describe('Sokeresultat', () => {
@@ -80,7 +82,8 @@ describe('Sokeresultat', () => {
             </AktivEnhetProvider>
           </FilterContext.Provider>
         </QueryClientProvider>
-      </NotificationProvider>
+      </NotificationProvider>,
+      { wrapper: MemoryRouter }
     );
     expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
     expect(screen.queryByRole('link', { name: 'Navn, Et Annet' })).to.not.exist;

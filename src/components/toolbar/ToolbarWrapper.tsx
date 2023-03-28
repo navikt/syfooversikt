@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
-import { SortingType } from '@/utils/hendelseFilteringUtils';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -12,7 +11,6 @@ export interface ToolbarWrapperProps {
   checkAllHandler: (checked: boolean) => void;
   onPageChange: (startItem: number, endItem: number) => void;
   markertePersoner: string[];
-  setSortingType: (sortingType: SortingType) => void;
 }
 
 const InfoText = styled.div`

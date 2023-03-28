@@ -7,12 +7,10 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import {
-  getSortedEventsFromSortingType,
-  SortingType,
-} from '@/utils/hendelseFilteringUtils';
+import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
+import { useSortingType } from '@/hooks/useSortingType';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
@@ -20,7 +18,6 @@ interface PersonlisteProps {
   markertePersoner: string[];
   startItem: number;
   endItem: number;
-  sortingType: SortingType;
 }
 
 export const VeilederNavn = styled.label`
@@ -75,9 +72,9 @@ const Personliste = ({
   markertePersoner,
   startItem,
   endItem,
-  sortingType,
 }: PersonlisteProps): ReactElement => {
   const veiledereQuery = useVeiledereQuery();
+  const { sortingType } = useSortingType();
 
   const paginatePersonregister = (
     register: PersonregisterState,
