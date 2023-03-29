@@ -1,9 +1,10 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
 import { SortingType } from '@/utils/hendelseFilteringUtils';
 import Chevron from 'nav-frontend-chevron';
+import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 
 const tekster = {
   navn: 'Etternavn, Fornavn',
@@ -73,9 +74,10 @@ interface SortingRowProps {
 }
 
 const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
-  const [currentSortingType, setCurrentSortingType] = useState<SortingType>(
-    'FNR_ASC'
-  );
+  const [
+    currentSortingType,
+    setCurrentSortingType,
+  ] = useLocalStorageState<SortingType>(StoreKey.SORT, 'FNR_ASC');
 
   const onSortingButtonClicked = (
     sortingTypeAsc: SortingType,

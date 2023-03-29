@@ -18,6 +18,7 @@ import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { OverviewTabType } from '@/konstanter';
+import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
@@ -52,7 +53,10 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(0);
-  const [sortingType, setSortingType] = useState<SortingType>('FNR_ASC');
+  const [sortingType, setSortingType] = useLocalStorageState<SortingType>(
+    StoreKey.SORT,
+    'FNR_ASC'
+  );
 
   useEffect(() => {
     setMarkertePersoner([]);
