@@ -8,7 +8,7 @@ import * as Config from './config';
 
 const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
   expressHttpProxy(host, {
-    https: true,
+    https: false,
     parseReqBody: parseReqBody,
     proxyReqOptDecorator: async (options, srcReq) => {
       if (!accessToken) {
@@ -34,7 +34,7 @@ const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
         (pathFromRequest ? pathFromRequest : '') +
         (queryString ? '?' + queryString : '');
 
-      return `https://${newPath}`;
+      return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
       console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);

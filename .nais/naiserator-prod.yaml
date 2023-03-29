@@ -43,7 +43,17 @@ spec:
           - "NAVident"
   envFrom:
     - secret: syfooversikt-session-key
-  webproxy: true
+  accessPolicy:
+    outbound:
+      external:
+        - host: "login.microsoftonline.com"
+        - host: "internarbeidsflatedecorator.prod-fss-pub.nais.io"
+        - host: "modiacontextholder.prod-fss-pub.nais.io"
+      rules:
+        - application: syfooversiktsrv
+        - application: syfoperson
+        - application: syfoveileder
+        - application: syfooversikt-redis
   ingresses:
     - "https://syfooversikt.intern.nav.no"
   env:
@@ -56,7 +66,7 @@ spec:
     - name: REDIS_HOST
       value: "syfooversikt-redis"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "internarbeidsflatedecorator.intern.nav.no"
+      value: "https://internarbeidsflatedecorator.prod-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfooversiktsrv"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
@@ -66,10 +76,10 @@ spec:
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
       value: "prod-fss.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder.intern.nav.no"
+      value: "https://modiacontextholder.prod-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_HOST
-      value: "syfooversiktsrv.intern.nav.no"
+      value: "http://syfooversiktsrv"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.intern.nav.no"
+      value: "http://syfoperson"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.intern.nav.no"
+      value: "http://syfoveileder"

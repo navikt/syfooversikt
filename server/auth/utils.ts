@@ -88,15 +88,6 @@ export const getOpenIdClient = async (
   issuerUrl: string
 ): Promise<OpenIdClient.Client> => {
   try {
-    if (Config.server.proxy) {
-      const proxyAgent = HttpsProxyAgent(Config.server.proxy);
-      OpenIdClient.custom.setHttpOptionsDefaults({
-        agent: {
-          http: proxyAgent,
-          https: proxyAgent,
-        },
-      });
-    }
     const issuer = await OpenIdClient.Issuer.discover(issuerUrl);
 
     return new issuer.Client(

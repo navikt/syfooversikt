@@ -43,20 +43,30 @@ spec:
           - "NAVident"
   envFrom:
     - secret: syfooversikt-session-key
-  webproxy: true
+  accessPolicy:
+    outbound:
+      external:
+        - host: "login.microsoftonline.com"
+        - host: "internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
+        - host: "modiacontextholder-q1.dev-fss-pub.nais.io"
+      rules:
+        - application: syfooversiktsrv
+        - application: syfoperson
+        - application: syfoveileder
+        - application: syfooversikt-redis
   ingresses:
-    - "https://syfooversikt.dev.intern.nav.no"
+    - "https://syfooversikt.intern.dev.nav.no"
   env:
     - name: NAIS_CONTEXT
       value: "dev"
     - name: NODE_ENV
       value: 'production'
     - name: AUTH_REDIRECT_URI
-      value: "https://syfooversikt.dev.intern.nav.no/oauth2/callback"
+      value: "https://syfooversikt.intern.dev.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfooversikt-redis"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
-      value: "internarbeidsflatedecorator-q0.dev.intern.nav.no"
+      value: "https://internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfooversiktsrv"
     - name: SYFOPERSON_AAD_APP_CLIENT_ID
@@ -66,10 +76,10 @@ spec:
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
       value: "dev-fss.personoversikt.modiacontextholder-q1"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "modiacontextholder-q1.dev.intern.nav.no"
+      value: "https://modiacontextholder-q1.dev-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_HOST
-      value: "syfooversiktsrv.intern.dev.nav.no"
+      value: "http://syfooversiktsrv"
     - name: SYFOPERSON_HOST
-      value: "syfoperson.intern.dev.nav.no"
+      value: "http://syfoperson"
     - name: SYFOVEILEDER_HOST
-      value: "syfoveileder.intern.dev.nav.no"
+      value: "http://syfoveileder"
