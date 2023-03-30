@@ -1,4 +1,5 @@
 import { Veileder } from '@/api/types/veiledereTypes';
+import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
   veiledere: Veileder[],
@@ -40,4 +41,15 @@ const getAndRemoveVeileder = (
   return veilederToRemoveIndex > 0
     ? veiledere.splice(veilederToRemoveIndex, 1)
     : [];
+};
+
+export const filterVeiledereWithActiveOppgave = (
+  veiledere: Veileder[],
+  personOversiktStatus: PersonOversiktStatusDTO[]
+): Veileder[] => {
+  return veiledere.filter((veileder) => {
+    return personOversiktStatus.some((person) => {
+      return person.veilederIdent === veileder.ident;
+    });
+  });
 };
