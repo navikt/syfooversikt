@@ -3,7 +3,10 @@ import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Veileder } from '@/api/types/veiledereTypes';
 import styled from 'styled-components';
 import { Dropdown } from '../Dropdown/Dropdown';
-import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
+import {
+  filterVeiledereWithActiveOppgave,
+  sortVeiledereAlphabeticallyWithGivenVeilederFirst,
+} from '@/utils/veiledereUtils';
 import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
 import {
@@ -12,6 +15,7 @@ import {
 } from '@/data/veiledereQueryHooks';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
+import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 
 const ButtonDiv = styled.div`
   display: flex;
@@ -28,6 +32,7 @@ const SearchVeileder = (): ReactElement => {
   const [input, setInput] = useState('');
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
+  const personoversiktQuery = usePersonoversiktQuery();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
   const [activeVeilederFilter, setActiveVeilederFilter] = useState<Veileder[]>(
@@ -69,8 +74,14 @@ const SearchVeileder = (): ReactElement => {
   };
 
   const lowerCaseInput = input.toLowerCase();
-  const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
+
+  const veiledereWithOppgaver = filterVeiledereWithActiveOppgave(
     veiledereQuery.data || [],
+    personoversiktQuery.data
+  );
+
+  const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
+    veiledereWithOppgaver,
     aktivVeilederQuery.data?.ident || ''
   );
   const lowerCasedAndFilteredVeiledere = filterVeiledereOnInput(
