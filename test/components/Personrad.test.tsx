@@ -11,7 +11,6 @@ import { testQueryClient } from '../testQueryClient';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
 import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { unleashMock } from '../../mock/unleash/unleashMock';
-import { ToggleNames } from '@/data/unleash/types/unleash_types';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -101,18 +100,5 @@ describe('Personrad', () => {
     renderPersonrad(personDataAktivitetskravAvventUtenFrist);
 
     expect(screen.getByText('Avventer')).to.exist;
-  });
-  it('Skal rendre label med sistVurdert-dato for aktivitetskrav AVVENT når frist er togglet av', () => {
-    queryClient.setQueryData(
-      unleashQueryKeys.toggles(aktivEnhetMockData.aktivEnhet, 'Z101010'),
-      () => {
-        return {
-          [ToggleNames.aktivitetskravVurderingFrist]: false,
-        };
-      }
-    );
-    renderPersonrad(personDataAktivitetskravAvventMedFrist);
-
-    expect(screen.getByText('Avventer (01.12.2022)')).to.exist;
   });
 });
