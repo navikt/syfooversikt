@@ -49,24 +49,22 @@ export const usePersonoversiktQuery = () => {
     return personoversiktData || [];
   };
 
-  const query = useQuery(
-    personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
-    fetchPersonoversikt,
-    {
-      enabled: !!aktivEnhet,
-      staleTime: minutesToMillis(5),
-      onError: (error) => {
-        if (error instanceof ApiErrorException && error.code === 403) {
-          throwError(error);
-        } else {
-          displayNotification(FetchPersonoversiktFailed);
-        }
-      },
-      onSuccess: () => {
-        clearNotification('fetchPersonoversiktFailed');
-      },
-    }
-  );
+  const query = useQuery({
+    queryKey: personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
+    queryFn: fetchPersonoversikt,
+    enabled: !!aktivEnhet,
+    staleTime: minutesToMillis(5),
+    onError: (error) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        throwError(error);
+      } else {
+        displayNotification(FetchPersonoversiktFailed);
+      }
+    },
+    onSuccess: () => {
+      clearNotification('fetchPersonoversiktFailed');
+    },
+  });
 
   return {
     ...query,

@@ -24,13 +24,11 @@ export const useFeatureToggles = () => {
     post<Toggles>(path, {
       toggles: Object.values(ToggleNames),
     });
-  const query = useQuery(
-    unleashQueryKeys.toggles(aktivEnhet || '', veilederIdent),
-    fetchToggles,
-    {
-      enabled: !!aktivEnhet,
-    }
-  );
+  const query = useQuery({
+    queryKey: unleashQueryKeys.toggles(aktivEnhet || '', veilederIdent),
+    queryFn: fetchToggles,
+    enabled: !!aktivEnhet,
+  });
   const isFeatureEnabled = (toggle: ToggleNames): boolean => {
     return query.data ? !!query.data[toggle] : false;
   };

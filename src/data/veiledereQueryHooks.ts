@@ -36,23 +36,21 @@ export const useVeiledereQuery = () => {
   const fetchVeiledere = () =>
     get<Veileder[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${aktivEnhet}`);
 
-  return useQuery(
-    veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
-    fetchVeiledere,
-    {
-      enabled: !!aktivEnhet,
-      onError: (error) => {
-        if (error instanceof ApiErrorException && error.code === 403) {
-          throwError(error);
-        } else {
-          displayNotification(FetchVeiledereFailed);
-        }
-      },
-      onSuccess: () => {
-        clearNotification('fetchVeiledereFailed');
-      },
-    }
-  );
+  return useQuery({
+    queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
+    queryFn: fetchVeiledere,
+    enabled: !!aktivEnhet,
+    onError: (error) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        throwError(error);
+      } else {
+        displayNotification(FetchVeiledereFailed);
+      }
+    },
+    onSuccess: () => {
+      clearNotification('fetchVeiledereFailed');
+    },
+  });
 };
 
 export const useAktivVeilederQuery = () => {
@@ -62,7 +60,9 @@ export const useAktivVeilederQuery = () => {
   const fetchVeilederInfo = () =>
     get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
 
-  return useQuery(veiledereQueryKeys.veiledereInfo, fetchVeilederInfo, {
+  return useQuery({
+    queryKey: veiledereQueryKeys.veiledereInfo,
+    queryFn: fetchVeilederInfo,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
         throwError(error);
@@ -87,7 +87,8 @@ export const useTildelVeileder = () => {
   const postTildelVeileder = (liste: VeilederArbeidstaker[]) =>
     post(path, { tilknytninger: liste });
 
-  return useMutation(postTildelVeileder, {
+  return useMutation({
+    mutationFn: postTildelVeileder,
     onMutate: (liste: VeilederArbeidstaker[]) => {
       clearNotification('tildelVeilederFailed');
 

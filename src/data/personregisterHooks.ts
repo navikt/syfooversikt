@@ -34,7 +34,9 @@ export const usePersonregisterQuery = () => {
     return personregisterData || [];
   };
 
-  return useQuery(personregisterQueryKeys.personregister, fetchPersonregister, {
+  return useQuery({
+    queryKey: personregisterQueryKeys.personregister,
+    queryFn: fetchPersonregister,
     enabled: !!fnrListe,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
