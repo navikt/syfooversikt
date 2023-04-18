@@ -10,5 +10,8 @@ export const changelogsQueryKeys = {
 export const useChangelogsQuery = () => {
   const fetchChangelogs = () => get<Changelog[]>(CHANGELOG_ROOT);
 
-  return useQuery(changelogsQueryKeys.changelogs, fetchChangelogs);
+  return useQuery({
+    queryKey: changelogsQueryKeys.changelogs,
+    queryFn: fetchChangelogs,
+  });
 };
