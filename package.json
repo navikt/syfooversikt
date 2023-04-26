@@ -16,7 +16,8 @@
     "prettier": "prettier --write src/**/*.ts*",
     "prettier-check": "prettier --check src/**/*.ts*",
     "prettier-lint": "npm-run-all prettier lint",
-    "test": "mocha --require regenerator-runtime --require ./test/babel-register.js --require ignore-styles --require jsdom-global/register ./test/setup.tsx ./test/**/*.tsx ./test/**/*.ts --exit"
+    "test": "mocha --require regenerator-runtime --require ./test/babel-register.js --require ignore-styles --require jsdom-global/register ./test/setup.tsx ./test/**/*.tsx ./test/**/*.ts --exit",
+    "prepare": "husky install"
   },
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
@@ -173,13 +174,8 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.{js,ts,tsx": "lint:fix",
-    "*.{js,ts,tsx,css,less,md}": "prettier --write"
+    "*.{js,ts,tsx}": "npm run lint:fix",
+    "*.{js,ts,tsx,css,less,md}": "npm run prettier --write"
   }
 }
