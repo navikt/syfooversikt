@@ -31,6 +31,7 @@ export const toPersonData = (
       aktivitetskravSistVurdert: person.aktivitetskravSistVurdert,
       aktivitetskravActive: person.aktivitetskravActive,
       aktivitetskravVurderingFrist: person.aktivitetskravVurderingFrist,
+      harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
     };
   });
 

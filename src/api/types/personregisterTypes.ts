@@ -28,6 +28,7 @@ export interface PersonData {
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravActive: boolean;
   aktivitetskravVurderingFrist: Date | null;
+  harBehandlerdialogUbehandlet: boolean;
 }
 
 export interface PersonregisterState {
