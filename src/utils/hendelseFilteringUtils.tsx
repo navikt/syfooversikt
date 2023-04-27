@@ -107,6 +107,11 @@ export const filterOnPersonregister = (
       return true;
     } else if (filter.aktivitetskrav && personData.aktivitetskravActive) {
       return true;
+    } else if (
+      filter.behandlerdialog &&
+      personData.harBehandlerdialogUbehandlet
+    ) {
+      return true;
     }
   });
 

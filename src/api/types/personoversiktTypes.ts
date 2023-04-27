@@ -31,6 +31,7 @@ export interface PersonOversiktStatusDTO {
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravActive: boolean;
   aktivitetskravVurderingFrist: Date | null;
+  behandlerdialogUbehandlet: boolean;
 }
 
 export interface OppfolgingstilfelleDTO {

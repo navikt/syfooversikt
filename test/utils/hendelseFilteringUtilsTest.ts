@@ -23,6 +23,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravSistVurdert: null,
     aktivitetskravActive: false,
     aktivitetskravVurderingFrist: null,
+    harBehandlerdialogUbehandlet: false,
   };
 };
 

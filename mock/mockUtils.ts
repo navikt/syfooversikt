@@ -81,6 +81,7 @@ export const generatePersonoversiktEnhetFromPersons = (
       dialogmotekandidat: undefined,
       motestatus: undefined,
       dialogmotesvarUbehandlet: false,
+      behandlerdialogUbehandlet: false,
     };
   });
 };

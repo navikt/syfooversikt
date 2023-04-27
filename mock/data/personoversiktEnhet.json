@@ -7,7 +7,8 @@
     "oppfolgingsplanLPSBistandUbehandlet": true,
     "dialogmotekandidat": null,
     "motestatus": null,
-    "dialogmotesvarUbehandlet": false
+    "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false
   },
   {
     "fnr": "99999922222",
@@ -17,7 +18,8 @@
     "oppfolgingsplanLPSBistandUbehandlet": null,
     "dialogmotekandidat": null,
     "motestatus": null,
-    "dialogmotesvarUbehandlet": false
+    "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": true
   },
   {
     "fnr": "99999933333",
@@ -29,6 +31,7 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-10-25",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -62,6 +65,7 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-08-03",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -95,6 +99,7 @@
     "aktivitetskravActive": true,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": "2023-04-01",
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-08-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -124,6 +129,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "1984-01-19T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -149,6 +155,7 @@
     "aktivitetskravActive": true,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -174,6 +181,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -199,6 +207,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-05-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -224,6 +233,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-10-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -253,6 +263,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -278,6 +289,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -303,7 +315,8 @@
     "aktivitetskrav": "OPPFYLT",
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
-    "aktivitetskravVurderingFrist": null
+    "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false
   },
   {
     "fnr": "99999966673",
@@ -319,6 +332,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-10-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -344,6 +358,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2022-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -369,6 +384,7 @@
     "aktivitetskravActive": false,
     "aktivitetskravSistVurdert": "2020-12-01T10:12:05.913826",
     "aktivitetskravVurderingFrist": null,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -390,6 +406,7 @@
     "dialogmotekandidat": true,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -411,6 +428,7 @@
     "dialogmotekandidat": false,
     "motestatus": "FERDIGSTILT",
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -432,6 +450,7 @@
     "dialogmotekandidat": false,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
@@ -453,6 +472,7 @@
     "dialogmotekandidat": null,
     "motestatus": null,
     "dialogmotesvarUbehandlet": false,
+    "behandlerdialogUbehandlet": false,
     "latestOppfolgingstilfelle": {
       "oppfolgingstilfelleStart": "2022-01-01",
       "oppfolgingstilfelleEnd": "2022-12-31",
