@@ -1,11 +1,9 @@
 import React, { useRef, useState } from 'react';
-import {
-  companyNamesFromPersonData,
-  firstCompanyNameFromPersonData,
-} from '@/utils/personDataUtil';
+import { virksomhetnummerFromPersonData } from '@/utils/personDataUtil';
 import { Popover } from '@navikt/ds-react';
 import styled from 'styled-components';
 import { PersonData } from '@/api/types/personregisterTypes';
+import { useVirksomheterQueries } from '@/data/virksomhet/virksomhetQueryHooks';
 
 const StyledPopover = styled(Popover)`
   position: relative;
@@ -24,7 +22,9 @@ export const PersonRadVirksomhetColumn = ({
   const [showVirksomheter, setShowVirksomheter] = useState(false);
   const showPopover = () => setShowVirksomheter(true);
   const dontShowPopover = () => setShowVirksomheter(false);
-  const companyNames = companyNamesFromPersonData(personData);
+
+  const virksomhetsnumre = virksomhetnummerFromPersonData(personData);
+  const companyNames = useVirksomheterQueries(virksomhetsnumre);
 
   return (
     <>
@@ -33,7 +33,7 @@ export const PersonRadVirksomhetColumn = ({
         onMouseEnter={showPopover}
         onMouseLeave={dontShowPopover}
       >
-        {firstCompanyNameFromPersonData(personData)}
+        {companyNames[0]}
       </p>
       <StyledPopover
         open={showVirksomheter}

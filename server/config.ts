@@ -107,6 +107,12 @@ export const auth = {
     name: 'INTERNARBEIDSFLATEDECORATOR_HOST',
   }),
 
+  ereg: {
+    clientId: '',
+    host: envVar({
+      name: 'EREG_HOST',
+    }),
+  },
   modiacontextholder: {
     clientId: envVar({
       name: 'MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID',

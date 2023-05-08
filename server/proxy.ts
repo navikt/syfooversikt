@@ -6,6 +6,61 @@ import OpenIdClient from 'openid-client';
 import * as AuthUtils from './auth/utils';
 import * as Config from './config';
 
+const proxyExternalHostWithoutAuthentication = (host: any) =>
+  expressHttpProxy(host, {
+    https: false,
+    proxyReqPathResolver: (req) => {
+      const urlFromApi = url.parse(host);
+      const pathFromApi =
+        urlFromApi.pathname === '/' ? '' : urlFromApi.pathname;
+
+      const urlFromRequest = url.parse(req.originalUrl);
+      const pathFromRequest = urlFromRequest.pathname;
+
+      const queryString = urlFromRequest.query;
+      const newPath =
+        (pathFromApi ? pathFromApi : '') +
+        (pathFromRequest ? pathFromRequest : '') +
+        (queryString ? '?' + queryString : '');
+
+      return newPath;
+    },
+    proxyErrorHandler: (err, res, next) => {
+      console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);
+      if (err && err.code === 'ECONNREFUSED') {
+        console.log('proxyErrorHandler: Got ECONNREFUSED');
+        return res.status(503).send({ message: `Could not contact ${host}` });
+      }
+      next(err);
+    },
+  });
+
+const proxyDirectly = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+  authClient: OpenIdClient.Client,
+  externalAppConfig: Config.ExternalAppConfig
+) => {
+  const user = req.user as any;
+  if (!user) {
+    res
+      .status(401)
+      .header(
+        'WWW-Authenticate',
+        `OAuth realm=${externalAppConfig.host}, charset="UTF-8"`
+      )
+      .send('Not authenticated');
+    return;
+  }
+
+  return proxyExternalHostWithoutAuthentication(externalAppConfig.host)(
+    req,
+    res,
+    next
+  );
+};
+
 const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
   expressHttpProxy(host, {
     https: false,
@@ -94,6 +149,17 @@ const proxyOnBehalfOf = (
 
 export const setupProxy = (authClient: OpenIdClient.Client) => {
   const router = express.Router();
+
+  router.use(
+    '/ereg/*',
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyDirectly(req, res, next, authClient, Config.auth.ereg);
+    }
+  );
 
   router.use(
     '/modiacontextholder/*',
