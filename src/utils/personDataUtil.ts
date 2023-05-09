@@ -32,6 +32,14 @@ export const companyNamesFromPersonData = (p: PersonData): string[] => {
     : [];
 };
 
+export const virksomhetnummerFromPersonData = (p: PersonData): string[] => {
+  return p.latestOppfolgingstilfelle
+    ? p.latestOppfolgingstilfelle.virksomhetList.map(
+        ({ virksomhetsnummer }) => virksomhetsnummer
+      )
+    : [];
+};
+
 export const firstCompanyNameFromPersonData = (
   p: PersonData
 ): string | undefined => {

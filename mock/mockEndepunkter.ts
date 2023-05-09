@@ -8,6 +8,7 @@ import { mockChangelogs } from './changelogs/mockChangelogs';
 import { mockUnleash } from './unleash/mockUnleash';
 
 import * as mockUtils from './mockUtils';
+import { mockEreg } from './ereg/mockEreg';
 const generatedPersons = mockUtils.generatePersons(50);
 
 const mockEndepunkter = (server: express.Application) => {
@@ -16,6 +17,7 @@ const mockEndepunkter = (server: express.Application) => {
 
   [
     mockModiacontextholder,
+    mockEreg,
     mockPersonoversikt,
     mockPersontildeling,
     mockSyfoperson,

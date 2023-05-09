@@ -49,6 +49,7 @@ spec:
         - host: "login.microsoftonline.com"
         - host: "internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
         - host: "modiacontextholder-q1.dev-fss-pub.nais.io"
+        - host: "ereg-services-q1.dev-fss-pub.nais.io"
       rules:
         - application: syfooversiktsrv
         - application: syfoperson
@@ -65,6 +66,8 @@ spec:
       value: "https://syfooversikt.intern.dev.nav.no/oauth2/callback"
     - name: REDIS_HOST
       value: "syfooversikt-redis"
+    - name: EREG_HOST
+      value: "https://ereg-services-q1.dev-fss-pub.nais.io"
     - name: INTERNARBEIDSFLATEDECORATOR_HOST
       value: "https://internarbeidsflatedecorator-q1.dev-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
