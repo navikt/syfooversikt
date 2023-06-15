@@ -28,7 +28,6 @@ spec:
     path: /actuator/metrics
   resources:
     limits:
-      cpu: 500m
       memory: 1Gi
     requests:
       cpu: 100m
@@ -43,6 +42,7 @@ spec:
           - "NAVident"
   envFrom:
     - secret: syfooversikt-session-key
+    - secret: syfooversikt-redis-password
   accessPolicy:
     outbound:
       external:
