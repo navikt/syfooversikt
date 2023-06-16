@@ -1,7 +1,7 @@
 import { SYFOPERSON_ROOT } from '../../src/apiConstants';
 
 import * as mockUtils from '../mockUtils';
-import { ensureAuthenticated } from '../../server/auth';
+import { ensureAuthenticated } from '../../server/authUtils';
 import express from 'express';
 
 const personInfo = (generatedPersons: any) => [

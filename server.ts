@@ -4,8 +4,10 @@ import path from 'path';
 import prometheus from 'prom-client';
 import { getChangelogs } from './server/changelogReader';
 
-import { setupAuth } from './server/auth';
+import * as Config from './server/config';
+import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
 import { setupProxy } from './server/proxy';
+import { setupSession } from './server/session';
 import { getUnleashToggles } from './server/routes/unleashRoutes';
 
 // Prometheus metrics
@@ -40,8 +42,22 @@ const nocache = (
   next();
 };
 
+const redirectIfUnauthorized = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  if (req.headers['authorization']) {
+    next();
+  } else {
+    res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
+  }
+};
+
 const setupServer = async () => {
-  const authClient = await setupAuth(server);
+  setupSession(server);
+  const issuer = await getOpenIdIssuer();
+  const authClient = await getOpenIdClient(issuer);
 
   const DIST_DIR = path.join(__dirname, 'dist');
   const HTML_FILE = path.join(DIST_DIR, 'index.html');
@@ -59,7 +75,7 @@ const setupServer = async () => {
     res.status(200).send(unleashToggles);
   });
 
-  server.use(setupProxy(authClient));
+  server.use(setupProxy(authClient, issuer));
 
   server.get('/syfooversikt/changelogs', (req, res) => {
     res.send(getChangelogs());
@@ -94,8 +110,8 @@ const setupServer = async () => {
 
   server.get(
     ['*', '/syfooversikt/?', /^\/syfooversikt\/(?!(resources|img)).*$/],
-    nocache,
-    (req, res) => {
+    [nocache, redirectIfUnauthorized],
+    (req: express.Request, res: express.Response) => {
       res.sendFile(HTML_FILE);
       httpRequestDurationMicroseconds.labels(req.path).observe(10);
     }
