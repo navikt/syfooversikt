@@ -1,5 +1,5 @@
 import OpenIdClient from 'openid-client';
-import { Request, Response, NextFunction } from 'express';
+import { Request } from 'express';
 import {
   createRemoteJWKSet,
   FlattenedJWSInput,
@@ -34,15 +34,6 @@ let _remoteJWKSet: GetKeyFunction<JWSHeaderParameters, FlattenedJWSInput>;
 async function initJWKSet() {
   _remoteJWKSet = await createRemoteJWKSet(new URL(Config.auth.jwksUri));
 }
-
-export const ensureAuthenticated = () => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    if (req.headers['authorization']) {
-      return next();
-    }
-    res.status(401).send('Unauthorized');
-  };
-};
 
 const retrieveAndValidateToken = async (
   req: Request,

@@ -1,5 +1,4 @@
 import express from 'express';
-import { ensureAuthenticated } from '../../server/authUtils';
 import { EregOrganisasjonResponseDTO } from '@/data/virksomhet/EregVirksomhetsnavn';
 
 interface EregMockData {
@@ -39,7 +38,6 @@ const eregResponses: EregMockData = {
 export const mockEreg = (server: express.Application) => {
   server.get(
     '/ereg/api/v1/organisasjon/:orgnr',
-    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       const eregResponse = eregResponses[req.params.orgnr as string];
       res.setHeader('Content-Type', 'application/json');

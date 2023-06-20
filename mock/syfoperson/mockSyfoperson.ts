@@ -1,7 +1,6 @@
 import { SYFOPERSON_ROOT } from '../../src/apiConstants';
 
 import * as mockUtils from '../mockUtils';
-import { ensureAuthenticated } from '../../server/authUtils';
 import express from 'express';
 
 const personInfo = (generatedPersons: any) => [
@@ -15,7 +14,6 @@ export const mockSyfoperson = (
 ) => {
   server.post(
     `${SYFOPERSON_ROOT}/person/info`,
-    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(personInfo(generatedPersons)));
