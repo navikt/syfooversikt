@@ -33,7 +33,7 @@ const setupDev = async (devServer: WebpackDevServer) => {
   }
   const compiler = devServer.compiler;
 
-  Session.setupSession(app);
+  await Session.setupSession(app);
 
   mockEndepunkter(app);
   app.use('/static', express.static(path.resolve(__dirname, 'dist')));

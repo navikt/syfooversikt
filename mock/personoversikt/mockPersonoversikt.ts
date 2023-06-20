@@ -1,5 +1,4 @@
 import express from 'express';
-import { ensureAuthenticated } from '../../server/authUtils';
 
 import { PERSONOVERSIKT_ROOT } from '../../src/apiConstants';
 
@@ -16,7 +15,6 @@ export const mockPersonoversikt = (
 ) => {
   server.get(
     `${PERSONOVERSIKT_ROOT}/enhet/:id`,
-    ensureAuthenticated(),
     (req: express.Request, res: express.Response) => {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(personoversiktEnhet(generatedPersons)));
