@@ -3,7 +3,7 @@ import expressHttpProxy from 'express-http-proxy';
 import url from 'url';
 import OpenIdClient from 'openid-client';
 
-import * as AuthUtils from './auth/utils';
+import { getOrRefreshOnBehalfOfToken } from './authUtils';
 import * as Config from './config';
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
@@ -42,18 +42,6 @@ const proxyDirectly = (
   authClient: OpenIdClient.Client,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
-  const user = req.user as any;
-  if (!user) {
-    res
-      .status(401)
-      .header(
-        'WWW-Authenticate',
-        `OAuth realm=${externalAppConfig.host}, charset="UTF-8"`
-      )
-      .send('Not authenticated');
-    return;
-  }
-
   return proxyExternalHostWithoutAuthentication(externalAppConfig.host)(
     req,
     res,
@@ -106,40 +94,30 @@ const proxyOnBehalfOf = (
   res: express.Response,
   next: express.NextFunction,
   authClient: OpenIdClient.Client,
+  issuer: OpenIdClient.Issuer<any>,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
-  const user = req.user as any;
-  if (!user) {
-    res
-      .status(401)
-      .header(
-        'WWW-Authenticate',
-        `OAuth realm=${externalAppConfig.host}, charset="UTF-8"`
-      )
-      .send('Not authenticated');
-    return;
-  }
-
-  AuthUtils.getOrRefreshOnBehalfOfToken(
+  getOrRefreshOnBehalfOfToken(
     authClient,
-    user.tokenSets,
+    issuer,
+    req,
     externalAppConfig.clientId
   )
     .then((onBehalfOfToken) => {
-      if (!onBehalfOfToken.access_token) {
+      if (!onBehalfOfToken || !onBehalfOfToken.accessToken) {
         res.status(500).send('Failed to fetch access token on behalf of user.');
         console.log(
-          'proxyReqOptDecorator: Got on-behalf-of token, but the access_token was undefined'
+          'proxyOnBehalfOf: on-behalf-of-token or accessToken was undefined'
         );
         return;
       }
       return proxyExternalHost(
         externalAppConfig.host,
-        onBehalfOfToken.access_token,
+        onBehalfOfToken.accessToken,
         req.method === 'POST'
       )(req, res, next);
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.log('Failed to renew token(s). Original error: %s', error);
       res
         .status(500)
@@ -147,7 +125,10 @@ const proxyOnBehalfOf = (
     });
 };
 
-export const setupProxy = (authClient: OpenIdClient.Client) => {
+export const setupProxy = (
+  authClient: OpenIdClient.Client,
+  issuer: OpenIdClient.Issuer<any>
+) => {
   const router = express.Router();
 
   router.use(
@@ -173,6 +154,7 @@ export const setupProxy = (authClient: OpenIdClient.Client) => {
         res,
         next,
         authClient,
+        issuer,
         Config.auth.modiacontextholder
       );
     }
@@ -185,7 +167,14 @@ export const setupProxy = (authClient: OpenIdClient.Client) => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfooversiktsrv);
+      proxyOnBehalfOf(
+        req,
+        res,
+        next,
+        authClient,
+        issuer,
+        Config.auth.syfooversiktsrv
+      );
     }
   );
 
@@ -196,7 +185,14 @@ export const setupProxy = (authClient: OpenIdClient.Client) => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfoperson);
+      proxyOnBehalfOf(
+        req,
+        res,
+        next,
+        authClient,
+        issuer,
+        Config.auth.syfoperson
+      );
     }
   );
 
@@ -207,7 +203,14 @@ export const setupProxy = (authClient: OpenIdClient.Client) => {
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(req, res, next, authClient, Config.auth.syfoveileder);
+      proxyOnBehalfOf(
+        req,
+        res,
+        next,
+        authClient,
+        issuer,
+        Config.auth.syfoveileder
+      );
     }
   );
 

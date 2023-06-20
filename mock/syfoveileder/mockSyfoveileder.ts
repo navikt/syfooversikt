@@ -2,7 +2,7 @@ import { SYFOVEILEDER_ROOT } from '../../src/apiConstants';
 import express from 'express';
 
 import * as mockUtils from '../mockUtils';
-import { ensureAuthenticated } from '../../server/auth';
+import { ensureAuthenticated } from '../../server/authUtils';
 
 export const mockSyfoveileder = (server: express.Application) => {
   server.get(

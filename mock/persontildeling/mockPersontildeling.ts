@@ -1,7 +1,7 @@
 import { PERSONTILDELING_ROOT } from '../../src/apiConstants';
 import express from 'express';
 
-import { ensureAuthenticated } from '../../server/auth';
+import { ensureAuthenticated } from '../../server/authUtils';
 
 export const mockPersontildeling = (server: express.Application) => {
   server.post(
