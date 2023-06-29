@@ -19,6 +19,9 @@ COPY --from=builder /syfooversikt/dist/server.js.map ./
 COPY --from=builder /syfooversikt/dist/server ./server
 COPY --from=builder /syfooversikt/dist/index.html ./dist/index.html
 COPY --from=builder /syfooversikt/dist/main.bundle.js ./dist/main.bundle.js
+COPY --from=builder /syfooversikt/dist/main.bundle.js.map ./dist/main.bundle.js.map
+COPY --from=builder /syfooversikt/dist/styles.css ./dist/styles.css
+COPY --from=builder /syfooversikt/dist/styles.css.map ./dist/styles.css.map
 COPY --from=builder /syfooversikt/node_modules ./node_modules
 COPY --from=builder /syfooversikt/img ./img
 
