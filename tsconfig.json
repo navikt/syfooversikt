@@ -18,9 +18,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "noEmit": true,
     "jsx": "react",
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"]
     },
