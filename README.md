@@ -8,12 +8,14 @@ Frontend for å vise oversikt over syfooppgaver
 
 ```sh
 $ cp .env.template .env # for å sette opp lokale miljøvariabler
-$ npm install # installerer avhengigheter
+$ npm install --legacy-peer-deps # installerer avhengigheter
 ```
 
 #### For å kjøre koden lokalt:
 
-- `$ npm install`
+Du må ha Node v18 og npm v9 installert.
+
+- `$ npm install --legacy-peer-deps`
 - `$ docker compose up -d, alternativt ./start-dev.sh`
 - `$ npm start`
 - Kjør tester med `npm test`

@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:18-alpine as builder
 WORKDIR /syfooversikt
 
 COPY server.ts package.json tsconfig.json ./
@@ -11,7 +11,7 @@ COPY changelogs ./changelogs
 RUN npm install -g typescript
 RUN tsc --build
 
-FROM gcr.io/distroless/nodejs16-debian11
+FROM gcr.io/distroless/nodejs18-debian11
 WORKDIR /syfooversikt
 
 COPY --from=builder /syfooversikt/package.json ./
