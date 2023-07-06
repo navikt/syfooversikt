@@ -1,11 +1,15 @@
 import { expect } from 'chai';
-import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
+import {
+  filterOnPersonregister,
+  getSortedEventsFromSortingType,
+} from '@/utils/hendelseFilteringUtils';
 import {
   PersonData,
   PersonregisterState,
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
+import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
 const createPersonDataWithName = (name: string): PersonData => {
   return {
@@ -25,6 +29,16 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
   };
+};
+
+const defaulthendelseFilter = {
+  arbeidsgiverOnskerMote: false,
+  onskerMote: false,
+  ufordeltBruker: false,
+  dialogmotekandidat: false,
+  dialogmotesvar: false,
+  aktivitetskrav: false,
+  behandlerdialog: false,
 };
 
 describe('hendelseFilteringUtils', () => {
@@ -60,5 +74,72 @@ describe('hendelseFilteringUtils', () => {
     expect(Object.values(result)[0]?.navn).to.deep.equal('Camilla Camilla');
     expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
     expect(Object.values(result)[2]?.navn).to.deep.equal('Agnes Agnes');
+  });
+
+  describe('filterOnPersonregister', () => {
+    it('Return all elements in personregister if no filter is selected', () => {
+      const personregister: PersonregisterState = {
+        '16614407794': createPersonDataWithName('Bjarne Bjarne'),
+      };
+      const filter: HendelseTypeFilters = defaulthendelseFilter;
+
+      const filteredPersonregister = filterOnPersonregister(
+        personregister,
+        filter
+      );
+
+      expect(Object.keys(filteredPersonregister).length).to.equal(1);
+      expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407794');
+    });
+
+    it('Return no elements in personregister if no personer matches filter', () => {
+      const personDataWithAktivitetskrav: PersonData = {
+        ...createPersonDataWithName('Navn Navnesen'),
+        aktivitetskravActive: true,
+      };
+      const personregister: PersonregisterState = {
+        '16614407794': personDataWithAktivitetskrav,
+      };
+      const filterWithDialogmotesvar: HendelseTypeFilters = {
+        ...defaulthendelseFilter,
+        dialogmotesvar: true,
+      };
+
+      const filteredPersonregister = filterOnPersonregister(
+        personregister,
+        filterWithDialogmotesvar
+      );
+
+      expect(Object.keys(filteredPersonregister).length).to.equal(0);
+    });
+
+    it('Return only elements matching all active filters', () => {
+      const personDataWithAktivitetskrav: PersonData = {
+        ...createPersonDataWithName('Fox Mulder'),
+        aktivitetskravActive: true,
+      };
+      const personDataWithMotebehovAndAktivitetskrav: PersonData = {
+        ...createPersonDataWithName('Dana Scully'),
+        harMotebehovUbehandlet: true,
+        aktivitetskravActive: true,
+      };
+      const personregister: PersonregisterState = {
+        '16614407794': personDataWithAktivitetskrav,
+        '09128034883': personDataWithMotebehovAndAktivitetskrav,
+      };
+      const filterWithMotebehovAndAktivitetskrav: HendelseTypeFilters = {
+        ...defaulthendelseFilter,
+        onskerMote: true,
+        aktivitetskrav: true,
+      };
+
+      const filteredPersonregister = filterOnPersonregister(
+        personregister,
+        filterWithMotebehovAndAktivitetskrav
+      );
+
+      expect(Object.keys(filteredPersonregister).length).to.equal(1);
+      expect(Object.keys(filteredPersonregister)[0]).to.equal('09128034883');
+    });
   });
 });
