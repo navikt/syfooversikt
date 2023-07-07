@@ -92,27 +92,16 @@ export const filterOnPersonregister = (
   }
 
   const filtered = Object.entries(personregister).filter(([, personData]) => {
-    if (filter.onskerMote && personData.harMotebehovUbehandlet) {
-      return true;
-    } else if (
-      filter.arbeidsgiverOnskerMote &&
-      personData.harOppfolgingsplanLPSBistandUbehandlet
-    ) {
-      return true;
-    } else if (filter.dialogmotekandidat && personData.dialogmotekandidat) {
-      return true;
-    } else if (filter.ufordeltBruker && !personData.tildeltVeilederIdent) {
-      return true;
-    } else if (filter.dialogmotesvar && personData.harDialogmotesvar) {
-      return true;
-    } else if (filter.aktivitetskrav && personData.aktivitetskravActive) {
-      return true;
-    } else if (
-      filter.behandlerdialog &&
-      personData.harBehandlerdialogUbehandlet
-    ) {
-      return true;
-    }
+    return (
+      (!filter.onskerMote || personData.harMotebehovUbehandlet) &&
+      (!filter.arbeidsgiverOnskerMote ||
+        personData.harOppfolgingsplanLPSBistandUbehandlet) &&
+      (!filter.dialogmotekandidat || personData.dialogmotekandidat) &&
+      (!filter.ufordeltBruker || !personData.tildeltVeilederIdent) &&
+      (!filter.dialogmotesvar || personData.harDialogmotesvar) &&
+      (!filter.aktivitetskrav || personData.aktivitetskravActive) &&
+      (!filter.behandlerdialog || personData.harBehandlerdialogUbehandlet)
+    );
   });
 
   return Object.fromEntries(filtered);
