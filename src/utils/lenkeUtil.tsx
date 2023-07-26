@@ -18,12 +18,16 @@ export const lenkeTilModia = (personData: PersonData) => {
   const isGoingToOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
   const isGoingToAktivitetskrav = personData.aktivitetskravActive;
+  const isGoingToBehandlerdialog = personData.harBehandlerdialogUbehandlet;
+
   if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
   } else if (isGoingToMoteoversikt) {
     path = `${path}/moteoversikt`;
   } else if (isGoingToAktivitetskrav) {
     path = `${path}/aktivitetskrav`;
+  } else if (isGoingToBehandlerdialog) {
+    path = `${path}/behandlerdialog`;
   }
   return fullNaisUrlDefault('syfomodiaperson', path);
 };
