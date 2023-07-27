@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { SYFOOVERSIKTSRVREST_ROOT } from '@/utils/apiUrlUtil';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useNotifications } from '@/context/notification/NotificationContext';
@@ -9,6 +8,7 @@ import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
+import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
 
 const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
   return (
@@ -45,7 +45,7 @@ export const usePersonoversiktQuery = () => {
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
-      `${SYFOOVERSIKTSRVREST_ROOT}/v2/personoversikt/enhet/${aktivEnhet}`
+      `${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhet}`
     );
     return personoversiktData || [];
   };

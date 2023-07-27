@@ -2,7 +2,7 @@ import {
   EregOrganisasjonResponseDTO,
   getVirksomhetsnavn,
 } from '@/data/virksomhet/EregVirksomhetsnavn';
-import { EREG_ROOT } from '@/utils/apiUrlUtil';
+import { EREG_ROOT } from '@/apiConstants';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useQueries } from '@tanstack/react-query';
 import { get } from '@/api/axios';

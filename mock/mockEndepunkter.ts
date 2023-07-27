@@ -6,10 +6,10 @@ import { mockPersonoversikt } from './personoversikt/mockPersonoversikt';
 import { mockPersontildeling } from './persontildeling/mockPersontildeling';
 import { mockChangelogs } from './changelogs/mockChangelogs';
 import { mockUnleash } from './unleash/mockUnleash';
-
-import * as mockUtils from './mockUtils';
 import { mockEreg } from './ereg/mockEreg';
-const generatedPersons = mockUtils.generatePersons(50);
+import { generatePersons } from './mockUtils';
+
+const generatedPersons = generatePersons(50);
 
 const mockEndepunkter = (server: express.Application) => {
   server.use(express.json() as any);

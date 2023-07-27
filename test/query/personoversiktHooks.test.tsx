@@ -2,12 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { stubModiaContext } from '../stubs/stubModiaContext';
-import personoversiktEnhetMockData from '../../mock/data/personoversiktEnhet.json';
+import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { expect } from 'chai';
 
@@ -22,7 +22,7 @@ describe('personoversiktHooks tests', () => {
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
-            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
             handleAktivEnhetChanged: () => void 0,
           }}
         >
@@ -42,6 +42,6 @@ describe('personoversiktHooks tests', () => {
     const actual: PersonOversiktStatusDTO[] = result.current.data || [];
 
     expect(actual[0]).to.not.be.undefined;
-    expect(actual[0]?.fnr).to.eq(personoversiktEnhetMockData[0]?.fnr);
+    expect(actual[0]?.fnr).to.eq(personoversiktEnhetMock[0]?.fnr);
   });
 });

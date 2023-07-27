@@ -1,17 +1,19 @@
 import express from 'express';
-
 import { PERSONOVERSIKT_ROOT } from '../../src/apiConstants';
+import { personoversiktEnhetMock } from '../data/personoversiktEnhetMock';
+import {
+  generatePersonoversiktEnhetFromPersons,
+  MockPerson,
+} from '../mockUtils';
 
-import * as mockUtils from '../mockUtils';
-
-const personoversiktEnhet = (generatedPersons: any) => [
-  ...mockUtils.personoversiktEnhet,
-  ...mockUtils.generatePersonoversiktEnhetFromPersons(generatedPersons),
+const personoversiktEnhet = (generatedPersons: MockPerson[]) => [
+  ...personoversiktEnhetMock,
+  ...generatePersonoversiktEnhetFromPersons(generatedPersons),
 ];
 
 export const mockPersonoversikt = (
   server: express.Application,
-  generatedPersons: any
+  generatedPersons: MockPerson[]
 ) => {
   server.get(
     `${PERSONOVERSIKT_ROOT}/enhet/:id`,

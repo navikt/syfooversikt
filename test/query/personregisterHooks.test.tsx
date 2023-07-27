@@ -2,13 +2,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { stubModiaContext } from '../stubs/stubModiaContext';
-import personoversiktMockData from '../../mock/data/personoversiktEnhet.json';
+import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
 import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { expect } from 'chai';
 
@@ -24,7 +24,7 @@ describe('personregisterHooks tests', () => {
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
-            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
             handleAktivEnhetChanged: () => void 0,
           }}
         >
@@ -45,7 +45,7 @@ describe('personregisterHooks tests', () => {
 
     expect(actual).to.not.be.undefined;
     if (actual) {
-      expect(actual[0]?.fnr).to.eq(personoversiktMockData[0]?.fnr);
+      expect(actual[0]?.fnr).to.eq(personoversiktEnhetMock[0]?.fnr);
     }
   });
 });

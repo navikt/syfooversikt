@@ -10,7 +10,7 @@ import { stubPersonregister } from '../stubs/stubPersonregister';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { stubVeiledere } from '../stubs/stubVeiledere';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { FetchVeiledereFailed } from '@/context/notification/Notifications';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
@@ -42,7 +42,7 @@ describe('OversiktContainer', () => {
               >
                 <AktivEnhetContext.Provider
                   value={{
-                    aktivEnhet: aktivEnhetMockData.aktivEnhet,
+                    aktivEnhet: aktivEnhetMock.aktivEnhet,
                     handleAktivEnhetChanged: () => void 0,
                   }}
                 >

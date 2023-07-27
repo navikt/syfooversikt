@@ -10,10 +10,10 @@ import {
 import { Veileder } from '@/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
-import veiledere from '../../mock/data/veiledere.json';
-import veilederInfo from '../../mock/data/veilederInfo.json';
+import { veiledereMock } from '../../mock/data/veiledereMock';
+import { veilederInfoMock } from '../../mock/data/veilederInfoMock';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { expect } from 'chai';
 
@@ -28,7 +28,7 @@ describe('veiledereQueryHooks tests', () => {
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
-            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
             handleAktivEnhetChanged: () => void 0,
           }}
         >
@@ -48,7 +48,7 @@ describe('veiledereQueryHooks tests', () => {
     const actual: Veileder[] = result.current.data || [];
 
     expect(actual[0]).to.not.be.undefined;
-    expect(actual[0]?.ident).to.eq(veiledere[0]?.ident);
+    expect(actual[0]?.ident).to.eq(veiledereMock[0]?.ident);
   });
 
   it('loads aktiv veileder correctly', async () => {
@@ -72,6 +72,6 @@ describe('veiledereQueryHooks tests', () => {
     const actual: VeilederinfoDTO | undefined = result.current.data;
 
     expect(actual).to.not.be.undefined;
-    expect(actual?.ident).to.eq(veilederInfo.ident);
+    expect(actual?.ident).to.eq(veilederInfoMock.ident);
   });
 });
