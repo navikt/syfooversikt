@@ -17,7 +17,7 @@ export const usePersonregisterQuery = () => {
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
-  const fnrListe =
+  const fnrForPersonerUtenNavnListe =
     personoversiktQuery.data &&
     personoversiktQuery.data
       .filter((p) => !p.navn)
@@ -28,7 +28,7 @@ export const usePersonregisterQuery = () => {
   const fetchPersonregister = () => {
     const personregisterData = post<PersonregisterData[]>(
       `${SYFOPERSONREST_ROOT}/v2/person/info`,
-      fnrListe || []
+      fnrForPersonerUtenNavnListe || []
     );
 
     return personregisterData || [];
@@ -37,7 +37,7 @@ export const usePersonregisterQuery = () => {
   return useQuery({
     queryKey: personregisterQueryKeys.personregister,
     queryFn: fetchPersonregister,
-    enabled: !!fnrListe,
+    enabled: fnrForPersonerUtenNavnListe.length > 0,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
         throwError(error);
