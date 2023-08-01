@@ -5,12 +5,12 @@ import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
 import { unleashMock } from '../../mock/unleash/unleashMock';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 
 const queryClient = testQueryClient();
 
@@ -21,7 +21,7 @@ describe('HendelseTypeFilter', () => {
       () => veilederMock
     );
     queryClient.setQueryData(
-      unleashQueryKeys.toggles(aktivEnhetMockData.aktivEnhet, 'Z101010'),
+      unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, 'Z101010'),
       () => unleashMock
     );
 
@@ -29,7 +29,7 @@ describe('HendelseTypeFilter', () => {
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
-            aktivEnhet: aktivEnhetMockData.aktivEnhet,
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
             handleAktivEnhetChanged: () => void 0,
           }}
         >

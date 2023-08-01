@@ -1,6 +1,6 @@
 import nock from 'nock';
-import { MODIACONTEXTHOLDER_ROOT } from '@/utils/apiUrlUtil';
-import aktivEnhetMockData from '../../mock/data/aktivEnhet.json';
+import { MODIACONTEXTHOLDER_ROOT } from '@/apiConstants';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
@@ -10,6 +10,6 @@ export const stubModiaContext = () => {
   nock(nockBasePath)
     .get(`${MODIACONTEXTHOLDER_ROOT}/context/aktivenhet`)
     .reply(200, {
-      ...aktivEnhetMockData,
+      ...aktivEnhetMock,
     });
 };

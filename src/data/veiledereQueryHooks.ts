@@ -1,7 +1,4 @@
-import {
-  SYFOOVERSIKTSRVREST_ROOT,
-  SYFOVEILEDER_ROOT,
-} from '@/utils/apiUrlUtil';
+import { PERSONTILDELING_ROOT, SYFOVEILEDER_ROOT } from '@/apiConstants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
@@ -34,7 +31,7 @@ export const useVeiledereQuery = () => {
   const throwError = useAsyncError();
 
   const fetchVeiledere = () =>
-    get<Veileder[]>(`${SYFOVEILEDER_ROOT}/v2/veiledere/enhet/${aktivEnhet}`);
+    get<Veileder[]>(`${SYFOVEILEDER_ROOT}/veiledere/enhet/${aktivEnhet}`);
 
   return useQuery({
     queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
@@ -58,7 +55,7 @@ export const useAktivVeilederQuery = () => {
   const throwError = useAsyncError();
 
   const fetchVeilederInfo = () =>
-    get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/v2/veileder/self`);
+    get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/veileder/self`);
 
   return useQuery({
     queryKey: veiledereQueryKeys.veiledereInfo,
@@ -82,7 +79,7 @@ export const useTildelVeileder = () => {
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
-  const path = `${SYFOOVERSIKTSRVREST_ROOT}/v2/persontildeling/registrer`;
+  const path = `${PERSONTILDELING_ROOT}/registrer`;
 
   const postTildelVeileder = (liste: VeilederArbeidstaker[]) =>
     post(path, { tilknytninger: liste });

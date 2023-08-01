@@ -1,4 +1,4 @@
-import { SYFOPERSONREST_ROOT } from '@/utils/apiUrlUtil';
+import { SYFOPERSON_ROOT } from '@/apiConstants';
 import { useQuery } from '@tanstack/react-query';
 import { post } from '@/api/axios';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
@@ -27,7 +27,7 @@ export const usePersonregisterQuery = () => {
 
   const fetchPersonregister = () => {
     const personregisterData = post<PersonregisterData[]>(
-      `${SYFOPERSONREST_ROOT}/v2/person/info`,
+      `${SYFOPERSON_ROOT}/person/info`,
       fnrForPersonerUtenNavnListe || []
     );
 

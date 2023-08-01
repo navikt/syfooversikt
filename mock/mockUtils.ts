@@ -1,11 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
-const readDataFromJsonFile = (filename: any) => {
-  const rawData = fs.readFileSync(path.join(__dirname, `/Data/${filename}`));
-  return JSON.parse(rawData.toString());
-};
-
 const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * Math.floor(max));
 };
@@ -48,7 +40,7 @@ const generateName = () => {
   return `${randomChoice(f)} ${randomChoice(e)}`;
 };
 
-interface MockPerson {
+export interface MockPerson {
   name: string;
   fnr: string;
   skjermingskode: string;
@@ -65,7 +57,7 @@ export const generatePerson = (): MockPerson => {
 };
 
 export const generatePersons = (amount: number) =>
-  new Array(amount).fill({}).map((_) => generatePerson());
+  new Array(amount).fill(generatePerson());
 
 export const generatePersonoversiktEnhetFromPersons = (
   persons: MockPerson[]
@@ -85,11 +77,3 @@ export const generatePersonoversiktEnhetFromPersons = (
     };
   });
 };
-
-export const personInfo = readDataFromJsonFile('personInfo.json');
-export const personoversiktEnhet = readDataFromJsonFile(
-  'personoversiktEnhet.json'
-);
-export const veiledere = readDataFromJsonFile('veiledere.json');
-export const veilederInfo = readDataFromJsonFile('veilederInfo.json');
-export const aktivEnhet = readDataFromJsonFile('aktivEnhet.json');

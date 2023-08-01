@@ -1,16 +1,16 @@
 import { SYFOPERSON_ROOT } from '../../src/apiConstants';
-
-import * as mockUtils from '../mockUtils';
 import express from 'express';
+import { personInfoMock } from '../data/personInfoMock';
+import { MockPerson } from '../mockUtils';
 
-const personInfo = (generatedPersons: any) => [
-  ...mockUtils.personInfo,
+const personInfo = (generatedPersons: MockPerson[]) => [
+  ...personInfoMock,
   ...generatedPersons,
 ];
 
 export const mockSyfoperson = (
   server: express.Application,
-  generatedPersons: any
+  generatedPersons: MockPerson[]
 ) => {
   server.post(
     `${SYFOPERSON_ROOT}/person/info`,
