@@ -7,7 +7,6 @@ import {
   jwtVerify,
 } from 'jose';
 import { GetKeyFunction, JWTPayload } from 'jose/dist/types/types';
-import { URL } from 'url';
 
 import * as Config from './config';
 
