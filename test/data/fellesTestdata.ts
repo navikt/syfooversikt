@@ -13,7 +13,7 @@ const enhetId = '0316';
 export const testdata = {
   fnr1: '01999911111',
   fnr2: '99999922222',
-  fnr3: '99999933333',
+  fnr3: '59999933333',
   fnr4: '99999944444',
   navn1: 'Et navn',
   navn2: 'Et annet navn',
