@@ -38,7 +38,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: true,
   },
   {
-    fnr: '99999933333',
+    fnr: '59999933333',
     navn: '',
     enhet: '0316',
     veilederIdent: 'Z101010',

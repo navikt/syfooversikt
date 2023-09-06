@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { FilterTitle } from '../FilterTitle';
 
-const allDates = new Array(31)
+const allDates = new Array(71)
   .fill(1)
   .map((currentNumber, index) => currentNumber + index);
 

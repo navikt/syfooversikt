@@ -12,7 +12,7 @@ export const personInfoMock: PersonregisterData[] = [
     skjermingskode: 'INGEN',
   },
   {
-    fnr: '99999933333',
+    fnr: '59999933333',
     navn: 'Korrupt Bolle',
     skjermingskode: 'DISKRESJONSMERKET',
   },
