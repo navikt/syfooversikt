@@ -7,10 +7,10 @@ import { NotificationProvider } from '@/context/notification/NotificationContext
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { unleashMock } from '../../mock/unleash/unleashMock';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { unleashMock } from '../../mock/mockUnleash';
 
 const queryClient = testQueryClient();
 

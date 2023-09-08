@@ -4,11 +4,11 @@ import path from 'path';
 import prometheus from 'prom-client';
 import { getChangelogs } from './server/changelogReader';
 
-import * as Config from './server/config';
 import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
 import { setupProxy } from './server/proxy';
 import { setupSession } from './server/session';
-import { getUnleashToggles } from './server/routes/unleashRoutes';
+
+import unleash = require('./server/unleash');
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -64,16 +64,17 @@ const setupServer = async () => {
 
   server.use('/static', express.static(DIST_DIR));
 
-  server.post('/unleash/toggles', (req, res) => {
-    const toggles = req.body.toggles;
-    const unleashToggles = getUnleashToggles(
-      toggles,
-      req.query.valgtEnhet,
-      req.query.userId
-    );
-
-    res.status(200).send(unleashToggles);
-  });
+  server.get(
+    '/unleash/toggles',
+    redirectIfUnauthorized,
+    (req: express.Request, res: express.Response) => {
+      const togglesResponse = unleash.getToggles(
+        req.query.veilederId,
+        req.query.enhetId
+      );
+      res.status(200).send(togglesResponse);
+    }
+  );
 
   server.use(setupProxy(authClient, issuer));
 

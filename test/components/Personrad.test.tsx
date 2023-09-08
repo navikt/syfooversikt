@@ -9,12 +9,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { testQueryClient } from '../testQueryClient';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { unleashMock } from '../../mock/unleash/unleashMock';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { unleashMock } from '../../mock/mockUnleash';
 
 let queryClient: QueryClient;
 
