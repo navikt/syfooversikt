@@ -30,7 +30,6 @@ const envVar = ({ name, defaultValue }: EnvVarType) => {
 
 export const isDev = envVar({ name: 'NODE_ENV' }) === 'development';
 export const isProd = envVar({ name: 'NODE_ENV' }) === 'production';
-export const tokenSetSelf = 'self';
 
 export interface ExternalAppConfig {
   clientId: string;
@@ -148,6 +147,11 @@ export const auth = {
       name: 'SYFOVEILEDER_HOST',
     }),
   },
+};
+
+export const unleash: { serverApiUrl: string; serverApiToken: string } = {
+  serverApiUrl: envVar({ name: 'UNLEASH_SERVER_API_URL' }),
+  serverApiToken: envVar({ name: 'UNLEASH_SERVER_API_TOKEN' }),
 };
 
 export const redis = {

@@ -5,7 +5,7 @@ import { mockSyfoveileder } from './syfoveileder/mockSyfoveileder';
 import { mockPersonoversikt } from './personoversikt/mockPersonoversikt';
 import { mockPersontildeling } from './persontildeling/mockPersontildeling';
 import { mockChangelogs } from './changelogs/mockChangelogs';
-import { mockUnleash } from './unleash/mockUnleash';
+import { mockUnleash } from './mockUnleash';
 import { mockEreg } from './ereg/mockEreg';
 import { generatePersons } from './mockUtils';
 
