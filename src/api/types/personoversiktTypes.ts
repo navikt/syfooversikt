@@ -14,6 +14,9 @@ export enum AktivitetskravStatus {
   AUTOMATISK_OPPFYLT = 'AUTOMATISK_OPPFYLT',
   STANS = 'STANS',
   IKKE_OPPFYLT = 'IKKE_OPPFYLT',
+  FORHANDSVARSEL = 'FORHANDSVARSEL',
+  IKKE_AKTUELL = 'IKKE_AKTUELL',
+  LUKKET = 'LUKKET',
 }
 
 export interface PersonOversiktStatusDTO {
