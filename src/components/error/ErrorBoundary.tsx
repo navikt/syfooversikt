@@ -1,14 +1,7 @@
-import React, { ReactElement, ReactNode } from 'react';
-import * as Sentry from '@sentry/react';
-import { ApiErrorException } from '@/api/errors';
+import React, { ReactNode } from 'react';
+import { defaultErrorTexts } from '@/api/errors';
 import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
-
-export type ErrorContext = 'mainPage' | 'appRouter' | 'oversiktContainer';
-
-interface ContentProps {
-  message: string;
-}
 
 const ErrorContentContainer = styled.div`
   display: flex;
@@ -22,55 +15,38 @@ const ErrorRow = styled.div`
   margin: 2rem;
 `;
 
-const ErrorContent = ({ message }: ContentProps): ReactElement => {
-  return (
-    <ErrorContentContainer>
-      <ErrorRow>
-        <AlertStripe type="feil">{message}</AlertStripe>
-      </ErrorRow>
-    </ErrorContentContainer>
-  );
-};
-
-const renderErrorContent = (
-  error: Error,
-  customError?: CustomError
-): ReactElement => {
-  if (customError) {
-    return <ErrorContent message={customError.message} />;
-  }
-
-  if (error instanceof ApiErrorException) {
-    return <ErrorContent message={error.error.defaultErrorMsg} />;
-  }
-
-  return <ErrorContent message={error.message} />;
-};
-
-interface CustomError {
-  header: string;
-  message: string;
-}
-
 interface ErrorBoundaryProps {
   children: ReactNode;
-  context: ErrorContext;
-  customError?: CustomError;
 }
 
-export const ErrorBoundary = ({
-  context,
-  children,
-  customError,
-}: ErrorBoundaryProps) => {
-  return (
-    <Sentry.ErrorBoundary
-      beforeCapture={(scope) => {
-        scope.setTag('context', context);
-      }}
-      fallback={({ error }) => renderErrorContent(error, customError)}
-    >
-      {children}
-    </Sentry.ErrorBoundary>
-  );
+type State = {
+  hasError: boolean;
 };
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  componentDidCatch() {
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <ErrorContentContainer>
+          <ErrorRow>
+            <AlertStripe type="feil">
+              {defaultErrorTexts.generalError}
+            </AlertStripe>
+          </ErrorRow>
+        </ErrorContentContainer>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+export default ErrorBoundary;

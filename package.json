@@ -27,8 +27,6 @@
     "@navikt/ds-react": "1.5.9",
     "@navikt/fnrvalidator": "1.1.4",
     "@navikt/navspa": "3.0.1",
-    "@sentry/react": "6.19.7",
-    "@sentry/tracing": "6.19.7",
     "@tanstack/react-query": "4.22.0",
     "@tanstack/react-query-devtools": "4.22.0",
     "@types/connect-redis": "0.0.19",
