@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import styled from 'styled-components';
+import { Loader } from '@navikt/ds-react';
 
 const SpinnerContainer = styled.div`
   text-align: center;
@@ -10,9 +10,7 @@ const SpinnerContainer = styled.div`
 const AppSpinner = (): ReactElement => {
   return (
     <SpinnerContainer>
-      <NavFrontendSpinner type="XL">
-        Vent litt mens siden laster
-      </NavFrontendSpinner>
+      <Loader size="2xlarge" title="Vent litt mens siden laster" />
     </SpinnerContainer>
   );
 };

@@ -8,7 +8,7 @@ export const NotificationBar = (): ReactElement => {
   const notificationBars = notifications.map(
     (notification, index): ReactNode => {
       return (
-        <AlertstripeFullbredde key={index} type={notification.level}>
+        <AlertstripeFullbredde key={index} variant={notification.variant}>
           {notification.message}
         </AlertstripeFullbredde>
       );

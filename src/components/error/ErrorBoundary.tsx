@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { defaultErrorTexts } from '@/api/errors';
 import styled from 'styled-components';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 
 const ErrorContentContainer = styled.div`
   display: flex;
@@ -38,9 +38,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
       return (
         <ErrorContentContainer>
           <ErrorRow>
-            <AlertStripe type="feil">
-              {defaultErrorTexts.generalError}
-            </AlertStripe>
+            <Alert variant="error">{defaultErrorTexts.generalError}</Alert>
           </ErrorRow>
         </ErrorContentContainer>
       );
