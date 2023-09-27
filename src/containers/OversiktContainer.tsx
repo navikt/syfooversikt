@@ -7,8 +7,8 @@ import { Oversikt } from '@/containers/Oversikt';
 import { OverviewTabType } from '@/konstanter';
 import { NavigationBar } from '@/components/NavigationBar';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { ErrorBoundary } from '@/components/error/ErrorBoundary';
 import { NotificationBar } from '@/components/error/NotificationBar';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 const Container = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
   };
 
   return (
-    <ErrorBoundary context={'oversiktContainer'}>
+    <ErrorBoundary>
       <Container>
         <NotificationBar />
         <NavigationBar />

@@ -5,7 +5,7 @@ import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
 import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
-import { ErrorBoundary } from '@/components/error/ErrorBoundary';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 export const minOversiktRoutePathRoutePath = '/minoversikt';
 export const enhetOversiktRoutePath = '/enhet';
@@ -16,7 +16,7 @@ const AppRouter = (): ReactElement => {
       <>
         <Decorator />
         <Side tittel="Sykefraværsoppfølging">
-          <ErrorBoundary context="appRouter">
+          <ErrorBoundary>
             <Routes>
               <Route
                 path={enhetOversiktRoutePath}
