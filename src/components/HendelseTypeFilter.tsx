@@ -10,6 +10,7 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { trackOnClick } from '@/amplitude/amplitude';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 const texts = {
   trackingLabel: 'HendelseFilter',
@@ -23,6 +24,7 @@ export const HendelseTekster = {
   DIALOGMOTESVAR: 'Svar dialogmøte',
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
+  AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
 };
 
 interface Props {
@@ -41,6 +43,7 @@ const enkeltFilterFraTekst = (
     dialogmotesvar: false,
     aktivitetskrav: false,
     behandlerdialog: false,
+    aktivitetskravVurderStans: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -62,6 +65,8 @@ const lagNyttFilter = (
   if (tekst === HendelseTekster.AKTIVITETSKRAV) filter.aktivitetskrav = checked;
   if (tekst === HendelseTekster.BEHANDLERDIALOG)
     filter.behandlerdialog = checked;
+  if (tekst === HendelseTekster.AKTIVITETSKRAV_VURDER_STANS)
+    filter.aktivitetskravVurderStans = checked;
   return filter;
 };
 
@@ -78,6 +83,8 @@ const isCheckedInState = (
   if (tekst === HendelseTekster.DIALOGMOTESVAR) return state.dialogmotesvar;
   if (tekst === HendelseTekster.AKTIVITETSKRAV) return state.aktivitetskrav;
   if (tekst === HendelseTekster.BEHANDLERDIALOG) return state.behandlerdialog;
+  if (tekst === HendelseTekster.AKTIVITETSKRAV_VURDER_STANS)
+    return state.aktivitetskravVurderStans;
   return false;
 };
 
@@ -92,6 +99,7 @@ const Container = styled.div`
   margin-bottom: 1rem;
 `;
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
+  const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
@@ -127,6 +135,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
+            toggles.isSendingAvForhandsvarselEnabled,
             personRegister
           )}
         </CheckboxGruppe>
@@ -138,26 +147,33 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
+  isSendingAvForhandsvarselEnabled: boolean,
   personRegister?: PersonregisterState
 ) => {
-  return elementer.map((checkboksElement) => {
-    const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
-    const antall = Object.keys(
-      filterOnPersonregister(personRegister || {}, filter)
-    ).length;
-    const labelNode = (
-      <div>
-        {checkboksElement.tekst} <strong>({antall})</strong>
-      </div>
-    );
-    return (
-      <Checkbox
-        label={labelNode}
-        checked={checkboksElement.checked}
-        id={checkboksElement.key}
-        key={checkboksElement.key}
-        onChange={(e) => onCheckedChange(checkboksElement, e.target.checked)}
-      />
-    );
-  });
+  return elementer
+    .filter(
+      (checkboksElement) =>
+        isSendingAvForhandsvarselEnabled ||
+        checkboksElement.tekst !== HendelseTekster.AKTIVITETSKRAV_VURDER_STANS
+    )
+    .map((checkboksElement) => {
+      const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
+      const antall = Object.keys(
+        filterOnPersonregister(personRegister || {}, filter)
+      ).length;
+      const labelNode = (
+        <div>
+          {checkboksElement.tekst} <strong>({antall})</strong>
+        </div>
+      );
+      return (
+        <Checkbox
+          label={labelNode}
+          checked={checkboksElement.checked}
+          id={checkboksElement.key}
+          key={checkboksElement.key}
+          onChange={(e) => onCheckedChange(checkboksElement, e.target.checked)}
+        />
+      );
+    });
 };
