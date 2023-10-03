@@ -46,7 +46,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: null,
     motebehovUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
-    aktivitetskravActive: true,
+    aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: null,
