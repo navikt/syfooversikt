@@ -42,5 +42,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       'isMotebehovTilbakemeldingEnabled',
       context
     ),
+    isSendingAvForhandsvarselEnabled: unleash.isEnabled(
+      'isSendingAvForhandsvarselEnabled',
+      context
+    ),
   };
 };

@@ -100,7 +100,9 @@ export const filterOnPersonregister = (
       (!filter.ufordeltBruker || !personData.tildeltVeilederIdent) &&
       (!filter.dialogmotesvar || personData.harDialogmotesvar) &&
       (!filter.aktivitetskrav || personData.aktivitetskravActive) &&
-      (!filter.behandlerdialog || personData.harBehandlerdialogUbehandlet)
+      (!filter.behandlerdialog || personData.harBehandlerdialogUbehandlet) &&
+      (!filter.aktivitetskravVurderStans ||
+        personData.harAktivitetskravVurderStansUbehandlet)
     );
   });
 

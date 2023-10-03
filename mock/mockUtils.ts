@@ -74,6 +74,7 @@ export const generatePersonoversiktEnhetFromPersons = (
       motestatus: undefined,
       dialogmotesvarUbehandlet: false,
       behandlerdialogUbehandlet: false,
+      aktivitetskravVurderStansUbehandlet: false,
     };
   });
 };

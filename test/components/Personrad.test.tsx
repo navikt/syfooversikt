@@ -55,6 +55,7 @@ const defaultPersonData: PersonData = {
   aktivitetskravActive: false,
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
+  harAktivitetskravVurderStansUbehandlet: false,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,

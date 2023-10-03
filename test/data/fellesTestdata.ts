@@ -69,6 +69,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
+    aktivitetskravVurderStansUbehandlet: false,
   },
   {
     fnr: testdata.fnr4,
@@ -85,6 +86,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
+    aktivitetskravVurderStansUbehandlet: false,
   },
 ];
 
