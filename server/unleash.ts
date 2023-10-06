@@ -46,5 +46,6 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       'isSendingAvForhandsvarselEnabled',
       context
     ),
+    isHuskelappEnabled: unleash.isEnabled('isHuskelappEnabled', context),
   };
 };

@@ -34,6 +34,7 @@ export const toPersonData = (
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
       harAktivitetskravVurderStansUbehandlet:
         person.aktivitetskravVurderStansUbehandlet,
+      huskelappActive: person.huskelappActive,
     };
   });
 

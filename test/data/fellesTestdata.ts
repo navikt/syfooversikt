@@ -70,6 +70,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
+    huskelappActive: false,
   },
   {
     fnr: testdata.fnr4,
@@ -87,6 +88,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
+    huskelappActive: false,
   },
 ];
 
@@ -107,5 +109,3 @@ export const veiledere = [
     etternavn: 'Ansatt',
   },
 ];
-
-export const markertePersoner = ['01999911111', '99999922222'];
