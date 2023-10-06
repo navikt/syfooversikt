@@ -4,7 +4,7 @@ import { OverviewTabType } from '@/konstanter';
 
 type TabTypeProviderProps = { children: React.ReactNode };
 
-const TabTypeContext = React.createContext<{
+export const TabTypeContext = React.createContext<{
   tabType: OverviewTabType;
   setTabType: (tabType: OverviewTabType) => void;
 }>({
