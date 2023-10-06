@@ -1,6 +1,6 @@
 import React from 'react';
 import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -11,15 +11,20 @@ import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { unleashMock } from '../../mock/mockUnleash';
+import { TabTypeContext } from '@/context/tab/TabTypeContext';
+import { OverviewTabType } from '@/konstanter';
 
-const queryClient = testQueryClient();
+let queryClient: QueryClient;
 
 describe('HendelseTypeFilter', () => {
-  it('Skal inneholde checkbokser med riktige labels', () => {
+  beforeEach(() => {
+    queryClient = testQueryClient();
     queryClient.setQueryData(
       veiledereQueryKeys.veiledereInfo,
       () => veilederMock
     );
+  });
+  it('Skal inneholde checkbokser med riktige labels', () => {
     queryClient.setQueryData(
       unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, 'Z101010'),
       () => unleashMock
@@ -81,5 +86,67 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(behandlerdialogCheckbox).to.exist;
+
+    const vurderStansCheckbox = screen.getByRole('checkbox', {
+      name: /Vurder stans/,
+      checked: false,
+    });
+    expect(vurderStansCheckbox).to.exist;
+  });
+  it('Skal ikke inneholde checkbokser bak toggle når toggles disabled', () => {
+    queryClient.setQueryData(
+      veiledereQueryKeys.veiledereInfo,
+      () => veilederMock
+    );
+
+    render(
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <HendelseTypeFilter />
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
+    );
+
+    expect(
+      screen.queryByRole('checkbox', {
+        name: /Vurder stans/,
+      })
+    ).to.not.exist;
+  });
+  it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
+    render(
+      <NotificationProvider>
+        <TabTypeContext.Provider
+          value={{
+            tabType: OverviewTabType.MY_OVERVIEW,
+            setTabType: () => void 0,
+          }}
+        >
+          <AktivEnhetContext.Provider
+            value={{
+              aktivEnhet: aktivEnhetMock.aktivEnhet,
+              handleAktivEnhetChanged: () => void 0,
+            }}
+          >
+            <QueryClientProvider client={queryClient}>
+              <HendelseTypeFilter />
+            </QueryClientProvider>
+          </AktivEnhetContext.Provider>
+        </TabTypeContext.Provider>
+      </NotificationProvider>
+    );
+
+    expect(
+      screen.queryByRole('checkbox', {
+        name: /Ufordelte brukere/,
+      })
+    ).to.not.exist;
   });
 });

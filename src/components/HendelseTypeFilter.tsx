@@ -11,6 +11,7 @@ import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { Toggles } from '@/data/unleash/types/unleash_types';
 
 const texts = {
   trackingLabel: 'HendelseFilter',
@@ -25,14 +26,17 @@ export const HendelseTekster = {
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
-};
+} as const;
+
+type HendelseTeksterKeys = keyof typeof HendelseTekster;
+type HendelseTeksterValues = typeof HendelseTekster[HendelseTeksterKeys];
 
 interface Props {
   personRegister?: PersonregisterState;
 }
 
 const enkeltFilterFraTekst = (
-  tekst: string,
+  tekst: HendelseTeksterValues,
   checked: boolean
 ): HendelseTypeFilters => {
   const filter: HendelseTypeFilters = {
@@ -50,70 +54,117 @@ const enkeltFilterFraTekst = (
 
 const lagNyttFilter = (
   forrigeFilter: HendelseTypeFilters,
-  tekst: string,
+  tekst: HendelseTeksterValues,
   checked: boolean
 ): HendelseTypeFilters => {
   const filter = { ...forrigeFilter };
-  if (tekst === HendelseTekster.ARBEIDSGIVER_BISTAND)
-    filter.arbeidsgiverOnskerMote = checked;
-  if (tekst === HendelseTekster.MOTEBEHOV) filter.onskerMote = checked;
-  if (tekst === HendelseTekster.UFORDELTE_BRUKERE)
-    filter.ufordeltBruker = checked;
-  if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
-    filter.dialogmotekandidat = checked;
-  if (tekst === HendelseTekster.DIALOGMOTESVAR) filter.dialogmotesvar = checked;
-  if (tekst === HendelseTekster.AKTIVITETSKRAV) filter.aktivitetskrav = checked;
-  if (tekst === HendelseTekster.BEHANDLERDIALOG)
-    filter.behandlerdialog = checked;
-  if (tekst === HendelseTekster.AKTIVITETSKRAV_VURDER_STANS)
-    filter.aktivitetskravVurderStans = checked;
-  return filter;
+
+  switch (tekst) {
+    case HendelseTekster.ARBEIDSGIVER_BISTAND: {
+      filter.arbeidsgiverOnskerMote = checked;
+      return filter;
+    }
+    case HendelseTekster.MOTEBEHOV: {
+      filter.onskerMote = checked;
+      return filter;
+    }
+    case HendelseTekster.UFORDELTE_BRUKERE: {
+      filter.ufordeltBruker = checked;
+      return filter;
+    }
+    case HendelseTekster.DIALOGMOTEKANDIDAT: {
+      filter.dialogmotekandidat = checked;
+      return filter;
+    }
+    case HendelseTekster.DIALOGMOTESVAR: {
+      filter.dialogmotesvar = checked;
+      return filter;
+    }
+    case HendelseTekster.AKTIVITETSKRAV: {
+      filter.aktivitetskrav = checked;
+      return filter;
+    }
+    case HendelseTekster.BEHANDLERDIALOG: {
+      filter.behandlerdialog = checked;
+      return filter;
+    }
+    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS: {
+      filter.aktivitetskravVurderStans = checked;
+      return filter;
+    }
+  }
 };
 
 const isCheckedInState = (
   state: HendelseTypeFilters,
-  tekst: string
+  tekst: HendelseTeksterValues
 ): boolean => {
-  if (tekst === HendelseTekster.ARBEIDSGIVER_BISTAND)
-    return state.arbeidsgiverOnskerMote;
-  if (tekst === HendelseTekster.MOTEBEHOV) return state.onskerMote;
-  if (tekst === HendelseTekster.UFORDELTE_BRUKERE) return state.ufordeltBruker;
-  if (tekst === HendelseTekster.DIALOGMOTEKANDIDAT)
-    return state.dialogmotekandidat;
-  if (tekst === HendelseTekster.DIALOGMOTESVAR) return state.dialogmotesvar;
-  if (tekst === HendelseTekster.AKTIVITETSKRAV) return state.aktivitetskrav;
-  if (tekst === HendelseTekster.BEHANDLERDIALOG) return state.behandlerdialog;
-  if (tekst === HendelseTekster.AKTIVITETSKRAV_VURDER_STANS)
-    return state.aktivitetskravVurderStans;
-  return false;
+  switch (tekst) {
+    case HendelseTekster.ARBEIDSGIVER_BISTAND:
+      return state.arbeidsgiverOnskerMote;
+    case HendelseTekster.MOTEBEHOV:
+      return state.onskerMote;
+    case HendelseTekster.UFORDELTE_BRUKERE:
+      return state.ufordeltBruker;
+    case HendelseTekster.DIALOGMOTEKANDIDAT:
+      return state.dialogmotekandidat;
+    case HendelseTekster.DIALOGMOTESVAR:
+      return state.dialogmotesvar;
+    case HendelseTekster.AKTIVITETSKRAV:
+      return state.aktivitetskrav;
+    case HendelseTekster.BEHANDLERDIALOG:
+      return state.behandlerdialog;
+    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
+      return state.aktivitetskravVurderStans;
+  }
+};
+
+const showCheckbox = (
+  key: HendelseTeksterKeys,
+  toggles: Toggles,
+  tabType: OverviewTabType
+): boolean => {
+  switch (key) {
+    case 'AKTIVITETSKRAV':
+    case 'BEHANDLERDIALOG':
+    case 'DIALOGMOTEKANDIDAT':
+    case 'DIALOGMOTESVAR':
+    case 'MOTEBEHOV':
+    case 'ARBEIDSGIVER_BISTAND':
+      return true;
+    case 'UFORDELTE_BRUKERE':
+      return tabType === OverviewTabType.ENHET_OVERVIEW;
+    case 'AKTIVITETSKRAV_VURDER_STANS':
+      return toggles.isSendingAvForhandsvarselEnabled;
+  }
 };
 
 interface CheckboksElement {
-  tekst: string;
+  tekst: HendelseTeksterValues;
   checked: boolean;
-  key: string;
-  tabType: OverviewTabType;
+  key: HendelseTeksterKeys;
+  show: boolean;
 }
 
 const Container = styled.div`
   margin-bottom: 1rem;
 `;
+
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
-  const elementer = Object.entries(HendelseTekster)
-    .filter(([, tekst]) => {
-      return !(
-        tekst === HendelseTekster.UFORDELTE_BRUKERE &&
-        tabType === OverviewTabType.MY_OVERVIEW
-      );
-    })
-    .map(([key, tekst]) => {
-      const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
-      return { key, tekst, checked } as CheckboksElement;
-    });
+  const elementer = Object.entries(HendelseTekster).map(([key, tekst]) => {
+    const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
+    const show = showCheckbox(key as HendelseTeksterKeys, toggles, tabType);
+    return {
+      key,
+      tekst,
+      checked,
+      show,
+    } as CheckboksElement;
+  });
 
   const onCheckedChange = (element: CheckboksElement, checked: boolean) => {
     const nyttFilter = lagNyttFilter(
@@ -135,7 +186,6 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           {genererHendelseCheckbokser(
             elementer,
             onCheckedChange,
-            toggles.isSendingAvForhandsvarselEnabled,
             personRegister
           )}
         </CheckboxGruppe>
@@ -147,15 +197,10 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
 const genererHendelseCheckbokser = (
   elementer: CheckboksElement[],
   onCheckedChange: (klikketElement: CheckboksElement, checked: boolean) => void,
-  isSendingAvForhandsvarselEnabled: boolean,
   personRegister?: PersonregisterState
 ) => {
   return elementer
-    .filter(
-      (checkboksElement) =>
-        isSendingAvForhandsvarselEnabled ||
-        checkboksElement.tekst !== HendelseTekster.AKTIVITETSKRAV_VURDER_STANS
-    )
+    .filter((checkboksElement) => checkboksElement.show)
     .map((checkboksElement) => {
       const filter = enkeltFilterFraTekst(checkboksElement.tekst, true);
       const antall = Object.keys(
