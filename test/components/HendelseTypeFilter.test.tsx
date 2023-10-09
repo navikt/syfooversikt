@@ -92,6 +92,12 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(vurderStansCheckbox).to.exist;
+
+    const huskelappCheckbox = screen.getByRole('checkbox', {
+      name: /Huskelapp/,
+      checked: false,
+    });
+    expect(huskelappCheckbox).to.exist;
   });
   it('Skal ikke inneholde checkbokser bak toggle når toggles disabled', () => {
     queryClient.setQueryData(
@@ -117,6 +123,11 @@ describe('HendelseTypeFilter', () => {
     expect(
       screen.queryByRole('checkbox', {
         name: /Vurder stans/,
+      })
+    ).to.not.exist;
+    expect(
+      screen.queryByRole('checkbox', {
+        name: /Huskelapp/,
       })
     ).to.not.exist;
   });

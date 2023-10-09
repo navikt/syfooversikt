@@ -77,6 +77,35 @@ export const filterOnBirthDates = (
   return Object.fromEntries(filtered);
 };
 
+type HendelseTypeFilterKey = keyof HendelseTypeFilters;
+
+const matchesFilter = (
+  key: HendelseTypeFilterKey,
+  filters: HendelseTypeFilters,
+  personData: PersonData
+): boolean => {
+  switch (key) {
+    case 'onskerMote':
+      return !filters[key] || personData.harMotebehovUbehandlet;
+    case 'arbeidsgiverOnskerMote':
+      return !filters[key] || personData.harOppfolgingsplanLPSBistandUbehandlet;
+    case 'dialogmotekandidat':
+      return !filters[key] || personData.dialogmotekandidat === true;
+    case 'ufordeltBruker':
+      return !filters[key] || !personData.tildeltVeilederIdent;
+    case 'dialogmotesvar':
+      return !filters[key] || personData.harDialogmotesvar;
+    case 'aktivitetskrav':
+      return !filters[key] || personData.aktivitetskravActive;
+    case 'behandlerdialog':
+      return !filters[key] || personData.harBehandlerdialogUbehandlet;
+    case 'aktivitetskravVurderStans':
+      return !filters[key] || personData.harAktivitetskravVurderStansUbehandlet;
+    case 'huskelapp':
+      return !filters[key] || personData.huskelappActive;
+  }
+};
+
 export const filterOnPersonregister = (
   personregister: PersonregisterState,
   filter?: HendelseTypeFilters
@@ -92,17 +121,8 @@ export const filterOnPersonregister = (
   }
 
   const filtered = Object.entries(personregister).filter(([, personData]) => {
-    return (
-      (!filter.onskerMote || personData.harMotebehovUbehandlet) &&
-      (!filter.arbeidsgiverOnskerMote ||
-        personData.harOppfolgingsplanLPSBistandUbehandlet) &&
-      (!filter.dialogmotekandidat || personData.dialogmotekandidat) &&
-      (!filter.ufordeltBruker || !personData.tildeltVeilederIdent) &&
-      (!filter.dialogmotesvar || personData.harDialogmotesvar) &&
-      (!filter.aktivitetskrav || personData.aktivitetskravActive) &&
-      (!filter.behandlerdialog || personData.harBehandlerdialogUbehandlet) &&
-      (!filter.aktivitetskravVurderStans ||
-        personData.harAktivitetskravVurderStansUbehandlet)
+    return Object.keys(filter).every((key) =>
+      matchesFilter(key as HendelseTypeFilterKey, filter, personData)
     );
   });
 

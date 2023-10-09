@@ -7,6 +7,7 @@ export interface HendelseTypeFilters {
   aktivitetskrav: boolean;
   behandlerdialog: boolean;
   aktivitetskravVurderStans: boolean;
+  huskelapp: boolean;
 }
 
 export interface FilterState {
@@ -33,5 +34,6 @@ export const filterInitialState: FilterState = {
     aktivitetskrav: false,
     behandlerdialog: false,
     aktivitetskravVurderStans: false,
+    huskelapp: false,
   },
 };

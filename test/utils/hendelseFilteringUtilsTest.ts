@@ -29,10 +29,11 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
     harAktivitetskravVurderStansUbehandlet: false,
+    huskelappActive: false,
   };
 };
 
-const defaulthendelseFilter = {
+const defaulthendelseFilter: HendelseTypeFilters = {
   arbeidsgiverOnskerMote: false,
   onskerMote: false,
   ufordeltBruker: false,
@@ -41,6 +42,7 @@ const defaulthendelseFilter = {
   aktivitetskrav: false,
   behandlerdialog: false,
   aktivitetskravVurderStans: false,
+  huskelapp: false,
 };
 
 describe('hendelseFilteringUtils', () => {
@@ -83,11 +85,9 @@ describe('hendelseFilteringUtils', () => {
       const personregister: PersonregisterState = {
         '16614407794': createPersonDataWithName('Bjarne Bjarne'),
       };
-      const filter: HendelseTypeFilters = defaulthendelseFilter;
-
       const filteredPersonregister = filterOnPersonregister(
         personregister,
-        filter
+        defaulthendelseFilter
       );
 
       expect(Object.keys(filteredPersonregister).length).to.equal(1);

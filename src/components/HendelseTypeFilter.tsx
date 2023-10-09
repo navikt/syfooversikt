@@ -26,6 +26,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
+  HUSKELAPP: 'Huskelapp',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -48,6 +49,7 @@ const enkeltFilterFraTekst = (
     aktivitetskrav: false,
     behandlerdialog: false,
     aktivitetskravVurderStans: false,
+    huskelapp: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -92,6 +94,10 @@ const lagNyttFilter = (
       filter.aktivitetskravVurderStans = checked;
       return filter;
     }
+    case HendelseTekster.HUSKELAPP: {
+      filter.huskelapp = checked;
+      return filter;
+    }
   }
 };
 
@@ -116,6 +122,8 @@ const isCheckedInState = (
       return state.behandlerdialog;
     case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
       return state.aktivitetskravVurderStans;
+    case HendelseTekster.HUSKELAPP:
+      return state.huskelapp;
   }
 };
 
@@ -136,6 +144,8 @@ const showCheckbox = (
       return tabType === OverviewTabType.ENHET_OVERVIEW;
     case 'AKTIVITETSKRAV_VURDER_STANS':
       return toggles.isSendingAvForhandsvarselEnabled;
+    case 'HUSKELAPP':
+      return toggles.isHuskelappEnabled;
   }
 };
 
