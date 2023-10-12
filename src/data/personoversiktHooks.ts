@@ -17,7 +17,8 @@ const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
     personOversiktStatus.dialogmotesvarUbehandlet ||
     personOversiktStatus.dialogmotekandidat ||
     personOversiktStatus.behandlerdialogUbehandlet ||
-    personOversiktStatus.aktivitetskravVurderStansUbehandlet
+    personOversiktStatus.aktivitetskravVurderStansUbehandlet ||
+    personOversiktStatus.huskelappActive
   );
 };
 
