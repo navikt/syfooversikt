@@ -24,6 +24,7 @@ type State = {
 };
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };

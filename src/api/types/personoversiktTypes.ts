@@ -19,24 +19,28 @@ export enum AktivitetskravStatus {
   LUKKET = 'LUKKET',
 }
 
-export interface PersonOversiktStatusDTO {
-  fnr: string;
-  navn: string;
-  enhet: string;
-  veilederIdent: string | null;
+export interface PersonOversiktUbehandletStatusDTO {
   motebehovUbehandlet: boolean | null;
   dialogmotesvarUbehandlet: boolean;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
   dialogmotekandidat: boolean | undefined;
+  behandlerdialogUbehandlet: boolean;
+  aktivitetskravActive: boolean;
+  aktivitetskravVurderStansUbehandlet: boolean;
+  huskelappActive: boolean;
+}
+
+export interface PersonOversiktStatusDTO
+  extends PersonOversiktUbehandletStatusDTO {
+  fnr: string;
+  navn: string;
+  enhet: string;
+  veilederIdent: string | null;
   motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
   aktivitetskravSistVurdert: Date | null;
-  aktivitetskravActive: boolean;
   aktivitetskravVurderingFrist: Date | null;
-  behandlerdialogUbehandlet: boolean;
-  aktivitetskravVurderStansUbehandlet: boolean;
-  huskelappActive: boolean;
 }
 
 export interface OppfolgingstilfelleDTO {
