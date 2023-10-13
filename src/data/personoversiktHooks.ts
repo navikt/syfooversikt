@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
+import {
+  PersonOversiktStatusDTO,
+  PersonOversiktUbehandletStatusDTO,
+} from '@/api/types/personoversiktTypes';
 import { get } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useNotifications } from '@/context/notification/NotificationContext';
@@ -10,26 +13,28 @@ import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
 
-const isUbehandlet = (personOversiktStatus: PersonOversiktStatusDTO) => {
-  return (
-    personOversiktStatus.motebehovUbehandlet ||
-    personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet ||
-    personOversiktStatus.dialogmotesvarUbehandlet ||
-    personOversiktStatus.dialogmotekandidat ||
-    personOversiktStatus.behandlerdialogUbehandlet ||
-    personOversiktStatus.aktivitetskravVurderStansUbehandlet ||
-    personOversiktStatus.huskelappActive
-  );
+const isUbehandlet = (ubehandletStatus: PersonOversiktUbehandletStatusDTO) => {
+  return Object.values(ubehandletStatus).some((value) => value);
 };
 
 const filteredPersonOversiktStatusList = (
   personOversiktStatusList: PersonOversiktStatusDTO[]
 ): PersonOversiktStatusDTO[] => {
-  return personOversiktStatusList.filter(
-    (personOversiktStatus) =>
-      isUbehandlet(personOversiktStatus) ||
-      personOversiktStatus.aktivitetskravActive
-  );
+  return personOversiktStatusList.filter((personOversiktStatus) => {
+    const ubehandletStatus = {
+      aktivitetskravVurderStansUbehandlet:
+        personOversiktStatus.aktivitetskravVurderStansUbehandlet,
+      behandlerdialogUbehandlet: personOversiktStatus.behandlerdialogUbehandlet,
+      dialogmotekandidat: personOversiktStatus.dialogmotekandidat,
+      dialogmotesvarUbehandlet: personOversiktStatus.dialogmotesvarUbehandlet,
+      huskelappActive: personOversiktStatus.huskelappActive,
+      motebehovUbehandlet: personOversiktStatus.motebehovUbehandlet,
+      oppfolgingsplanLPSBistandUbehandlet:
+        personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet,
+      aktivitetskravActive: personOversiktStatus.aktivitetskravActive,
+    };
+    return isUbehandlet(ubehandletStatus);
+  });
 };
 
 export const personoversiktQueryKeys = {

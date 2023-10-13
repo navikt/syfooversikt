@@ -44,4 +44,48 @@ describe('personoversiktHooks tests', () => {
     expect(actual[0]).to.not.be.undefined;
     expect(actual[0]?.fnr).to.eq(personoversiktEnhetMock[0]?.fnr);
   });
+
+  it('contains only personer with ubehandlet oppgave', async () => {
+    stubModiaContext();
+    stubPersonoversikt();
+
+    const wrapper = ({ children }: never) => (
+      <NotificationProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </AktivEnhetContext.Provider>
+      </NotificationProvider>
+    );
+
+    const { result, waitFor } = renderHook(() => usePersonoversiktQuery(), {
+      wrapper,
+    });
+
+    await waitFor(() => result.current.isSuccess);
+
+    const persons: PersonOversiktStatusDTO[] = result.current.data || [];
+
+    expect(persons.length).to.be.lessThan(personoversiktEnhetMock.length);
+
+    const allPersonsUbehandlet = persons.every((person) => {
+      return (
+        person.aktivitetskravActive ||
+        person.huskelappActive ||
+        person.behandlerdialogUbehandlet ||
+        person.aktivitetskravVurderStansUbehandlet ||
+        person.dialogmotekandidat ||
+        person.oppfolgingsplanLPSBistandUbehandlet ||
+        person.motebehovUbehandlet ||
+        person.dialogmotesvarUbehandlet
+      );
+    });
+    expect(allPersonsUbehandlet).to.be.true;
+  });
 });
