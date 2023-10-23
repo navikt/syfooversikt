@@ -30,6 +30,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     harBehandlerdialogUbehandlet: false,
     harAktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
   };
 };
 
@@ -43,6 +44,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   behandlerdialog: false,
   aktivitetskravVurderStans: false,
   huskelapp: false,
+  behandlerBerOmBistand: false,
 };
 
 describe('hendelseFilteringUtils', () => {

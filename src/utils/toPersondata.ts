@@ -35,6 +35,7 @@ export const toPersonData = (
       harAktivitetskravVurderStansUbehandlet:
         person.aktivitetskravVurderStansUbehandlet,
       huskelappActive: person.huskelappActive,
+      behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
     };
   });
 

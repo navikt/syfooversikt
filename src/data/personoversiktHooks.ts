@@ -32,6 +32,8 @@ const filteredPersonOversiktStatusList = (
       oppfolgingsplanLPSBistandUbehandlet:
         personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet,
       aktivitetskravActive: personOversiktStatus.aktivitetskravActive,
+      behandlerBerOmBistandUbehandlet:
+        personOversiktStatus.behandlerBerOmBistandUbehandlet,
     };
     return isUbehandlet(ubehandletStatus);
   });

@@ -31,6 +31,7 @@ export interface PersonData {
   harBehandlerdialogUbehandlet: boolean;
   harAktivitetskravVurderStansUbehandlet: boolean;
   huskelappActive: boolean;
+  behandlerBerOmBistandUbehandlet: boolean;
 }
 
 export interface PersonregisterState {
