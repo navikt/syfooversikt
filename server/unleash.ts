@@ -47,5 +47,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       context
     ),
     isHuskelappEnabled: unleash.isEnabled('isHuskelappEnabled', context),
+    isBehandlerBerOmBistandEnabled: unleash.isEnabled(
+      'isBehandlerBerOmBistandEnabled',
+      context
+    ),
   };
 };
