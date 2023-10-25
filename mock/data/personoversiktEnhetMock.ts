@@ -22,6 +22,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
   },
   {
     fnr: '99999922222',
@@ -40,6 +41,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: true,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
   },
   {
     fnr: '99999922220',
@@ -58,6 +60,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: true,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
   },
   {
     fnr: '99999911120',
@@ -76,6 +79,26 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: true,
+    behandlerBerOmBistandUbehandlet: false,
+  },
+  {
+    fnr: '18049911120',
+    navn: 'Bent Behandlerbistandsen',
+    enhet: '0316',
+    veilederIdent: null,
+    motebehovUbehandlet: true,
+    aktivitetskrav: null,
+    aktivitetskravActive: false,
+    aktivitetskravSistVurdert: null,
+    aktivitetskravVurderingFrist: null,
+    oppfolgingsplanLPSBistandUbehandlet: null,
+    dialogmotekandidat: undefined,
+    motestatus: undefined,
+    dialogmotesvarUbehandlet: false,
+    behandlerdialogUbehandlet: false,
+    aktivitetskravVurderStansUbehandlet: false,
+    huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: true,
   },
   {
     fnr: '59999933333',
@@ -94,6 +117,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-25'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -134,6 +158,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-03'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -170,6 +195,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -202,6 +228,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -230,6 +257,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -258,6 +286,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -286,6 +315,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-05-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -314,6 +344,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -346,6 +377,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -374,6 +406,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -403,6 +436,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
   },
   {
     fnr: '99999966673',
@@ -421,6 +455,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -449,6 +484,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -477,6 +513,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -505,6 +542,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -533,6 +571,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -561,6 +600,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -589,6 +629,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     huskelappActive: false,
+    behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),

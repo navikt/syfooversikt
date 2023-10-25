@@ -28,6 +28,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   aktivitetskravActive: boolean;
   aktivitetskravVurderStansUbehandlet: boolean;
   huskelappActive: boolean;
+  behandlerBerOmBistandUbehandlet: boolean;
 }
 
 export interface PersonOversiktStatusDTO

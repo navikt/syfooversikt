@@ -27,6 +27,7 @@ export const HendelseTekster = {
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   HUSKELAPP: 'Huskelapp',
+  BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -50,6 +51,7 @@ const enkeltFilterFraTekst = (
     behandlerdialog: false,
     aktivitetskravVurderStans: false,
     huskelapp: false,
+    behandlerBerOmBistand: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -98,6 +100,10 @@ const lagNyttFilter = (
       filter.huskelapp = checked;
       return filter;
     }
+    case HendelseTekster.BEHANDLER_BER_OM_BISTAND: {
+      filter.behandlerBerOmBistand = checked;
+      return filter;
+    }
   }
 };
 
@@ -124,6 +130,8 @@ const isCheckedInState = (
       return state.aktivitetskravVurderStans;
     case HendelseTekster.HUSKELAPP:
       return state.huskelapp;
+    case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
+      return state.behandlerBerOmBistand;
   }
 };
 
@@ -146,6 +154,8 @@ const showCheckbox = (
       return toggles.isSendingAvForhandsvarselEnabled;
     case 'HUSKELAPP':
       return toggles.isHuskelappEnabled;
+    case 'BEHANDLER_BER_OM_BISTAND':
+      return toggles.isBehandlerBerOmBistandEnabled;
   }
 };
 

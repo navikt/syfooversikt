@@ -83,7 +83,8 @@ describe('personoversiktHooks tests', () => {
         person.dialogmotekandidat ||
         person.oppfolgingsplanLPSBistandUbehandlet ||
         person.motebehovUbehandlet ||
-        person.dialogmotesvarUbehandlet
+        person.dialogmotesvarUbehandlet ||
+        person.behandlerBerOmBistandUbehandlet
       );
     });
     expect(allPersonsUbehandlet).to.be.true;

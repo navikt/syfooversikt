@@ -103,6 +103,8 @@ const matchesFilter = (
       return !filters[key] || personData.harAktivitetskravVurderStansUbehandlet;
     case 'huskelapp':
       return !filters[key] || personData.huskelappActive;
+    case 'behandlerBerOmBistand':
+      return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
   }
 };
 
