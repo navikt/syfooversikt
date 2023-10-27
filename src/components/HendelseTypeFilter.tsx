@@ -26,7 +26,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
-  HUSKELAPP: 'Trenger oppfølging',
+  HUSKELAPP: 'Vurdert for oppfølging',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
 } as const;
 
