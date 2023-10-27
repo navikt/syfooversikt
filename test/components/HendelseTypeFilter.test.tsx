@@ -94,7 +94,7 @@ describe('HendelseTypeFilter', () => {
     expect(vurderStansCheckbox).to.exist;
 
     const huskelappCheckbox = screen.getByRole('checkbox', {
-      name: /Trenger oppfølging/,
+      name: /Vurdert for oppfølging/,
       checked: false,
     });
     expect(huskelappCheckbox).to.exist;
