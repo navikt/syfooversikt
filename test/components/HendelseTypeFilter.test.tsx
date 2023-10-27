@@ -46,7 +46,7 @@ describe('HendelseTypeFilter', () => {
     );
 
     const onskerMoteCheckbox = screen.getByRole('checkbox', {
-      name: /Ønsker møte/,
+      name: /Ber om dialogmøte/,
       checked: false,
     });
     expect(onskerMoteCheckbox).to.exist;
@@ -58,7 +58,7 @@ describe('HendelseTypeFilter', () => {
     expect(ufordelteCheckbox).to.exist;
 
     const arbeidsgiverCheckbox = screen.getByRole('checkbox', {
-      name: /Arbeidsgiver ønsker bistand/,
+      name: /Arbeidsgiver ber om bistand/,
       checked: false,
     });
     expect(arbeidsgiverCheckbox).to.exist;
@@ -94,7 +94,7 @@ describe('HendelseTypeFilter', () => {
     expect(vurderStansCheckbox).to.exist;
 
     const huskelappCheckbox = screen.getByRole('checkbox', {
-      name: /Huskelapp/,
+      name: /Vurdert for oppfølging/,
       checked: false,
     });
     expect(huskelappCheckbox).to.exist;

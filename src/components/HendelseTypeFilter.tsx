@@ -19,14 +19,14 @@ const texts = {
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
-  ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ønsker bistand',
-  MOTEBEHOV: 'Ønsker møte', // MØTEBEHOV - UBEHANDLET
+  ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ber om bistand',
+  MOTEBEHOV: 'Ber om dialogmøte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
-  HUSKELAPP: 'Huskelapp',
+  HUSKELAPP: 'Vurdert for oppfølging',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
 } as const;
 
