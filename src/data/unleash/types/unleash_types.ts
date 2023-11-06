@@ -7,12 +7,10 @@ export enum ToggleNames {
   isMotebehovTilbakemeldingEnabled = 'isMotebehovTilbakemeldingEnabled',
   isSendingAvForhandsvarselEnabled = 'isSendingAvForhandsvarselEnabled',
   isHuskelappEnabled = 'isHuskelappEnabled',
-  isBehandlerBerOmBistandEnabled = 'isBehandlerBerOmBistandEnabled',
 }
 
 export const defaultToggles: Toggles = {
   isMotebehovTilbakemeldingEnabled: false,
   isSendingAvForhandsvarselEnabled: false,
   isHuskelappEnabled: false,
-  isBehandlerBerOmBistandEnabled: false,
 };
