@@ -1,16 +1,11 @@
 import dayjs from 'dayjs';
 
-const ONE_WEEK_MILLIS = 7 * 24 * 60 * 60 * 1000;
-
-export const getWeeksSinceDate = (date: Date): number => {
-  const now = new Date();
-  return getWeeksBetween(new Date(date), now);
+export const getEarliestDate = (date1: Date, date2: Date): Date => {
+  return date1 < date2 ? date1 : date2;
 };
 
 export const getWeeksBetween = (date1: Date, date2: Date): number => {
-  return Math.round(
-    Math.abs(date1.getTime() - date2.getTime()) / ONE_WEEK_MILLIS
-  );
+  return Math.abs(dayjs(date1).diff(date2, 'week'));
 };
 
 export const toReadableDate = (dateArg: Date | null): string => {
