@@ -147,6 +147,7 @@ const showCheckbox = (
     case 'DIALOGMOTESVAR':
     case 'MOTEBEHOV':
     case 'ARBEIDSGIVER_BISTAND':
+    case 'BEHANDLER_BER_OM_BISTAND':
       return true;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
@@ -154,8 +155,6 @@ const showCheckbox = (
       return toggles.isSendingAvForhandsvarselEnabled;
     case 'HUSKELAPP':
       return toggles.isHuskelappEnabled;
-    case 'BEHANDLER_BER_OM_BISTAND':
-      return toggles.isBehandlerBerOmBistandEnabled;
   }
 };
 
