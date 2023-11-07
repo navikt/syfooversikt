@@ -1,12 +1,21 @@
 import { expect } from 'chai';
-import { getWeeksBetween, toReadableDate } from '@/utils/dateUtils';
+import {
+  getEarliestDate,
+  getWeeksBetween,
+  toReadableDate,
+} from '@/utils/dateUtils';
 
 describe('dateUtils', () => {
-  describe('week calculations', () => {
+  describe('Calculations', () => {
     it('Will calculate number of weeks between two dates', () => {
       const date1 = new Date('2022-10-01');
-      const date2 = new Date('2022-10-14');
+      const date2 = new Date('2022-10-15');
       expect(getWeeksBetween(date1, date2)).to.equal(2);
+    });
+    it('Will calculate earliest date', () => {
+      const earliesDate = new Date('2023-01-01');
+      const latestDate = new Date('2023-02-02');
+      expect(getEarliestDate(earliesDate, latestDate)).to.equal(earliesDate);
     });
   });
   describe('readable date', () => {

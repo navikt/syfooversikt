@@ -70,6 +70,14 @@ const personDataAktivitetskravAvventMedFrist: PersonData = {
   ...personDataAktivitetskravAvventUtenFrist,
   aktivitetskravVurderingFrist: new Date('2023-04-01'),
 };
+const personWithOppfolgingstilfelle: PersonData = {
+  ...defaultPersonData,
+  latestOppfolgingstilfelle: {
+    oppfolgingstilfelleStart: new Date('2023-01-01'),
+    oppfolgingstilfelleEnd: new Date('2023-01-15'),
+    virksomhetList: [],
+  },
+};
 
 describe('Personrad', () => {
   beforeEach(() => {
@@ -95,14 +103,22 @@ describe('Personrad', () => {
     expect(screen.getByText(testdata.fnr1)).to.exist;
     expect(screen.getByText('diskresjonsmerket')).to.exist;
   });
+
   it('Skal rendre label med frist-dato for aktivitetskrav AVVENT', () => {
     renderPersonrad(personDataAktivitetskravAvventMedFrist);
 
     expect(screen.getByText('Avventer (01.04.2023)')).to.exist;
   });
+
   it('Skal rendre label uten frist-dato for aktivitetskrav AVVENT når frist mangler', () => {
     renderPersonrad(personDataAktivitetskravAvventUtenFrist);
 
     expect(screen.getByText('Avventer')).to.exist;
+  });
+
+  it('Viser riktig utregning av varighet på sykefraværet', () => {
+    renderPersonrad(personWithOppfolgingstilfelle);
+
+    expect(screen.getByText('2 uker')).to.exist;
   });
 });
