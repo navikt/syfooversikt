@@ -1,11 +1,17 @@
 import dayjs from 'dayjs';
 
-export const getEarliestDate = (date1: Date, date2: Date): Date => {
-  return date1 < date2 ? date1 : date2;
+export const getEarliestDate = (
+  date1: Date | string,
+  date2: Date | string
+): Date => {
+  return new Date(date1) < new Date(date2) ? new Date(date1) : new Date(date2);
 };
 
-export const getWeeksBetween = (date1: Date, date2: Date): number => {
-  return Math.abs(dayjs(date1).diff(date2, 'week'));
+export const getWeeksBetween = (
+  date1: Date | string,
+  date2: Date | string
+): number => {
+  return Math.abs(dayjs(date1).diff(dayjs(date2), 'week'));
 };
 
 export const toReadableDate = (dateArg: Date | null): string => {
