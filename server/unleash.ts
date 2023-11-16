@@ -38,10 +38,6 @@ export const getToggles = (veilederId: any, enhetId: any) => {
     enhetId: enhetId,
   };
   return {
-    isMotebehovTilbakemeldingEnabled: unleash.isEnabled(
-      'isMotebehovTilbakemeldingEnabled',
-      context
-    ),
     isHuskelappEnabled: unleash.isEnabled('isHuskelappEnabled', context),
   };
 };
