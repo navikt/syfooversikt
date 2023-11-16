@@ -142,6 +142,7 @@ const showCheckbox = (
 ): boolean => {
   switch (key) {
     case 'AKTIVITETSKRAV':
+    case 'AKTIVITETSKRAV_VURDER_STANS':
     case 'BEHANDLERDIALOG':
     case 'DIALOGMOTEKANDIDAT':
     case 'DIALOGMOTESVAR':
@@ -151,8 +152,6 @@ const showCheckbox = (
       return true;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
-    case 'AKTIVITETSKRAV_VURDER_STANS':
-      return toggles.isSendingAvForhandsvarselEnabled;
     case 'HUSKELAPP':
       return toggles.isHuskelappEnabled;
   }
