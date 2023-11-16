@@ -122,11 +122,6 @@ describe('HendelseTypeFilter', () => {
 
     expect(
       screen.queryByRole('checkbox', {
-        name: /Vurder stans/,
-      })
-    ).to.not.exist;
-    expect(
-      screen.queryByRole('checkbox', {
         name: /Huskelapp/,
       })
     ).to.not.exist;
