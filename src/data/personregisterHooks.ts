@@ -7,6 +7,7 @@ import { ApiErrorException } from '@/api/errors';
 import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { useAsyncError } from '@/data/useAsyncError';
+import { useEffect } from 'react';
 
 export const personregisterQueryKeys = {
   personregister: ['personregister'],
@@ -34,19 +35,27 @@ export const usePersonregisterQuery = () => {
     return personregisterData || [];
   };
 
-  return useQuery({
+  const query = useQuery<PersonregisterData[], ApiErrorException>({
     queryKey: personregisterQueryKeys.personregister,
     queryFn: fetchPersonregister,
     enabled: fnrForPersonerUtenNavnListe.length > 0,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
+  });
+
+  useEffect(() => {
+    if (query.isSuccess) {
+      clearNotification('fetchPersonregisterFailed');
+    }
+  }, [query.isSuccess, clearNotification]);
+
+  useEffect(() => {
+    if (query.isError) {
+      if (query.error.code === 403) {
+        throwError(query.error);
       } else {
         displayNotification(FetchPersonregisterFailed);
       }
-    },
-    onSuccess: () => {
-      clearNotification('fetchPersonregisterFailed');
-    },
-  });
+    }
+  }, [throwError, query.isError, query.error, displayNotification]);
+
+  return query;
 };

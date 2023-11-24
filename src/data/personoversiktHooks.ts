@@ -10,7 +10,7 @@ import { FetchPersonoversiktFailed } from '@/context/notification/Notifications'
 import { ApiErrorException } from '@/api/errors';
 import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
 
 const isUbehandlet = (ubehandletStatus: PersonOversiktUbehandletStatusDTO) => {
@@ -59,22 +59,28 @@ export const usePersonoversiktQuery = () => {
     return personoversiktData || [];
   };
 
-  const query = useQuery({
+  const query = useQuery<PersonOversiktStatusDTO[], ApiErrorException>({
     queryKey: personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
     queryFn: fetchPersonoversikt,
     enabled: !!aktivEnhet,
     staleTime: minutesToMillis(5),
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
+  });
+
+  useEffect(() => {
+    if (query.isSuccess) {
+      clearNotification('fetchPersonoversiktFailed');
+    }
+  }, [query.isSuccess, clearNotification]);
+
+  useEffect(() => {
+    if (query.isError) {
+      if (query.error.code === 403) {
+        throwError(query.error);
       } else {
         displayNotification(FetchPersonoversiktFailed);
       }
-    },
-    onSuccess: () => {
-      clearNotification('fetchPersonoversiktFailed');
-    },
-  });
+    }
+  }, [throwError, query.isError, query.error, displayNotification]);
 
   return {
     ...query,

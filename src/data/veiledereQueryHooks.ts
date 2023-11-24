@@ -15,6 +15,7 @@ import {
 } from '@/context/notification/Notifications';
 import { useAsyncError } from '@/data/useAsyncError';
 import { ApiErrorException } from '@/api/errors';
+import { useEffect } from 'react';
 
 export const veiledereQueryKeys = {
   veiledereInfo: ['veiledereInfo'],
@@ -33,21 +34,29 @@ export const useVeiledereQuery = () => {
   const fetchVeiledere = () =>
     get<Veileder[]>(`${SYFOVEILEDER_ROOT}/veiledere/enhet/${aktivEnhet}`);
 
-  return useQuery({
+  const query = useQuery<Veileder[], ApiErrorException>({
     queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
     queryFn: fetchVeiledere,
     enabled: !!aktivEnhet,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
+  });
+
+  useEffect(() => {
+    if (query.isSuccess) {
+      clearNotification('fetchVeiledereFailed');
+    }
+  }, [query.isSuccess, clearNotification]);
+
+  useEffect(() => {
+    if (query.isError) {
+      if (query.error.code === 403) {
+        throwError(query.error);
       } else {
         displayNotification(FetchVeiledereFailed);
       }
-    },
-    onSuccess: () => {
-      clearNotification('fetchVeiledereFailed');
-    },
-  });
+    }
+  }, [throwError, query.isError, query.error, displayNotification]);
+
+  return query;
 };
 
 export const useAktivVeilederQuery = () => {
@@ -57,20 +66,28 @@ export const useAktivVeilederQuery = () => {
   const fetchVeilederInfo = () =>
     get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/veileder/self`);
 
-  return useQuery({
+  const query = useQuery<VeilederinfoDTO, ApiErrorException>({
     queryKey: veiledereQueryKeys.veiledereInfo,
     queryFn: fetchVeilederInfo,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
+  });
+
+  useEffect(() => {
+    if (query.isSuccess) {
+      clearNotification('fetchAktivVeilederFailed');
+    }
+  }, [query.isSuccess, clearNotification]);
+
+  useEffect(() => {
+    if (query.isError) {
+      if (query.error.code === 403) {
+        throwError(query.error);
       } else {
         displayNotification(FetchAktivVeilederFailed);
       }
-    },
-    onSuccess: () => {
-      clearNotification('fetchAktivVeilederFailed');
-    },
-  });
+    }
+  }, [throwError, query.isError, query.error, displayNotification]);
+
+  return query;
 };
 
 export const useTildelVeileder = () => {
@@ -126,9 +143,9 @@ export const useTildelVeileder = () => {
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(
-        personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
-      );
+      queryClient.invalidateQueries({
+        queryKey: personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
+      });
     },
   });
 };
