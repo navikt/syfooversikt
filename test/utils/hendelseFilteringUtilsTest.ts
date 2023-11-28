@@ -29,7 +29,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
     harAktivitetskravVurderStansUbehandlet: false,
-    huskelappActive: false,
+    trengerOppfolging: false,
     behandlerBerOmBistandUbehandlet: false,
   };
 };

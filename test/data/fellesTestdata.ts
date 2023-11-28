@@ -70,7 +70,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
-    huskelappActive: false,
+    trengerOppfolging: false,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -89,7 +89,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
-    huskelappActive: false,
+    trengerOppfolging: false,
     behandlerBerOmBistandUbehandlet: false,
   },
 ];

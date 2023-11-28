@@ -30,7 +30,7 @@ export interface PersonData {
   aktivitetskravVurderingFrist: Date | null;
   harBehandlerdialogUbehandlet: boolean;
   harAktivitetskravVurderStansUbehandlet: boolean;
-  huskelappActive: boolean;
+  trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
 }
 
