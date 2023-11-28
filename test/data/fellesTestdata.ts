@@ -71,6 +71,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -90,6 +91,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
 ];

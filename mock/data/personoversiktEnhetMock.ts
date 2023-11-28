@@ -22,6 +22,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -41,6 +42,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: true,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -60,6 +62,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: true,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -79,6 +82,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: true,
+    trengerOppfolgingFrist: new Date('2024-01-01'),
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -98,6 +102,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: true,
   },
   {
@@ -117,6 +122,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-25'),
@@ -158,6 +164,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-03'),
@@ -195,6 +202,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-01'),
@@ -228,6 +236,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -257,6 +266,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -286,6 +296,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -315,6 +326,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-05-01'),
@@ -344,6 +356,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-01'),
@@ -377,6 +390,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -406,6 +420,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -436,6 +451,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   },
   {
@@ -455,6 +471,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -484,6 +501,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -513,6 +531,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -542,6 +561,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -571,6 +591,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -600,6 +621,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -629,6 +651,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerdialogUbehandlet: false,
     aktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),

@@ -42,6 +42,7 @@ export interface PersonOversiktStatusDTO
   aktivitetskrav: AktivitetskravStatus | null;
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravVurderingFrist: Date | null;
+  trengerOppfolgingFrist: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {

@@ -57,6 +57,7 @@ const defaultPersonData: PersonData = {
   harBehandlerdialogUbehandlet: false,
   harAktivitetskravVurderStansUbehandlet: false,
   trengerOppfolging: false,
+  trengerOppfolgingFrist: null,
   behandlerBerOmBistandUbehandlet: false,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {

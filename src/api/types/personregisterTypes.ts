@@ -31,6 +31,7 @@ export interface PersonData {
   harBehandlerdialogUbehandlet: boolean;
   harAktivitetskravVurderStansUbehandlet: boolean;
   trengerOppfolging: boolean;
+  trengerOppfolgingFrist: Date | null;
   behandlerBerOmBistandUbehandlet: boolean;
 }
 
