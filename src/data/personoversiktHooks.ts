@@ -27,7 +27,7 @@ const filteredPersonOversiktStatusList = (
       behandlerdialogUbehandlet: personOversiktStatus.behandlerdialogUbehandlet,
       dialogmotekandidat: personOversiktStatus.dialogmotekandidat,
       dialogmotesvarUbehandlet: personOversiktStatus.dialogmotesvarUbehandlet,
-      huskelappActive: personOversiktStatus.huskelappActive,
+      trengerOppfolging: personOversiktStatus.trengerOppfolging,
       motebehovUbehandlet: personOversiktStatus.motebehovUbehandlet,
       oppfolgingsplanLPSBistandUbehandlet:
         personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet,
