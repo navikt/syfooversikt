@@ -30,6 +30,7 @@ const createPersonDataWithName = (name: string): PersonData => {
     harBehandlerdialogUbehandlet: false,
     harAktivitetskravVurderStansUbehandlet: false,
     trengerOppfolging: false,
+    trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   };
 };

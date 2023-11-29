@@ -35,6 +35,7 @@ export const toPersonData = (
       harAktivitetskravVurderStansUbehandlet:
         person.aktivitetskravVurderStansUbehandlet,
       trengerOppfolging: person.trengerOppfolging,
+      trengerOppfolgingFrist: person.trengerOppfolgingFrist,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
     };
   });
