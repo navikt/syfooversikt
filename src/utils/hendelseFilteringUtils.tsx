@@ -156,6 +156,8 @@ export type SortingType =
   | 'VEILEDER_DESC'
   | 'UKE_ASC'
   | 'UKE_DESC'
+  | 'DATO_ASC'
+  | 'DATO_DESC'
   | 'NONE';
 
 export const getSortedEventsFromSortingType = (
@@ -163,18 +165,28 @@ export const getSortedEventsFromSortingType = (
   veiledere: Veileder[],
   type: SortingType
 ): PersonregisterState => {
-  if (type === 'NAME_ASC' || type === 'NAME_DESC') {
-    return sortEventsOnName(personregister, type);
-  } else if (type === 'FNR_ASC' || type === 'FNR_DESC') {
-    return sortEventsOnFnr(personregister, type);
-  } else if (type === 'COMPANY_ASC' || type === 'COMPANY_DESC') {
-    return sortEventsOnCompanyName(personregister, type);
-  } else if (type === 'VEILEDER_ASC' || type === 'VEILEDER_DESC') {
-    return sortEventsOnVeileder(personregister, veiledere, type);
-  } else if (type === 'UKE_ASC' || type === 'UKE_DESC') {
-    return sortEventsOnWeek(personregister, type);
+  switch (type) {
+    case 'NAME_ASC':
+    case 'NAME_DESC':
+      return sortEventsOnName(personregister, type);
+    case 'FNR_ASC':
+    case 'FNR_DESC':
+      return sortEventsOnFnr(personregister, type);
+    case 'COMPANY_ASC':
+    case 'COMPANY_DESC':
+      return sortEventsOnCompanyName(personregister, type);
+    case 'VEILEDER_ASC':
+    case 'VEILEDER_DESC':
+      return sortEventsOnVeileder(personregister, veiledere, type);
+    case 'UKE_ASC':
+    case 'UKE_DESC':
+      return sortEventsOnWeek(personregister, type);
+    case 'DATO_ASC':
+    case 'DATO_DESC':
+      return sortEventsOnFrist(personregister, type);
+    case 'NONE':
+      return personregister;
   }
-  return personregister;
 };
 
 const sortVeiledereByLastName = (
@@ -287,6 +299,25 @@ const sortEventsOnWeek = (
       if (!startDateB) return order === 'UKE_ASC' ? 1 : -1;
       if (startDateA > startDateB) return order === 'UKE_ASC' ? -1 : 1;
       if (startDateA < startDateB) return order === 'UKE_ASC' ? 1 : -1;
+      return 0;
+    }
+  );
+
+  return Object.fromEntries(sorted);
+};
+
+const sortEventsOnFrist = (
+  personregister: PersonregisterState,
+  order: 'DATO_ASC' | 'DATO_DESC'
+): PersonregisterState => {
+  const sorted = Object.entries(personregister).sort(
+    ([, persondataA], [, persondataB]) => {
+      const fristDateA = persondataA.aktivitetskravVurderingFrist;
+      const fristDateB = persondataB.aktivitetskravVurderingFrist;
+      if (!fristDateA) return order === 'DATO_ASC' ? -1 : 1;
+      if (!fristDateB) return order === 'DATO_ASC' ? 1 : -1;
+      if (fristDateA > fristDateB) return order === 'DATO_ASC' ? -1 : 1;
+      if (fristDateA < fristDateB) return order === 'DATO_ASC' ? 1 : -1;
       return 0;
     }
   );

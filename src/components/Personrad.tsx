@@ -14,6 +14,7 @@ import { getEarliestDate, getWeeksBetween } from '@/utils/dateUtils';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
 import { Labels } from '@/components/Labels';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
+import { FristColumn } from '@/components/FristColumn';
 
 interface PersonradProps {
   fnr: string;
@@ -95,7 +96,7 @@ export const Personrad = (props: PersonradProps): ReactElement => {
           }}
         />
       </Column>
-      <Column xs={'3'}>{lenkeTilModiaEnkeltperson(personData, onClick)}</Column>
+      <Column xs={'2'}>{lenkeTilModiaEnkeltperson(personData, onClick)}</Column>
       <Column xs={'2'}>
         {lenkeTilModiaEnkeltpersonFnr(personData, fnr, onClick)}
       </Column>
@@ -104,6 +105,9 @@ export const Personrad = (props: PersonradProps): ReactElement => {
       </Column>
       <Column xs={'2'}>{veilederName}</Column>
       <Column xs={'1'}>{oppfolgingstilfelleLengthInWeeks}</Column>
+      <Column xs={'1'}>
+        <FristColumn personData={personData} />
+      </Column>
       <Column xs={'2'}>
         <Labels personData={personData} />
       </Column>
