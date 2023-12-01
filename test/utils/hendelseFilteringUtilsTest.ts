@@ -82,6 +82,56 @@ describe('hendelseFilteringUtils', () => {
     expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
     expect(Object.values(result)[2]?.navn).to.deep.equal('Agnes Agnes');
   });
+  describe('sort by frist', () => {
+    it('Sorts by aktivitetskrav avventer-frist ascending', () => {
+      const personWithFirstAvventerFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+      };
+      const personWithAvventerFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        aktivitetskravVurderingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+      const personregisterState: PersonregisterState = {
+        '09128034883': personWithFirstAvventerFrist,
+        '16624407794': personWithNoFrist,
+        '16614407794': personWithAvventerFrist,
+      };
+      const result = getSortedEventsFromSortingType(
+        personregisterState,
+        [],
+        'DATO_ASC'
+      );
+      expect(Object.keys(result)[0]).to.deep.equal('09128034883');
+      expect(Object.keys(result)[1]).to.deep.equal('16614407794');
+      expect(Object.keys(result)[2]).to.deep.equal('16624407794');
+    });
+    it('Sorts by aktivitetskrav avventer-frist descending', () => {
+      const personWithFirstAvventerFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+      };
+      const personWithAvventerFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        aktivitetskravVurderingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+      const personregisterState: PersonregisterState = {
+        '09128034883': personWithFirstAvventerFrist,
+        '16624407794': personWithNoFrist,
+        '16614407794': personWithAvventerFrist,
+      };
+      const result = getSortedEventsFromSortingType(
+        personregisterState,
+        [],
+        'DATO_DESC'
+      );
+      expect(Object.keys(result)[0]).to.deep.equal('16624407794');
+      expect(Object.keys(result)[1]).to.deep.equal('16614407794');
+      expect(Object.keys(result)[2]).to.deep.equal('09128034883');
+    });
+  });
 
   describe('filterOnPersonregister', () => {
     it('Return all elements in personregister if no filter is selected', () => {
