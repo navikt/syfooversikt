@@ -2,9 +2,7 @@ import React from 'react';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { getReadableSkjermingskode } from '@/utils/personDataUtil';
 import styled from 'styled-components';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import { EtikettFokus } from 'nav-frontend-etiketter';
-import { toReadableDate } from '@/utils/dateUtils';
+import { Tag } from '@navikt/ds-react';
 
 const LabelColumnWrapper = styled.div`
   padding: 0.5em 0;
@@ -21,24 +19,13 @@ interface LabelColumnProps {
 export const Labels = ({ personData }: LabelColumnProps) => {
   const showSkjermingskode =
     personData.skjermingskode && personData.skjermingskode !== 'INGEN';
-  const showAktivitetskrav =
-    personData.aktivitetskrav === AktivitetskravStatus.AVVENT;
-  const avventerDato = personData.aktivitetskravVurderingFrist;
 
   return (
     <LabelColumnWrapper>
       {showSkjermingskode && (
-        <EtikettFokus mini>
+        <Tag variant="warning" size="small">
           {getReadableSkjermingskode(personData.skjermingskode)}
-        </EtikettFokus>
-      )}
-
-      {showAktivitetskrav && (
-        <EtikettFokus mini>
-          {avventerDato
-            ? `Avventer (${toReadableDate(avventerDato)})`
-            : 'Avventer'}
-        </EtikettFokus>
+        </Tag>
       )}
     </LabelColumnWrapper>
   );

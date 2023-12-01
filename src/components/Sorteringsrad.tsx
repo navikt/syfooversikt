@@ -14,7 +14,8 @@ const tekster = {
   overskriftBruker: 'Bruker',
   overskriftVeileder: 'Veileder',
   virksomhet: 'Virksomhet',
-  varighetSykefravar: 'Varighet sykefravær',
+  varighetSykefravar: 'Sykefravær',
+  frist: 'Frist',
 };
 
 export const GrayChevron = styled(Chevron)`
@@ -116,7 +117,7 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
       extraText: <p>, Fornavn</p>,
       sortingTypeAsc: 'NAME_ASC',
       sortingTypeDesc: 'NAME_DESC',
-      xs: '3',
+      xs: '2',
     },
     {
       sortingText: tekster.fodselsnummer,
@@ -144,6 +145,13 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
       extraText: null,
       sortingTypeAsc: 'UKE_ASC',
       sortingTypeDesc: 'UKE_DESC',
+      xs: '1',
+    },
+    {
+      sortingText: tekster.frist,
+      extraText: null,
+      sortingTypeAsc: 'DATO_ASC',
+      sortingTypeDesc: 'DATO_DESC',
       xs: '1',
     },
   ];

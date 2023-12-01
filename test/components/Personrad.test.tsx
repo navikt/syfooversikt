@@ -105,16 +105,16 @@ describe('Personrad', () => {
     expect(screen.getByText('diskresjonsmerket')).to.exist;
   });
 
-  it('Skal rendre label med frist-dato for aktivitetskrav AVVENT', () => {
+  it('Skal rendre frist-dato for aktivitetskrav AVVENT', () => {
     renderPersonrad(personDataAktivitetskravAvventMedFrist);
 
-    expect(screen.getByText('Avventer (01.04.2023)')).to.exist;
+    expect(screen.getByText('01.04.2023')).to.exist;
   });
 
-  it('Skal rendre label uten frist-dato for aktivitetskrav AVVENT når frist mangler', () => {
+  it('Rendrer ingen frist-dato for aktivitetskrav AVVENT når frist mangler', () => {
     renderPersonrad(personDataAktivitetskravAvventUtenFrist);
 
-    expect(screen.getByText('Avventer')).to.exist;
+    expect(screen.queryByText('01.04.2023')).to.not.exist;
   });
 
   it('Viser riktig utregning av varighet på sykefraværet', () => {

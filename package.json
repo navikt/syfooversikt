@@ -22,6 +22,7 @@
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
   "dependencies": {
+    "@navikt/aksel-icons": "5.11.2",
     "@navikt/ds-css": "5.11.1",
     "@navikt/ds-react": "5.11.1",
     "@navikt/fnrvalidator": "1.1.4",
