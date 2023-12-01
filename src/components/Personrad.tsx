@@ -108,7 +108,7 @@ export const Personrad = (props: PersonradProps): ReactElement => {
       <Column xs={'1'}>
         <FristColumn personData={personData} />
       </Column>
-      <Column xs={'2'}>
+      <Column xs={'1'}>
         <Labels personData={personData} />
       </Column>
     </StyledPersonRad>

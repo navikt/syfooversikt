@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const FristColumnWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 interface FristColumnProps {
