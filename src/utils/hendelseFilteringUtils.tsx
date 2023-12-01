@@ -314,10 +314,10 @@ const sortEventsOnFrist = (
     ([, persondataA], [, persondataB]) => {
       const fristDateA = persondataA.aktivitetskravVurderingFrist;
       const fristDateB = persondataB.aktivitetskravVurderingFrist;
-      if (!fristDateA) return order === 'DATO_ASC' ? -1 : 1;
-      if (!fristDateB) return order === 'DATO_ASC' ? 1 : -1;
-      if (fristDateA > fristDateB) return order === 'DATO_ASC' ? -1 : 1;
-      if (fristDateA < fristDateB) return order === 'DATO_ASC' ? 1 : -1;
+      if (!fristDateA) return order === 'DATO_ASC' ? 1 : -1;
+      if (!fristDateB) return order === 'DATO_ASC' ? -1 : 1;
+      if (fristDateA > fristDateB) return order === 'DATO_ASC' ? 1 : -1;
+      if (fristDateA < fristDateB) return order === 'DATO_ASC' ? -1 : 1;
       return 0;
     }
   );
