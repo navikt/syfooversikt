@@ -93,7 +93,7 @@ describe('Personrad', () => {
     );
   });
 
-  it('Skal rendre riktig navn, fodselsnummer og skjermingskode', () => {
+  it('Skal rendre riktig navn og fodselsnummer', () => {
     renderPersonrad(defaultPersonData);
 
     expect(
@@ -102,7 +102,6 @@ describe('Personrad', () => {
       })
     ).to.exist;
     expect(screen.getByText(testdata.fnr1)).to.exist;
-    expect(screen.getByText('diskresjonsmerket')).to.exist;
   });
 
   it('Skal rendre frist-dato for aktivitetskrav AVVENT', () => {

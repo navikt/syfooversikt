@@ -7,7 +7,7 @@ import {
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   {
     fnr: '01999911111',
-    navn: '',
+    navn: 'Korrupt Heis',
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: null,
@@ -27,7 +27,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999922222',
-    navn: '',
+    navn: 'Korrupt Bordsen',
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
@@ -107,7 +107,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '59999933333',
-    navn: '',
+    navn: 'Korrupt Bolle',
     enhet: '0316',
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,
@@ -149,7 +149,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999944444',
-    navn: '',
+    navn: 'Stol Bordsen',
     enhet: '0316',
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,
@@ -187,7 +187,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '18999955555',
-    navn: '',
+    navn: 'Bord Stolesen',
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
@@ -221,7 +221,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966666',
-    navn: '',
+    navn: 'Gulv Heisen',
     enhet: '0316',
     veilederIdent: 'M987654',
     motebehovUbehandlet: null,
@@ -251,7 +251,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999955556',
-    navn: '',
+    navn: 'Skjerm Visen',
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
@@ -281,7 +281,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966667',
-    navn: '',
+    navn: 'Stol Sengestad',
     enhet: '0316',
     veilederIdent: 'M987654',
     motebehovUbehandlet: null,
@@ -311,7 +311,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966668',
-    navn: '',
+    navn: 'Bord Plantesen',
     enhet: '0316',
     veilederIdent: 'M987654',
     motebehovUbehandlet: null,
@@ -341,7 +341,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966669',
-    navn: '',
+    navn: 'Lun Gange',
     enhet: '0316',
     veilederIdent: 'Wienerbrød',
     motebehovUbehandlet: null,
@@ -375,7 +375,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966670',
-    navn: '',
+    navn: 'Vissen Plass',
     enhet: '0316',
     veilederIdent: 'Wienerbrød',
     motebehovUbehandlet: null,
@@ -405,7 +405,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966671',
-    navn: '',
+    navn: 'Mør Benk',
     enhet: '0316',
     veilederIdent: 'Z999991',
     motebehovUbehandlet: null,
@@ -435,7 +435,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   },
   {
     fnr: '99999966672',
-    navn: '',
+    navn: 'Grønn Due',
     enhet: '0316',
     veilederIdent: 'Z999991',
     motebehovUbehandlet: null,
