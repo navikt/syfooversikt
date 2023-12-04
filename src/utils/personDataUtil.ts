@@ -45,3 +45,29 @@ export const firstCompanyNameFromPersonData = (
 ): string | undefined => {
   return companyNamesFromPersonData(p).shift();
 };
+
+export const getEarliestFrist = (p: PersonData): Date | null => {
+  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = p;
+  if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
+    return aktivitetskravVurderingFrist < trengerOppfolgingFrist
+      ? aktivitetskravVurderingFrist
+      : trengerOppfolgingFrist;
+  }
+
+  return aktivitetskravVurderingFrist
+    ? aktivitetskravVurderingFrist
+    : trengerOppfolgingFrist;
+};
+
+export const getLatestFrist = (p: PersonData): Date | null => {
+  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = p;
+  if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
+    return aktivitetskravVurderingFrist < trengerOppfolgingFrist
+      ? trengerOppfolgingFrist
+      : aktivitetskravVurderingFrist;
+  }
+
+  return aktivitetskravVurderingFrist
+    ? aktivitetskravVurderingFrist
+    : trengerOppfolgingFrist;
+};
