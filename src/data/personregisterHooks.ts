@@ -7,12 +7,14 @@ import { ApiErrorException } from '@/api/errors';
 import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { useAsyncError } from '@/data/useAsyncError';
+import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
 export const personregisterQueryKeys = {
-  personregister: ['personregister'],
+  personregister: (enhetId: string | undefined) => ['personregister', enhetId],
 };
 
 export const usePersonregisterQuery = () => {
+  const { aktivEnhet } = useAktivEnhet();
   const { data } = usePersonoversiktQuery();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
@@ -29,9 +31,9 @@ export const usePersonregisterQuery = () => {
   };
 
   return useQuery({
-    queryKey: personregisterQueryKeys.personregister,
+    queryKey: personregisterQueryKeys.personregister(aktivEnhet),
     queryFn: fetchPersonregister,
-    enabled: fnrForPersonerListe.length > 0,
+    enabled: !!aktivEnhet && fnrForPersonerListe.length > 0,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
         throwError(error);
