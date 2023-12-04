@@ -7,37 +7,33 @@ import { ApiErrorException } from '@/api/errors';
 import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { useAsyncError } from '@/data/useAsyncError';
+import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
 export const personregisterQueryKeys = {
-  personregister: ['personregister'],
+  personregister: (enhetId: string | undefined) => ['personregister', enhetId],
 };
 
 export const usePersonregisterQuery = () => {
-  const personoversiktQuery = usePersonoversiktQuery();
+  const { aktivEnhet } = useAktivEnhet();
+  const { data } = usePersonoversiktQuery();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
-  const fnrForPersonerUtenNavnListe =
-    personoversiktQuery.data &&
-    personoversiktQuery.data
-      .filter((p) => !p.navn)
-      .map((person) => ({
-        fnr: person.fnr,
-      }));
+  const fnrForPersonerListe = data.map((person) => ({ fnr: person.fnr }));
 
   const fetchPersonregister = () => {
     const personregisterData = post<PersonregisterData[]>(
       `${SYFOPERSON_ROOT}/person/info`,
-      fnrForPersonerUtenNavnListe || []
+      fnrForPersonerListe
     );
 
     return personregisterData || [];
   };
 
   return useQuery({
-    queryKey: personregisterQueryKeys.personregister,
+    queryKey: personregisterQueryKeys.personregister(aktivEnhet),
     queryFn: fetchPersonregister,
-    enabled: fnrForPersonerUtenNavnListe.length > 0,
+    enabled: !!aktivEnhet && fnrForPersonerListe.length > 0,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
         throwError(error);

@@ -2,14 +2,11 @@ import React from 'react';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { getReadableSkjermingskode } from '@/utils/personDataUtil';
 import styled from 'styled-components';
-import { Tag } from '@navikt/ds-react';
+import { Tooltip } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 
 const LabelColumnWrapper = styled.div`
-  padding: 0.5em 0;
-
-  > * {
-    margin: 0.2em;
-  }
+  display: flex;
 `;
 
 interface LabelColumnProps {
@@ -17,15 +14,18 @@ interface LabelColumnProps {
 }
 
 export const Labels = ({ personData }: LabelColumnProps) => {
-  const showSkjermingskode =
-    personData.skjermingskode && personData.skjermingskode !== 'INGEN';
+  const { skjermingskode } = personData;
+  const showSkjermingskode = skjermingskode && skjermingskode !== 'INGEN';
 
   return (
     <LabelColumnWrapper>
       {showSkjermingskode && (
-        <Tag variant="warning" size="small">
-          {getReadableSkjermingskode(personData.skjermingskode)}
-        </Tag>
+        <Tooltip content={getReadableSkjermingskode(skjermingskode)}>
+          <ExclamationmarkTriangleFillIcon
+            fontSize="1.5rem"
+            color="var(--a-orange-600)"
+          />
+        </Tooltip>
       )}
     </LabelColumnWrapper>
   );
