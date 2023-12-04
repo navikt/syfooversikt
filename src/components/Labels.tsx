@@ -22,7 +22,6 @@ export const Labels = ({ personData }: LabelColumnProps) => {
       {showSkjermingskode && (
         <Tooltip content={getReadableSkjermingskode(skjermingskode)}>
           <ExclamationmarkTriangleFillIcon
-            aria-hidden
             fontSize="1.5rem"
             color="var(--a-orange-600)"
           />
