@@ -84,52 +84,253 @@ describe('hendelseFilteringUtils', () => {
   });
   describe('sort by frist', () => {
     it('Sorts by aktivitetskrav avventer-frist ascending', () => {
-      const personWithFirstAvventerFrist: PersonData = {
+      const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
         aktivitetskravVurderingFrist: new Date('2023-12-05'),
       };
-      const personWithAvventerFrist: PersonData = {
+      const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
         aktivitetskravVurderingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithFirstAvventerFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithAvventerFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_ASC'
       );
-      expect(Object.keys(result)[0]).to.deep.equal('09128034883');
-      expect(Object.keys(result)[1]).to.deep.equal('16614407794');
-      expect(Object.keys(result)[2]).to.deep.equal('16624407794');
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
     });
+
     it('Sorts by aktivitetskrav avventer-frist descending', () => {
-      const personWithFirstAvventerFrist: PersonData = {
+      const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
         aktivitetskravVurderingFrist: new Date('2023-12-05'),
       };
-      const personWithAvventerFrist: PersonData = {
+      const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
         aktivitetskravVurderingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithFirstAvventerFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithAvventerFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_DESC'
       );
-      expect(Object.keys(result)[0]).to.deep.equal('16624407794');
-      expect(Object.keys(result)[1]).to.deep.equal('16614407794');
-      expect(Object.keys(result)[2]).to.deep.equal('09128034883');
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+    });
+
+    it('Sorts by trenger oppfolging-frist ascending', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        trengerOppfolgingFrist: new Date('2023-12-05'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_ASC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
+    });
+
+    it('Sorts by trenger oppfolging-frist descending', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        trengerOppfolgingFrist: new Date('2023-12-05'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_DESC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+    });
+
+    it('Sorts by avventer and trenger oppfolging-frist ascending', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_ASC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
+    });
+
+    it('Sorts by avventer and trenger oppfolging-frist descending', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_DESC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithNoFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[2]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+    });
+
+    it('Sorts ascending by earliest frist per person when person have both frist', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        aktivitetskravVurderingFrist: new Date('2023-12-08'),
+        trengerOppfolgingFrist: new Date('2023-12-15'),
+      };
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_ASC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+    });
+
+    it('Sorts descending by earliest frist per person when person have both frist', () => {
+      const personWithEarliestFrist: PersonData = {
+        ...createPersonDataWithName('Agnes Agnes'),
+        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        trengerOppfolgingFrist: new Date('2023-12-10'),
+      };
+      const personWithLatestFrist: PersonData = {
+        ...createPersonDataWithName('Bjarne Bjarne'),
+        aktivitetskravVurderingFrist: new Date('2023-12-08'),
+        trengerOppfolgingFrist: new Date('2023-12-15'),
+      };
+
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestFrist,
+          '16614407794': personWithLatestFrist,
+        },
+        [],
+        'DATO_DESC'
+      );
+
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithLatestFrist.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithEarliestFrist.navn
+      );
     });
   });
 

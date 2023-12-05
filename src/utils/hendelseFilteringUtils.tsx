@@ -2,7 +2,11 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { firstCompanyNameFromPersonData } from './personDataUtil';
+import {
+  firstCompanyNameFromPersonData,
+  getEarliestFrist,
+  getLatestFrist,
+} from './personDataUtil';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 
@@ -312,8 +316,14 @@ const sortEventsOnFrist = (
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
-      const fristDateA = persondataA.aktivitetskravVurderingFrist;
-      const fristDateB = persondataB.aktivitetskravVurderingFrist;
+      const fristDateA =
+        order === 'DATO_ASC'
+          ? getEarliestFrist(persondataA)
+          : getLatestFrist(persondataA);
+      const fristDateB =
+        order === 'DATO_ASC'
+          ? getEarliestFrist(persondataB)
+          : getLatestFrist(persondataB);
       if (!fristDateA) return order === 'DATO_ASC' ? 1 : -1;
       if (!fristDateB) return order === 'DATO_ASC' ? -1 : 1;
       if (fristDateA > fristDateB) return order === 'DATO_ASC' ? 1 : -1;
