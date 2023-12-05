@@ -54,9 +54,7 @@ export const getEarliestFrist = (personData: PersonData): Date | null => {
       : trengerOppfolgingFrist;
   }
 
-  return aktivitetskravVurderingFrist
-    ? aktivitetskravVurderingFrist
-    : trengerOppfolgingFrist;
+  return aktivitetskravVurderingFrist || trengerOppfolgingFrist || null;
 };
 
 export const getLatestFrist = (personData: PersonData): Date | null => {
@@ -67,7 +65,5 @@ export const getLatestFrist = (personData: PersonData): Date | null => {
       : aktivitetskravVurderingFrist;
   }
 
-  return aktivitetskravVurderingFrist
-    ? aktivitetskravVurderingFrist
-    : trengerOppfolgingFrist;
+  return aktivitetskravVurderingFrist || trengerOppfolgingFrist || null;
 };
