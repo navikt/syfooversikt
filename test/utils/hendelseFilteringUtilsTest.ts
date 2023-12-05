@@ -93,16 +93,17 @@ describe('hendelseFilteringUtils', () => {
         aktivitetskravVurderingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_ASC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithEarliestFrist.navn
       );
@@ -113,6 +114,7 @@ describe('hendelseFilteringUtils', () => {
         personWithNoFrist.navn
       );
     });
+
     it('Sorts by aktivitetskrav avventer-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -123,16 +125,17 @@ describe('hendelseFilteringUtils', () => {
         aktivitetskravVurderingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_DESC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithNoFrist.navn
       );
@@ -143,6 +146,7 @@ describe('hendelseFilteringUtils', () => {
         personWithEarliestFrist.navn
       );
     });
+
     it('Sorts by trenger oppfolging-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -153,16 +157,17 @@ describe('hendelseFilteringUtils', () => {
         trengerOppfolgingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_ASC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithEarliestFrist.navn
       );
@@ -173,6 +178,7 @@ describe('hendelseFilteringUtils', () => {
         personWithNoFrist.navn
       );
     });
+
     it('Sorts by trenger oppfolging-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -183,16 +189,17 @@ describe('hendelseFilteringUtils', () => {
         trengerOppfolgingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_DESC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithNoFrist.navn
       );
@@ -203,6 +210,7 @@ describe('hendelseFilteringUtils', () => {
         personWithEarliestFrist.navn
       );
     });
+
     it('Sorts by avventer and trenger oppfolging-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -213,16 +221,17 @@ describe('hendelseFilteringUtils', () => {
         trengerOppfolgingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_ASC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithEarliestFrist.navn
       );
@@ -233,6 +242,7 @@ describe('hendelseFilteringUtils', () => {
         personWithNoFrist.navn
       );
     });
+
     it('Sorts by avventer and trenger oppfolging-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -243,16 +253,17 @@ describe('hendelseFilteringUtils', () => {
         trengerOppfolgingFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16624407794': personWithNoFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16624407794': personWithNoFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_DESC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithNoFrist.navn
       );
@@ -263,6 +274,7 @@ describe('hendelseFilteringUtils', () => {
         personWithEarliestFrist.navn
       );
     });
+
     it('Sorts ascending by earliest frist per person when person have both frist', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -274,15 +286,16 @@ describe('hendelseFilteringUtils', () => {
         aktivitetskravVurderingFrist: new Date('2023-12-08'),
         trengerOppfolgingFrist: new Date('2023-12-15'),
       };
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_ASC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithEarliestFrist.navn
       );
@@ -290,6 +303,7 @@ describe('hendelseFilteringUtils', () => {
         personWithLatestFrist.navn
       );
     });
+
     it('Sorts descending by earliest frist per person when person have both frist', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
@@ -301,15 +315,16 @@ describe('hendelseFilteringUtils', () => {
         aktivitetskravVurderingFrist: new Date('2023-12-08'),
         trengerOppfolgingFrist: new Date('2023-12-15'),
       };
-      const personregisterState: PersonregisterState = {
-        '09128034883': personWithEarliestFrist,
-        '16614407794': personWithLatestFrist,
-      };
+
       const result = getSortedEventsFromSortingType(
-        personregisterState,
+        {
+          '09128034883': personWithEarliestFrist,
+          '16614407794': personWithLatestFrist,
+        },
         [],
         'DATO_DESC'
       );
+
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithLatestFrist.navn
       );

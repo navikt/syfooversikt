@@ -46,8 +46,8 @@ export const firstCompanyNameFromPersonData = (
   return companyNamesFromPersonData(p).shift();
 };
 
-export const getEarliestFrist = (p: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = p;
+export const getEarliestFrist = (personData: PersonData): Date | null => {
+  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = personData;
   if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
     return aktivitetskravVurderingFrist < trengerOppfolgingFrist
       ? aktivitetskravVurderingFrist
@@ -59,8 +59,8 @@ export const getEarliestFrist = (p: PersonData): Date | null => {
     : trengerOppfolgingFrist;
 };
 
-export const getLatestFrist = (p: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = p;
+export const getLatestFrist = (personData: PersonData): Date | null => {
+  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = personData;
   if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
     return aktivitetskravVurderingFrist < trengerOppfolgingFrist
       ? trengerOppfolgingFrist
