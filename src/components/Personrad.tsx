@@ -10,7 +10,6 @@ import {
 } from '@/utils/lenkeUtil';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
-import { getEarliestDate, getWeeksBetween } from '@/utils/dateUtils';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
 import { Labels } from '@/components/Labels';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
@@ -48,17 +47,9 @@ const VelgBoks = styled(Checkbox)`
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
 ): string => {
-  if (oppfolgingstilfelle) {
-    const start = oppfolgingstilfelle.oppfolgingstilfelleStart;
-    const now = new Date();
-    const end = getEarliestDate(
-      oppfolgingstilfelle.oppfolgingstilfelleEnd,
-      now
-    );
-    return `${getWeeksBetween(start, end)} uker`;
-  } else {
-    return 'Ukjent';
-  }
+  return oppfolgingstilfelle
+    ? `${oppfolgingstilfelle.varighetUker} uker`
+    : 'Ukjent';
 };
 
 export const Personrad = (props: PersonradProps): ReactElement => {
