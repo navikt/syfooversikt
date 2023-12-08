@@ -147,6 +147,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-25'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654321',
@@ -189,6 +190,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-03'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654321',
@@ -227,6 +229,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -261,6 +264,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -291,6 +295,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -321,6 +326,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 4,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -351,6 +357,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-05-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 1,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -381,6 +388,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -415,6 +423,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 420,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -445,6 +454,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 68,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -496,6 +506,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 10,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -526,6 +537,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 6,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -556,6 +568,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -586,6 +599,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -616,6 +630,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -646,6 +661,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',
@@ -676,6 +692,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
       virksomhetList: [
         {
           virksomhetsnummer: '987654322',

@@ -48,6 +48,7 @@ export interface PersonOversiktStatusDTO
 export interface OppfolgingstilfelleDTO {
   oppfolgingstilfelleStart: Date;
   oppfolgingstilfelleEnd: Date;
+  varighetUker: number;
   virksomhetList: OppfolgingstilfelleVirksomhetDTO[];
 }
 

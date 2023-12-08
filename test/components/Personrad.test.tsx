@@ -76,6 +76,7 @@ const personWithOppfolgingstilfelle: PersonData = {
   latestOppfolgingstilfelle: {
     oppfolgingstilfelleStart: new Date('2023-01-01'),
     oppfolgingstilfelleEnd: new Date('2023-01-15'),
+    varighetUker: 2,
     virksomhetList: [],
   },
 };
