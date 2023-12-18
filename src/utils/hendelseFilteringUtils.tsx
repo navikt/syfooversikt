@@ -184,7 +184,7 @@ export const getSortedEventsFromSortingType = (
       return sortEventsOnVeileder(personregister, veiledere, type);
     case 'UKE_ASC':
     case 'UKE_DESC':
-      return sortEventsOnWeek(personregister, type);
+      return sortEventsOnTilfelleVarighet(personregister, type);
     case 'DATO_ASC':
     case 'DATO_DESC':
       return sortEventsOnFrist(personregister, type);
@@ -289,25 +289,41 @@ const sortEventsOnName = (
     : Object.fromEntries(sorted.reverse());
 };
 
-const sortEventsOnWeek = (
+const sortEventsOnTilfelleVarighet = (
   personregister: PersonregisterState,
   order: SortingType
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
-      const startDateA =
-        persondataA.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
-      const startDateB =
-        persondataB.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
-      if (!startDateA) return order === 'UKE_ASC' ? -1 : 1;
-      if (!startDateB) return order === 'UKE_ASC' ? 1 : -1;
-      if (startDateA > startDateB) return order === 'UKE_ASC' ? -1 : 1;
-      if (startDateA < startDateB) return order === 'UKE_ASC' ? 1 : -1;
-      return 0;
+      const varighetA = persondataA.latestOppfolgingstilfelle?.varighetUker;
+      const varighetB = persondataB.latestOppfolgingstilfelle?.varighetUker;
+      if (!varighetA) return order === 'UKE_ASC' ? -1 : 1;
+      if (!varighetB) return order === 'UKE_ASC' ? 1 : -1;
+      const compareVarighet =
+        order === 'UKE_ASC' ? varighetA - varighetB : varighetB - varighetA;
+      return compareVarighet === 0
+        ? compareTilfelleStart(persondataA, persondataB, order)
+        : compareVarighet;
     }
   );
 
   return Object.fromEntries(sorted);
+};
+
+const compareTilfelleStart = (
+  persondataA: PersonData,
+  persondataB: PersonData,
+  order: SortingType
+) => {
+  const startDateA =
+    persondataA.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
+  const startDateB =
+    persondataB.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
+  if (!startDateA) return order === 'UKE_ASC' ? -1 : 1;
+  if (!startDateB) return order === 'UKE_ASC' ? 1 : -1;
+  if (startDateA > startDateB) return order === 'UKE_ASC' ? -1 : 1;
+  if (startDateA < startDateB) return order === 'UKE_ASC' ? 1 : -1;
+  return 0;
 };
 
 const sortEventsOnFrist = (
