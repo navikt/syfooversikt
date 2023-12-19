@@ -82,6 +82,112 @@ describe('hendelseFilteringUtils', () => {
     expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
     expect(Object.values(result)[2]?.navn).to.deep.equal('Agnes Agnes');
   });
+
+  describe('sort by sykefravar varighet uker', () => {
+    const personWithLongestVarighet: PersonData = {
+      ...createPersonDataWithName('Agnes Agnes'),
+      latestOppfolgingstilfelle: {
+        varighetUker: 10,
+        virksomhetList: [],
+        oppfolgingstilfelleStart: new Date('2023-01-01'),
+        oppfolgingstilfelleEnd: new Date('2023-03-15'),
+      },
+    };
+    const personWithShortestVarighet: PersonData = {
+      ...createPersonDataWithName('Bjarne Bjarne'),
+      latestOppfolgingstilfelle: {
+        varighetUker: 4,
+        virksomhetList: [],
+        oppfolgingstilfelleStart: new Date('2023-02-01'),
+        oppfolgingstilfelleEnd: new Date('2023-02-28'),
+      },
+    };
+    const personWithEarliestTilfelleStart: PersonData = {
+      ...createPersonDataWithName('Agnes Agnes'),
+      latestOppfolgingstilfelle: {
+        varighetUker: 8,
+        virksomhetList: [],
+        oppfolgingstilfelleStart: new Date('2023-01-01'),
+        oppfolgingstilfelleEnd: new Date('2023-03-01'),
+      },
+    };
+    const personWithLatestTilfelleStart: PersonData = {
+      ...createPersonDataWithName('Bjarne Bjarne'),
+      latestOppfolgingstilfelle: {
+        varighetUker: 8,
+        virksomhetList: [],
+        oppfolgingstilfelleStart: new Date('2023-02-01'),
+        oppfolgingstilfelleEnd: new Date('2023-04-01'),
+      },
+    };
+
+    it('sorts by varighet uker ascending', () => {
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithLongestVarighet,
+          '16624407794': personWithShortestVarighet,
+        },
+        [],
+        'UKE_ASC'
+      );
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithShortestVarighet.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLongestVarighet.navn
+      );
+    });
+
+    it('sorts by varighet uker descending', () => {
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithLongestVarighet,
+          '16624407794': personWithShortestVarighet,
+        },
+        [],
+        'UKE_DESC'
+      );
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithLongestVarighet.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithShortestVarighet.navn
+      );
+    });
+
+    it('sorts by tilfelle-start if equal varighet uker ascending', () => {
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestTilfelleStart,
+          '16624407794': personWithLatestTilfelleStart,
+        },
+        [],
+        'UKE_ASC'
+      );
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithLatestTilfelleStart.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithEarliestTilfelleStart.navn
+      );
+    });
+    it('sorts by tilfelle-start if equal varighet uker descending', () => {
+      const result = getSortedEventsFromSortingType(
+        {
+          '09128034883': personWithEarliestTilfelleStart,
+          '16624407794': personWithLatestTilfelleStart,
+        },
+        [],
+        'UKE_DESC'
+      );
+      expect(Object.values(result)[0]?.navn).to.deep.equal(
+        personWithEarliestTilfelleStart.navn
+      );
+      expect(Object.values(result)[1]?.navn).to.deep.equal(
+        personWithLatestTilfelleStart.navn
+      );
+    });
+  });
   describe('sort by frist', () => {
     it('Sorts by aktivitetskrav avventer-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
