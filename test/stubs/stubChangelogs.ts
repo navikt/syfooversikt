@@ -5,7 +5,7 @@ import { changelogsMock } from '../../mock/data/changelogsMock';
 import { nockBasePath } from './nockDefaults';
 
 export const stubChangelogs = () => {
-  axios.defaults.adapter = require('axios/lib/adapters/http');
+  axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
     .get(CHANGELOG_ROOT)

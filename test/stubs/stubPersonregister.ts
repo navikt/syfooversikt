@@ -5,7 +5,7 @@ import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
 export const stubPersonregister = () => {
-  axios.defaults.adapter = require('axios/lib/adapters/http');
+  axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
     .post(`${SYFOPERSON_ROOT}/person/info`)

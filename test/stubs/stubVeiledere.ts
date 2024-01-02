@@ -6,7 +6,7 @@ import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
 export const stubVeiledere = () => {
-  axios.defaults.adapter = require('axios/lib/adapters/http');
+  axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
     .get(`${SYFOVEILEDER_ROOT}/veiledere/enhet/${aktivEnhetMock.aktivEnhet}`)

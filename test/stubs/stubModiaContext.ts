@@ -5,7 +5,7 @@ import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
 export const stubModiaContext = () => {
-  axios.defaults.adapter = require('axios/lib/adapters/http');
+  axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
     .get(`${MODIACONTEXTHOLDER_ROOT}/context/aktivenhet`)
