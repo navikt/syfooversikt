@@ -4,7 +4,6 @@ import themes from '@/styles/themes';
 import SlettIkon from '@/components/common/SlettIkon';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { trackOnClick } from '@/amplitude/amplitude';
 
 const texts = {
   nullstill: 'Nullstill valg',
@@ -41,7 +40,6 @@ export const ClearFiltersButton = (): ReactElement => {
   return (
     <ClearFiltersWrapper
       onClick={() => {
-        trackOnClick(texts.nullstill);
         dispatchFilterAction({
           type: ActionType.ResetFilters,
         });

@@ -9,13 +9,8 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { trackOnClick } from '@/amplitude/amplitude';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { Toggles } from '@/data/unleash/types/unleash_types';
-
-const texts = {
-  trackingLabel: 'HendelseFilter',
-};
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -190,7 +185,6 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
       element.tekst,
       checked
     );
-    trackOnClick(`${texts.trackingLabel} '${element.tekst}'`);
     dispatchFilterAction({
       type: ActionType.SetSelectedHendelseType,
       selectedHendelseType: nyttFilter,

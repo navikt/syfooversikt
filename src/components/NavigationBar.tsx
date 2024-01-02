@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { trackOnClick } from '@/amplitude/amplitude';
 import { MoteoversiktLink } from '@/components/MoteoversiktLink';
 import {
   enhetOversiktRoutePath,
@@ -72,14 +71,12 @@ export const NavigationBar = (): ReactElement => {
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={minOversiktRoutePathRoutePath}
-          onClick={() => trackOnClick(tekster.minOversikt)}
         >
           {tekster.minOversikt}
         </LinkStyled>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={enhetOversiktRoutePath}
-          onClick={() => trackOnClick(tekster.enhetensOversikt)}
         >
           {tekster.enhetensOversikt}
         </LinkStyled>

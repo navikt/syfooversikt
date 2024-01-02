@@ -3,11 +3,6 @@ import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { fullNaisUrlDefault } from './miljoUtil';
 import { capitalizeHyphenatedWords } from './stringUtil';
-import { trackOnClick } from '@/amplitude/amplitude';
-
-const texts = {
-  trackingLabelNavigateToModiaPerson: 'Gå til Syfomodiaperson',
-};
 
 export const lenkeTilModia = (personData: PersonData) => {
   let path = `/sykefravaer`;
@@ -57,7 +52,6 @@ export const lenkeTilModiaEnkeltperson = (
     <Lenke
       onClick={(event) => {
         event.preventDefault();
-        trackOnClick(texts.trackingLabelNavigateToModiaPerson);
         onClick();
       }}
       href={lenkeTilModia(personData)}

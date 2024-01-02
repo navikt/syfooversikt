@@ -7,7 +7,6 @@ import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { trackOnClick } from '@/amplitude/amplitude';
 
 const texts = {
   panelTitle: 'Filter',
@@ -36,7 +35,6 @@ export const PersonFilter = ({
   };
 
   const onBirthDateChange = (birthDates: string[]) => {
-    trackOnClick(texts.trackingLabelDate);
     dispatchFilterAction({
       type: ActionType.SetSelectedBirthDates,
       selectedBirthDates: birthDates,
@@ -44,7 +42,6 @@ export const PersonFilter = ({
   };
 
   const onCompanyChange = (companies: string[]) => {
-    trackOnClick(texts.trackingLabelCompanies);
     dispatchFilterAction({
       type: ActionType.SetSelectedCompanies,
       selectedCompanies: companies,

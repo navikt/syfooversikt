@@ -3,7 +3,6 @@ import NAVSPA from '@navikt/navspa';
 import { DecoratorProps } from './decoratorProps';
 import decoratorConfig from './decoratorConfig';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { setAmplitudeUserProperties } from '@/amplitude/amplitude';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { fullNaisUrlDefault } from '@/utils/miljoUtil';
 
@@ -26,7 +25,6 @@ const Decorator = () => {
   };
 
   const handleChangeEnhet = (nyEnhet: string) => {
-    setAmplitudeUserProperties(nyEnhet);
     handleAktivEnhetChanged(nyEnhet);
   };
 
