@@ -5,7 +5,6 @@ import { Undertittel } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { trackOnClick } from '@/amplitude/amplitude';
 
 const FilterContainer = styled.div`
   margin-bottom: 1rem;
@@ -25,7 +24,6 @@ export const TekstFilter = (): ReactElement => {
         <Input
           label={<Undertittel>{texts.undertittel}</Undertittel>}
           placeholder={texts.placeholder}
-          onBlur={() => trackOnClick(texts.placeholder)}
           value={filterState.tekstFilter}
           onChange={(e) => {
             dispatchFilterAction({

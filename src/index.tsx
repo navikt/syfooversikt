@@ -11,11 +11,8 @@ import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { TabTypeProvider } from '@/context/tab/TabTypeContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { minutesToMillis } from '@/utils/timeUtils';
-import { initAmplitude } from '@/amplitude/amplitude';
 import { isClientError } from '@/api/errors';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
-
-initAmplitude();
 
 const queryClient = new QueryClient({
   defaultOptions: {
