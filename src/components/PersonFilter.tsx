@@ -7,6 +7,8 @@ import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
+import { FristFilter } from '@/components/filters/FristFilter';
+import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
 
 const texts = {
   panelTitle: 'Filter',
@@ -48,6 +50,13 @@ export const PersonFilter = ({
     });
   };
 
+  const onFristFilterChange = (fristFilter?: FristFilterOption) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedFristFilter,
+      selectedFristFilter: fristFilter,
+    });
+  };
+
   return (
     <Ekspanderbartpanel
       apen={panelOpen}
@@ -64,6 +73,10 @@ export const PersonFilter = ({
         <BirthDateFilter
           onSelect={onBirthDateChange}
           selectedDates={filterState.selectedBirthDates}
+        />
+        <FristFilter
+          onSelect={onFristFilterChange}
+          selectedFilterOption={filterState.selectedFristFilter}
         />
       </SpacedFilters>
     </Ekspanderbartpanel>
