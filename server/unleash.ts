@@ -39,5 +39,6 @@ export const getToggles = (veilederId: any, enhetId: any) => {
   };
   return {
     isHuskelappEnabled: unleash.isEnabled('isHuskelappEnabled', context),
+    isFlexjarEnabled: unleash.isEnabled('isFlexjarEnabled', context),
   };
 };

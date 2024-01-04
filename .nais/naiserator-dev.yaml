@@ -60,6 +60,8 @@ spec:
         - application: syfoperson
         - application: syfoveileder
         - application: syfooversikt-redis
+        - application: flexjar-backend
+          namespace: flex
   ingresses:
     - "https://syfooversikt.intern.dev.nav.no"
   env:
@@ -91,3 +93,7 @@ spec:
       value: "http://syfoperson"
     - name: SYFOVEILEDER_HOST
       value: "http://syfoveileder"
+    - name: FLEXJAR_AAD_APP_CLIENT_ID
+      value: "dev-gcp.flex.flexjar-backend"
+    - name: FLEXJAR_HOST
+      value: "http://flexjar-backend.flex"
