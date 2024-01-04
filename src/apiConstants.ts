@@ -6,3 +6,4 @@ export const PERSONTILDELING_ROOT = '/api/v2/persontildeling';
 export const CHANGELOG_ROOT = '/syfooversikt/changelogs';
 export const UNLEASH_ROOT = '/unleash';
 export const EREG_ROOT = '/ereg/api/v1';
+export const FLEXJAR_ROOT = '/flexjar-backend/api/v1';

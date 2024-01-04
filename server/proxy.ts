@@ -236,5 +236,16 @@ export const setupProxy = (
     })
   );
 
+  router.use(
+    '/flexjar-backend/*',
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(req, res, next, authClient, issuer, Config.auth.flexjar);
+    }
+  );
+
   return router;
 };

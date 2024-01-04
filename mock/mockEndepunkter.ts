@@ -8,6 +8,7 @@ import { mockChangelogs } from './changelogs/mockChangelogs';
 import { mockUnleash } from './mockUnleash';
 import { mockEreg } from './ereg/mockEreg';
 import { generatePersons } from './mockUtils';
+import { mockFlexjar } from './flexjar/mockFlexjar';
 
 const generatedPersons = generatePersons(50);
 
@@ -18,6 +19,7 @@ const mockEndepunkter = (server: express.Application) => {
   [
     mockModiacontextholder,
     mockEreg,
+    mockFlexjar,
     mockPersonoversikt,
     mockPersontildeling,
     mockSyfoperson,
