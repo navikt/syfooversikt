@@ -2,13 +2,8 @@ import React, { ReactElement } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import Panel from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
-import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-
-const FilterContainer = styled.div`
-  margin-bottom: 1rem;
-`;
 
 const texts = {
   undertittel: 'Navn / Fødselsnummer',
@@ -19,7 +14,7 @@ export const TekstFilter = (): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
   return (
-    <FilterContainer>
+    <div className="mb-4">
       <Panel>
         <Input
           label={<Undertittel>{texts.undertittel}</Undertittel>}
@@ -33,6 +28,6 @@ export const TekstFilter = (): ReactElement => {
           }}
         />
       </Panel>
-    </FilterContainer>
+    </div>
   );
 };
