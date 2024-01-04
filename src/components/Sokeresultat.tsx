@@ -69,7 +69,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const filteredEvents = allEvents
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
-    .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilter))
+    .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
     .applyFilter((v) => filterOnPersonregister(v, selectedHendelsetypeFilter))
     .applyFilter((v) =>
       filterOnFodselsnummerOrName(v, filterState.tekstFilter)

@@ -34,7 +34,7 @@ export interface SetSelectedCompanies {
 
 export interface SetSelectedFristFilter {
   type: ActionType.SetSelectedFristFilter;
-  selectedFristFilter?: FristFilterOption;
+  selectedFristFilters: FristFilterOption[];
 }
 
 export interface SetSelectedBirthDates {

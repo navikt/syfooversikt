@@ -19,7 +19,7 @@ export interface FilterState {
   selectedOptions: string[];
   selectedCompanies: string[];
   selectedBirthDates: string[];
-  selectedFristFilter?: FristFilterOption;
+  selectedFristFilters: FristFilterOption[];
   selectedHendelseType: HendelseTypeFilters;
 }
 
@@ -29,7 +29,7 @@ export const filterInitialState: FilterState = {
   selectedOptions: [],
   selectedCompanies: [],
   selectedBirthDates: [],
-  selectedFristFilter: undefined,
+  selectedFristFilters: [],
   selectedHendelseType: {
     arbeidsgiverOnskerMote: false,
     onskerMote: false,

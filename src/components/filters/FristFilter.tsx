@@ -1,40 +1,32 @@
-import { Select } from '@navikt/ds-react';
+import { CheckboxGroup, Checkbox } from '@navikt/ds-react';
 import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
 import React from 'react';
 
 const texts = {
-  label: 'Frist',
+  legend: 'Velg synlighet for frist',
   option: {
-    noChoice: 'Velg visningsalternativ',
-    todayOrPast: 'I dag og tidligere datoer',
+    past: 'Tidligere datoer',
+    today: 'Dagens dato',
     future: 'Fremtidige datoer',
   },
 };
 
 interface Props {
-  onSelect(value?: FristFilterOption): void;
-
-  selectedFilterOption?: FristFilterOption;
+  onChange(value: FristFilterOption[]): void;
 }
 
-export const FristFilter = ({ onSelect, selectedFilterOption }: Props) => {
+export const FristFilter = ({ onChange }: Props) => {
   return (
-    <Select
-      label="Frist"
-      value={selectedFilterOption}
-      onChange={(event) => {
-        if (event.target.value === '') {
-          onSelect();
-        } else {
-          onSelect(event.target.value as FristFilterOption);
-        }
-      }}
+    <CheckboxGroup
+      legend={texts.legend}
+      onChange={(val: FristFilterOption[]) => onChange(val)}
+      size="small"
     >
-      <option value="">{texts.option.noChoice}</option>
-      <option value={FristFilterOption.TodayOrPast}>
-        {texts.option.todayOrPast}
-      </option>
-      <option value={FristFilterOption.Future}>{texts.option.future}</option>
-    </Select>
+      <Checkbox value={FristFilterOption.Past}>{texts.option.past}</Checkbox>
+      <Checkbox value={FristFilterOption.Today}>{texts.option.today}</Checkbox>
+      <Checkbox value={FristFilterOption.Future}>
+        {texts.option.future}
+      </Checkbox>
+    </CheckboxGroup>
   );
 };

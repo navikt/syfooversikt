@@ -45,7 +45,7 @@ export const filterReducer = (
     case ActionType.SetSelectedFristFilter: {
       return {
         ...state,
-        selectedFristFilter: action.selectedFristFilter,
+        selectedFristFilters: action.selectedFristFilters,
       };
     }
     case ActionType.SetSelectedVeilederIdents: {

@@ -9,7 +9,7 @@ import {
 } from './personDataUtil';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
-import { isFuture, isTodayOrPast } from '@/utils/dateUtils';
+import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 
 export class Filterable<T> {
   value: T;
@@ -83,15 +83,16 @@ export const filterOnBirthDates = (
 };
 
 export enum FristFilterOption {
-  TodayOrPast = 'TodayOrPast',
+  Past = 'Past',
+  Today = 'Today',
   Future = 'Future',
 }
 
 export const filterOnFrist = (
   personregister: PersonregisterState,
-  fristFilter?: FristFilterOption
+  selectedFristFilters: FristFilterOption[]
 ): PersonregisterState => {
-  const isNoFilter = fristFilter === undefined;
+  const isNoFilter = selectedFristFilters.length === 0;
   if (isNoFilter) {
     return personregister;
   }
@@ -105,30 +106,33 @@ export const filterOnFrist = (
     ) {
       return true;
     }
-
-    switch (fristFilter) {
-      case FristFilterOption.TodayOrPast:
-        return (
-          (oppfolgingsoppgaveFrist
-            ? isTodayOrPast(oppfolgingsoppgaveFrist)
-            : false) ||
-          (aktivitetskravVurderingFrist
-            ? isTodayOrPast(aktivitetskravVurderingFrist)
-            : false)
-        );
-      case FristFilterOption.Future:
-        return (
-          (oppfolgingsoppgaveFrist
-            ? isFuture(oppfolgingsoppgaveFrist)
-            : false) ||
-          (aktivitetskravVurderingFrist
-            ? isFuture(aktivitetskravVurderingFrist)
-            : false)
-        );
-    }
+    const isOppfolgingsoppgaveVisible = oppfolgingsoppgaveFrist
+      ? isInFristFilter(selectedFristFilters, oppfolgingsoppgaveFrist)
+      : false;
+    const isAktivitetskravVisible = aktivitetskravVurderingFrist
+      ? isInFristFilter(selectedFristFilters, aktivitetskravVurderingFrist)
+      : false;
+    return isOppfolgingsoppgaveVisible || isAktivitetskravVisible;
   });
+
   return Object.fromEntries(filtered);
 };
+
+function isInFristFilter(
+  selectedFilters: FristFilterOption[],
+  fristDate: Date
+): boolean {
+  return selectedFilters.some((fristFilter) => {
+    switch (fristFilter) {
+      case FristFilterOption.Past:
+        return isPast(fristDate);
+      case FristFilterOption.Today:
+        return isToday(fristDate);
+      case FristFilterOption.Future:
+        return isFuture(fristDate);
+    }
+  });
+}
 
 type HendelseTypeFilterKey = keyof HendelseTypeFilters;
 

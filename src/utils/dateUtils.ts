@@ -8,22 +8,24 @@ export const toReadableDate = (dateArg: Date | null): string => {
   return dayjs(dateArg).format('DD.MM.YYYY');
 };
 
-export function isTodayOrPast(compareDate: Date): boolean {
+export function isPast(compareDate: Date): boolean {
   const currentDate = new Date();
   const date = new Date(compareDate);
+  return date < currentDate;
+}
 
-  const isSameDay =
+export function isToday(compareDate: Date): boolean {
+  const currentDate = new Date();
+  const date = new Date(compareDate);
+  return (
     date.getFullYear() === currentDate.getFullYear() &&
     date.getMonth() === currentDate.getMonth() &&
-    date.getDate() === currentDate.getDate();
-  const isPast = date < currentDate;
-
-  return isSameDay || isPast;
+    date.getDate() === currentDate.getDate()
+  );
 }
 
 export function isFuture(compareDate: Date): boolean {
   const currentDate = new Date();
   const date = new Date(compareDate);
-
   return currentDate < date;
 }

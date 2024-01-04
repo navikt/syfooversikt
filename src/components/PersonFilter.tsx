@@ -50,10 +50,10 @@ export const PersonFilter = ({
     });
   };
 
-  const onFristFilterChange = (fristFilter?: FristFilterOption) => {
+  const onFristFilterChange = (fristFilters: FristFilterOption[]) => {
     dispatchFilterAction({
       type: ActionType.SetSelectedFristFilter,
-      selectedFristFilter: fristFilter,
+      selectedFristFilters: fristFilters,
     });
   };
 
@@ -74,10 +74,7 @@ export const PersonFilter = ({
           onSelect={onBirthDateChange}
           selectedDates={filterState.selectedBirthDates}
         />
-        <FristFilter
-          onSelect={onFristFilterChange}
-          selectedFilterOption={filterState.selectedFristFilter}
-        />
+        <FristFilter onChange={onFristFilterChange} />
       </SpacedFilters>
     </Ekspanderbartpanel>
   );
