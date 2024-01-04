@@ -4,7 +4,6 @@ import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { filterOnPersonregister } from '@/utils/hendelseFilteringUtils';
 import { OverviewTabType } from '@/konstanter';
-import styled from 'styled-components';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
@@ -159,10 +158,6 @@ interface CheckboksElement {
   show: boolean;
 }
 
-const Container = styled.div`
-  margin-bottom: 1rem;
-`;
-
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
@@ -192,7 +187,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
   };
 
   return (
-    <Container>
+    <div className="mb-4">
       <EkspanderbartPanel apen tittel="Hendelse">
         <CheckboxGruppe>
           {genererHendelseCheckbokser(
@@ -202,7 +197,7 @@ export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
           )}
         </CheckboxGruppe>
       </EkspanderbartPanel>
-    </Container>
+    </div>
   );
 };
 
