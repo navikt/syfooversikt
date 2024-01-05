@@ -7,3 +7,31 @@ export const toReadableDate = (dateArg: Date | null): string => {
 
   return dayjs(dateArg).format('DD.MM.YYYY');
 };
+
+export function isPast(compareDate: Date): boolean {
+  const currentDate = new Date();
+  const date = new Date(compareDate);
+  const isNotToday = !(
+    date.getFullYear() === currentDate.getFullYear() &&
+    date.getMonth() === currentDate.getMonth() &&
+    date.getDate() === currentDate.getDate()
+  );
+  const isInThePast = date < currentDate;
+  return isNotToday && isInThePast;
+}
+
+export function isToday(compareDate: Date): boolean {
+  const currentDate = new Date();
+  const date = new Date(compareDate);
+  return (
+    date.getFullYear() === currentDate.getFullYear() &&
+    date.getMonth() === currentDate.getMonth() &&
+    date.getDate() === currentDate.getDate()
+  );
+}
+
+export function isFuture(compareDate: Date): boolean {
+  const currentDate = new Date();
+  const date = new Date(compareDate);
+  return currentDate < date;
+}

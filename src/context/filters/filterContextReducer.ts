@@ -42,6 +42,12 @@ export const filterReducer = (
         selectedCompanies: action.selectedCompanies,
       };
     }
+    case ActionType.SetSelectedFristFilter: {
+      return {
+        ...state,
+        selectedFristFilters: action.selectedFristFilters,
+      };
+    }
     case ActionType.SetSelectedVeilederIdents: {
       return {
         ...state,

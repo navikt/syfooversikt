@@ -9,6 +9,7 @@ import {
 } from './personDataUtil';
 import { Veileder } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 
 export class Filterable<T> {
   value: T;
@@ -80,6 +81,58 @@ export const filterOnBirthDates = (
 
   return Object.fromEntries(filtered);
 };
+
+export enum FristFilterOption {
+  Past = 'Past',
+  Today = 'Today',
+  Future = 'Future',
+}
+
+export const filterOnFrist = (
+  personregister: PersonregisterState,
+  selectedFristFilters: FristFilterOption[]
+): PersonregisterState => {
+  const isNoFilter = selectedFristFilters.length === 0;
+  if (isNoFilter) {
+    return personregister;
+  }
+  const filtered = Object.entries(personregister).filter(([, persondata]) => {
+    const aktivitetskravVurderingFrist =
+      persondata.aktivitetskravVurderingFrist;
+    const oppfolgingsoppgaveFrist = persondata.trengerOppfolgingFrist;
+    if (
+      aktivitetskravVurderingFrist === null &&
+      oppfolgingsoppgaveFrist === null
+    ) {
+      return true;
+    }
+    const isOppfolgingsoppgaveVisible = oppfolgingsoppgaveFrist
+      ? isInFristFilter(selectedFristFilters, oppfolgingsoppgaveFrist)
+      : false;
+    const isAktivitetskravVisible = aktivitetskravVurderingFrist
+      ? isInFristFilter(selectedFristFilters, aktivitetskravVurderingFrist)
+      : false;
+    return isOppfolgingsoppgaveVisible || isAktivitetskravVisible;
+  });
+
+  return Object.fromEntries(filtered);
+};
+
+function isInFristFilter(
+  selectedFilters: FristFilterOption[],
+  fristDate: Date
+): boolean {
+  return selectedFilters.some((fristFilter) => {
+    switch (fristFilter) {
+      case FristFilterOption.Past:
+        return isPast(fristDate);
+      case FristFilterOption.Today:
+        return isToday(fristDate);
+      case FristFilterOption.Future:
+        return isFuture(fristDate);
+    }
+  });
+}
 
 type HendelseTypeFilterKey = keyof HendelseTypeFilters;
 
