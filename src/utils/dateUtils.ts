@@ -11,7 +11,13 @@ export const toReadableDate = (dateArg: Date | null): string => {
 export function isPast(compareDate: Date): boolean {
   const currentDate = new Date();
   const date = new Date(compareDate);
-  return date < currentDate;
+  const isNotToday = !(
+    date.getFullYear() === currentDate.getFullYear() &&
+    date.getMonth() === currentDate.getMonth() &&
+    date.getDate() === currentDate.getDate()
+  );
+  const isInThePast = date < currentDate;
+  return isNotToday && isInThePast;
 }
 
 export function isToday(compareDate: Date): boolean {

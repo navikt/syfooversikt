@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import {
+  filterOnFrist,
   filterOnPersonregister,
+  FristFilterOption,
   getSortedEventsFromSortingType,
 } from '@/utils/hendelseFilteringUtils';
 import {
@@ -10,6 +12,7 @@ import {
 } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { addWeeks, subWeeks } from 'date-fns';
 
 const createPersonDataWithName = (name: string): PersonData => {
   return {
@@ -502,6 +505,84 @@ describe('hendelseFilteringUtils', () => {
 
       expect(Object.keys(filteredPersonregister).length).to.equal(1);
       expect(Object.keys(filteredPersonregister)[0]).to.equal('09128034883');
+    });
+
+    describe('Frist filter', () => {
+      const today = new Date();
+      const oneWeekAgo = subWeeks(today, 1);
+      const oneWeekFromToday = addWeeks(today, 1);
+
+      const oppfolgingsOppgaveFristBeforeToday: PersonData = {
+        ...createPersonDataWithName('Box Culder'),
+        trengerOppfolging: true,
+        trengerOppfolgingFrist: oneWeekAgo,
+      };
+      const aktivitetskravVurderingFristBeforeToday: PersonData = {
+        ...createPersonDataWithName('Cox Dulder'),
+        aktivitetskravActive: true,
+        aktivitetskravVurderingFrist: oneWeekAgo,
+      };
+      const oppfolgingsOppgaveFristToday: PersonData = {
+        ...createPersonDataWithName('Dox Fulder'),
+        trengerOppfolging: true,
+        trengerOppfolgingFrist: today,
+      };
+      const aktivitetskravVurderingFristToday: PersonData = {
+        ...createPersonDataWithName('Fox Gulder'),
+        aktivitetskravActive: true,
+        aktivitetskravVurderingFrist: today,
+      };
+      const oppfolgingsOppgaveFristFuture: PersonData = {
+        ...createPersonDataWithName('Gox Hulder'),
+        trengerOppfolging: true,
+        trengerOppfolgingFrist: oneWeekFromToday,
+      };
+      const aktivitetskravVurderingFristFuture: PersonData = {
+        ...createPersonDataWithName('Jox Kulder'),
+        aktivitetskravActive: true,
+        aktivitetskravVurderingFrist: oneWeekFromToday,
+      };
+
+      const personregister: PersonregisterState = {
+        '16614407794': oppfolgingsOppgaveFristBeforeToday,
+        '16614407795': aktivitetskravVurderingFristBeforeToday,
+        '16614407796': oppfolgingsOppgaveFristToday,
+        '16614407797': aktivitetskravVurderingFristToday,
+        '16614407798': oppfolgingsOppgaveFristFuture,
+        '16614407799': aktivitetskravVurderingFristFuture,
+      };
+
+      it('Only returns elements with frist dato before today', () => {
+        const filteredPersonregister = filterOnFrist(personregister, [
+          FristFilterOption.Past,
+        ]);
+
+        console.log(filteredPersonregister);
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407794');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407795');
+      });
+
+      it('Only returns elements with frist dato today', () => {
+        const filteredPersonregister = filterOnFrist(personregister, [
+          FristFilterOption.Today,
+        ]);
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407797');
+      });
+
+      it('Only returns elements with frist dato in the future', () => {
+        const filteredPersonregister = filterOnFrist(personregister, [
+          FristFilterOption.Future,
+        ]);
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407798');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407799');
+      });
     });
   });
 });
