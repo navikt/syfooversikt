@@ -53,7 +53,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
         feedbackId: side,
         feedback: feedback,
         svar: svar,
-        app: 'syfomodiaperson',
+        app: 'syfooversikt',
       };
       sendFeedback.mutate(body);
     } else {
