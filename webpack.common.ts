@@ -30,7 +30,7 @@ const commonConfig: Configuration = {
         exclude: /node_modules/,
       },
       {
-        test: /\.less$/,
+        test: /\.(less|css)$/,
         use: [
           {
             loader: 'style-loader',

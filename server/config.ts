@@ -147,6 +147,14 @@ export const auth = {
       name: 'SYFOVEILEDER_HOST',
     }),
   },
+  flexjar: {
+    clientId: envVar({
+      name: 'FLEXJAR_AAD_APP_CLIENT_ID',
+    }),
+    host: envVar({
+      name: 'FLEXJAR_HOST',
+    }),
+  },
 };
 
 export const unleash: { serverApiUrl: string; serverApiToken: string } = {
