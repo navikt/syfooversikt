@@ -3,9 +3,9 @@ import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
 import React from 'react';
 
 const texts = {
-  legend: 'Velg synlighet for frist',
+  legend: 'Frist',
   option: {
-    past: 'Tidligere datoer',
+    past: 'Før dagens dato',
     today: 'Dagens dato',
     future: 'Fremtidige datoer',
   },
