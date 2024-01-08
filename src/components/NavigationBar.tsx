@@ -7,7 +7,7 @@ import {
   minOversiktRoutePathRoutePath,
 } from '@/routers/AppRouter';
 
-const tekster = {
+const texts = {
   enhetensOversikt: 'Enhetens oversikt',
   minOversikt: 'Min oversikt',
 };
@@ -54,6 +54,7 @@ const NavigationBarContent = styled.div`
   padding-top: 1em;
   padding-bottom: 1em;
   display: flex;
+
   > :not(:last-child) {
     margin-right: 1em;
   }
@@ -72,13 +73,13 @@ export const NavigationBar = (): ReactElement => {
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={minOversiktRoutePathRoutePath}
         >
-          {tekster.minOversikt}
+          {texts.minOversikt}
         </LinkStyled>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={enhetOversiktRoutePath}
         >
-          {tekster.enhetensOversikt}
+          {texts.enhetensOversikt}
         </LinkStyled>
         <MoteoversiktLinkContent>
           <MoteoversiktLink />

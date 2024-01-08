@@ -9,6 +9,8 @@ import { NavigationBar } from '@/components/NavigationBar';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { NotificationBar } from '@/components/error/NotificationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
 const Container = styled.div`
   display: flex;
@@ -21,10 +23,29 @@ interface Props {
   tabType: OverviewTabType;
 }
 
+function logPageView(tab: OverviewTabType) {
+  Amplitude.logEvent({
+    type: EventType.PageView,
+    data: { url: window.location.href, sidetittel: toReadableString(tab) },
+  });
+}
+
+function toReadableString(overviewTabType: OverviewTabType): string {
+  switch (overviewTabType) {
+    case OverviewTabType.ENHET_OVERVIEW:
+      return 'Enhetens oversikt';
+    case OverviewTabType.MY_OVERVIEW:
+      return 'Min oversikt';
+  }
+}
+
 const OversiktContainer = ({ tabType }: Props): ReactElement => {
   const personregisterQuery = usePersonregisterQuery();
   const personoversiktQuery = usePersonoversiktQuery();
   const { setTabType } = useTabType();
+  useEffect(() => {
+    logPageView(tabType);
+  }, [tabType]);
 
   useEffect(() => {
     setTabType(tabType);
