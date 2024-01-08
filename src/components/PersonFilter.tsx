@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import styled from 'styled-components';
 import BirthDateFilter from './filters/BirthDateFilter';
 import CompanyFilter from './filters/CompanyFilter';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
@@ -15,12 +14,6 @@ const texts = {
   trackingLabelCompanies: 'Filter - Virksomheter',
   trackingLabelDate: 'Filter - Fødselsdato',
 };
-
-const SpacedFilters = styled.div`
-  > * {
-    margin-bottom: 1em;
-  }
-`;
 
 interface PersonFilterProps {
   personregister: PersonregisterState;
@@ -63,7 +56,7 @@ export const PersonFilter = ({
       onClick={togglePanel}
       tittel={texts.panelTitle}
     >
-      <SpacedFilters>
+      <div className="flex flex-col gap-4">
         <CompanyFilter
           selectedOptions={filterState.selectedOptions}
           selectedCompanies={filterState.selectedCompanies}
@@ -75,7 +68,7 @@ export const PersonFilter = ({
           selectedDates={filterState.selectedBirthDates}
         />
         <FristFilter onChange={onFristFilterChange} />
-      </SpacedFilters>
+      </div>
     </Ekspanderbartpanel>
   );
 };

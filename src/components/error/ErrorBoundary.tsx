@@ -1,19 +1,6 @@
 import React, { ReactNode } from 'react';
 import { defaultErrorTexts } from '@/api/errors';
-import styled from 'styled-components';
 import { Alert } from '@navikt/ds-react';
-
-const ErrorContentContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ErrorRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50em;
-  margin: 2rem;
-`;
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -37,15 +24,16 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <ErrorContentContainer>
-          <ErrorRow>
+        <div className="flex justify-center">
+          <div className="flex flex-col w-[50rem] m-8">
             <Alert variant="error">{defaultErrorTexts.generalError}</Alert>
-          </ErrorRow>
-        </ErrorContentContainer>
+          </div>
+        </div>
       );
     }
 
     return this.props.children;
   }
 }
+
 export default ErrorBoundary;

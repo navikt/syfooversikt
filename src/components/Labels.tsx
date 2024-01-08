@@ -1,13 +1,8 @@
 import React from 'react';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { getReadableSkjermingskode } from '@/utils/personDataUtil';
-import styled from 'styled-components';
 import { Tooltip } from '@navikt/ds-react';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-
-const LabelColumnWrapper = styled.div`
-  display: flex;
-`;
 
 interface LabelColumnProps {
   personData: PersonData;
@@ -18,7 +13,7 @@ export const Labels = ({ personData }: LabelColumnProps) => {
   const showSkjermingskode = skjermingskode && skjermingskode !== 'INGEN';
 
   return (
-    <LabelColumnWrapper>
+    <div className="flex">
       {showSkjermingskode && (
         <Tooltip content={getReadableSkjermingskode(skjermingskode)}>
           <ExclamationmarkTriangleFillIcon
@@ -27,6 +22,6 @@ export const Labels = ({ personData }: LabelColumnProps) => {
           />
         </Tooltip>
       )}
-    </LabelColumnWrapper>
+    </div>
   );
 };

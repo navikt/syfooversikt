@@ -4,12 +4,6 @@ import { FileTextIcon, HourglassTopFilledIcon } from '@navikt/aksel-icons';
 import React, { ReactElement } from 'react';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Tooltip } from '@navikt/ds-react';
-import styled from 'styled-components';
-
-const FristWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
 
 const texts = {
   tooltipAvventer: 'Avventer',
@@ -58,12 +52,12 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
   return (
     <>
       {frister.sort(byFristAsc).map(({ date, icon, tooltip }, index) => (
-        <FristWrapper key={index}>
+        <div key={index} className="flex flex-wrap">
           <Tooltip content={tooltip} arrow={false}>
             {icon()}
           </Tooltip>
           {toReadableDate(date)}
-        </FristWrapper>
+        </div>
       ))}
     </>
   );

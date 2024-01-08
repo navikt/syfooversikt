@@ -54,14 +54,10 @@ const NavigationBarContent = styled.div`
   padding-top: 1em;
   padding-bottom: 1em;
   display: flex;
+
   > :not(:last-child) {
     margin-right: 1em;
   }
-`;
-
-const MoteoversiktLinkContent = styled.div`
-  align-self: center;
-  margin-left: auto;
 `;
 
 export const NavigationBar = (): ReactElement => {
@@ -80,9 +76,9 @@ export const NavigationBar = (): ReactElement => {
         >
           {tekster.enhetensOversikt}
         </LinkStyled>
-        <MoteoversiktLinkContent>
+        <div className="ml-auto self-center">
           <MoteoversiktLink />
-        </MoteoversiktLinkContent>
+        </div>
       </NavigationBarContent>
     </NavigationBarDiv>
   );
