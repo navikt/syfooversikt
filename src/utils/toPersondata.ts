@@ -16,7 +16,7 @@ export const toPersonData = (
       (reg) => reg.fnr === person.fnr
     );
     personDataList[person.fnr] = {
-      navn: person.navn || matchingPersonRegister?.navn || '',
+      navn: person.navn || '',
       harMotebehovUbehandlet: person.motebehovUbehandlet || false,
       harDialogmotesvar: person.dialogmotesvarUbehandlet,
       harOppfolgingsplanLPSBistandUbehandlet:

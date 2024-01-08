@@ -46,6 +46,5 @@ export interface PersonHendelseData {
 
 export interface PersonregisterData {
   fnr: string;
-  navn: string;
   skjermingskode: Skjermingskode;
 }

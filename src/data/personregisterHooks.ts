@@ -33,7 +33,7 @@ export const usePersonregisterQuery = () => {
   return useQuery({
     queryKey: personregisterQueryKeys.personregister(aktivEnhet),
     queryFn: fetchPersonregister,
-    enabled: false,
+    enabled: !!aktivEnhet && fnrForPersonerListe.length > 0,
     onError: (error) => {
       if (error instanceof ApiErrorException && error.code === 403) {
         throwError(error);
