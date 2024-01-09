@@ -23,18 +23,20 @@ function copyProps(src: any, target: any) {
   Object.defineProperties(target, propsAsPropertyDescriptorMap);
 }
 
-let temp: any = null;
-const localS = {
-  getItem() {
-    return temp;
-  },
-  setItem(key: any, value: any) {
-    temp = value;
-  },
-};
+function localStorage() {
+  let storage = {};
+  return {
+    getItem: function (key: string) {
+      return key in storage ? (storage as any)[key] : null;
+    },
+    setItem: function (key: string, value: any) {
+      (storage as any)[key] = value || '';
+    },
+  };
+}
 
 (global as any).HTMLElement = window.HTMLElement;
-(global as any).localStorage = localS;
+(global as any).localStorage = localStorage();
 (global as any).XMLHttpRequest = window.XMLHttpRequest;
 
 (global as any).window = window;

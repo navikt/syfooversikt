@@ -44,11 +44,8 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
   const personoversiktQuery = usePersonoversiktQuery();
   const { setTabType } = useTabType();
   useEffect(() => {
-    logPageView(tabType);
-  }, [tabType]);
-
-  useEffect(() => {
     setTabType(tabType);
+    logPageView(tabType);
   }, [setTabType, tabType]);
 
   const ContainerContent = (): ReactElement => {
