@@ -7,7 +7,7 @@ import {
   minOversiktRoutePathRoutePath,
 } from '@/routers/AppRouter';
 
-const tekster = {
+const texts = {
   enhetensOversikt: 'Enhetens oversikt',
   minOversikt: 'Min oversikt',
 };
@@ -68,13 +68,13 @@ export const NavigationBar = (): ReactElement => {
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={minOversiktRoutePathRoutePath}
         >
-          {tekster.minOversikt}
+          {texts.minOversikt}
         </LinkStyled>
         <LinkStyled
           className={({ isActive }) => (isActive ? 'active' : '')}
           to={enhetOversiktRoutePath}
         >
-          {tekster.enhetensOversikt}
+          {texts.enhetensOversikt}
         </LinkStyled>
         <div className="ml-auto self-center">
           <MoteoversiktLink />
