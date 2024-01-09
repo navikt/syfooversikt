@@ -49,10 +49,7 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
   }, [setTabType, tabType]);
 
   const ContainerContent = (): ReactElement => {
-    if (
-      personoversiktQuery.isInitialLoading ||
-      personregisterQuery.isInitialLoading
-    ) {
+    if (personoversiktQuery.isInitialLoading) {
       return <AppSpinner />;
     }
 

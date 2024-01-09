@@ -15,7 +15,7 @@ import { expect } from 'chai';
 describe('personregisterHooks tests', () => {
   const queryClient = new QueryClient();
 
-  xit('loads personregister correctly', async () => {
+  it('loads personregister correctly', async () => {
     stubModiaContext();
     stubPersonoversikt();
     stubPersonregister();
