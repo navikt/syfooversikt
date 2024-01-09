@@ -49,4 +49,5 @@ const getApiKey = () => {
 
 amplitude.init(getApiKey(), undefined, {
   serverUrl: 'https://amplitude.nav.no/collect',
+  defaultTracking: true,
 });
