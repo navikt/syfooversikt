@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { FilterTitle } from '../FilterTitle';
 import { ValueType } from 'react-select/src/types';
+import { Label } from '@navikt/ds-react';
 
 const texts = {
   title: 'Virksomheter',
@@ -18,6 +18,7 @@ interface CompantyFilterProps {
   options: string[];
   selectedOptions: string[];
   selectedCompanies: string[];
+
   onSelect(arrayOfCompanies: string[]): void;
 }
 
@@ -42,7 +43,7 @@ const CompanyFilter = (props: CompantyFilterProps): ReactElement => {
 
   return (
     <div>
-      <FilterTitle>{texts.title}</FilterTitle>
+      <Label size="small">{texts.title}</Label>
       <Select
         isDisabled={allCompanies.length === 0}
         isMulti

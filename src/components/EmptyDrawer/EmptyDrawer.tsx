@@ -1,6 +1,5 @@
 import { EmptyDrawerImage } from '../../../img/ImageComponents';
 import React from 'react';
-import styled from 'styled-components';
 import { Ingress } from 'nav-frontend-typografi';
 
 export const texts = {
@@ -8,25 +7,13 @@ export const texts = {
   altText: 'Her var det ikke mye',
 };
 
-const Container = styled.div`
-  margin-top: 4rem;
-`;
-
-const StyledDrawerComponent = styled.div`
-  text-align: center;
-`;
-
-const IngressMarginTop = styled(Ingress)`
-  margin-top: 2rem;
-`;
-
 export const EmptyDrawer = () => {
   return (
-    <Container>
-      <StyledDrawerComponent>
+    <div className="mt-16">
+      <div className="text-center">
         <img alt={texts.altText} src={EmptyDrawerImage} />
-        <IngressMarginTop>{texts.ingenHendelser}</IngressMarginTop>
-      </StyledDrawerComponent>
-    </Container>
+        <Ingress className="mt-8">{texts.ingenHendelser}</Ingress>
+      </div>
+    </div>
   );
 };

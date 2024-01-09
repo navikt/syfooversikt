@@ -39,11 +39,6 @@ export const StyledPersonRad = styled.div<{ index: number; selected: boolean }>`
   }};
 `;
 
-const VelgBoks = styled(Checkbox)`
-  margin-left: 0.5em;
-  padding-bottom: 2em;
-`;
-
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
 ): string => {
@@ -79,12 +74,13 @@ export const Personrad = (props: PersonradProps): ReactElement => {
   return (
     <StyledPersonRad index={index} selected={kryssAv}>
       <Column xs={'1'}>
-        <VelgBoks
+        <Checkbox
           label={''}
           checked={kryssAv}
           onChange={() => {
             checkboxHandler(fnr);
           }}
+          className="ml-2 pb-8"
         />
       </Column>
       <Column xs={'2'}>{lenkeTilModiaEnkeltperson(personData, onClick)}</Column>

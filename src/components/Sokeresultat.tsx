@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import Personliste from './Personliste';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
@@ -35,10 +34,6 @@ const lagListe = (
     enhet,
   }));
 };
-
-const SokeresultatContainer = styled.div`
-  flex: 3;
-`;
 
 const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const { aktivEnhet } = useAktivEnhet();
@@ -108,7 +103,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   };
 
   return (
-    <SokeresultatContainer>
+    <div className="flex-[3]">
       <ToolbarWrapper
         numberOfItemsTotal={allFnr.length}
         onPageChange={onPageChange}
@@ -126,7 +121,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         markertePersoner={markertePersoner}
         sortingType={sortingType}
       />
-    </SokeresultatContainer>
+    </div>
   );
 };
 

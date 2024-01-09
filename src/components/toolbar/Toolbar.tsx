@@ -24,6 +24,7 @@ const Innhold = styled.section`
 const Element = styled.div`
   display: flex;
   align-items: center;
+
   & > div:not(:nth-child(2)) {
     padding: 0.5em;
   }
@@ -34,15 +35,9 @@ const VelgBoks = styled(Checkbox)`
     margin: 0;
     padding: 0;
   }
+
   margin: 0;
   margin-left: 0.5em;
-`;
-
-const IngressRad = styled(Row)`
-  margin-left: 0;
-  margin-right: 0;
-  display: flex;
-  align-items: center;
 `;
 
 const ToolbarStyled = styled.div`
@@ -92,7 +87,7 @@ const Toolbar = (props: ToolbarProps) => {
           }
         />
       </Innhold>
-      <IngressRad>
+      <Row className="flex ml-0 mr-0 items-center">
         <Column xs="1">
           <VelgBoks
             className="toolbar__velgBoks"
@@ -110,7 +105,7 @@ const Toolbar = (props: ToolbarProps) => {
           }}
         />
         <Column xs={'1'} />
-      </IngressRad>
+      </Row>
     </ToolbarStyled>
   );
 };

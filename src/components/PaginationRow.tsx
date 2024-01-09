@@ -5,17 +5,11 @@ import ChevronKnapp from './ChevronKnapp';
 import themes from '../styles/themes';
 import Clickable from './toolbar/Clickable';
 
-const PaginationItems = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  justify-content: space-between;
-`;
-
 interface PaginationProps {
   startPage?: number;
   numberOfItems: number;
   maxNumberPerPage: number;
+
   onPageChange(start: number, end: number, pageNumber: number): void;
 }
 
@@ -65,7 +59,7 @@ const PaginationRow = ({
   };
 
   return (
-    <PaginationItems>
+    <div className="flex flex-row justify-items-center justify-between">
       <Element>
         <ChevronKnapp
           disabled={currentPage === 0}
@@ -96,7 +90,7 @@ const PaginationRow = ({
           onClick={onNextClick}
         />
       </Element>
-    </PaginationItems>
+    </div>
   );
 };
 
