@@ -67,7 +67,10 @@ export const PersonFilter = ({
           onSelect={onBirthDateChange}
           selectedDates={filterState.selectedBirthDates}
         />
-        <FristFilter onChange={onFristFilterChange} />
+        <FristFilter
+          onChange={onFristFilterChange}
+          selectedFristFilters={filterState.selectedFristFilters}
+        />
       </div>
     </Ekspanderbartpanel>
   );
