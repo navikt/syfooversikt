@@ -15,6 +15,8 @@ const texts = {
 
 interface Props {
   onChange(value: FristFilterOption[]): void;
+
+  selectedFristFilters: FristFilterOption[];
 }
 
 function logOptionSelectedEvent(option: FristFilterOption[]) {
@@ -28,7 +30,7 @@ function logOptionSelectedEvent(option: FristFilterOption[]) {
   });
 }
 
-export const FristFilter = ({ onChange }: Props) => {
+export const FristFilter = ({ onChange, selectedFristFilters }: Props) => {
   return (
     <CheckboxGroup
       legend={texts.legend}
@@ -36,6 +38,7 @@ export const FristFilter = ({ onChange }: Props) => {
         onChange(val);
         logOptionSelectedEvent(val);
       }}
+      value={selectedFristFilters}
       size="small"
     >
       <Checkbox value={FristFilterOption.Past}>{texts.option.past}</Checkbox>
