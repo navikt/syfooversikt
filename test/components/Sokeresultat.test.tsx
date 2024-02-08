@@ -65,7 +65,7 @@ describe('Sokeresultat', () => {
         aktivitetskrav: false,
         behandlerdialog: false,
         aktivitetskravVurderStans: false,
-        huskelapp: false,
+        oppfolgingsoppgave: false,
         behandlerBerOmBistand: false,
       },
     };

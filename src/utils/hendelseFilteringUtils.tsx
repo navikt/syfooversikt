@@ -99,7 +99,7 @@ export const filterOnFrist = (
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
     const aktivitetskravVurderingFrist =
       persondata.aktivitetskravVurderingFrist;
-    const oppfolgingsoppgaveFrist = persondata.trengerOppfolgingFrist;
+    const oppfolgingsoppgaveFrist = persondata.oppfolgingsoppgaveFrist;
     if (
       aktivitetskravVurderingFrist === null &&
       oppfolgingsoppgaveFrist === null
@@ -158,8 +158,8 @@ const matchesFilter = (
       return !filters[key] || personData.harBehandlerdialogUbehandlet;
     case 'aktivitetskravVurderStans':
       return !filters[key] || personData.harAktivitetskravVurderStansUbehandlet;
-    case 'huskelapp':
-      return !filters[key] || personData.trengerOppfolging;
+    case 'oppfolgingsoppgave':
+      return !filters[key] || personData.harOppfolgingsoppgave;
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
   }
