@@ -20,7 +20,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
-  HUSKELAPP: 'Vurdert for oppfølging',
+  OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
 } as const;
 
@@ -90,7 +90,7 @@ const lagNyttFilter = (
       filter.aktivitetskravVurderStans = checked;
       return filter;
     }
-    case HendelseTekster.HUSKELAPP: {
+    case HendelseTekster.OPPFOLGINGSOPPGAVE: {
       filter.huskelapp = checked;
       return filter;
     }
@@ -122,7 +122,7 @@ const isCheckedInState = (
       return state.behandlerdialog;
     case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
       return state.aktivitetskravVurderStans;
-    case HendelseTekster.HUSKELAPP:
+    case HendelseTekster.OPPFOLGINGSOPPGAVE:
       return state.huskelapp;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
       return state.behandlerBerOmBistand;
@@ -143,11 +143,10 @@ const showCheckbox = (
     case 'MOTEBEHOV':
     case 'ARBEIDSGIVER_BISTAND':
     case 'BEHANDLER_BER_OM_BISTAND':
+    case 'OPPFOLGINGSOPPGAVE':
       return true;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
-    case 'HUSKELAPP':
-      return toggles.isHuskelappEnabled;
   }
 };
 
