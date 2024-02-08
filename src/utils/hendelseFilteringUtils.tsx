@@ -308,8 +308,8 @@ const sortEventsOnFnr = (
   order: SortingType
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(([fnrA], [fnrB]) => {
-    const birthDateA = Number(fnrA.slice(0, 2));
-    const birthDateB = Number(fnrB.slice(0, 2));
+    const birthDateA = Number(fnrA.slice(0, 4));
+    const birthDateB = Number(fnrB.slice(0, 4));
     if (birthDateB === birthDateA) return 0;
     if (order === 'FNR_ASC') {
       if (birthDateA > birthDateB) return 1;
