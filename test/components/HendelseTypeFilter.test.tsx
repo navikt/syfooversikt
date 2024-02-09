@@ -99,33 +99,6 @@ describe('HendelseTypeFilter', () => {
     });
     expect(oppfolgingsoppgaveCheckbox).to.exist;
   });
-  it('Skal ikke inneholde checkbokser bak toggle når toggles disabled', () => {
-    queryClient.setQueryData(
-      veiledereQueryKeys.veiledereInfo,
-      () => veilederMock
-    );
-
-    render(
-      <NotificationProvider>
-        <AktivEnhetContext.Provider
-          value={{
-            aktivEnhet: aktivEnhetMock.aktivEnhet,
-            handleAktivEnhetChanged: () => void 0,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            <HendelseTypeFilter />
-          </QueryClientProvider>
-        </AktivEnhetContext.Provider>
-      </NotificationProvider>
-    );
-
-    expect(
-      screen.queryByRole('checkbox', {
-        name: /Oppfølgingsoppgave/,
-      })
-    ).to.not.exist;
-  });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
     render(
       <NotificationProvider>
