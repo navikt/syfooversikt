@@ -8,8 +8,6 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { Toggles } from '@/data/unleash/types/unleash_types';
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -131,7 +129,6 @@ const isCheckedInState = (
 
 const showCheckbox = (
   key: HendelseTeksterKeys,
-  toggles: Toggles,
   tabType: OverviewTabType
 ): boolean => {
   switch (key) {
@@ -158,13 +155,12 @@ interface CheckboksElement {
 }
 
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
-  const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
   const elementer = Object.entries(HendelseTekster).map(([key, tekst]) => {
     const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
-    const show = showCheckbox(key as HendelseTeksterKeys, toggles, tabType);
+    const show = showCheckbox(key as HendelseTeksterKeys, tabType);
     return {
       key,
       tekst,
