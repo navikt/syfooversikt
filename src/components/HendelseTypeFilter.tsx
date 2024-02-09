@@ -44,7 +44,7 @@ const enkeltFilterFraTekst = (
     aktivitetskrav: false,
     behandlerdialog: false,
     aktivitetskravVurderStans: false,
-    huskelapp: false,
+    oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
   };
   return lagNyttFilter(filter, tekst, checked);
@@ -91,7 +91,7 @@ const lagNyttFilter = (
       return filter;
     }
     case HendelseTekster.OPPFOLGINGSOPPGAVE: {
-      filter.huskelapp = checked;
+      filter.oppfolgingsoppgave = checked;
       return filter;
     }
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND: {
@@ -123,7 +123,7 @@ const isCheckedInState = (
     case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
       return state.aktivitetskravVurderStans;
     case HendelseTekster.OPPFOLGINGSOPPGAVE:
-      return state.huskelapp;
+      return state.oppfolgingsoppgave;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
       return state.behandlerBerOmBistand;
   }

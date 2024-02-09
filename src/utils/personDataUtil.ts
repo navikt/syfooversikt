@@ -47,23 +47,23 @@ export const firstCompanyNameFromPersonData = (
 };
 
 export const getEarliestFrist = (personData: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = personData;
-  if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
-    return aktivitetskravVurderingFrist < trengerOppfolgingFrist
+  const { aktivitetskravVurderingFrist, oppfolgingsoppgaveFrist } = personData;
+  if (aktivitetskravVurderingFrist && oppfolgingsoppgaveFrist) {
+    return aktivitetskravVurderingFrist < oppfolgingsoppgaveFrist
       ? aktivitetskravVurderingFrist
-      : trengerOppfolgingFrist;
+      : oppfolgingsoppgaveFrist;
   }
 
-  return aktivitetskravVurderingFrist || trengerOppfolgingFrist || null;
+  return aktivitetskravVurderingFrist || oppfolgingsoppgaveFrist || null;
 };
 
 export const getLatestFrist = (personData: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, trengerOppfolgingFrist } = personData;
-  if (aktivitetskravVurderingFrist && trengerOppfolgingFrist) {
-    return aktivitetskravVurderingFrist < trengerOppfolgingFrist
-      ? trengerOppfolgingFrist
+  const { aktivitetskravVurderingFrist, oppfolgingsoppgaveFrist } = personData;
+  if (aktivitetskravVurderingFrist && oppfolgingsoppgaveFrist) {
+    return aktivitetskravVurderingFrist < oppfolgingsoppgaveFrist
+      ? oppfolgingsoppgaveFrist
       : aktivitetskravVurderingFrist;
   }
 
-  return aktivitetskravVurderingFrist || trengerOppfolgingFrist || null;
+  return aktivitetskravVurderingFrist || oppfolgingsoppgaveFrist || null;
 };

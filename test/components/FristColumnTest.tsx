@@ -22,8 +22,8 @@ const defaultPersonData: PersonData = {
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
   harAktivitetskravVurderStansUbehandlet: false,
-  trengerOppfolging: false,
-  trengerOppfolgingFrist: null,
+  harOppfolgingsoppgave: false,
+  oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
 };
 
@@ -67,7 +67,7 @@ describe('FristColumn', () => {
     const trengerOppfolgingFrist = new Date('2023-12-31');
     const personTrengerOppfolgingMedFrist: PersonData = {
       ...defaultPersonData,
-      trengerOppfolgingFrist: trengerOppfolgingFrist,
+      oppfolgingsoppgaveFrist: trengerOppfolgingFrist,
     };
     render(<FristColumn personData={personTrengerOppfolgingMedFrist} />);
 
@@ -81,7 +81,7 @@ describe('FristColumn', () => {
       ...defaultPersonData,
       aktivitetskrav: AktivitetskravStatus.AVVENT,
       aktivitetskravVurderingFrist: aktivitetskravVurderingFrist,
-      trengerOppfolgingFrist: trengerOppfolgingFrist,
+      oppfolgingsoppgaveFrist: trengerOppfolgingFrist,
     };
 
     render(<FristColumn personData={personMedFlereFrister} />);

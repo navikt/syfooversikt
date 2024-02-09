@@ -34,8 +34,8 @@ export const toPersonData = (
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
       harAktivitetskravVurderStansUbehandlet:
         person.aktivitetskravVurderStansUbehandlet,
-      trengerOppfolging: person.trengerOppfolging,
-      trengerOppfolgingFrist: person.trengerOppfolgingFrist,
+      harOppfolgingsoppgave: person.trengerOppfolging,
+      oppfolgingsoppgaveFrist: person.trengerOppfolgingFrist,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
     };
   });
