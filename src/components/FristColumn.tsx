@@ -7,7 +7,7 @@ import { Tooltip } from '@navikt/ds-react';
 
 const texts = {
   tooltipAvventer: 'Avventer',
-  tooltipTrengerOppfolging: 'Trenger oppfølging',
+  tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave',
 };
 
 interface FristColumnProps {
@@ -28,7 +28,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
   const {
     aktivitetskrav,
     aktivitetskravVurderingFrist,
-    trengerOppfolgingFrist,
+    oppfolgingsoppgaveFrist,
   } = personData;
   const frister: Frist[] = [];
   if (
@@ -41,11 +41,11 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
       tooltip: texts.tooltipAvventer,
     });
   }
-  if (trengerOppfolgingFrist) {
+  if (oppfolgingsoppgaveFrist) {
     frister.push({
       icon: () => <FileTextIcon aria-hidden fontSize="1.5rem" />,
-      date: trengerOppfolgingFrist,
-      tooltip: texts.tooltipTrengerOppfolging,
+      date: oppfolgingsoppgaveFrist,
+      tooltip: texts.tooltipOppfolgingsoppgave,
     });
   }
 

@@ -32,8 +32,8 @@ const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
     harAktivitetskravVurderStansUbehandlet: false,
-    trengerOppfolging: false,
-    trengerOppfolgingFrist: null,
+    harOppfolgingsoppgave: false,
+    oppfolgingsoppgaveFrist: null,
     behandlerBerOmBistandUbehandlet: false,
   };
 };
@@ -47,7 +47,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   aktivitetskrav: false,
   behandlerdialog: false,
   aktivitetskravVurderStans: false,
-  huskelapp: false,
+  oppfolgingsoppgave: false,
   behandlerBerOmBistand: false,
 };
 
@@ -259,11 +259,11 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by trenger oppfolging-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        trengerOppfolgingFrist: new Date('2023-12-05'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-05'),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -291,11 +291,11 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by trenger oppfolging-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        trengerOppfolgingFrist: new Date('2023-12-05'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-05'),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -327,7 +327,7 @@ describe('hendelseFilteringUtils', () => {
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -359,7 +359,7 @@ describe('hendelseFilteringUtils', () => {
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -388,12 +388,12 @@ describe('hendelseFilteringUtils', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
         aktivitetskravVurderingFrist: new Date('2023-12-05'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
         aktivitetskravVurderingFrist: new Date('2023-12-08'),
-        trengerOppfolgingFrist: new Date('2023-12-15'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-15'),
       };
 
       const result = getSortedEventsFromSortingType(
@@ -417,12 +417,12 @@ describe('hendelseFilteringUtils', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
         aktivitetskravVurderingFrist: new Date('2023-12-05'),
-        trengerOppfolgingFrist: new Date('2023-12-10'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-10'),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
         aktivitetskravVurderingFrist: new Date('2023-12-08'),
-        trengerOppfolgingFrist: new Date('2023-12-15'),
+        oppfolgingsoppgaveFrist: new Date('2023-12-15'),
       };
 
       const result = getSortedEventsFromSortingType(
@@ -514,8 +514,8 @@ describe('hendelseFilteringUtils', () => {
 
       const oppfolgingsOppgaveFristBeforeToday: PersonData = {
         ...createPersonDataWithName('Box Culder'),
-        trengerOppfolging: true,
-        trengerOppfolgingFrist: oneWeekAgo,
+        harOppfolgingsoppgave: true,
+        oppfolgingsoppgaveFrist: oneWeekAgo,
       };
       const aktivitetskravVurderingFristBeforeToday: PersonData = {
         ...createPersonDataWithName('Cox Dulder'),
@@ -524,8 +524,8 @@ describe('hendelseFilteringUtils', () => {
       };
       const oppfolgingsOppgaveFristToday: PersonData = {
         ...createPersonDataWithName('Dox Fulder'),
-        trengerOppfolging: true,
-        trengerOppfolgingFrist: today,
+        harOppfolgingsoppgave: true,
+        oppfolgingsoppgaveFrist: today,
       };
       const aktivitetskravVurderingFristToday: PersonData = {
         ...createPersonDataWithName('Fox Gulder'),
@@ -534,8 +534,8 @@ describe('hendelseFilteringUtils', () => {
       };
       const oppfolgingsOppgaveFristFuture: PersonData = {
         ...createPersonDataWithName('Gox Hulder'),
-        trengerOppfolging: true,
-        trengerOppfolgingFrist: oneWeekFromToday,
+        harOppfolgingsoppgave: true,
+        oppfolgingsoppgaveFrist: oneWeekFromToday,
       };
       const aktivitetskravVurderingFristFuture: PersonData = {
         ...createPersonDataWithName('Jox Kulder'),
