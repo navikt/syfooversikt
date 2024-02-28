@@ -14,6 +14,7 @@ import { NotificationProvider } from '@/context/notification/NotificationContext
 import { minutesToMillis } from '@/utils/timeUtils';
 import { isClientError } from '@/api/errors';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
+import { initFaro } from '@/faro';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,8 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+initFaro();
 
 const App = () => {
   return (
