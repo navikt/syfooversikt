@@ -1,5 +1,8 @@
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
-import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
+import {
+  AgeFilterOption,
+  FristFilterOption,
+} from '@/utils/hendelseFilteringUtils';
 
 export enum ActionType {
   SetTekstFilter,
@@ -8,6 +11,7 @@ export enum ActionType {
   SetSelectedCompanies,
   SetSelectedBirthDates,
   SetSelectedFristFilter,
+  SetSelectedAgeFilter,
   SetSelectedHendelseType,
   ResetFilters,
 }
@@ -37,6 +41,11 @@ export interface SetSelectedFristFilter {
   selectedFristFilters: FristFilterOption[];
 }
 
+export interface SetSelectedAgeFilter {
+  type: ActionType.SetSelectedAgeFilter;
+  selectedAgeFilters: AgeFilterOption[];
+}
+
 export interface SetSelectedBirthDates {
   type: ActionType.SetSelectedBirthDates;
   selectedBirthDates: string[];
@@ -57,6 +66,7 @@ export type FilterActions =
   | SetSelectedOptions
   | SetSelectedCompanies
   | SetSelectedFristFilter
+  | SetSelectedAgeFilter
   | SetSelectedBirthDates
   | SetSelectedHendelseType
   | ResetFilters;

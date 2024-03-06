@@ -4,7 +4,7 @@ import {
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
 import { toPersonData } from '@/utils/toPersondata';
-import { PersonFilter } from '@/components/PersonFilter';
+import { PersonFilter } from '@/components/Filter/PersonFilter';
 import Sokeresultat from '@/components/Sokeresultat';
 import styled from 'styled-components';
 import { TekstFilter } from '@/components/filters/TekstFilter';
