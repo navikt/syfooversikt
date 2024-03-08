@@ -14,7 +14,7 @@ import { testdata } from '../data/fellesTestdata';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from 'date-fns';
 
-const createPersonDataWithName = (name: string): PersonData => {
+export const createPersonDataWithName = (name: string): PersonData => {
   return {
     navn: name,
     harMotebehovUbehandlet: false,
