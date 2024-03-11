@@ -29,6 +29,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   aktivitetskravVurderStansUbehandlet: boolean;
   trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
+  arbeidsuforhetVurderAvslagUbehandlet: boolean;
 }
 
 export interface PersonOversiktStatusDTO

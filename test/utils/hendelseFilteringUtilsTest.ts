@@ -35,6 +35,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     harOppfolgingsoppgave: false,
     oppfolgingsoppgaveFrist: null,
     behandlerBerOmBistandUbehandlet: false,
+    harArbeidsuforhetVurderAvslagUbehandlet: false,
   };
 };
 

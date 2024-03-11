@@ -21,7 +21,7 @@ const filteredPersonOversiktStatusList = (
   personOversiktStatusList: PersonOversiktStatusDTO[]
 ): PersonOversiktStatusDTO[] => {
   return personOversiktStatusList.filter((personOversiktStatus) => {
-    const ubehandletStatus = {
+    const ubehandletStatus: PersonOversiktUbehandletStatusDTO = {
       aktivitetskravVurderStansUbehandlet:
         personOversiktStatus.aktivitetskravVurderStansUbehandlet,
       behandlerdialogUbehandlet: personOversiktStatus.behandlerdialogUbehandlet,
@@ -34,7 +34,10 @@ const filteredPersonOversiktStatusList = (
       aktivitetskravActive: personOversiktStatus.aktivitetskravActive,
       behandlerBerOmBistandUbehandlet:
         personOversiktStatus.behandlerBerOmBistandUbehandlet,
+      arbeidsuforhetVurderAvslagUbehandlet:
+        personOversiktStatus.arbeidsuforhetVurderAvslagUbehandlet,
     };
+
     return isUbehandlet(ubehandletStatus);
   });
 };
