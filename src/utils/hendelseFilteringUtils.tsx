@@ -209,6 +209,10 @@ const matchesFilter = (
       return !filters[key] || personData.harOppfolgingsoppgave;
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
+    case 'arbeidsuforhetVurderAvslag':
+      return (
+        !filters[key] || personData.harArbeidsuforhetVurderAvslagUbehandlet
+      );
   }
 };
 

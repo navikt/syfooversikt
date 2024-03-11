@@ -84,7 +84,8 @@ describe('personoversiktHooks tests', () => {
         person.oppfolgingsplanLPSBistandUbehandlet ||
         person.motebehovUbehandlet ||
         person.dialogmotesvarUbehandlet ||
-        person.behandlerBerOmBistandUbehandlet
+        person.behandlerBerOmBistandUbehandlet ||
+        person.arbeidsuforhetVurderAvslagUbehandlet
       );
     });
     expect(allPersonsUbehandlet).to.be.true;
