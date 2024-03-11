@@ -6,6 +6,7 @@ import { useTildelVeileder } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,
+  filterOnAge,
   filterOnBirthDates,
   filterOnCompany,
   filterOnFodselsnummerOrName,
@@ -65,6 +66,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
     .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
+    .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
     .applyFilter((v) => filterOnPersonregister(v, selectedHendelsetypeFilter))
     .applyFilter((v) =>
       filterOnFodselsnummerOrName(v, filterState.tekstFilter)

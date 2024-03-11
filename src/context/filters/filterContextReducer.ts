@@ -48,6 +48,12 @@ export const filterReducer = (
         selectedFristFilters: action.selectedFristFilters,
       };
     }
+    case ActionType.SetSelectedAgeFilter: {
+      return {
+        ...state,
+        selectedAgeFilters: action.selectedAgeFilters,
+      };
+    }
     case ActionType.SetSelectedVeilederIdents: {
       return {
         ...state,
