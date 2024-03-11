@@ -73,6 +73,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     trengerOppfolging: false,
     trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
+    arbeidsuforhetVurderAvslagUbehandlet: false,
   },
   {
     fnr: testdata.fnr4,
@@ -93,6 +94,7 @@ export const personoversikt: PersonOversiktStatusDTO[] = [
     trengerOppfolging: false,
     trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
+    arbeidsuforhetVurderAvslagUbehandlet: false,
   },
 ];
 

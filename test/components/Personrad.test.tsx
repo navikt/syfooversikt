@@ -59,6 +59,7 @@ const defaultPersonData: PersonData = {
   harOppfolgingsoppgave: false,
   oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
+  harArbeidsuforhetVurderAvslagUbehandlet: false,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
