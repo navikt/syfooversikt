@@ -557,8 +557,6 @@ describe('hendelseFilteringUtils', () => {
           FristFilterOption.Past,
         ]);
 
-        console.log(filteredPersonregister);
-
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407794');
         expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407795');
