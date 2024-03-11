@@ -134,6 +134,53 @@ function isInFristFilter(
   });
 }
 
+export enum AgeFilterOption {
+  ThirtyAndUnder = 'ThirtyAndUnder',
+  OverThirty = 'OverThirty',
+}
+
+export const filterOnAge = (
+  personregister: PersonregisterState,
+  selectedAgeFilters: AgeFilterOption[]
+): PersonregisterState => {
+  const isNoFilter = selectedAgeFilters.length === 0;
+  if (isNoFilter) {
+    return personregister;
+  }
+  const currentYear = new Date().getFullYear();
+  const filtered = Object.entries(personregister).filter(([fnr]) => {
+    const age = ageFromFnr(fnr, currentYear);
+    return isAgeInFilters(age, selectedAgeFilters);
+  });
+  return Object.fromEntries(filtered);
+};
+
+function ageFromFnr(fnr: string, currentYear: number): number {
+  const currentYearLastTwoDigits = parseInt(currentYear.toString().slice(2));
+  const yearBornLastTwoDigits = parseInt(fnr.slice(4, 6));
+  let age;
+  if (currentYearLastTwoDigits > yearBornLastTwoDigits) {
+    age = currentYearLastTwoDigits - yearBornLastTwoDigits;
+  } else {
+    age = 100 - yearBornLastTwoDigits + currentYearLastTwoDigits;
+  }
+  return age;
+}
+
+function isAgeInFilters(
+  age: number,
+  selectedAgeFilters: AgeFilterOption[]
+): boolean {
+  return selectedAgeFilters.some((ageFilter) => {
+    switch (ageFilter) {
+      case AgeFilterOption.ThirtyAndUnder:
+        return age <= 30;
+      case AgeFilterOption.OverThirty:
+        return age > 30;
+    }
+  });
+}
+
 type HendelseTypeFilterKey = keyof HendelseTypeFilters;
 
 const matchesFilter = (

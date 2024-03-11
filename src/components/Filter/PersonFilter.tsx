@@ -1,13 +1,17 @@
 import React, { ReactElement, useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import BirthDateFilter from './filters/BirthDateFilter';
-import CompanyFilter from './filters/CompanyFilter';
+import BirthDateFilter from '../filters/BirthDateFilter';
+import CompanyFilter from '../filters/CompanyFilter';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { FristFilter } from '@/components/filters/FristFilter';
-import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
+import {
+  AgeFilterOption,
+  FristFilterOption,
+} from '@/utils/hendelseFilteringUtils';
+import { AgeFilter } from '@/components/filters/AgeFilter';
 
 const texts = {
   panelTitle: 'Filter',
@@ -50,6 +54,13 @@ export const PersonFilter = ({
     });
   };
 
+  const onAgeFilterChange = (ageFilters: AgeFilterOption[]) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedAgeFilter,
+      selectedAgeFilters: ageFilters,
+    });
+  };
+
   return (
     <Ekspanderbartpanel
       apen={panelOpen}
@@ -66,6 +77,10 @@ export const PersonFilter = ({
         <BirthDateFilter
           onSelect={onBirthDateChange}
           selectedDates={filterState.selectedBirthDates}
+        />
+        <AgeFilter
+          onChange={onAgeFilterChange}
+          selectedAgeFilters={filterState.selectedAgeFilters}
         />
         <FristFilter
           onChange={onFristFilterChange}
