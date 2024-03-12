@@ -100,7 +100,7 @@ describe('HendelseTypeFilter', () => {
     expect(oppfolgingsoppgaveCheckbox).to.exist;
 
     const vurderAvslagCheckbox = screen.getByRole('checkbox', {
-      name: /Vurder avslag/,
+      name: /forhåndsvarsel utløpt/,
       checked: false,
     });
     expect(vurderAvslagCheckbox).to.exist;

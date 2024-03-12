@@ -50,7 +50,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   aktivitetskravVurderStans: false,
   oppfolgingsoppgave: false,
   behandlerBerOmBistand: false,
-  arbeidsuforhetVurderAvslag: false,
+  arbeidsuforhetForhandsvarselUtlopt: false,
 };
 
 describe('hendelseFilteringUtils', () => {

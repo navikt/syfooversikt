@@ -68,7 +68,7 @@ describe('Sokeresultat', () => {
         aktivitetskravVurderStans: false,
         oppfolgingsoppgave: false,
         behandlerBerOmBistand: false,
-        arbeidsuforhetVurderAvslag: false,
+        arbeidsuforhetForhandsvarselUtlopt: false,
       },
     };
 

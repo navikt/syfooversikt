@@ -22,7 +22,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
-  ARBEIDSUFORHET_VURDER_AVSLAG: 'Vurder avslag §8-4',
+  ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: '§8-4 forhåndsvarsel utløpt',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -47,7 +47,7 @@ const enkeltFilterFraTekst = (
     aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
-    arbeidsuforhetVurderAvslag: false,
+    arbeidsuforhetForhandsvarselUtlopt: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -100,8 +100,8 @@ const lagNyttFilter = (
       filter.behandlerBerOmBistand = checked;
       return filter;
     }
-    case HendelseTekster.ARBEIDSUFORHET_VURDER_AVSLAG: {
-      filter.arbeidsuforhetVurderAvslag = checked;
+    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: {
+      filter.arbeidsuforhetForhandsvarselUtlopt = checked;
       return filter;
     }
   }
@@ -132,8 +132,8 @@ const isCheckedInState = (
       return state.oppfolgingsoppgave;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
       return state.behandlerBerOmBistand;
-    case HendelseTekster.ARBEIDSUFORHET_VURDER_AVSLAG:
-      return state.arbeidsuforhetVurderAvslag;
+    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT:
+      return state.arbeidsuforhetForhandsvarselUtlopt;
   }
 };
 
@@ -153,7 +153,7 @@ const showCheckbox = (
     case 'BEHANDLER_BER_OM_BISTAND':
     case 'OPPFOLGINGSOPPGAVE':
       return true;
-    case 'ARBEIDSUFORHET_VURDER_AVSLAG':
+    case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
       return toggles.isArbeidsuforhetEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;

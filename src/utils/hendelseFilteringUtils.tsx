@@ -209,7 +209,7 @@ const matchesFilter = (
       return !filters[key] || personData.harOppfolgingsoppgave;
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
-    case 'arbeidsuforhetVurderAvslag':
+    case 'arbeidsuforhetForhandsvarselUtlopt':
       return (
         !filters[key] || personData.harArbeidsuforhetVurderAvslagUbehandlet
       );
