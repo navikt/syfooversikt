@@ -98,6 +98,12 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(oppfolgingsoppgaveCheckbox).to.exist;
+
+    const vurderAvslagCheckbox = screen.getByRole('checkbox', {
+      name: /forhåndsvarsel utløpt/,
+      checked: false,
+    });
+    expect(vurderAvslagCheckbox).to.exist;
   });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
     render(

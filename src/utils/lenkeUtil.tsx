@@ -17,6 +17,8 @@ export const lenkeTilModia = (personData: PersonData) => {
     personData.harAktivitetskravVurderStansUbehandlet;
   const isGoingToBehandlerdialog = personData.harBehandlerdialogUbehandlet;
   const isGoingToSykmeldinger = personData.behandlerBerOmBistandUbehandlet;
+  const isGoingToArbeidsuforhet =
+    personData.harArbeidsuforhetVurderAvslagUbehandlet;
 
   if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
@@ -28,7 +30,10 @@ export const lenkeTilModia = (personData: PersonData) => {
     path = `${path}/behandlerdialog`;
   } else if (isGoingToSykmeldinger) {
     path = `${path}/sykmeldinger`;
+  } else if (isGoingToArbeidsuforhet) {
+    path = `${path}/arbeidsuforhet`;
   }
+
   return fullNaisUrlDefault('syfomodiaperson', path);
 };
 
