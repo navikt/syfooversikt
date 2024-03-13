@@ -1,9 +1,8 @@
 import { PERSONTILDELING_ROOT, SYFOVEILEDER_ROOT } from '@/apiConstants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import { get, post } from '@/api/axios';
-import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
@@ -31,7 +30,7 @@ export const useVeiledereQuery = () => {
   const throwError = useAsyncError();
 
   const fetchVeiledere = () =>
-    get<Veileder[]>(`${SYFOVEILEDER_ROOT}/veiledere/enhet/${aktivEnhet}`);
+    get<VeilederDTO[]>(`${SYFOVEILEDER_ROOT}/veiledere?enhetNr=${aktivEnhet}`);
 
   return useQuery({
     queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
@@ -55,7 +54,7 @@ export const useAktivVeilederQuery = () => {
   const throwError = useAsyncError();
 
   const fetchVeilederInfo = () =>
-    get<VeilederinfoDTO>(`${SYFOVEILEDER_ROOT}/veileder/self`);
+    get<VeilederDTO>(`${SYFOVEILEDER_ROOT}/veiledere/self`);
 
   return useQuery({
     queryKey: veiledereQueryKeys.veiledereInfo,

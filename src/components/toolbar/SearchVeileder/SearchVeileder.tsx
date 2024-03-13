@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactElement, useState } from 'react';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import styled from 'styled-components';
 import { Dropdown } from '../Dropdown/Dropdown';
 import {
@@ -35,9 +35,9 @@ const SearchVeileder = (): ReactElement => {
   const personoversiktQuery = usePersonoversiktQuery();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
-  const [activeVeilederFilter, setActiveVeilederFilter] = useState<Veileder[]>(
-    []
-  );
+  const [activeVeilederFilter, setActiveVeilederFilter] = useState<
+    VeilederDTO[]
+  >([]);
 
   const onVeilederIdentsChange = (veilederIdents: string[]) => {
     dispatchFilterAction({
@@ -89,7 +89,7 @@ const SearchVeileder = (): ReactElement => {
     lowerCaseInput
   );
 
-  const checkedSort = (v1: Veileder, v2: Veileder) => {
+  const checkedSort = (v1: VeilederDTO, v2: VeilederDTO) => {
     const v1InFilter = filterState.selectedVeilederIdents.find(
       (v) => v === v1.ident
     );
@@ -116,9 +116,9 @@ const SearchVeileder = (): ReactElement => {
 
   const filteredVeiledere = lowerCasedAndFilteredVeiledere.sort(checkedSort);
 
-  const checkboxOnChangeHandler = (veileder: Veileder) => {
+  const checkboxOnChangeHandler = (veileder: VeilederDTO) => {
     if (
-      activeVeilederFilter.find((v: Veileder) => v.ident === veileder.ident)
+      activeVeilederFilter.find((v: VeilederDTO) => v.ident === veileder.ident)
     ) {
       setActiveVeilederFilter(
         activeVeilederFilter.filter((v) => v.ident !== veileder.ident)

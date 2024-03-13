@@ -1,4 +1,4 @@
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { sortVeiledereAlphabetically } from './veiledereUtils';
 import { ToolbarWrapperProps } from '@/components/toolbar/ToolbarWrapper';
 
@@ -13,11 +13,11 @@ export const assignUsersToSelectedVeileder = (
 };
 
 export const filterVeiledereOnInput = (
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   lowerCaseInput: string
-): Veileder[] => {
+): VeilederDTO[] => {
   const filteredVeiledere = veiledere.filter(
-    (veileder: Veileder) =>
+    (veileder: VeilederDTO) =>
       lowerCaseInput === '' ||
       veileder.ident.toLowerCase().includes(lowerCaseInput) ||
       veileder.fornavn.toLowerCase().includes(lowerCaseInput) ||

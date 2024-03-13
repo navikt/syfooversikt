@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SYFOVEILEDER_ROOT } from '@/apiConstants';
-import { veilederInfoMock } from '../../mock/data/veilederInfoMock';
+import { veilederMock } from '../../mock/data/veilederMock';
 import axios from 'axios';
 import { nockBasePath } from './nockDefaults';
 
@@ -8,8 +8,8 @@ export const stubAktivVeileder = () => {
   axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
-    .get(`${SYFOVEILEDER_ROOT}/veileder/self`)
+    .get(`${SYFOVEILEDER_ROOT}/veiledere/self`)
     .reply(200, {
-      ...veilederInfoMock,
+      ...veilederMock,
     });
 };
