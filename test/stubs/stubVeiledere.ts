@@ -9,6 +9,6 @@ export const stubVeiledere = () => {
   axios.defaults.adapter = 'http';
 
   nock(nockBasePath)
-    .get(`${SYFOVEILEDER_ROOT}/veiledere/enhet/${aktivEnhetMock.aktivEnhet}`)
+    .get(`${SYFOVEILEDER_ROOT}/veiledere?enhetNr=${aktivEnhetMock.aktivEnhet}`)
     .reply(200, () => [...veiledereMock]);
 };

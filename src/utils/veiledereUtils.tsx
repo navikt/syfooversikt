@@ -1,10 +1,10 @@
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 
 export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   veilederIdentToBeFirst: string
-): Veileder[] => {
+): VeilederDTO[] => {
   const newVeiledere = [...veiledere];
   const veilederToBeFirstAsList = getAndRemoveVeileder(
     newVeiledere,
@@ -16,8 +16,8 @@ export const sortVeiledereAlphabeticallyWithGivenVeilederFirst = (
 };
 
 export const sortVeiledereAlphabetically = (
-  veiledere: Veileder[]
-): Veileder[] => {
+  veiledere: VeilederDTO[]
+): VeilederDTO[] => {
   return [...veiledere].sort((veileder1, veileder2) => {
     const surname1 = veileder1.etternavn.toLowerCase();
     const surname2 = veileder2.etternavn.toLowerCase();
@@ -31,9 +31,9 @@ export const sortVeiledereAlphabetically = (
 };
 
 const getAndRemoveVeileder = (
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   ident: string
-): Veileder[] => {
+): VeilederDTO[] => {
   const veilederToRemoveIndex = veiledere.findIndex((veileder) => {
     return veileder.ident === ident;
   });
@@ -44,9 +44,9 @@ const getAndRemoveVeileder = (
 };
 
 export const filterVeiledereWithActiveOppgave = (
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   personOversiktStatus: PersonOversiktStatusDTO[]
-): Veileder[] => {
+): VeilederDTO[] => {
   return veiledere.filter((veileder) => {
     return personOversiktStatus.some((person) => {
       return person.veilederIdent === veileder.ident;

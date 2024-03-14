@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Personrad } from './Personrad';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import {
   PersonData,
   PersonregisterState,
@@ -48,7 +48,7 @@ const erMarkert = (markertePersoner: string[], fnr: string) => {
 };
 
 export const getVeilederComponent = (
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   personData: PersonData
 ): ReactElement => {
   const tildeltVeilederIdent = personData.tildeltVeilederIdent;

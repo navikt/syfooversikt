@@ -5,7 +5,7 @@ import {
   hasNoCheckedPersoner,
 } from '@/utils/assignVeilederUtils';
 import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
@@ -49,7 +49,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
     setInput(target.value);
   };
 
-  const radiobuttonOnChangeHandler = (veileder: Veileder) => {
+  const radiobuttonOnChangeHandler = (veileder: VeilederDTO) => {
     setChosenVeilederIdent(veileder.ident);
     setVeilederIsChosen(true);
     setShowError(false);

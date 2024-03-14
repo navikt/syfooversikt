@@ -7,7 +7,7 @@ import {
   getEarliestFrist,
   getLatestFrist,
 } from './personDataUtil';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 
@@ -270,7 +270,7 @@ export type SortingType =
 
 export const getSortedEventsFromSortingType = (
   personregister: PersonregisterState,
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   type: SortingType
 ): PersonregisterState => {
   switch (type) {
@@ -300,7 +300,7 @@ export const getSortedEventsFromSortingType = (
 const sortVeiledereByLastName = (
   persondataA: PersonData,
   persondataB: PersonData,
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   order: SortingType
 ) => {
   const veilederA = veiledere.find(
@@ -320,7 +320,7 @@ const sortVeiledereByLastName = (
 
 const sortEventsOnVeileder = (
   personregister: PersonregisterState,
-  veiledere: Veileder[],
+  veiledere: VeilederDTO[],
   order: SortingType
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(

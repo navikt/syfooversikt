@@ -4,19 +4,19 @@ import InputWithSearchIcon from '../../InputWithSearchIcon';
 import { VeilederInputButtons } from './VeilederInputButtons';
 import { isInputGiven } from '@/utils/assignVeilederUtils';
 import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 
 interface DropdownProps {
   buttonTexts: DropdownButtonTexts;
   cancelButtonHandler: () => void;
   chooseButtonHandler: (chosenVeilederIdent: string) => void;
   chosenVeilederIdent: string;
-  filteredVeiledere: Veileder[];
+  filteredVeiledere: VeilederDTO[];
   input: string;
   inputChangeHandler: (event: ChangeEvent) => void;
-  buttonChangeHandler: (veileder: Veileder) => void;
+  buttonChangeHandler: (veileder: VeilederDTO) => void;
   veilederIsChosen: boolean;
-  selectedVeileders: Veileder[];
+  selectedVeileders: VeilederDTO[];
   showNoChosenVeilederError: boolean;
   placeholder: string;
   buttonType: string;

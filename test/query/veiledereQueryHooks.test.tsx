@@ -7,11 +7,10 @@ import {
   useAktivVeilederQuery,
   useVeiledereQuery,
 } from '@/data/veiledereQueryHooks';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
-import { VeilederinfoDTO } from '@/api/types/veilederinfoTypes';
 import { veiledereMock } from '../../mock/data/veiledereMock';
-import { veilederInfoMock } from '../../mock/data/veilederInfoMock';
+import { veilederMock } from '../../mock/data/veilederMock';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -45,7 +44,7 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    const actual: Veileder[] = result.current.data || [];
+    const actual: VeilederDTO[] = result.current.data || [];
 
     expect(actual[0]).to.not.be.undefined;
     expect(actual[0]?.ident).to.eq(veiledereMock[0]?.ident);
@@ -69,9 +68,9 @@ describe('veiledereQueryHooks tests', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    const actual: VeilederinfoDTO | undefined = result.current.data;
+    const actual: VeilederDTO | undefined = result.current.data;
 
     expect(actual).to.not.be.undefined;
-    expect(actual?.ident).to.eq(veilederInfoMock.ident);
+    expect(actual?.ident).to.eq(veilederMock.ident);
   });
 });

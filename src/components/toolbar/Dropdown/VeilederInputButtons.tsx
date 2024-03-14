@@ -1,13 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Checkbox, Radio } from 'nav-frontend-skjema';
-import { Veileder } from '@/api/types/veiledereTypes';
+import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { ReactElement } from 'react';
 
 interface VeilederCheckboxProps {
-  onChangeHandler: (veileder: Veileder) => void;
-  filteredVeiledere: Veileder[];
-  selectedVeileders: Veileder[];
+  onChangeHandler: (veileder: VeilederDTO) => void;
+  filteredVeiledere: VeilederDTO[];
+  selectedVeileders: VeilederDTO[];
   isInputGiven: boolean;
   buttonType: string;
 }
@@ -32,7 +32,7 @@ const StyledCheckbox = styled(Checkbox)`
 const InputButtons = (props: VeilederCheckboxProps) => {
   const { onChangeHandler, filteredVeiledere, selectedVeileders } = props;
 
-  const getVeilederIdentification = (veileder: Veileder): string => {
+  const getVeilederIdentification = (veileder: VeilederDTO): string => {
     return veileder.fornavn === ''
       ? veileder.ident
       : `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -40,7 +40,7 @@ const InputButtons = (props: VeilederCheckboxProps) => {
 
   return (
     <React.Fragment>
-      {filteredVeiledere.map((veileder: Veileder, index: number) =>
+      {filteredVeiledere.map((veileder: VeilederDTO, index: number) =>
         props.buttonType === 'radio' ? (
           <StyledRadio
             key={JSON.stringify({ ...veileder, index })}
