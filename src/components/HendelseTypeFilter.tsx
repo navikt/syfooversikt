@@ -8,6 +8,8 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { useTabType } from '@/context/tab/TabTypeContext';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { Toggles } from '@/data/unleash/types/unleash_types';
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -20,6 +22,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
+  ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: '§8-4 forhåndsvarsel utløpt',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -44,6 +47,7 @@ const enkeltFilterFraTekst = (
     aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
+    arbeidsuforhetForhandsvarselUtlopt: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -96,6 +100,10 @@ const lagNyttFilter = (
       filter.behandlerBerOmBistand = checked;
       return filter;
     }
+    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: {
+      filter.arbeidsuforhetForhandsvarselUtlopt = checked;
+      return filter;
+    }
   }
 };
 
@@ -124,10 +132,13 @@ const isCheckedInState = (
       return state.oppfolgingsoppgave;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
       return state.behandlerBerOmBistand;
+    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT:
+      return state.arbeidsuforhetForhandsvarselUtlopt;
   }
 };
 
 const showCheckbox = (
+  toggles: Toggles,
   key: HendelseTeksterKeys,
   tabType: OverviewTabType
 ): boolean => {
@@ -142,6 +153,8 @@ const showCheckbox = (
     case 'BEHANDLER_BER_OM_BISTAND':
     case 'OPPFOLGINGSOPPGAVE':
       return true;
+    case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
+      return toggles.isArbeidsuforhetEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }
@@ -155,12 +168,13 @@ interface CheckboksElement {
 }
 
 export const HendelseTypeFilter = ({ personRegister }: Props): ReactElement => {
+  const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { tabType } = useTabType();
 
   const elementer = Object.entries(HendelseTekster).map(([key, tekst]) => {
     const checked = isCheckedInState(filterState.selectedHendelseType, tekst);
-    const show = showCheckbox(key as HendelseTeksterKeys, tabType);
+    const show = showCheckbox(toggles, key as HendelseTeksterKeys, tabType);
     return {
       key,
       tekst,
