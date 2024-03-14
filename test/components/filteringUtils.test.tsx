@@ -17,10 +17,6 @@ describe('Filters unit tests', () => {
   const fourtyFnr = `0101${yearBornFourty}99999`;
   const fourtyFiveFnr = `0101${yearBornFourtyFive}99999`;
 
-  console.log(
-    `FNR: ${twentyFiveFnr}, ${thirtyFnr}, ${thirtyFiveFnr}, ${fourtyFnr}, ${fourtyFiveFnr}`
-  );
-
   const personregister: PersonregisterState = {
     [twentyFiveFnr]: createPersonDataWithName('Bjarne Bjarnson'),
     [thirtyFnr]: createPersonDataWithName('Vetle Vetlesen'),
