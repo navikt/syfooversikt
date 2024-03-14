@@ -31,7 +31,7 @@ const CompanyFilter = ({
       isMultiSelect
       size="small"
       label={texts.title}
-      description={texts.placeholder}
+      placeholder={selectedCompanies.length > 0 ? undefined : texts.placeholder}
       options={options}
       selectedOptions={selectedCompanies}
       onToggleSelected={onOptionSelected}

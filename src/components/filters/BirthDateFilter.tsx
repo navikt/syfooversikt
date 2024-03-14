@@ -37,7 +37,7 @@ const BirthDateFilter = ({
       isMultiSelect
       size="small"
       label={texts.title}
-      description={texts.placeholder}
+      placeholder={selectedDates.length > 0 ? undefined : texts.placeholder}
       options={options}
       selectedOptions={selectedDates}
       onToggleSelected={onOptionSelected}
