@@ -6,7 +6,6 @@ COPY server ./server
 COPY node_modules ./node_modules
 COPY img ./img
 COPY dist ./dist
-COPY changelogs ./changelogs
 
 RUN npm install -g typescript
 RUN tsc --build
@@ -25,7 +24,6 @@ COPY --from=builder /syfooversikt/dist/styles.css ./dist/styles.css
 COPY --from=builder /syfooversikt/dist/styles.css.map ./dist/styles.css.map
 COPY --from=builder /syfooversikt/node_modules ./node_modules
 COPY --from=builder /syfooversikt/img ./img
-COPY --from=builder /syfooversikt/changelogs ./changelogs
 
 EXPOSE 8080
 USER nonroot
