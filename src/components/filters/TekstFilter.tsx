@@ -1,9 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Input } from 'nav-frontend-skjema';
-import Panel from 'nav-frontend-paneler';
-import { Undertittel } from 'nav-frontend-typografi';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
+import { Box, Heading, TextField } from '@navikt/ds-react';
 
 const texts = {
   undertittel: 'Navn / Fødselsnummer',
@@ -14,20 +12,26 @@ export const TekstFilter = (): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
   return (
-    <div className="mb-4">
-      <Panel>
-        <Input
-          label={<Undertittel>{texts.undertittel}</Undertittel>}
-          placeholder={texts.placeholder}
-          value={filterState.tekstFilter}
-          onChange={(e) => {
-            dispatchFilterAction({
-              type: ActionType.SetTekstFilter,
-              tekstFilter: e.target.value,
-            });
-          }}
-        />
-      </Panel>
-    </div>
+    <Box
+      borderRadius="medium"
+      background="surface-default"
+      borderColor="border-strong"
+      padding="4"
+      borderWidth="1"
+      className="mb-4"
+    >
+      <TextField
+        size="small"
+        label={<Heading size="small">{texts.undertittel}</Heading>}
+        description={texts.placeholder}
+        value={filterState.tekstFilter}
+        onChange={(e) => {
+          dispatchFilterAction({
+            type: ActionType.SetTekstFilter,
+            tekstFilter: e.target.value,
+          });
+        }}
+      />
+    </Box>
   );
 };
