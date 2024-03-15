@@ -1,26 +1,18 @@
 import React, { ReactElement } from 'react';
-import Select from 'react-select';
-import { ValueType } from 'react-select/src/types';
-import { Label } from '@navikt/ds-react';
+import { UNSAFE_Combobox } from '@navikt/ds-react';
 
 const allDates = new Array(71)
   .fill(1)
   .map((currentNumber, index) => currentNumber + index);
 
+const options: string[] = allDates.map((date) =>
+  date.toString().padStart(2, '0')
+);
+
 const texts = {
   title: 'Fødselsdato',
   placeholder: 'Velg datoer',
 };
-
-interface DateOption {
-  value: string;
-  label: string;
-}
-
-const selectableOptions: DateOption[] = allDates.map((v: number) => {
-  const paddedValue = v.toString().padStart(2, '0');
-  return { value: paddedValue, label: paddedValue };
-});
 
 interface BirthDateFilterProps {
   selectedDates: string[];
@@ -32,27 +24,24 @@ const BirthDateFilter = ({
   onSelect,
   selectedDates,
 }: BirthDateFilterProps): ReactElement => {
-  const selectedOptions = selectedDates.map(
-    (v) => ({ label: v, value: v } as DateOption)
-  );
+  const onOptionSelected = (option: string, isSelected: boolean) => {
+    if (isSelected) {
+      onSelect([...selectedDates, option]);
+    } else {
+      onSelect(selectedDates.filter((o) => o !== option));
+    }
+  };
 
   return (
-    <div>
-      <Label size="small">{texts.title}</Label>
-      <Select
-        placeholder={texts.placeholder}
-        options={selectableOptions}
-        isMulti
-        value={selectedOptions}
-        closeMenuOnSelect={false}
-        onChange={(v: ValueType<DateOption, boolean>) => {
-          const arrayOfSelectedOptions = (v as DateOption[]) || [];
-          const arrayOfStrings =
-            arrayOfSelectedOptions.map((option) => option.value) || [];
-          onSelect(arrayOfStrings);
-        }}
-      />
-    </div>
+    <UNSAFE_Combobox
+      isMultiSelect
+      size="small"
+      label={texts.title}
+      placeholder={selectedDates.length > 0 ? undefined : texts.placeholder}
+      options={options}
+      selectedOptions={selectedDates}
+      onToggleSelected={onOptionSelected}
+    />
   );
 };
 

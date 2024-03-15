@@ -69,7 +69,6 @@ export const PersonFilter = ({
     >
       <div className="flex flex-col gap-4">
         <CompanyFilter
-          selectedOptions={filterState.selectedOptions}
           selectedCompanies={filterState.selectedCompanies}
           options={mapPersonregisterToCompanyList(personregister)}
           onSelect={onCompanyChange}
