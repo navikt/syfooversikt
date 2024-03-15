@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
-import Lenke from 'nav-frontend-lenker';
 import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { Link } from '@navikt/ds-react';
 
 const texts = {
   moteoversikt: 'Mine møter',
 };
 
 export const MoteoversiktLink = (): ReactElement => (
-  <Lenke
+  <Link
     href={fullNaisUrlDefault('syfomoteoversikt', '/syfomoteoversikt/minemoter')}
   >
     {texts.moteoversikt}
-  </Lenke>
+  </Link>
 );
