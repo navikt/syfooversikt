@@ -4,7 +4,6 @@ import Side from '../sider/Side';
 import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
-import { ChangelogWrapper } from '@/components/changelog/ChangelogWrapper';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 export const minOversiktRoutePathRoutePath = '/minoversikt';
@@ -37,7 +36,6 @@ const AppRouter = (): ReactElement => {
             </Routes>
           </ErrorBoundary>
         </Side>
-        <ChangelogWrapper />
       </>
     </BrowserRouter>
   );

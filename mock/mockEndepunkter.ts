@@ -4,7 +4,6 @@ import { mockSyfoperson } from './syfoperson/mockSyfoperson';
 import { mockSyfoveileder } from './syfoveileder/mockSyfoveileder';
 import { mockPersonoversikt } from './personoversikt/mockPersonoversikt';
 import { mockPersontildeling } from './persontildeling/mockPersontildeling';
-import { mockChangelogs } from './changelogs/mockChangelogs';
 import { mockUnleash } from './mockUnleash';
 import { mockEreg } from './ereg/mockEreg';
 import { generatePersons } from './mockUtils';
@@ -24,7 +23,6 @@ const mockEndepunkter = (server: express.Application) => {
     mockPersontildeling,
     mockSyfoperson,
     mockSyfoveileder,
-    mockChangelogs,
     mockUnleash,
   ].forEach((func) => {
     func(server, generatedPersons);

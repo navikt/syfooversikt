@@ -2,7 +2,6 @@ import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
 import prometheus from 'prom-client';
-import { getChangelogs } from './server/changelogReader';
 
 import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
 import { setupProxy } from './server/proxy';
@@ -77,24 +76,6 @@ const setupServer = async () => {
   );
 
   server.use(setupProxy(authClient, issuer));
-
-  server.get('/syfooversikt/changelogs', (req, res) => {
-    res.send(getChangelogs());
-  });
-
-  server.get(
-    '/syfooversikt/changelogs/image/:changelogId/:imageName',
-    (req: any, res) => {
-      res.sendFile(
-        path.join(
-          __dirname,
-          'changelogs',
-          req.params.changelogId,
-          req.params.imageName
-        )
-      );
-    }
-  );
 
   server.get('/health/isAlive', (req, res) => {
     res.sendStatus(200);
