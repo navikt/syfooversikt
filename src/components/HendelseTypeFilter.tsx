@@ -152,9 +152,8 @@ const showCheckbox = (
     case 'ARBEIDSGIVER_BISTAND':
     case 'BEHANDLER_BER_OM_BISTAND':
     case 'OPPFOLGINGSOPPGAVE':
-      return true;
     case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
-      return toggles.isArbeidsuforhetEnabled;
+      return true;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }
