@@ -163,7 +163,7 @@ const showCheckbox = (
     case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
       return true;
     case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
-      return toggles.isFrisktilarbeidEnabled;
+      return toggles.isFrisktilarbeid;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }

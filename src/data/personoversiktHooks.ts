@@ -12,6 +12,7 @@ import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
+import { isFuture } from '@/utils/dateUtils';
 
 const isUbehandlet = (ubehandletStatus: PersonOversiktUbehandletStatusDTO) => {
   return Object.values(ubehandletStatus).some((value) => value);
@@ -36,6 +37,10 @@ const filteredPersonOversiktStatusList = (
         personOversiktStatus.behandlerBerOmBistandUbehandlet,
       arbeidsuforhetVurderAvslagUbehandlet:
         personOversiktStatus.arbeidsuforhetVurderAvslagUbehandlet,
+      harFriskmeldingTilArbeidsformidling:
+        (personOversiktStatus.friskmeldingTilArbeidsformidlingFom &&
+          isFuture(personOversiktStatus.friskmeldingTilArbeidsformidlingFom)) ||
+        false,
     };
 
     return isUbehandlet(ubehandletStatus);

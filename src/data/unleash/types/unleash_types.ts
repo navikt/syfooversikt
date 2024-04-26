@@ -5,10 +5,10 @@ export type Toggles = {
 // See toggles: https://teamsykefravr-unleash-web.nav.cloud.nais.io/features
 export enum ToggleNames {
   isFlexjarEnabled = 'isFlexjarEnabled',
-  isFrisktilarbeidEnabled = 'isFrisktilarbeid',
+  isFrisktilarbeid = 'isFrisktilarbeid',
 }
 
 export const defaultToggles: Toggles = {
   isFlexjarEnabled: false,
-  isFrisktilarbeidEnabled: false,
+  isFrisktilarbeid: false,
 };
