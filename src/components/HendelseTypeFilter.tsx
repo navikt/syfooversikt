@@ -161,8 +161,9 @@ const showCheckbox = (
     case 'BEHANDLER_BER_OM_BISTAND':
     case 'OPPFOLGINGSOPPGAVE':
     case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
-    case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
       return true;
+    case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
+      return toggles.isFrisktilarbeidEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }
