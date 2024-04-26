@@ -87,8 +87,8 @@ describe('personoversiktHooks tests', () => {
         person.dialogmotesvarUbehandlet ||
         person.behandlerBerOmBistandUbehandlet ||
         person.arbeidsuforhetVurderAvslagUbehandlet ||
-        (person.friskmeldingTilArbeidsFormidlingFom &&
-          isFuture(person.friskmeldingTilArbeidsFormidlingFom))
+        (person.friskmeldingTilArbeidsformidlingFom &&
+          isFuture(person.friskmeldingTilArbeidsformidlingFom))
       );
     });
     expect(allPersonsUbehandlet).to.be.true;
