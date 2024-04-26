@@ -4,6 +4,7 @@ import {
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
+import { isFuture } from '@/utils/dateUtils';
 
 export const toPersonData = (
   personoversiktData: PersonOversiktStatusDTO[],
@@ -39,6 +40,10 @@ export const toPersonData = (
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
       harArbeidsuforhetVurderAvslagUbehandlet:
         person.arbeidsuforhetVurderAvslagUbehandlet,
+      harFriskmeldingTilArbeidsformidling:
+        (person.friskmeldingTilArbeidsformidlingFom &&
+          isFuture(person.friskmeldingTilArbeidsformidlingFom)) ||
+        false,
     };
   });
 
