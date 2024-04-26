@@ -30,6 +30,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetVurderAvslagUbehandlet: boolean;
+  friskmeldingTilArbeidsformidlingFom: Date | null;
 }
 
 export interface PersonOversiktStatusDTO
@@ -44,7 +45,6 @@ export interface PersonOversiktStatusDTO
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravVurderingFrist: Date | null;
   trengerOppfolgingFrist: Date | null;
-  friskmeldingTilArbeidsformidlingFom: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {
