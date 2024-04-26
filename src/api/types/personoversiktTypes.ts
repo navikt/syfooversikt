@@ -44,6 +44,7 @@ export interface PersonOversiktStatusDTO
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravVurderingFrist: Date | null;
   trengerOppfolgingFrist: Date | null;
+  friskmeldingTilArbeidsformidlingFom: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {

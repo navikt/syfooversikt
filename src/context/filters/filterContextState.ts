@@ -15,6 +15,7 @@ export interface HendelseTypeFilters {
   oppfolgingsoppgave: boolean;
   behandlerBerOmBistand: boolean;
   arbeidsuforhetForhandsvarselUtlopt: boolean;
+  harFriskmeldingTilArbeidsformidling: boolean;
 }
 
 export interface FilterState {
@@ -48,5 +49,6 @@ export const filterInitialState: FilterState = {
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
     arbeidsuforhetForhandsvarselUtlopt: false,
+    harFriskmeldingTilArbeidsformidling: false,
   },
 };

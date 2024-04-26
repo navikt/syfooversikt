@@ -213,6 +213,8 @@ const matchesFilter = (
       return (
         !filters[key] || personData.harArbeidsuforhetVurderAvslagUbehandlet
       );
+    case 'harFriskmeldingTilArbeidsformidling':
+      return !filters[key] || personData.harFriskmeldingTilArbeidsformidling;
   }
 };
 

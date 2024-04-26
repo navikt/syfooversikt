@@ -104,6 +104,12 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(vurderAvslagCheckbox).to.exist;
+
+    const friskmeldingCheckbox = screen.getByRole('checkbox', {
+      name: /friskmelding/,
+      checked: false,
+    });
+    expect(friskmeldingCheckbox).to.exist;
   });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
     render(
