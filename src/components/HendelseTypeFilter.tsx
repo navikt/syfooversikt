@@ -23,6 +23,7 @@ export const HendelseTekster = {
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
   ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: '§8-4 forhåndsvarsel utløpt',
+  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 friskmelding',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -48,6 +49,7 @@ const enkeltFilterFraTekst = (
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
     arbeidsuforhetForhandsvarselUtlopt: false,
+    harFriskmeldingTilArbeidsformidling: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -104,6 +106,10 @@ const lagNyttFilter = (
       filter.arbeidsuforhetForhandsvarselUtlopt = checked;
       return filter;
     }
+    case HendelseTekster.FRISKMELDING_TIL_ARBEIDSFORMIDLING: {
+      filter.harFriskmeldingTilArbeidsformidling = checked;
+      return filter;
+    }
   }
 };
 
@@ -134,6 +140,8 @@ const isCheckedInState = (
       return state.behandlerBerOmBistand;
     case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT:
       return state.arbeidsuforhetForhandsvarselUtlopt;
+    case HendelseTekster.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
+      return state.harFriskmeldingTilArbeidsformidling;
   }
 };
 
@@ -154,6 +162,8 @@ const showCheckbox = (
     case 'OPPFOLGINGSOPPGAVE':
     case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
       return true;
+    case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
+      return toggles.isFrisktilarbeidEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }

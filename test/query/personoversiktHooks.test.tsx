@@ -10,6 +10,7 @@ import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { expect } from 'chai';
+import { isFuture } from '@/utils/dateUtils';
 
 describe('personoversiktHooks tests', () => {
   const queryClient = new QueryClient();
@@ -85,7 +86,9 @@ describe('personoversiktHooks tests', () => {
         person.motebehovUbehandlet ||
         person.dialogmotesvarUbehandlet ||
         person.behandlerBerOmBistandUbehandlet ||
-        person.arbeidsuforhetVurderAvslagUbehandlet
+        person.arbeidsuforhetVurderAvslagUbehandlet ||
+        (person.friskmeldingTilArbeidsformidlingFom &&
+          isFuture(person.friskmeldingTilArbeidsformidlingFom))
       );
     });
     expect(allPersonsUbehandlet).to.be.true;

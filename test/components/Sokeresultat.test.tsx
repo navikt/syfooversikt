@@ -69,6 +69,7 @@ describe('Sokeresultat', () => {
         oppfolgingsoppgave: false,
         behandlerBerOmBistand: false,
         arbeidsuforhetForhandsvarselUtlopt: false,
+        harFriskmeldingTilArbeidsformidling: false,
       },
     };
 

@@ -26,6 +26,7 @@ const defaultPersonData: PersonData = {
   oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
   harArbeidsuforhetVurderAvslagUbehandlet: false,
+  harFriskmeldingTilArbeidsformidling: false,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;

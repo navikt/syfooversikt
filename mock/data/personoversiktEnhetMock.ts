@@ -16,6 +16,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   behandlerBerOmBistandUbehandlet: false,
   aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetVurderAvslagUbehandlet: false,
+  friskmeldingTilArbeidsformidlingFom: null,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -576,6 +577,31 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
+      virksomhetList: [
+        {
+          virksomhetsnummer: '987654322',
+          virksomhetsnavn: 'NAV Investments',
+        },
+      ],
+    },
+  },
+  {
+    ...behandletPerson,
+    fnr: '99999966679',
+    navn: 'Ikke Viseland',
+    enhet: '0316',
+    veilederIdent: 'Z101010',
+    motestatus: undefined,
+    aktivitetskrav: AktivitetskravStatus.AVVENT,
+    aktivitetskravActive: false,
+    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
+    aktivitetskravVurderingFrist: null,
+    trengerOppfolgingFrist: null,
+    friskmeldingTilArbeidsformidlingFom: new Date('2099-01-01'),
+    latestOppfolgingstilfelle: {
+      oppfolgingstilfelleStart: new Date('2024-01-01'),
+      oppfolgingstilfelleEnd: new Date('2024-12-31'),
       varighetUker: 2,
       virksomhetList: [
         {
