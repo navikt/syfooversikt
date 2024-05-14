@@ -1,6 +1,10 @@
 import { PersonData } from '@/api/types/personregisterTypes';
 import { toReadableDate } from '@/utils/dateUtils';
-import { FileTextIcon, HourglassTopFilledIcon } from '@navikt/aksel-icons';
+import {
+  FileTextIcon,
+  HourglassTopFilledIcon,
+  HeadHeartIcon,
+} from '@navikt/aksel-icons';
 import React, { ReactElement } from 'react';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Tooltip } from '@navikt/ds-react';
@@ -8,6 +12,7 @@ import { Tooltip } from '@navikt/ds-react';
 const texts = {
   tooltipAvventer: 'Avventer',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave',
+  tooltipFriskmeldingTilArbeidsformidling: '§8-5',
 };
 
 interface FristColumnProps {
@@ -29,6 +34,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     aktivitetskrav,
     aktivitetskravVurderingFrist,
     oppfolgingsoppgaveFrist,
+    friskmeldingTilArbeidsformidlingFom,
   } = personData;
   const frister: Frist[] = [];
   if (
@@ -49,14 +55,22 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     });
   }
 
+  if (friskmeldingTilArbeidsformidlingFom) {
+    frister.push({
+      icon: () => <HeadHeartIcon aria-hidden fontSize="1.5rem" />,
+      date: friskmeldingTilArbeidsformidlingFom,
+      tooltip: texts.tooltipFriskmeldingTilArbeidsformidling,
+    });
+  }
+
   return (
     <>
       {frister.sort(byFristAsc).map(({ date, icon, tooltip }, index) => (
-        <div key={index} className="flex flex-wrap">
+        <div key={index} className="flex flex-wrap items-center">
           <Tooltip content={tooltip} arrow={false}>
             {icon()}
           </Tooltip>
-          {toReadableDate(date)}
+          <div>{toReadableDate(date)}</div>
         </div>
       ))}
     </>

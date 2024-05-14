@@ -97,22 +97,19 @@ export const filterOnFrist = (
     return personregister;
   }
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
-    const aktivitetskravVurderingFrist =
-      persondata.aktivitetskravVurderingFrist;
-    const oppfolgingsoppgaveFrist = persondata.oppfolgingsoppgaveFrist;
-    if (
-      aktivitetskravVurderingFrist === null &&
-      oppfolgingsoppgaveFrist === null
-    ) {
+    const frister = [
+      persondata.aktivitetskravVurderingFrist,
+      persondata.oppfolgingsoppgaveFrist,
+      persondata.friskmeldingTilArbeidsformidlingFom,
+    ];
+
+    if (frister.every((frist) => frist === null)) {
       return true;
     }
-    const isOppfolgingsoppgaveVisible = oppfolgingsoppgaveFrist
-      ? isInFristFilter(selectedFristFilters, oppfolgingsoppgaveFrist)
-      : false;
-    const isAktivitetskravVisible = aktivitetskravVurderingFrist
-      ? isInFristFilter(selectedFristFilters, aktivitetskravVurderingFrist)
-      : false;
-    return isOppfolgingsoppgaveVisible || isAktivitetskravVisible;
+
+    return frister.some(
+      (frist) => frist && isInFristFilter(selectedFristFilters, frist)
+    );
   });
 
   return Object.fromEntries(filtered);
@@ -214,7 +211,7 @@ const matchesFilter = (
         !filters[key] || personData.harArbeidsuforhetVurderAvslagUbehandlet
       );
     case 'harFriskmeldingTilArbeidsformidling':
-      return !filters[key] || personData.harFriskmeldingTilArbeidsformidling;
+      return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
   }
 };
 

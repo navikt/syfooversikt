@@ -4,6 +4,7 @@ import {
   ReadableSkjermingskodeMap,
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
+import { earliestDate, latestDate } from '@/utils/dateUtils';
 
 const readableSkjermingskoder: ReadableSkjermingskodeMap = {
   INGEN: 'ingen',
@@ -46,24 +47,22 @@ export const firstCompanyNameFromPersonData = (
   return companyNamesFromPersonData(p).shift();
 };
 
-export const getEarliestFrist = (personData: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, oppfolgingsoppgaveFrist } = personData;
-  if (aktivitetskravVurderingFrist && oppfolgingsoppgaveFrist) {
-    return aktivitetskravVurderingFrist < oppfolgingsoppgaveFrist
-      ? aktivitetskravVurderingFrist
-      : oppfolgingsoppgaveFrist;
-  }
+const allFrister = (personData: PersonData): Date[] => {
+  return [
+    personData.aktivitetskravVurderingFrist,
+    personData.oppfolgingsoppgaveFrist,
+    personData.friskmeldingTilArbeidsformidlingFom,
+  ].filter((frist) => frist) as Date[];
+};
 
-  return aktivitetskravVurderingFrist || oppfolgingsoppgaveFrist || null;
+export const getEarliestFrist = (personData: PersonData): Date | null => {
+  const frister = allFrister(personData);
+
+  return earliestDate(frister);
 };
 
 export const getLatestFrist = (personData: PersonData): Date | null => {
-  const { aktivitetskravVurderingFrist, oppfolgingsoppgaveFrist } = personData;
-  if (aktivitetskravVurderingFrist && oppfolgingsoppgaveFrist) {
-    return aktivitetskravVurderingFrist < oppfolgingsoppgaveFrist
-      ? oppfolgingsoppgaveFrist
-      : aktivitetskravVurderingFrist;
-  }
+  const frister = allFrister(personData);
 
-  return aktivitetskravVurderingFrist || oppfolgingsoppgaveFrist || null;
+  return latestDate(frister);
 };
