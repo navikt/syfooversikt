@@ -12,7 +12,7 @@ import { Tooltip } from '@navikt/ds-react';
 const texts = {
   tooltipAvventer: 'Avventer',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave',
-  tooltipFriskmeldingTilArbeidsformidling: '§8-5',
+  tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
 };
 
 interface FristColumnProps {
