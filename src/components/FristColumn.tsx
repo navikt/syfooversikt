@@ -3,7 +3,7 @@ import { toReadableDate } from '@/utils/dateUtils';
 import {
   FileTextIcon,
   HourglassTopFilledIcon,
-  HeadHeartIcon,
+  BriefcaseIcon,
 } from '@navikt/aksel-icons';
 import React, { ReactElement } from 'react';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
@@ -57,7 +57,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
 
   if (friskmeldingTilArbeidsformidlingFom) {
     frister.push({
-      icon: () => <HeadHeartIcon aria-hidden fontSize="1.5rem" />,
+      icon: () => <BriefcaseIcon aria-hidden fontSize="1.5rem" />,
       date: friskmeldingTilArbeidsformidlingFom,
       tooltip: texts.tooltipFriskmeldingTilArbeidsformidling,
     });
