@@ -10,8 +10,8 @@ import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Tooltip } from '@navikt/ds-react';
 
 const texts = {
-  tooltipAvventer: 'Avventer',
-  tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave',
+  tooltipAvventer: 'Avventer til',
+  tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
 };
 
