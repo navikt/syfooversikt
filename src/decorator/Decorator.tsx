@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
 import NAVSPA from '@navikt/navspa';
-import { DecoratorProps } from './decoratorProps';
-import decoratorConfig from './decoratorConfig';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { DecoratorPropsV3 } from '@/decorator/decoratorProps';
+import { lagConfigV3 } from '@/decorator/decoratorConfig';
 
-const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
-  'internarbeidsflatefs'
+const InternflateDecoratorV3 = NAVSPA.importer<DecoratorPropsV3>(
+  'internarbeidsflate-decorator-v3'
 );
 
 const Decorator = () => {
-  const { handleAktivEnhetChanged } = useAktivEnhet();
+  const { aktivEnhet, handleAktivEnhetChanged } = useAktivEnhet();
   const aktivBruker = useAktivBruker();
 
   const handlePersonsokSubmit = (nyttFnr: string) => {
@@ -28,12 +28,13 @@ const Decorator = () => {
     handleAktivEnhetChanged(nyEnhet);
   };
 
-  const config = useCallback(decoratorConfig, [
+  const config = useCallback(lagConfigV3, [
     handlePersonsokSubmit,
     handleChangeEnhet,
-  ])(handlePersonsokSubmit, handleChangeEnhet);
+    aktivEnhet,
+  ])(handlePersonsokSubmit, handleChangeEnhet, aktivEnhet);
 
-  return <InternflateDecorator {...config} />;
+  return <InternflateDecoratorV3 {...config} />;
 };
 
 export default Decorator;
