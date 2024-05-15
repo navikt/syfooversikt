@@ -34,7 +34,7 @@ export interface PersonData {
   harOppfolgingsoppgave: boolean;
   oppfolgingsoppgaveFrist: Date | null;
   behandlerBerOmBistandUbehandlet: boolean;
-  harFriskmeldingTilArbeidsformidling: boolean;
+  friskmeldingTilArbeidsformidlingFom: Date | null;
 }
 
 export interface PersonregisterState {

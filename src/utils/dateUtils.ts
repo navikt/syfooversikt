@@ -1,4 +1,7 @@
 import dayjs from 'dayjs';
+import minMax from 'dayjs/plugin/minMax';
+
+dayjs.extend(minMax);
 
 export const toReadableDate = (dateArg: Date | null): string => {
   if (!dateArg) {
@@ -35,3 +38,13 @@ export function isFuture(compareDate: Date): boolean {
   const date = new Date(compareDate);
   return currentDate < date;
 }
+
+export const earliestDate = (dateArray: Date[]): Date | null =>
+  dateArray.length > 0
+    ? dayjs.min(dateArray.map((date: Date) => dayjs(date))).toDate()
+    : null;
+
+export const latestDate = (dateArray: Date[]): Date | null =>
+  dateArray.length > 0
+    ? dayjs.max(dateArray.map((date: Date) => dayjs(date))).toDate()
+    : null;

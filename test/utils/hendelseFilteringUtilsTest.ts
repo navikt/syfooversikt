@@ -36,7 +36,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     oppfolgingsoppgaveFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     harArbeidsuforhetVurderAvslagUbehandlet: false,
-    harFriskmeldingTilArbeidsformidling: false,
+    friskmeldingTilArbeidsformidlingFom: null,
   };
 };
 
@@ -546,6 +546,10 @@ describe('hendelseFilteringUtils', () => {
         aktivitetskravActive: true,
         aktivitetskravVurderingFrist: oneWeekFromToday,
       };
+      const friskmeldingTilArbeidsformidlingFomFuture: PersonData = {
+        ...createPersonDataWithName('Box Bulder'),
+        friskmeldingTilArbeidsformidlingFom: oneWeekFromToday,
+      };
 
       const personregister: PersonregisterState = {
         '16614407794': oppfolgingsOppgaveFristBeforeToday,
@@ -554,6 +558,7 @@ describe('hendelseFilteringUtils', () => {
         '16614407797': aktivitetskravVurderingFristToday,
         '16614407798': oppfolgingsOppgaveFristFuture,
         '16614407799': aktivitetskravVurderingFristFuture,
+        '16614407889': friskmeldingTilArbeidsformidlingFomFuture,
       };
 
       it('Only returns elements with frist dato before today', () => {
@@ -581,9 +586,10 @@ describe('hendelseFilteringUtils', () => {
           FristFilterOption.Future,
         ]);
 
-        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister).length).to.equal(3);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407798');
         expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407799');
+        expect(Object.keys(filteredPersonregister)[2]).to.equal('16614407889');
       });
     });
   });
