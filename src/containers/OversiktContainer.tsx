@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect } from 'react';
-import styled from 'styled-components';
 import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
@@ -11,13 +10,10 @@ import { NotificationBar } from '@/components/error/NotificationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 10%);
-  margin: auto;
-`;
+import { Flexjar } from '@/components/flexjar/Flexjar';
+import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
+import { getWeeksBetween } from '@/utils/dateUtils';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 interface Props {
   tabType: OverviewTabType;
@@ -42,6 +38,15 @@ function toReadableString(overviewTabType: OverviewTabType): string {
 const OversiktContainer = ({ tabType }: Props): ReactElement => {
   const personregisterQuery = usePersonregisterQuery();
   const personoversiktQuery = usePersonoversiktQuery();
+  const { toggles } = useFeatureToggles();
+  const [feedbackDate] = useLocalStorageState<Date | null>(
+    StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
+    null
+  );
+  const showFlexjar =
+    toggles.isFlexjarArenaEnabled &&
+    (feedbackDate === null || getWeeksBetween(new Date(), feedbackDate) >= 3);
+
   const { setTabType } = useTabType();
   useEffect(() => {
     setTabType(tabType);
@@ -63,11 +68,12 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
 
   return (
     <ErrorBoundary>
-      <Container>
+      <div className="flex flex-col mx-8">
         <NotificationBar />
         <NavigationBar />
         <ContainerContent />
-      </Container>
+        {showFlexjar && <Flexjar side={toReadableString(tabType)} />}
+      </div>
     </ErrorBoundary>
   );
 };
