@@ -14,7 +14,7 @@ export interface HendelseTypeFilters {
   aktivitetskravVurderStans: boolean;
   oppfolgingsoppgave: boolean;
   behandlerBerOmBistand: boolean;
-  arbeidsuforhetForhandsvarselUtlopt: boolean;
+  isAktivArbeidsuforhetvurdering: boolean;
   harFriskmeldingTilArbeidsformidling: boolean;
 }
 
@@ -48,7 +48,7 @@ export const filterInitialState: FilterState = {
     aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
-    arbeidsuforhetForhandsvarselUtlopt: false,
+    isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
   },
 };

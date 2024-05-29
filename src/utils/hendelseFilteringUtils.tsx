@@ -206,9 +206,11 @@ const matchesFilter = (
       return !filters[key] || personData.harOppfolgingsoppgave;
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
-    case 'arbeidsuforhetForhandsvarselUtlopt':
+    case 'isAktivArbeidsuforhetvurdering':
       return (
-        !filters[key] || personData.harArbeidsuforhetVurderAvslagUbehandlet
+        !filters[key] ||
+        personData.arbeidsuforhetvurdering !== undefined ||
+        personData.harArbeidsuforhetVurderAvslagUbehandlet
       );
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;

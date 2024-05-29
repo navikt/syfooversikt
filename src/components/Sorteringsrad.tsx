@@ -15,7 +15,7 @@ const tekster = {
   overskriftVeileder: 'Veileder',
   virksomhet: 'Virksomhet',
   varighetSykefravar: 'Sykefravær',
-  frist: 'Frist/dato',
+  frist: 'Frist/Dato',
 };
 
 export const GrayChevron = styled(Chevron)`

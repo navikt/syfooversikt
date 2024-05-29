@@ -39,6 +39,7 @@ export const toPersonData = (
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
       harArbeidsuforhetVurderAvslagUbehandlet:
         person.arbeidsuforhetVurderAvslagUbehandlet,
+      arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         person.friskmeldingTilArbeidsformidlingFom,
     };

@@ -22,8 +22,8 @@ export const HendelseTekster = {
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
-  ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: '§8-4 forhåndsvarsel utløpt',
-  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 friskmelding',
+  ARBEIDSUFORHET: '§8-4 Arbeidsuforhet',
+  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -48,7 +48,7 @@ const enkeltFilterFraTekst = (
     aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
-    arbeidsuforhetForhandsvarselUtlopt: false,
+    isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
   };
   return lagNyttFilter(filter, tekst, checked);
@@ -102,8 +102,8 @@ const lagNyttFilter = (
       filter.behandlerBerOmBistand = checked;
       return filter;
     }
-    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT: {
-      filter.arbeidsuforhetForhandsvarselUtlopt = checked;
+    case HendelseTekster.ARBEIDSUFORHET: {
+      filter.isAktivArbeidsuforhetvurdering = checked;
       return filter;
     }
     case HendelseTekster.FRISKMELDING_TIL_ARBEIDSFORMIDLING: {
@@ -138,8 +138,8 @@ const isCheckedInState = (
       return state.oppfolgingsoppgave;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
       return state.behandlerBerOmBistand;
-    case HendelseTekster.ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT:
-      return state.arbeidsuforhetForhandsvarselUtlopt;
+    case HendelseTekster.ARBEIDSUFORHET:
+      return state.isAktivArbeidsuforhetvurdering;
     case HendelseTekster.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
       return state.harFriskmeldingTilArbeidsformidling;
   }
@@ -160,7 +160,7 @@ const showCheckbox = (
     case 'ARBEIDSGIVER_BISTAND':
     case 'BEHANDLER_BER_OM_BISTAND':
     case 'OPPFOLGINGSOPPGAVE':
-    case 'ARBEIDSUFORHET_FORHANDSVARSEL_UTLOPT':
+    case 'ARBEIDSUFORHET':
       return true;
     case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
       return toggles.isFrisktilarbeidEnabled;

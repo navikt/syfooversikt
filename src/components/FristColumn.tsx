@@ -13,6 +13,7 @@ const texts = {
   tooltipAvventer: 'Avventer til',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
+  arbeidsuforhetvarselFrist: '§8-4: Svarfrist for forhåndsvarsel om avslag',
 };
 
 interface FristColumnProps {
@@ -35,6 +36,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     aktivitetskravVurderingFrist,
     oppfolgingsoppgaveFrist,
     friskmeldingTilArbeidsformidlingFom,
+    arbeidsuforhetvurdering,
   } = personData;
   const frister: Frist[] = [];
   if (
@@ -60,6 +62,14 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
       icon: () => <BriefcaseIcon aria-hidden fontSize="1.5rem" />,
       date: friskmeldingTilArbeidsformidlingFom,
       tooltip: texts.tooltipFriskmeldingTilArbeidsformidling,
+    });
+  }
+
+  if (arbeidsuforhetvurdering?.varsel !== undefined) {
+    frister.push({
+      icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+      date: arbeidsuforhetvurdering.varsel.svarfrist,
+      tooltip: texts.arbeidsuforhetvarselFrist,
     });
   }
 
