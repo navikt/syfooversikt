@@ -9,6 +9,7 @@ export enum EventType {
   PageView = 'besøk',
   Navigation = 'navigere',
   OptionSelected = 'alternativ valgt',
+  ButtonClick = 'knapp trykket',
 }
 
 type EventPageView = {
@@ -36,7 +37,15 @@ type OptionSelected = {
   };
 };
 
-type Event = EventPageView | Navigation | OptionSelected;
+type EventButtonClick = {
+  type: EventType.ButtonClick;
+  data: {
+    url: string;
+    tekst: string;
+  };
+};
+
+type Event = EventPageView | Navigation | OptionSelected | EventButtonClick;
 
 export const logEvent = (event: Event) =>
   amplitude.track(event.type, { ...event.data });

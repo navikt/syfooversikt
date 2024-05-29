@@ -48,3 +48,11 @@ export const latestDate = (dateArray: Date[]): Date | null =>
   dateArray.length > 0
     ? dayjs.max(dateArray.map((date: Date) => dayjs(date))).toDate()
     : null;
+
+export const getWeeksBetween = (date1: Date, date2: Date): number => {
+  return Math.abs(dayjs(date1).diff(date2, 'week'));
+};
+
+export const addWeeks = (date: Date, numberOfWeeks: number): Date => {
+  return dayjs(date).add(numberOfWeeks, 'weeks').toDate();
+};

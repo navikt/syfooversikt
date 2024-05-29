@@ -38,7 +38,7 @@ export const getToggles = (veilederId: any, enhetId: any) => {
     enhetId: enhetId,
   };
   return {
-    isFlexjarEnabled: unleash.isEnabled('isFlexjarEnabled', context),
+    isFlexjarArenaEnabled: unleash.isEnabled('isFlexjarArenaEnabled', context),
     isFrisktilarbeidEnabled: unleash.isEnabled('isFrisktilarbeid', context),
   };
 };
