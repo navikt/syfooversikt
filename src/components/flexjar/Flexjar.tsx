@@ -20,6 +20,7 @@ import { defaultErrorTexts } from '@/api/errors';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import styled from 'styled-components';
 
 const texts = {
   apneKnapp: 'Vi ønsker å lære av deg',
@@ -53,6 +54,12 @@ const arenaOptions = [
   'Oppfølgingsoppgave',
   'Sjekke arbeidsforhold til sykmeldt',
 ];
+
+const StyledCombobox = styled(UNSAFE_Combobox)`
+  .navds-combobox__list {
+    max-height: 12rem;
+  }
+`;
 
 function logPageView(side: string) {
   Amplitude.logEvent({
@@ -124,7 +131,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
     let s = '';
     if (radioValue === RadioOption.JA) {
       s += `[${comboboxValue.join(', ')}]`;
-      s += feedback ? ' \n' + feedback : '';
+      s += feedback ? ' - ' + feedback : '';
     } else if (radioValue === RadioOption.NEI && feedback) {
       s += feedback;
     }
@@ -198,7 +205,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
                 <Radio value={RadioOption.NEI}>Nei</Radio>
               </RadioGroup>
               {radioValue === RadioOption.JA && (
-                <UNSAFE_Combobox
+                <StyledCombobox
                   label={texts.labelAlternativer}
                   options={arenaOptions}
                   isMultiSelect
