@@ -86,12 +86,35 @@ export const Flexjar = ({ side }: FlexjarProps) => {
     logPageView(side);
   }, [side]);
 
+  const toggleApen = () => {
+    if (isApen) {
+      setRadioValue(null);
+      setComboboxValue([]);
+      setFeedback('');
+    }
+    setIsApen(!isApen);
+  };
+
   const updateToggledOptions = (option: string, isSelected: boolean) => {
     if (isSelected) {
       setComboboxValue([...comboboxValue, option]);
     } else {
       setComboboxValue(comboboxValue.filter((val) => val !== option));
     }
+  };
+
+  const updateRadioValue = (value: RadioOption) => {
+    if (radioValue === null) {
+      Amplitude.logEvent({
+        type: EventType.OptionSelected,
+        data: {
+          option: value,
+          tekst: 'Radioknapp Flexjar Arena',
+          url: window.location.href,
+        },
+      });
+    }
+    setRadioValue(value);
   };
 
   const buildFeedbackString = (): string | undefined => {
@@ -141,7 +164,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
         variant="primary"
         iconPosition="right"
         icon={isApen ? <ChevronDownIcon /> : <ChevronUpIcon />}
-        onClick={() => setIsApen(!isApen)}
+        onClick={toggleApen}
         className="w-max"
       >
         {texts.apneKnapp}
@@ -167,7 +190,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
             <>
               <RadioGroup
                 legend={<Label>{texts.sporsmal}</Label>}
-                onChange={(e) => setRadioValue(e)}
+                onChange={(e) => updateRadioValue(e)}
                 description={texts.anonym}
                 size="small"
               >
