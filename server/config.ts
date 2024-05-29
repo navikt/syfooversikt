@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const hasEnvVar = (name: any) => {
@@ -32,6 +33,7 @@ export const isDev = envVar({ name: 'NODE_ENV' }) === 'development';
 export const isProd = envVar({ name: 'NODE_ENV' }) === 'production';
 
 export interface ExternalAppConfig {
+  applicationName: string;
   clientId: string;
   host: string;
   tokenSetId?: any;
@@ -110,12 +112,14 @@ export const auth = {
   }),
 
   ereg: {
+    applicationName: 'ereg',
     clientId: '',
     host: envVar({
       name: 'EREG_HOST',
     }),
   },
   modiacontextholder: {
+    applicationName: 'modiacontextholder',
     clientId: envVar({
       name: 'MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID',
     }),
@@ -124,6 +128,7 @@ export const auth = {
     }),
   },
   syfooversiktsrv: {
+    applicationName: 'syfooversiktsrv',
     clientId: envVar({
       name: 'SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID',
     }),
@@ -132,6 +137,7 @@ export const auth = {
     }),
   },
   syfoperson: {
+    applicationName: 'syfoperson',
     clientId: envVar({
       name: 'SYFOPERSON_AAD_APP_CLIENT_ID',
     }),
@@ -140,6 +146,7 @@ export const auth = {
     }),
   },
   syfoveileder: {
+    applicationName: 'syfoveileder',
     clientId: envVar({
       name: 'SYFOVEILEDER_AAD_APP_CLIENT_ID',
     }),
@@ -148,12 +155,14 @@ export const auth = {
     }),
   },
   flexjar: {
+    applicationName: 'flexjar-backend',
     clientId: envVar({
       name: 'FLEXJAR_AAD_APP_CLIENT_ID',
     }),
     host: envVar({
       name: 'FLEXJAR_HOST',
     }),
+    removePathPrefix: true,
   },
 };
 
