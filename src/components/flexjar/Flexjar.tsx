@@ -166,7 +166,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
   };
 
   return (
-    <div className="flex flex-col sticky bottom-0 items-end z-[100]">
+    <div className="flex flex-col sticky bottom-0 self-end items-end z-[100]">
       <Button
         variant="primary"
         iconPosition="right"
