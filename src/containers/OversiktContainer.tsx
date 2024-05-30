@@ -72,7 +72,9 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
         <NotificationBar />
         <NavigationBar />
         <ContainerContent />
-        {showFlexjar && <Flexjar side={toReadableString(tabType)} />}
+        {showFlexjar && personoversiktQuery.isSuccess && (
+          <Flexjar side={toReadableString(tabType)} />
+        )}
       </div>
     </ErrorBoundary>
   );

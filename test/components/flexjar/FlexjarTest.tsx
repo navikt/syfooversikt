@@ -156,7 +156,7 @@ describe('Flexjar', () => {
       feedbackId: 'Test',
       app: 'syfooversikt',
       svar: 'Ja',
-      feedback: '[AEV, Tiltak]' + ' \n' + 'Tester innsending Ja',
+      feedback: '[AEV, Tiltak]' + ' - ' + 'Tester innsending Ja',
     };
     const sendFeedbackMutation = queryClient.getMutationCache().getAll()[0];
     expect(sendFeedbackMutation?.state.variables).to.deep.equal(
