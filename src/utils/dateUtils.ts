@@ -39,12 +39,28 @@ export function isFuture(compareDate: Date): boolean {
   return currentDate < date;
 }
 
-export const earliestDate = (dateArray: Date[]): Date | null =>
-  dateArray.length > 0
-    ? dayjs.min(dateArray.map((date: Date) => dayjs(date))).toDate()
-    : null;
+export const earliestDate = (dateArray: Date[]): Date | null => {
+  if (dateArray.length > 0) {
+    const minDate = dayjs.min(dateArray.map((date: Date) => dayjs(date)));
+    return minDate && minDate.toDate();
+  }
 
-export const latestDate = (dateArray: Date[]): Date | null =>
-  dateArray.length > 0
-    ? dayjs.max(dateArray.map((date: Date) => dayjs(date))).toDate()
-    : null;
+  return null;
+};
+
+export const latestDate = (dateArray: Date[]): Date | null => {
+  if (dateArray.length > 0) {
+    const maxDate = dayjs.max(dateArray.map((date: Date) => dayjs(date)));
+    return maxDate && maxDate.toDate();
+  }
+
+  return null;
+};
+
+export const getWeeksBetween = (date1: Date, date2: Date): number => {
+  return Math.abs(dayjs(date1).diff(date2, 'week'));
+};
+
+export const addWeeks = (date: Date, numberOfWeeks: number): Date => {
+  return dayjs(date).add(numberOfWeeks, 'weeks').toDate();
+};

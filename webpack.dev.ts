@@ -40,7 +40,7 @@ const setupDev = async (devServer: WebpackDevServer) => {
 
   app.use('*', (req: express.Request, res: express.Response) => {
     const filename = path.join(compiler.outputPath, 'index.html');
-    compiler.outputFileSystem.readFile(filename, (err: any, result: any) => {
+    compiler.outputFileSystem?.readFile(filename, (err: any, result: any) => {
       if (err) {
         res.status(404).sendFile(path.resolve(__dirname, 'public/error.html'));
         return;

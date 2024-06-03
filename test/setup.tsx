@@ -40,6 +40,8 @@ function localStorage() {
 (global as any).XMLHttpRequest = window.XMLHttpRequest;
 
 (global as any).window = window;
+(global as any).window.requestAnimationFrame = function () {};
+(global as any).cancelAnimationFrame = function () {};
 (global as any).document = window.document;
 (global as any).navigator = {
   userAgent: 'node.js',

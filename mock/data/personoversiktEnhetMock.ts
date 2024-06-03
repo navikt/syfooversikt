@@ -16,6 +16,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   behandlerBerOmBistandUbehandlet: false,
   aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetVurderAvslagUbehandlet: false,
+  arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
 };
 
@@ -441,7 +442,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     trengerOppfolgingFrist: null,
     arbeidsuforhetvurdering: {
-      varsel: undefined,
+      varsel: null,
     },
   },
   {

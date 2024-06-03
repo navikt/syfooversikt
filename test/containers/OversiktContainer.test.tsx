@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { NotificationContext } from '@/context/notification/NotificationContext';
@@ -11,31 +11,33 @@ import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { stubVeiledere } from '../stubs/stubVeiledere';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
-import { FetchVeiledereFailed } from '@/context/notification/Notifications';
+import {
+  FetchVeiledereFailed,
+  Notification,
+} from '@/context/notification/Notifications';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'chai';
 import { enhetOversiktRoutePath } from '@/routers/AppRouter';
-import { testQueryClient } from '../testQueryClient';
+import { getQueryClientWithMockdata } from '../testQueryClient';
+import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
+import { unleashMock } from '../../mock/mockUnleash';
+import { StoreKey } from '@/hooks/useLocalStorageState';
+import { addWeeks } from '@/utils/dateUtils';
+import nock from 'nock';
 
-describe('OversiktContainer', () => {
-  const queryClient = testQueryClient();
+let queryClient: QueryClient;
 
-  it('Skal vise notifikasjon ved feilende apikall', async () => {
-    stubPersonoversikt();
-    stubPersonregister();
-    stubAktivVeileder();
-    stubModiaContext();
-    stubVeiledere();
-
-    render(
-      <MemoryRouter initialEntries={[enhetOversiktRoutePath]}>
+function renderOversikten(notifications: Notification[] = []) {
+  return render(
+    <MemoryRouter initialEntries={[enhetOversiktRoutePath]}>
+      <QueryClientProvider client={queryClient}>
         <Routes>
           <Route
             path={enhetOversiktRoutePath}
             element={
               <NotificationContext.Provider
                 value={{
-                  notifications: [FetchVeiledereFailed],
+                  notifications: notifications,
                   displayNotification: () => void 0,
                   clearNotification: () => void 0,
                 }}
@@ -46,19 +48,85 @@ describe('OversiktContainer', () => {
                     handleAktivEnhetChanged: () => void 0,
                   }}
                 >
-                  <QueryClientProvider client={queryClient}>
-                    <OversiktContainer
-                      tabType={OverviewTabType.ENHET_OVERVIEW}
-                    />
-                  </QueryClientProvider>
+                  <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
                 </AktivEnhetContext.Provider>
               </NotificationContext.Provider>
             }
           ></Route>
         </Routes>
-      </MemoryRouter>
-    );
+      </QueryClientProvider>
+    </MemoryRouter>
+  );
+}
+
+describe('OversiktContainer', () => {
+  beforeEach(() => {
+    queryClient = getQueryClientWithMockdata();
+    localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
+  });
+
+  afterEach(() => {
+    localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
+    nock.cleanAll();
+  });
+
+  it('Skal vise notifikasjon ved feilende apikall', async () => {
+    stubPersonoversikt();
+    stubPersonregister();
+    stubAktivVeileder();
+    stubModiaContext();
+    stubVeiledere();
+
+    renderOversikten([FetchVeiledereFailed]);
 
     expect(screen.getByText(FetchVeiledereFailed.message)).to.exist;
+  });
+
+  describe('Flexjar', () => {
+    it('shows flexjar when toggle and no previous answer', () => {
+      renderOversikten();
+
+      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
+        .exist;
+    });
+
+    it('does not show flexjar when previous answer within 3 weeks', () => {
+      localStorage.setItem(
+        StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
+        new Date().toString()
+      );
+      renderOversikten();
+
+      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
+        .exist;
+    });
+
+    it('shows flexjar when previous answer more than 3 weeks ago', () => {
+      localStorage.setItem(
+        StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
+        addWeeks(new Date(), -4).toString()
+      );
+      renderOversikten();
+
+      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
+        .exist;
+    });
+
+    it('does not show flexjar when toggle off', () => {
+      queryClient.setQueryData(
+        unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, ''),
+        () => [
+          {
+            ...unleashMock,
+            isFlexjarArenaEnabled: false,
+          },
+        ]
+      );
+
+      renderOversikten();
+
+      expect(screen.queryByRole('button', { name: 'Vi ønsker å lære av deg' }))
+        .to.not.exist;
+    });
   });
 });

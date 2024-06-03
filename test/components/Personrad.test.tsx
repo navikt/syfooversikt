@@ -60,6 +60,7 @@ const defaultPersonData: PersonData = {
   oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
   harArbeidsuforhetVurderAvslagUbehandlet: false,
+  arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {

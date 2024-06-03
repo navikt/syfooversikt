@@ -49,8 +49,12 @@ const proxyDirectly = (
   );
 };
 
-const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
-  expressHttpProxy(host, {
+const proxyExternalHost = (
+  externalAppConfig: Config.ExternalAppConfig,
+  accessToken: any,
+  parseReqBody: any
+) =>
+  expressHttpProxy(externalAppConfig.host, {
     https: false,
     parseReqBody: parseReqBody,
     proxyReqOptDecorator: async (options, srcReq) => {
@@ -64,7 +68,7 @@ const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
       return options;
     },
     proxyReqPathResolver: (req) => {
-      const urlFromApi = url.parse(host);
+      const urlFromApi = url.parse(externalAppConfig.host);
       const pathFromApi =
         urlFromApi.pathname === '/' ? '' : urlFromApi.pathname;
 
@@ -77,13 +81,25 @@ const proxyExternalHost = (host: any, accessToken: any, parseReqBody: any) =>
         (pathFromRequest ? pathFromRequest : '') +
         (queryString ? '?' + queryString : '');
 
+      if (externalAppConfig.removePathPrefix) {
+        const newPathWithoutPrefix = newPath.replace(
+          `${externalAppConfig.applicationName}/`,
+          ''
+        );
+        return newPathWithoutPrefix;
+      }
+
       return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
-      console.log(`Error in proxy for ${host} ${err.message}, ${err.code}`);
+      console.log(
+        `Error in proxy for ${externalAppConfig.host} ${err.message}, ${err.code}`
+      );
       if (err && err.code === 'ECONNREFUSED') {
         console.log('proxyErrorHandler: Got ECONNREFUSED');
-        return res.status(503).send({ message: `Could not contact ${host}` });
+        return res
+          .status(503)
+          .send({ message: `Could not contact ${externalAppConfig.host}` });
       }
       next(err);
     },
@@ -112,7 +128,7 @@ const proxyOnBehalfOf = (
         return;
       }
       return proxyExternalHost(
-        externalAppConfig.host,
+        externalAppConfig,
         onBehalfOfToken.accessToken,
         req.method === 'POST'
       )(req, res, next);

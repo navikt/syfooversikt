@@ -22,7 +22,7 @@ export const HendelseTekster = {
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
-  ARBEIDSUFORHET: '§8-4 Arbeidsuforhet',
+  ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
   FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding',
 } as const;
 

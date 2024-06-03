@@ -209,7 +209,7 @@ const matchesFilter = (
     case 'isAktivArbeidsuforhetvurdering':
       return (
         !filters[key] ||
-        personData.arbeidsuforhetvurdering !== undefined ||
+        !!personData.arbeidsuforhetvurdering ||
         personData.harArbeidsuforhetVurderAvslagUbehandlet
       );
     case 'harFriskmeldingTilArbeidsformidling':

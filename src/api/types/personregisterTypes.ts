@@ -36,7 +36,7 @@ export interface PersonData {
   oppfolgingsoppgaveFrist: Date | null;
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
-  arbeidsuforhetvurdering?: ArbeidsuforhetvurderingDTO;
+  arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
 }
 
 export interface PersonregisterState {

@@ -65,7 +65,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     });
   }
 
-  if (arbeidsuforhetvurdering?.varsel !== undefined) {
+  if (arbeidsuforhetvurdering && arbeidsuforhetvurdering.varsel) {
     frister.push({
       icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
       date: arbeidsuforhetvurdering.varsel.svarfrist,
