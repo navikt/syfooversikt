@@ -2,7 +2,7 @@ import React from 'react';
 import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
