@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import React, { ReactNode } from 'react';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
@@ -10,7 +9,8 @@ import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
 
 describe('personregisterHooks tests', () => {
   const queryClient = new QueryClient();
@@ -20,7 +20,7 @@ describe('personregisterHooks tests', () => {
     stubPersonoversikt();
     stubPersonregister();
 
-    const wrapper = ({ children }: never) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -35,11 +35,11 @@ describe('personregisterHooks tests', () => {
       </NotificationProvider>
     );
 
-    const { result, waitFor } = renderHook(() => usePersonregisterQuery(), {
+    const { result } = renderHook(() => usePersonregisterQuery(), {
       wrapper,
     });
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     const actual: PersonregisterData[] | undefined = result.current.data;
 

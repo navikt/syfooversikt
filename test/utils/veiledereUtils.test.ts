@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import { filterVeiledereWithActiveOppgave } from '@/utils/veiledereUtils';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { VeilederDTO } from '@/api/types/veiledereTypes';

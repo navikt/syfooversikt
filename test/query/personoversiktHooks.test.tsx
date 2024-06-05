@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import React, { ReactNode } from 'react';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
@@ -9,36 +8,38 @@ import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import { isFuture } from '@/utils/dateUtils';
+import { renderHook, waitFor } from '@testing-library/react';
 
 describe('personoversiktHooks tests', () => {
   const queryClient = new QueryClient();
 
+  const wrapper = ({ children }: { children: ReactNode }) => (
+    <NotificationProvider>
+      <AktivEnhetContext.Provider
+        value={{
+          aktivEnhet: aktivEnhetMock.aktivEnhet,
+          handleAktivEnhetChanged: () => void 0,
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </AktivEnhetContext.Provider>
+    </NotificationProvider>
+  );
+
   it('loads personoversikt correctly', async () => {
     stubModiaContext();
+
     stubPersonoversikt();
 
-    const wrapper = ({ children }: never) => (
-      <NotificationProvider>
-        <AktivEnhetContext.Provider
-          value={{
-            aktivEnhet: aktivEnhetMock.aktivEnhet,
-            handleAktivEnhetChanged: () => void 0,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </AktivEnhetContext.Provider>
-      </NotificationProvider>
-    );
-
-    const { result, waitFor } = renderHook(() => usePersonoversiktQuery(), {
+    const { result } = renderHook(() => usePersonoversiktQuery(), {
       wrapper,
     });
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     const actual: PersonOversiktStatusDTO[] = result.current.data || [];
 
@@ -50,26 +51,11 @@ describe('personoversiktHooks tests', () => {
     stubModiaContext();
     stubPersonoversikt();
 
-    const wrapper = ({ children }: never) => (
-      <NotificationProvider>
-        <AktivEnhetContext.Provider
-          value={{
-            aktivEnhet: aktivEnhetMock.aktivEnhet,
-            handleAktivEnhetChanged: () => void 0,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </AktivEnhetContext.Provider>
-      </NotificationProvider>
-    );
-
-    const { result, waitFor } = renderHook(() => usePersonoversiktQuery(), {
+    const { result } = renderHook(() => usePersonoversiktQuery(), {
       wrapper,
     });
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     const persons: PersonOversiktStatusDTO[] = result.current.data || [];
 

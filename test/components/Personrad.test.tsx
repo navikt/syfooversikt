@@ -3,7 +3,7 @@ import { testdata, veiledere } from '../data/fellesTestdata';
 import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { Personrad } from '@/components/Personrad';
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { formatNameCorrectly } from '@/utils/lenkeUtil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';

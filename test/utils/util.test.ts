@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import { PersonHendelseData } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
 import { Fodselsnummer } from '@/api/types/personInfoTypes';

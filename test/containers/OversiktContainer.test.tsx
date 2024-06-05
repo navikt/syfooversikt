@@ -16,7 +16,7 @@ import {
   Notification,
 } from '@/context/notification/Notifications';
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { enhetOversiktRoutePath } from '@/routers/AppRouter';
 import { getQueryClientWithMockdata } from '../testQueryClient';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';

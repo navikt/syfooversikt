@@ -3,7 +3,7 @@ import { FristColumn } from '@/components/FristColumn';
 import React from 'react';
 import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
 import { addWeeks } from 'date-fns';
