@@ -13,7 +13,7 @@ const texts = {
   tooltipAvventer: 'Avventer til',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
-  arbeidsuforhetvarselFrist: '§8-4: Svarfrist for forhåndsvarsel om avslag',
+  arbeidsuforhetvarselFrist: '§8-4: Svarfrist forhåndsvarsel',
 };
 
 interface FristColumnProps {

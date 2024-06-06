@@ -73,7 +73,7 @@ describe('personoversiktHooks tests', () => {
         person.dialogmotesvarUbehandlet ||
         person.behandlerBerOmBistandUbehandlet ||
         person.arbeidsuforhetVurderAvslagUbehandlet ||
-        person.arbeidsuforhetvurdering !== undefined ||
+        person.arbeidsuforhetvurdering !== null ||
         (person.friskmeldingTilArbeidsformidlingFom &&
           isFuture(person.friskmeldingTilArbeidsformidlingFom))
       );
