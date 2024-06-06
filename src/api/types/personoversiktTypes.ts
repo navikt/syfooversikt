@@ -30,6 +30,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetVurderAvslagUbehandlet: boolean;
+  arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
 }
 
@@ -57,4 +58,12 @@ export interface OppfolgingstilfelleDTO {
 export interface OppfolgingstilfelleVirksomhetDTO {
   virksomhetsnummer: string;
   virksomhetsnavn?: string;
+}
+
+export interface ArbeidsuforhetvurderingDTO {
+  varsel: ArbeidsuforhetVarselDTO | null;
+}
+
+export interface ArbeidsuforhetVarselDTO {
+  svarfrist: Date;
 }

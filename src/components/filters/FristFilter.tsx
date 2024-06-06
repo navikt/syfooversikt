@@ -5,7 +5,7 @@ import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 
 const texts = {
-  legend: 'Frist',
+  legend: 'Dato',
   option: {
     past: 'Før dagens dato',
     today: 'Dagens dato',

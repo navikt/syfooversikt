@@ -36,6 +36,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     oppfolgingsoppgaveFrist: null,
     behandlerBerOmBistandUbehandlet: false,
     harArbeidsuforhetVurderAvslagUbehandlet: false,
+    arbeidsuforhetvurdering: null,
     friskmeldingTilArbeidsformidlingFom: null,
   };
 };
@@ -51,7 +52,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   aktivitetskravVurderStans: false,
   oppfolgingsoppgave: false,
   behandlerBerOmBistand: false,
-  arbeidsuforhetForhandsvarselUtlopt: false,
+  isAktivArbeidsuforhetvurdering: false,
   harFriskmeldingTilArbeidsformidling: false,
 };
 

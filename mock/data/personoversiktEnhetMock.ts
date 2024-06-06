@@ -16,6 +16,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   behandlerBerOmBistandUbehandlet: false,
   aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetVurderAvslagUbehandlet: false,
+  arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
 };
 
@@ -34,6 +35,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     trengerOppfolgingFrist: null,
     behandlerBerOmBistandUbehandlet: false,
+    arbeidsuforhetvurdering: {
+      varsel: {
+        svarfrist: new Date('2022-12-01T10:12:05.913826'),
+      },
+    },
   },
   {
     ...behandletPerson,
@@ -78,6 +84,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     trengerOppfolgingFrist: null,
     arbeidsuforhetVurderAvslagUbehandlet: true,
+    arbeidsuforhetvurdering: {
+      varsel: {
+        svarfrist: new Date(),
+      },
+    },
   },
   {
     ...behandletPerson,
@@ -415,6 +426,24 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     trengerOppfolgingFrist: null,
+  },
+  {
+    ...behandletPerson,
+    fnr: '99999966672',
+    navn: 'Kandidat Arbeidsuforheten Uten Varslesen',
+    enhet: '0316',
+    veilederIdent: 'Z999991',
+    oppfolgingsplanLPSBistandUbehandlet: null,
+    motestatus: undefined,
+    latestOppfolgingstilfelle: undefined,
+    aktivitetskrav: null,
+    aktivitetskravActive: false,
+    aktivitetskravSistVurdert: null,
+    aktivitetskravVurderingFrist: null,
+    trengerOppfolgingFrist: null,
+    arbeidsuforhetvurdering: {
+      varsel: null,
+    },
   },
   {
     ...behandletPerson,
