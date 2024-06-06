@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Flexjar } from '@/components/flexjar/Flexjar';
-import { expect } from 'chai';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { defaultErrorTexts } from '@/api/errors';
 import { FlexjarFeedbackDTO } from '@/data/flexjar/useFlexjarFeedback';
 import { StoreKey } from '@/hooks/useLocalStorageState';
@@ -64,7 +64,7 @@ describe('Flexjar', () => {
   it('renders feedback form content after radiobutton click Ja', () => {
     renderFlexjar();
     const radio = screen.getByRole('radio', { name: 'Ja' });
-    radio.click();
+    fireEvent.click(radio);
 
     expect(screen.getByText('Hva bruker du Arena til? (Velg gjerne flere)')).to
       .exist;
@@ -80,7 +80,7 @@ describe('Flexjar', () => {
   it('renders feedback form content after radiobutton click Nei', () => {
     renderFlexjar();
     const radio = screen.getByRole('radio', { name: 'Nei' });
-    radio.click();
+    fireEvent.click(radio);
 
     expect(
       screen.getByText(
@@ -99,12 +99,12 @@ describe('Flexjar', () => {
     stubFlexjarApiOk();
 
     const radio = screen.getByRole('radio', { name: 'Ja' });
-    radio.click();
+    fireEvent.click(radio);
 
     const sendButton = screen.getByRole('button', {
       name: 'Send',
     });
-    sendButton.click();
+    fireEvent.click(sendButton);
 
     expect(await screen.findByRole('img', { name: 'Suksess' })).to.exist;
     expect(await screen.findByText('Takk for din tilbakemelding!')).to.exist;
@@ -115,12 +115,12 @@ describe('Flexjar', () => {
     stubFlexjarApiError();
 
     const radio = screen.getByRole('radio', { name: 'Ja' });
-    radio.click();
+    fireEvent.click(radio);
 
     const sendButton = screen.getByRole('button', {
       name: 'Send',
     });
-    sendButton.click();
+    fireEvent.click(sendButton);
 
     expect(await screen.findByRole('img', { name: 'Feil' })).to.exist;
     expect(await screen.findByText(defaultErrorTexts.generalError)).to.exist;
@@ -131,7 +131,7 @@ describe('Flexjar', () => {
     renderFlexjar();
 
     const radio = screen.getByRole('radio', { name: 'Ja' });
-    radio.click();
+    fireEvent.click(radio);
 
     const combobox = screen.getByRole('combobox', {
       name: 'Hva bruker du Arena til? (Velg gjerne flere)',
@@ -150,7 +150,7 @@ describe('Flexjar', () => {
     const sendButton = screen.getByRole('button', {
       name: 'Send',
     });
-    sendButton.click();
+    fireEvent.click(sendButton);
 
     const expectedFlexjarDTO: FlexjarFeedbackDTO = {
       feedbackId: 'Test',
@@ -168,7 +168,7 @@ describe('Flexjar', () => {
     renderFlexjar();
 
     const radio = screen.getByRole('radio', { name: 'Nei' });
-    radio.click();
+    fireEvent.click(radio);
 
     const inputField = screen.getByRole('textbox');
     fireEvent.change(inputField, {
@@ -178,7 +178,7 @@ describe('Flexjar', () => {
     const sendButton = screen.getByRole('button', {
       name: 'Send',
     });
-    sendButton.click();
+    fireEvent.click(sendButton);
 
     const expectedFlexjarDTO: FlexjarFeedbackDTO = {
       feedbackId: 'Test',
@@ -195,12 +195,12 @@ describe('Flexjar', () => {
   it('sets localstorage when sending feedback to flexjar', () => {
     renderFlexjar();
     const radio = screen.getByRole('radio', { name: 'Ja' });
-    radio.click();
+    fireEvent.click(radio);
 
     const sendButton = screen.getByRole('button', {
       name: 'Send',
     });
-    sendButton.click();
+    fireEvent.click(sendButton);
 
     expect(
       localStorage.getItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE)

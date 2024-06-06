@@ -1,7 +1,7 @@
 import { AgeFilterOption, filterOnAge } from '@/utils/hendelseFilteringUtils';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { createPersonDataWithName } from '../utils/hendelseFilteringUtilsTest';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 
 describe('Filters unit tests', () => {
   const currentYear = new Date().getFullYear();

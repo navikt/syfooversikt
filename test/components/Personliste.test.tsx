@@ -5,7 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import { testQueryClient } from '../testQueryClient';
 
 const queryClient = testQueryClient();

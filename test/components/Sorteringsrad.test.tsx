@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 import React from 'react';
 import Sorteringsrad from '../../src/components/Sorteringsrad';
 import { render, screen } from '@testing-library/react';

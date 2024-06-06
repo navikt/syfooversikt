@@ -7,7 +7,7 @@ import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { FilterContext } from '@/context/filters/FilterContext';
 import { FilterState } from '@/context/filters/filterContextState';
 import { testQueryClient } from '../testQueryClient';

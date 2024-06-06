@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import React, { ReactNode } from 'react';
 import { stubVeiledere } from '../stubs/stubVeiledere';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import {
@@ -14,7 +13,8 @@ import { veilederMock } from '../../mock/data/veilederMock';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
 
 describe('veiledereQueryHooks tests', () => {
   const queryClient = new QueryClient();
@@ -23,7 +23,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubVeiledere();
 
-    const wrapper = ({ children }: never) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <NotificationProvider>
         <AktivEnhetContext.Provider
           value={{
@@ -38,11 +38,11 @@ describe('veiledereQueryHooks tests', () => {
       </NotificationProvider>
     );
 
-    const { result, waitFor } = renderHook(() => useVeiledereQuery(), {
+    const { result } = renderHook(() => useVeiledereQuery(), {
       wrapper,
     });
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     const actual: VeilederDTO[] = result.current.data || [];
 
@@ -54,7 +54,7 @@ describe('veiledereQueryHooks tests', () => {
     stubModiaContext();
     stubAktivVeileder();
 
-    const wrapper = ({ children }: never) => (
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           {children}
@@ -62,11 +62,11 @@ describe('veiledereQueryHooks tests', () => {
       </NotificationProvider>
     );
 
-    const { result, waitFor } = renderHook(() => useAktivVeilederQuery(), {
+    const { result } = renderHook(() => useAktivVeilederQuery(), {
       wrapper,
     });
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     const actual: VeilederDTO | undefined = result.current.data;
 
