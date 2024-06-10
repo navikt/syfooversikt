@@ -58,7 +58,7 @@ const SearchIconWrapper = styled.span`
 
 interface AssignToVeilederButtonProps {
   text: string;
-  userIsChecked: boolean;
+  active: boolean;
   onClick: () => void;
   showList: boolean;
   search: boolean;
@@ -72,7 +72,7 @@ const OpenDropdownButton = (
   props: AssignToVeilederButtonProps
 ): ReactElement => {
   return (
-    <ButtonDiv className="openDropdownButton" active={props.userIsChecked}>
+    <ButtonDiv className="openDropdownButton" active={props.active}>
       <DropdownButtonButton
         className="openDropdownButton__button"
         onClick={props.onClick}
