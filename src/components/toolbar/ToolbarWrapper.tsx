@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import styled from 'styled-components';
 import Toolbar from './Toolbar';
 import { SortingType } from '@/utils/hendelseFilteringUtils';
+import { Label } from '@navikt/ds-react';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -14,20 +14,6 @@ export interface ToolbarWrapperProps {
   markertePersoner: string[];
   setSortingType: (sortingType: SortingType) => void;
 }
-
-const InfoText = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 0.25em;
-  padding-bottom: 0.5em;
-  box-sizing: border-box;
-  border: 2px solid transparent;
-  > :not(:first-child) {
-    margin-left: 0.5em;
-  }
-`;
 
 interface PageInfoType {
   firstVisibleIndex: number;
@@ -55,12 +41,16 @@ const ToolbarWrapper = (props: ToolbarWrapperProps): ReactElement => {
 
   return (
     <>
-      <InfoText>
-        <div>{textPaginatedUsers(pageInfo, props.numberOfItemsTotal)}</div>
+      <div className="px-1 py-2 flex flex-row gap-1">
+        <Label size="small">
+          {textPaginatedUsers(pageInfo, props.numberOfItemsTotal)}
+        </Label>
         {props.markertePersoner.length > 0 && (
-          <div>{textMarkedUsers(props.markertePersoner.length)}</div>
+          <Label size="small">
+            {textMarkedUsers(props.markertePersoner.length)}
+          </Label>
         )}
-      </InfoText>
+      </div>
       <Toolbar {...props} setPageInfo={setPageInfo} />
     </>
   );

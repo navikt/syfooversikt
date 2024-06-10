@@ -1,18 +1,13 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
-import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Personrad } from './Personrad';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
-import {
-  PersonData,
-  PersonregisterState,
-} from '@/api/types/personregisterTypes';
+import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   getSortedEventsFromSortingType,
   SortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
+import { VeilederColumn } from '@/components/VeilederColumn';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
@@ -23,50 +18,12 @@ interface PersonlisteProps {
   sortingType: SortingType;
 }
 
-export const VeilederNavn = styled.label`
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
-const EtikettFokusStyled = styled(EtikettInfo)`
-  padding: 2px 4px !important;
-  background: rgb(224, 245, 251) !important;
-  border-radius: 4px !important;
-  border: 1px solid rgb(102, 203, 236);
-`;
-
-const UfordeltBrukerEtikett = () => (
-  <EtikettFokusStyled>Ufordelt bruker</EtikettFokusStyled>
-);
-
 const erMarkert = (markertePersoner: string[], fnr: string) => {
   return (
     markertePersoner.findIndex((markertPerson: string) => {
       return markertPerson === fnr;
     }) !== -1
   );
-};
-
-export const getVeilederComponent = (
-  veiledere: VeilederDTO[],
-  personData: PersonData
-): ReactElement => {
-  const tildeltVeilederIdent = personData.tildeltVeilederIdent;
-
-  if (tildeltVeilederIdent) {
-    const tildeltVeileder = veiledere.find(
-      (v) => v.ident === tildeltVeilederIdent
-    );
-    if (!tildeltVeileder || !tildeltVeileder.fornavn) {
-      return <VeilederNavn>{tildeltVeilederIdent}</VeilederNavn>;
-    } else {
-      return (
-        <VeilederNavn>{`${tildeltVeileder.etternavn}, ${tildeltVeileder.fornavn}`}</VeilederNavn>
-      );
-    }
-  }
-
-  return <UfordeltBrukerEtikett />;
 };
 
 const Personliste = ({
@@ -114,10 +71,7 @@ const Personliste = ({
             index={idx}
             key={idx}
             fnr={fnr}
-            veilederName={getVeilederComponent(
-              veiledereQuery.data || [],
-              persondata
-            )}
+            veilederName={<VeilederColumn personData={persondata} />}
             personData={persondata}
             checkboxHandler={checkboxHandler}
             kryssAv={erMarkert(markertePersoner, fnr)}
