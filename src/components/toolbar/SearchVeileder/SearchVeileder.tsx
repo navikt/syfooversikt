@@ -140,7 +140,7 @@ const SearchVeileder = (): ReactElement => {
         <OpenDropdownButton
           text={`Søk veileder (${activeVeilederFilter.length})`}
           showList={showList}
-          userIsChecked={true}
+          active={true}
           onClick={toggleShowList}
           search={true}
         />

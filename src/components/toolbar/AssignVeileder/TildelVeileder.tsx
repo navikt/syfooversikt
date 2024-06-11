@@ -1,15 +1,10 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
-import {
-  assignUsersToSelectedVeileder,
-  filterVeiledereOnInput,
-  hasNoCheckedPersoner,
-} from '@/utils/assignVeilederUtils';
+import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
 import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
-import { ToolbarWrapperProps } from '../ToolbarWrapper';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
@@ -21,7 +16,17 @@ const dropdownButtonTexts: DropdownButtonTexts = {
   reset: 'Avbryt',
 };
 
-const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
+interface Props {
+  selectedPersoner: string[];
+  handleSelectAll: (checked: boolean) => void;
+  handleTildelVeileder: (veilederIdent: string) => void;
+}
+
+const TildelVeileder = ({
+  selectedPersoner,
+  handleTildelVeileder,
+  handleSelectAll,
+}: Props): ReactElement => {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
 
@@ -56,7 +61,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
   };
 
   const assignToOtherVeilederButtonHandler = () => {
-    if (props.markertePersoner.length > 0) {
+    if (selectedPersoner.length > 0) {
       if (showList) {
         resetStateToDefault();
       } else {
@@ -66,9 +71,16 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
     }
   };
 
+  const assignUsersToSelectedVeileder = (): void => {
+    if (chosenVeilederIdent && chosenVeilederIdent.length > 0) {
+      handleTildelVeileder(chosenVeilederIdent);
+    }
+    handleSelectAll(false);
+  };
+
   const chooseButtonHandler = (chosenVeilederIdent: string) => {
     if (chosenVeilederIdent && chosenVeilederIdent.length > 0) {
-      assignUsersToSelectedVeileder(props, chosenVeilederIdent);
+      assignUsersToSelectedVeileder();
       setShowList(false);
       setVeilederIsChosen(false);
       setShowError(false);
@@ -104,7 +116,7 @@ const TildelVeileder = (props: ToolbarWrapperProps): ReactElement => {
         text={'Tildel veileder'}
         onClick={assignToOtherVeilederButtonHandler}
         showList={showList}
-        userIsChecked={!hasNoCheckedPersoner(props.markertePersoner)}
+        active={selectedPersoner.length > 0}
         search={false}
       />
 

@@ -1,16 +1,5 @@
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { sortVeiledereAlphabetically } from './veiledereUtils';
-import { ToolbarWrapperProps } from '@/components/toolbar/ToolbarWrapper';
-
-export const assignUsersToSelectedVeileder = (
-  { buttonHandler, checkAllHandler }: ToolbarWrapperProps,
-  selectedVeilederIdent: string
-): void => {
-  if (selectedVeilederIdent && selectedVeilederIdent.length > 0) {
-    buttonHandler(selectedVeilederIdent);
-  }
-  checkAllHandler(false);
-};
 
 export const filterVeiledereOnInput = (
   veiledere: VeilederDTO[],
@@ -28,10 +17,6 @@ export const filterVeiledereOnInput = (
     return sortVeiledereAlphabetically(filteredVeiledere);
   }
   return filteredVeiledere;
-};
-
-export const hasNoCheckedPersoner = (personer: string[]): boolean => {
-  return personer.length === 0;
 };
 
 export const isInputGiven = (input: string): boolean => {

@@ -73,7 +73,11 @@ const Toolbar = (props: ToolbarProps) => {
     <ToolbarStyled>
       <Innhold>
         <Element>
-          <TildelVeileder {...props} />
+          <TildelVeileder
+            selectedPersoner={props.markertePersoner}
+            handleTildelVeileder={props.buttonHandler}
+            handleSelectAll={props.checkAllHandler}
+          />
           {tabType === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
         </Element>
         <PaginationContainer
