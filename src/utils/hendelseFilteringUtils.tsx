@@ -254,20 +254,15 @@ export const filterEventsOnVeileder = (
   return Object.fromEntries(filtered);
 };
 
-export type SortingType =
-  | 'NAME_ASC'
-  | 'NAME_DESC'
-  | 'FNR_ASC'
-  | 'FNR_DESC'
-  | 'COMPANY_ASC'
-  | 'COMPANY_DESC'
-  | 'VEILEDER_ASC'
-  | 'VEILEDER_DESC'
-  | 'UKE_ASC'
-  | 'UKE_DESC'
-  | 'DATO_ASC'
-  | 'DATO_DESC'
-  | 'NONE';
+export type SortingKey =
+  | 'NAME'
+  | 'FNR'
+  | 'COMPANY'
+  | 'VEILEDER'
+  | 'UKE'
+  | 'DATO';
+export type SortingOrder = 'ASC' | 'DESC';
+export type SortingType = `${SortingKey}_${SortingOrder}` | 'NONE';
 
 export const getSortedEventsFromSortingType = (
   personregister: PersonregisterState,

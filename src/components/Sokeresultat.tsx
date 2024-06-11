@@ -19,6 +19,8 @@ import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { OverviewTabType } from '@/konstanter';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
+import { NewOversikt } from '@/components/NewOversikt';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
@@ -41,6 +43,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { tabType } = useTabType();
+  const { toggles } = useFeatureToggles();
 
   const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
@@ -115,14 +118,26 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         markertePersoner={markertePersoner}
         setSortingType={setSortingType}
       />
-      <Personliste
-        personregister={filteredEvents.value}
-        startItem={startItem}
-        endItem={endItem}
-        checkboxHandler={checkboxHandler}
-        markertePersoner={markertePersoner}
-        sortingType={sortingType}
-      />
+      {toggles.isAkselOversiktEnabled ? (
+        <NewOversikt
+          personregister={filteredEvents.value}
+          startItem={startItem}
+          endItem={endItem}
+          sortingType={sortingType}
+          setSortingType={setSortingType}
+          selectedRows={markertePersoner}
+          setSelectedRows={setMarkertePersoner}
+        />
+      ) : (
+        <Personliste
+          personregister={filteredEvents.value}
+          startItem={startItem}
+          endItem={endItem}
+          checkboxHandler={checkboxHandler}
+          markertePersoner={markertePersoner}
+          sortingType={sortingType}
+        />
+      )}
     </div>
   );
 };

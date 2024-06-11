@@ -10,6 +10,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
 import PaginationContainer from './PaginationContainer';
 import { useTabType } from '@/context/tab/TabTypeContext';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -64,6 +65,7 @@ interface ToolbarProps extends ToolbarWrapperProps {
 }
 
 const Toolbar = (props: ToolbarProps) => {
+  const { toggles } = useFeatureToggles();
   const { tabType } = useTabType();
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
     PAGINATED_NUMBER_OF_ITEMS
@@ -91,25 +93,27 @@ const Toolbar = (props: ToolbarProps) => {
           }
         />
       </Innhold>
-      <Row className="flex ml-0 mr-0 items-center">
-        <Column xs="1">
-          <VelgBoks
-            className="toolbar__velgBoks"
-            aria-label={tekster.selectAll}
-            label="&nbsp;"
-            checked={props.alleMarkert}
-            onChange={(event) => {
-              props.checkAllHandler(event.target.checked);
+      {!toggles.isAkselOversiktEnabled && (
+        <Row className="flex ml-0 mr-0 items-center">
+          <Column xs="1">
+            <VelgBoks
+              className="toolbar__velgBoks"
+              aria-label={tekster.selectAll}
+              label="&nbsp;"
+              checked={props.alleMarkert}
+              onChange={(event) => {
+                props.checkAllHandler(event.target.checked);
+              }}
+            />
+          </Column>
+          <Sorteringsrad
+            onSortClick={(type) => {
+              props.setSortingType(type);
             }}
           />
-        </Column>
-        <Sorteringsrad
-          onSortClick={(type) => {
-            props.setSortingType(type);
-          }}
-        />
-        <Column xs={'1'} />
-      </Row>
+          <Column xs={'1'} />
+        </Row>
+      )}
     </ToolbarStyled>
   );
 };

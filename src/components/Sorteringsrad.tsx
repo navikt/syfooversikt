@@ -2,7 +2,7 @@ import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
-import { SortingType } from '@/utils/hendelseFilteringUtils';
+import { SortingKey, SortingType } from '@/utils/hendelseFilteringUtils';
 import Chevron from 'nav-frontend-chevron';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 
@@ -17,6 +17,57 @@ const tekster = {
   varighetSykefravar: 'Sykefravær',
   frist: 'Frist/Dato',
 };
+
+export const columns: ColumnItem[] = [
+  {
+    sortKey: 'NAME',
+    sortingText: 'Etternavn',
+    extraText: <p>, Fornavn</p>,
+    sortingTypeAsc: 'NAME_ASC',
+    sortingTypeDesc: 'NAME_DESC',
+    xs: '2',
+  },
+  {
+    sortKey: 'FNR',
+    sortingText: tekster.fodselsnummer,
+    extraText: null,
+    sortingTypeAsc: 'FNR_ASC',
+    sortingTypeDesc: 'FNR_DESC',
+    xs: '2',
+  },
+  {
+    sortKey: 'COMPANY',
+    sortingText: tekster.virksomhet,
+    extraText: null,
+    sortingTypeAsc: 'COMPANY_ASC',
+    sortingTypeDesc: 'COMPANY_DESC',
+    xs: '2',
+  },
+  {
+    sortKey: 'VEILEDER',
+    sortingText: tekster.veileder,
+    extraText: null,
+    sortingTypeAsc: 'VEILEDER_ASC',
+    sortingTypeDesc: 'VEILEDER_DESC',
+    xs: '2',
+  },
+  {
+    sortKey: 'UKE',
+    sortingText: tekster.varighetSykefravar,
+    extraText: null,
+    sortingTypeAsc: 'UKE_ASC',
+    sortingTypeDesc: 'UKE_DESC',
+    xs: '1',
+  },
+  {
+    sortKey: 'DATO',
+    sortingText: tekster.frist,
+    extraText: null,
+    sortingTypeAsc: 'DATO_ASC',
+    sortingTypeDesc: 'DATO_DESC',
+    xs: '1',
+  },
+];
 
 export const GrayChevron = styled(Chevron)`
   margin-left: 0.25em;
@@ -63,6 +114,7 @@ type XsType =
   | '12';
 
 interface ColumnItem {
+  sortKey: SortingKey;
   sortingText: string;
   extraText: ReactNode;
   sortingTypeAsc: SortingType;
@@ -110,51 +162,6 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
       currentSortingType === sortingTypeDesc
     );
   };
-
-  const columns: ColumnItem[] = [
-    {
-      sortingText: 'Etternavn',
-      extraText: <p>, Fornavn</p>,
-      sortingTypeAsc: 'NAME_ASC',
-      sortingTypeDesc: 'NAME_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.fodselsnummer,
-      extraText: null,
-      sortingTypeAsc: 'FNR_ASC',
-      sortingTypeDesc: 'FNR_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.virksomhet,
-      extraText: null,
-      sortingTypeAsc: 'COMPANY_ASC',
-      sortingTypeDesc: 'COMPANY_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.veileder,
-      extraText: null,
-      sortingTypeAsc: 'VEILEDER_ASC',
-      sortingTypeDesc: 'VEILEDER_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.varighetSykefravar,
-      extraText: null,
-      sortingTypeAsc: 'UKE_ASC',
-      sortingTypeDesc: 'UKE_DESC',
-      xs: '1',
-    },
-    {
-      sortingText: tekster.frist,
-      extraText: null,
-      sortingTypeAsc: 'DATO_ASC',
-      sortingTypeDesc: 'DATO_DESC',
-      xs: '1',
-    },
-  ];
 
   return (
     <>
