@@ -1,12 +1,10 @@
 import React from 'react';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
-import {
-  getSortedEventsFromSortingType,
-  SortingType,
-} from '@/utils/hendelseFilteringUtils';
+import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
 import { NewOversiktTable } from '@/components/NewOversiktTable';
+import { SortingType } from '@/hooks/useSorting';
 
 interface Props {
   personregister: PersonregisterState;

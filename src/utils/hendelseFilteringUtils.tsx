@@ -10,6 +10,7 @@ import {
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
+import { SortingType } from '@/hooks/useSorting';
 
 export class Filterable<T> {
   value: T;
@@ -253,16 +254,6 @@ export const filterEventsOnVeileder = (
 
   return Object.fromEntries(filtered);
 };
-
-export type SortingKey =
-  | 'NAME'
-  | 'FNR'
-  | 'COMPANY'
-  | 'VEILEDER'
-  | 'UKE'
-  | 'DATO';
-export type SortingOrder = 'ASC' | 'DESC';
-export type SortingType = `${SortingKey}_${SortingOrder}` | 'NONE';
 
 export const getSortedEventsFromSortingType = (
   personregister: PersonregisterState,

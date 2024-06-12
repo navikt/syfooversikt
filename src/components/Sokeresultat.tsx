@@ -12,7 +12,6 @@ import {
   filterOnFodselsnummerOrName,
   filterOnFrist,
   filterOnPersonregister,
-  SortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
@@ -21,6 +20,7 @@ import { OverviewTabType } from '@/konstanter';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { NewOversikt } from '@/components/NewOversikt';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { SortingType } from '@/hooks/useSorting';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;

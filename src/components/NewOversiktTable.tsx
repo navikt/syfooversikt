@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Checkbox, SortState, Table } from '@navikt/ds-react';
-import { columns } from '@/components/Sorteringsrad';
 import { VeilederColumn } from '@/components/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
 import {
@@ -13,7 +12,7 @@ import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColum
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { FristColumn } from '@/components/FristColumn';
 import { Labels } from '@/components/Labels';
-import { SortingKey, SortingType } from '@/utils/hendelseFilteringUtils';
+import { SortingKey, SortingType, useSorting } from '@/hooks/useSorting';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -31,89 +30,6 @@ interface Props {
   setSortingType: (sortingType: SortingType) => void;
 }
 
-const toSortState = (
-  sortingType: SortingType
-): (SortState & { orderBy: SortingKey }) | undefined => {
-  switch (sortingType) {
-    case 'NAME_ASC':
-      return {
-        orderBy: 'NAME',
-        direction: 'ascending',
-      };
-    case 'NAME_DESC':
-      return {
-        orderBy: 'NAME',
-        direction: 'descending',
-      };
-    case 'FNR_ASC':
-      return {
-        orderBy: 'FNR',
-        direction: 'ascending',
-      };
-    case 'FNR_DESC':
-      return {
-        orderBy: 'FNR',
-        direction: 'descending',
-      };
-    case 'COMPANY_ASC':
-      return {
-        orderBy: 'COMPANY',
-        direction: 'ascending',
-      };
-    case 'COMPANY_DESC':
-      return {
-        orderBy: 'COMPANY',
-        direction: 'descending',
-      };
-    case 'VEILEDER_ASC':
-      return {
-        orderBy: 'VEILEDER',
-        direction: 'ascending',
-      };
-    case 'VEILEDER_DESC':
-      return {
-        orderBy: 'VEILEDER',
-        direction: 'descending',
-      };
-    case 'UKE_ASC':
-      return {
-        orderBy: 'UKE',
-        direction: 'ascending',
-      };
-    case 'UKE_DESC':
-      return {
-        orderBy: 'UKE',
-        direction: 'descending',
-      };
-    case 'DATO_ASC':
-      return {
-        orderBy: 'DATO',
-        direction: 'ascending',
-      };
-    case 'DATO_DESC':
-      return {
-        orderBy: 'DATO',
-        direction: 'descending',
-      };
-    case 'NONE':
-      return undefined;
-  }
-};
-
-const toSortingType = (
-  sortKey: SortingKey,
-  currentDirection: SortState['direction']
-): SortingType => {
-  switch (currentDirection) {
-    case 'ascending':
-      return `${sortKey}_DESC`;
-    case 'descending':
-      return `${sortKey}_ASC`;
-    case 'none':
-      return 'NONE';
-  }
-};
-
 export const NewOversiktTable = ({
   personListe,
   selectedRows,
@@ -122,6 +38,7 @@ export const NewOversiktTable = ({
   setSortingType,
 }: Props): ReactElement => {
   const aktivBruker = useAktivBruker();
+  const { columns, toSortState, toSortingType } = useSorting();
 
   const sortState: SortState | undefined = toSortState(sortingType);
   const handleSort = (sortKey: string | undefined) => {
