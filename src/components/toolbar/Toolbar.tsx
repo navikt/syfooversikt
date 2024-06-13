@@ -47,7 +47,7 @@ const ToolbarStyled = styled.div`
   background-color: ${themes.color.white};
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   border-radius: 4px;
   border: 1px solid ${themes.color.navGra20};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
