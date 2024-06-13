@@ -21,13 +21,13 @@ export const PersonRadVirksomhetColumn = ({
 
   return (
     <>
-      <p
+      <div
         ref={virksomehtRef}
         onMouseEnter={showPopover}
         onMouseLeave={dontShowPopover}
       >
         {companyNames[0]}
-      </p>
+      </div>
       <Popover
         open={showVirksomheter}
         onClose={() => setShowVirksomheter(false)}

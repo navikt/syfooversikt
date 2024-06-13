@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import Toolbar from './Toolbar';
-import { SortingType } from '@/utils/hendelseFilteringUtils';
 import { Label } from '@navikt/ds-react';
+import { SortingType } from '@/hooks/useSorting';
 
 const PAGINATED_NUMBER_OF_ITEMS = 50;
 

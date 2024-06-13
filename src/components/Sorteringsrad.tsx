@@ -1,22 +1,10 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Column } from 'nav-frontend-grid';
 import themes from '../styles/themes';
-import { SortingType } from '@/utils/hendelseFilteringUtils';
 import Chevron from 'nav-frontend-chevron';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
-
-const tekster = {
-  navn: 'Etternavn, Fornavn',
-  fodselsnummer: 'Fødselsnummer',
-  ident: 'NAV-ident',
-  veileder: 'Veileder',
-  overskriftBruker: 'Bruker',
-  overskriftVeileder: 'Veileder',
-  virksomhet: 'Virksomhet',
-  varighetSykefravar: 'Sykefravær',
-  frist: 'Frist/Dato',
-};
+import { SortColumn, SortingType, useSorting } from '@/hooks/useSorting';
 
 export const GrayChevron = styled(Chevron)`
   margin-left: 0.25em;
@@ -48,28 +36,6 @@ export const FlexColumn = styled(Column)`
   }
 `;
 
-type XsType =
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | '10'
-  | '11'
-  | '12';
-
-interface ColumnItem {
-  sortingText: string;
-  extraText: ReactNode;
-  sortingTypeAsc: SortingType;
-  sortingTypeDesc: SortingType;
-  xs: XsType;
-}
-
 interface SortingRowProps {
   onSortClick(type: SortingType): void;
 }
@@ -79,6 +45,7 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
     currentSortingType,
     setCurrentSortingType,
   ] = useLocalStorageState<SortingType>(StoreKey.SORT, 'FNR_ASC');
+  const { columns } = useSorting();
 
   const onSortingButtonClicked = (
     sortingTypeAsc: SortingType,
@@ -101,6 +68,23 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
     } else return undefined;
   };
 
+  const xsType = (col: SortColumn) => {
+    switch (col.sortKey) {
+      case 'NAME':
+        return '2';
+      case 'FNR':
+        return '2';
+      case 'COMPANY':
+        return '2';
+      case 'VEILEDER':
+        return '2';
+      case 'UKE':
+        return '1';
+      case 'DATO':
+        return '1';
+    }
+  };
+
   const isSorted = (
     sortingTypeAsc: SortingType,
     sortingTypeDesc: SortingType
@@ -111,56 +95,11 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
     );
   };
 
-  const columns: ColumnItem[] = [
-    {
-      sortingText: 'Etternavn',
-      extraText: <p>, Fornavn</p>,
-      sortingTypeAsc: 'NAME_ASC',
-      sortingTypeDesc: 'NAME_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.fodselsnummer,
-      extraText: null,
-      sortingTypeAsc: 'FNR_ASC',
-      sortingTypeDesc: 'FNR_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.virksomhet,
-      extraText: null,
-      sortingTypeAsc: 'COMPANY_ASC',
-      sortingTypeDesc: 'COMPANY_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.veileder,
-      extraText: null,
-      sortingTypeAsc: 'VEILEDER_ASC',
-      sortingTypeDesc: 'VEILEDER_DESC',
-      xs: '2',
-    },
-    {
-      sortingText: tekster.varighetSykefravar,
-      extraText: null,
-      sortingTypeAsc: 'UKE_ASC',
-      sortingTypeDesc: 'UKE_DESC',
-      xs: '1',
-    },
-    {
-      sortingText: tekster.frist,
-      extraText: null,
-      sortingTypeAsc: 'DATO_ASC',
-      sortingTypeDesc: 'DATO_DESC',
-      xs: '1',
-    },
-  ];
-
   return (
     <>
       {columns.map((col, index) => {
         return (
-          <FlexColumn key={index} xs={col.xs}>
+          <FlexColumn key={index} xs={xsType(col)}>
             <SortingButton
               onClick={() =>
                 onSortingButtonClicked(col.sortingTypeAsc, col.sortingTypeDesc)
@@ -169,8 +108,6 @@ const Sorteringsrad = ({ onSortClick }: SortingRowProps): ReactElement => {
             >
               {col.sortingText}
             </SortingButton>
-            {col.extraText}
-
             {isSorted(col.sortingTypeAsc, col.sortingTypeDesc) && (
               <GrayChevron
                 type={chevronType(col.sortingTypeAsc, col.sortingTypeDesc)}

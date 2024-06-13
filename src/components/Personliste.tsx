@@ -1,13 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Personrad } from './Personrad';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
-import {
-  getSortedEventsFromSortingType,
-  SortingType,
-} from '@/utils/hendelseFilteringUtils';
+import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
 import { VeilederColumn } from '@/components/VeilederColumn';
+import { SortingType } from '@/hooks/useSorting';
 
 interface PersonlisteProps {
   personregister: PersonregisterState;
