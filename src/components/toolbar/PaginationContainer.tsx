@@ -1,80 +1,83 @@
-import PaginationRow from '../PaginationRow';
-import React, { ReactElement, useCallback } from 'react';
-import styled from 'styled-components';
-import themes from '../../styles/themes';
-import {
-  getTogglePaginationText,
-  onTogglePaginationClick,
-} from '../utils/toolbar';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { Pagination, Switch } from '@navikt/ds-react';
 
-const TogglePagination = styled.p`
-  cursor: pointer;
-  margin-right: 0.7em;
-  color: ${themes.color.navBla};
-  :hover {
-    border-bottom: 1px solid ${themes.color.navGra40};
-  }
-`;
-
-const Wrapper = styled.div`
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-`;
+export const PAGINATED_NUMBER_OF_ITEMS = 50;
 
 interface PaginationContainerProps {
-  numberOfItemsPerPage: number;
   numberOfItemsTotal: number;
-  setNumberOfItemsPerPage: (n: number) => void;
   setPageInfo: (indices: {
     firstVisibleIndex: number;
     lastVisibleIndex: number;
   }) => void;
   onPageChange: (start: number, end: number) => void;
-  shouldShowTogglePagination: boolean;
 }
 
 const PaginationContainer = ({
-  numberOfItemsPerPage,
-  setNumberOfItemsPerPage,
   numberOfItemsTotal,
-  shouldShowTogglePagination,
   setPageInfo,
   onPageChange,
 }: PaginationContainerProps): ReactElement => {
-  const pageChangeCallback = useCallback(
-    (start: number, end: number) => {
-      setPageInfo({
-        firstVisibleIndex: start,
-        lastVisibleIndex: end,
-      });
-      onPageChange(start, end);
-    },
-    [onPageChange, setPageInfo]
+  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
+    PAGINATED_NUMBER_OF_ITEMS
   );
+  const [page, setPage] = useState(1);
+  const numberOfPages =
+    numberOfItemsTotal < numberOfItemsPerPage
+      ? 1
+      : Math.ceil(numberOfItemsTotal / numberOfItemsPerPage);
+  const allItemsVisible = numberOfItemsPerPage === numberOfItemsTotal;
+  const showToggleAllItems = numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS;
+
+  useEffect(() => {
+    const start = Math.min(
+      (page - 1) * numberOfItemsPerPage,
+      numberOfItemsTotal
+    );
+    const end = allItemsVisible
+      ? numberOfItemsTotal
+      : Math.min(page * numberOfItemsPerPage - 1, numberOfItemsTotal);
+
+    setPageInfo({
+      firstVisibleIndex: start,
+      lastVisibleIndex: end,
+    });
+    onPageChange(start, end);
+  }, [
+    allItemsVisible,
+    numberOfItemsPerPage,
+    numberOfItemsTotal,
+    onPageChange,
+    page,
+    setPageInfo,
+  ]);
+
+  const handleToggleShowAll = () => {
+    if (allItemsVisible) {
+      setNumberOfItemsPerPage(PAGINATED_NUMBER_OF_ITEMS);
+    } else {
+      setNumberOfItemsPerPage(numberOfItemsTotal);
+      setPage(1);
+    }
+  };
 
   return (
-    <Wrapper>
-      {shouldShowTogglePagination && (
-        <TogglePagination
-          onClick={() => {
-            onTogglePaginationClick(
-              numberOfItemsPerPage,
-              setNumberOfItemsPerPage,
-              numberOfItemsTotal
-            );
-          }}
-        >
-          {getTogglePaginationText(numberOfItemsPerPage, numberOfItemsTotal)}
-        </TogglePagination>
-      )}
-      <PaginationRow
-        numberOfItems={numberOfItemsTotal}
-        startPage={0}
-        maxNumberPerPage={numberOfItemsPerPage}
-        onPageChange={pageChangeCallback}
+    <div className="flex flex-row items-center gap-6">
+      <Pagination
+        page={page}
+        count={numberOfPages}
+        onPageChange={setPage}
+        size="small"
       />
-    </Wrapper>
+      {showToggleAllItems && (
+        <Switch
+          size="small"
+          checked={allItemsVisible}
+          onChange={handleToggleShowAll}
+        >
+          Vis alle
+        </Switch>
+      )}
+    </div>
   );
 };
 

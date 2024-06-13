@@ -3,16 +3,14 @@ import { OverviewTabType } from '@/konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
 import { Column, Row } from 'nav-frontend-grid';
 import Sorteringsrad from '../Sorteringsrad';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 import { Checkbox } from 'nav-frontend-skjema';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
-import PaginationContainer from './PaginationContainer';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-
-const PAGINATED_NUMBER_OF_ITEMS = 50;
+import PaginationContainer from '@/components/toolbar/PaginationContainer';
 
 const Innhold = styled.section`
   display: flex;
@@ -67,9 +65,6 @@ interface ToolbarProps extends ToolbarWrapperProps {
 const Toolbar = (props: ToolbarProps) => {
   const { toggles } = useFeatureToggles();
   const { tabType } = useTabType();
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
-    PAGINATED_NUMBER_OF_ITEMS
-  );
 
   return (
     <ToolbarStyled>
@@ -83,14 +78,9 @@ const Toolbar = (props: ToolbarProps) => {
           {tabType === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
         </Element>
         <PaginationContainer
-          numberOfItemsPerPage={numberOfItemsPerPage}
           numberOfItemsTotal={props.numberOfItemsTotal}
           onPageChange={props.onPageChange}
-          setNumberOfItemsPerPage={setNumberOfItemsPerPage}
           setPageInfo={props.setPageInfo}
-          shouldShowTogglePagination={
-            props.numberOfItemsTotal > PAGINATED_NUMBER_OF_ITEMS
-          }
         />
       </Innhold>
       {!toggles.isAkselOversiktEnabled && (
