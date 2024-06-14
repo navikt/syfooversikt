@@ -1,5 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Pagination, Switch } from '@navikt/ds-react';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
 export const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -58,6 +60,13 @@ const PaginationContainer = ({
       setNumberOfItemsPerPage(numberOfItemsTotal);
       setPage(1);
     }
+    Amplitude.logEvent({
+      type: EventType.ButtonClick,
+      data: {
+        url: window.location.href,
+        tekst: 'Vis alle togglet',
+      },
+    });
   };
 
   return (
