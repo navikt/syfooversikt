@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import Toolbar from './Toolbar';
 import { Label } from '@navikt/ds-react';
-import { SortingType } from '@/hooks/useSorting';
 import { PAGINATED_NUMBER_OF_ITEMS } from '@/components/toolbar/PaginationContainer';
 
 export interface ToolbarWrapperProps {
@@ -11,7 +10,6 @@ export interface ToolbarWrapperProps {
   checkAllHandler: (checked: boolean) => void;
   onPageChange: (startItem: number, endItem: number) => void;
   markertePersoner: string[];
-  setSortingType: (sortingType: SortingType) => void;
 }
 
 interface PageInfoType {

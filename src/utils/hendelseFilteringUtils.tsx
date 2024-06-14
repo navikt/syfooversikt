@@ -10,7 +10,7 @@ import {
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
-import { SortingType } from '@/hooks/useSorting';
+import { Sorting, SortDirection } from '@/hooks/useSorting';
 
 export class Filterable<T> {
   value: T;
@@ -258,27 +258,21 @@ export const filterEventsOnVeileder = (
 export const getSortedEventsFromSortingType = (
   personregister: PersonregisterState,
   veiledere: VeilederDTO[],
-  type: SortingType
+  { direction, orderBy }: Sorting
 ): PersonregisterState => {
-  switch (type) {
-    case 'NAME_ASC':
-    case 'NAME_DESC':
-      return sortEventsOnName(personregister, type);
-    case 'FNR_ASC':
-    case 'FNR_DESC':
-      return sortEventsOnFnr(personregister, type);
-    case 'COMPANY_ASC':
-    case 'COMPANY_DESC':
-      return sortEventsOnCompanyName(personregister, type);
-    case 'VEILEDER_ASC':
-    case 'VEILEDER_DESC':
-      return sortEventsOnVeileder(personregister, veiledere, type);
-    case 'UKE_ASC':
-    case 'UKE_DESC':
-      return sortEventsOnTilfelleVarighet(personregister, type);
-    case 'DATO_ASC':
-    case 'DATO_DESC':
-      return sortEventsOnFrist(personregister, type);
+  switch (orderBy) {
+    case 'NAME':
+      return sortEventsOnName(personregister, direction);
+    case 'FNR':
+      return sortEventsOnFnr(personregister, direction);
+    case 'COMPANY':
+      return sortEventsOnCompanyName(personregister, direction);
+    case 'VEILEDER':
+      return sortEventsOnVeileder(personregister, veiledere, direction);
+    case 'UKE':
+      return sortEventsOnTilfelleVarighet(personregister, direction);
+    case 'DATO':
+      return sortEventsOnFrist(personregister, direction);
     case 'NONE':
       return personregister;
   }
@@ -288,7 +282,7 @@ const sortVeiledereByLastName = (
   persondataA: PersonData,
   persondataB: PersonData,
   veiledere: VeilederDTO[],
-  order: SortingType
+  direction: SortDirection
 ) => {
   const veilederA = veiledere.find(
     (v) => persondataA.tildeltVeilederIdent === v.ident
@@ -300,15 +294,15 @@ const sortVeiledereByLastName = (
   const lastNameA = veilederA?.etternavn || '';
   const lastNameB = veilederB?.etternavn || '';
 
-  if (lastNameA > lastNameB) return order === 'VEILEDER_ASC' ? -1 : 1;
-  if (lastNameA < lastNameB) return order === 'VEILEDER_ASC' ? 1 : -1;
+  if (lastNameA > lastNameB) return direction === 'ascending' ? -1 : 1;
+  if (lastNameA < lastNameB) return direction === 'ascending' ? 1 : -1;
   return 0;
 };
 
 const sortEventsOnVeileder = (
   personregister: PersonregisterState,
   veiledere: VeilederDTO[],
-  order: SortingType
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
@@ -316,7 +310,7 @@ const sortEventsOnVeileder = (
         persondataA,
         persondataB,
         veiledere,
-        order
+        direction
       );
     }
   );
@@ -326,14 +320,16 @@ const sortEventsOnVeileder = (
 
 const sortEventsOnCompanyName = (
   personregister: PersonregisterState,
-  order: SortingType
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
       const companyNameA = firstCompanyNameFromPersonData(persondataA) || '';
       const companyNameB = firstCompanyNameFromPersonData(persondataB) || '';
-      if (companyNameA > companyNameB) return order === 'COMPANY_ASC' ? -1 : 1;
-      if (companyNameA < companyNameB) return order === 'COMPANY_ASC' ? 1 : -1;
+      if (companyNameA > companyNameB)
+        return direction === 'ascending' ? -1 : 1;
+      if (companyNameA < companyNameB)
+        return direction === 'ascending' ? 1 : -1;
       return 0;
     }
   );
@@ -343,16 +339,16 @@ const sortEventsOnCompanyName = (
 
 const sortEventsOnFnr = (
   personregister: PersonregisterState,
-  order: SortingType
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(([fnrA], [fnrB]) => {
     const birthDateA = Number(fnrA.slice(0, 4));
     const birthDateB = Number(fnrB.slice(0, 4));
     if (birthDateB === birthDateA) return 0;
-    if (order === 'FNR_ASC') {
+    if (direction === 'ascending') {
       if (birthDateA > birthDateB) return 1;
       return -1;
-    } else if (order === 'FNR_DESC') {
+    } else if (direction === 'descending') {
       if (birthDateA < birthDateB) return 1;
       return -1;
     }
@@ -364,7 +360,7 @@ const sortEventsOnFnr = (
 
 const sortEventsOnName = (
   personregister: PersonregisterState,
-  order: SortingType
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
@@ -375,25 +371,27 @@ const sortEventsOnName = (
     }
   );
 
-  return order === 'NAME_ASC'
+  return direction === 'ascending'
     ? Object.fromEntries(sorted)
     : Object.fromEntries(sorted.reverse());
 };
 
 const sortEventsOnTilfelleVarighet = (
   personregister: PersonregisterState,
-  order: SortingType
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
       const varighetA = persondataA.latestOppfolgingstilfelle?.varighetUker;
       const varighetB = persondataB.latestOppfolgingstilfelle?.varighetUker;
-      if (!varighetA) return order === 'UKE_ASC' ? -1 : 1;
-      if (!varighetB) return order === 'UKE_ASC' ? 1 : -1;
+      if (!varighetA) return direction === 'ascending' ? -1 : 1;
+      if (!varighetB) return direction === 'ascending' ? 1 : -1;
       const compareVarighet =
-        order === 'UKE_ASC' ? varighetA - varighetB : varighetB - varighetA;
+        direction === 'ascending'
+          ? varighetA - varighetB
+          : varighetB - varighetA;
       return compareVarighet === 0
-        ? compareTilfelleStart(persondataA, persondataB, order)
+        ? compareTilfelleStart(persondataA, persondataB, direction)
         : compareVarighet;
     }
   );
@@ -404,37 +402,37 @@ const sortEventsOnTilfelleVarighet = (
 const compareTilfelleStart = (
   persondataA: PersonData,
   persondataB: PersonData,
-  order: SortingType
+  direction: SortDirection
 ) => {
   const startDateA =
     persondataA.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
   const startDateB =
     persondataB.latestOppfolgingstilfelle?.oppfolgingstilfelleStart;
-  if (!startDateA) return order === 'UKE_ASC' ? -1 : 1;
-  if (!startDateB) return order === 'UKE_ASC' ? 1 : -1;
-  if (startDateA > startDateB) return order === 'UKE_ASC' ? -1 : 1;
-  if (startDateA < startDateB) return order === 'UKE_ASC' ? 1 : -1;
+  if (!startDateA) return direction === 'ascending' ? -1 : 1;
+  if (!startDateB) return direction === 'ascending' ? 1 : -1;
+  if (startDateA > startDateB) return direction === 'ascending' ? -1 : 1;
+  if (startDateA < startDateB) return direction === 'ascending' ? 1 : -1;
   return 0;
 };
 
 const sortEventsOnFrist = (
   personregister: PersonregisterState,
-  order: 'DATO_ASC' | 'DATO_DESC'
+  direction: SortDirection
 ): PersonregisterState => {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
       const fristDateA =
-        order === 'DATO_ASC'
+        direction === 'ascending'
           ? getEarliestFrist(persondataA)
           : getLatestFrist(persondataA);
       const fristDateB =
-        order === 'DATO_ASC'
+        direction === 'ascending'
           ? getEarliestFrist(persondataB)
           : getLatestFrist(persondataB);
-      if (!fristDateA) return order === 'DATO_ASC' ? 1 : -1;
-      if (!fristDateB) return order === 'DATO_ASC' ? -1 : 1;
-      if (fristDateA > fristDateB) return order === 'DATO_ASC' ? 1 : -1;
-      if (fristDateA < fristDateB) return order === 'DATO_ASC' ? -1 : 1;
+      if (!fristDateA) return direction === 'ascending' ? 1 : -1;
+      if (!fristDateB) return direction === 'ascending' ? -1 : 1;
+      if (fristDateA > fristDateB) return direction === 'ascending' ? 1 : -1;
+      if (fristDateA < fristDateB) return direction === 'ascending' ? -1 : 1;
       return 0;
     }
   );

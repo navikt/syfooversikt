@@ -57,34 +57,32 @@ const defaulthendelseFilter: HendelseTypeFilters = {
 };
 
 describe('hendelseFilteringUtils', () => {
-  it('Should sort by name descending', () => {
-    const personregisterState: PersonregisterState = {
-      '16614407794': createPersonDataWithName('Bjarne Bjarne'),
-      '09128034883': createPersonDataWithName('Camilla Camilla'),
-      '16761936120': createPersonDataWithName('Agnes Agnes'),
-    };
-    const result = getSortedEventsFromSortingType(
-      personregisterState,
-      [],
-      'NAME_ASC'
-    );
-
-    expect(Object.values(result)[0]?.navn).to.deep.equal('Agnes Agnes');
-    expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
-    expect(Object.values(result)[2]?.navn).to.deep.equal('Camilla Camilla');
-  });
-
   it('Should sort by name ascending', () => {
     const personregisterState: PersonregisterState = {
       '16614407794': createPersonDataWithName('Bjarne Bjarne'),
       '09128034883': createPersonDataWithName('Camilla Camilla'),
       '16761936120': createPersonDataWithName('Agnes Agnes'),
     };
-    const result = getSortedEventsFromSortingType(
-      personregisterState,
-      [],
-      'NAME_DESC'
-    );
+    const result = getSortedEventsFromSortingType(personregisterState, [], {
+      orderBy: 'NAME',
+      direction: 'ascending',
+    });
+
+    expect(Object.values(result)[0]?.navn).to.deep.equal('Agnes Agnes');
+    expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
+    expect(Object.values(result)[2]?.navn).to.deep.equal('Camilla Camilla');
+  });
+
+  it('Should sort by name descending', () => {
+    const personregisterState: PersonregisterState = {
+      '16614407794': createPersonDataWithName('Bjarne Bjarne'),
+      '09128034883': createPersonDataWithName('Camilla Camilla'),
+      '16761936120': createPersonDataWithName('Agnes Agnes'),
+    };
+    const result = getSortedEventsFromSortingType(personregisterState, [], {
+      orderBy: 'NAME',
+      direction: 'descending',
+    });
 
     expect(Object.values(result)[0]?.navn).to.deep.equal('Camilla Camilla');
     expect(Object.values(result)[1]?.navn).to.deep.equal('Bjarne Bjarne');
@@ -136,7 +134,7 @@ describe('hendelseFilteringUtils', () => {
           '16624407794': personWithShortestVarighet,
         },
         [],
-        'UKE_ASC'
+        { orderBy: 'UKE', direction: 'ascending' }
       );
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithShortestVarighet.navn
@@ -153,7 +151,7 @@ describe('hendelseFilteringUtils', () => {
           '16624407794': personWithShortestVarighet,
         },
         [],
-        'UKE_DESC'
+        { orderBy: 'UKE', direction: 'descending' }
       );
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithLongestVarighet.navn
@@ -170,7 +168,7 @@ describe('hendelseFilteringUtils', () => {
           '16624407794': personWithLatestTilfelleStart,
         },
         [],
-        'UKE_ASC'
+        { orderBy: 'UKE', direction: 'ascending' }
       );
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithLatestTilfelleStart.navn
@@ -186,7 +184,7 @@ describe('hendelseFilteringUtils', () => {
           '16624407794': personWithLatestTilfelleStart,
         },
         [],
-        'UKE_DESC'
+        { orderBy: 'UKE', direction: 'descending' }
       );
       expect(Object.values(result)[0]?.navn).to.deep.equal(
         personWithEarliestTilfelleStart.navn
@@ -215,7 +213,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_ASC'
+        { orderBy: 'DATO', direction: 'ascending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -247,7 +245,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_DESC'
+        { orderBy: 'DATO', direction: 'descending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -279,7 +277,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_ASC'
+        { orderBy: 'DATO', direction: 'ascending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -311,7 +309,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_DESC'
+        { orderBy: 'DATO', direction: 'descending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -343,7 +341,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_ASC'
+        { orderBy: 'DATO', direction: 'ascending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -375,7 +373,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_DESC'
+        { orderBy: 'DATO', direction: 'descending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -407,7 +405,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_ASC'
+        { orderBy: 'DATO', direction: 'ascending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(
@@ -436,7 +434,7 @@ describe('hendelseFilteringUtils', () => {
           '16614407794': personWithLatestFrist,
         },
         [],
-        'DATO_DESC'
+        { orderBy: 'DATO', direction: 'descending' }
       );
 
       expect(Object.values(result)[0]?.navn).to.deep.equal(

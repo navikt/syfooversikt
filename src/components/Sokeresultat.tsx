@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
-import Personliste from './Personliste';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
 import { useTildelVeileder } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
@@ -17,10 +16,7 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { OverviewTabType } from '@/konstanter';
-import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { NewOversikt } from '@/components/NewOversikt';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { SortingType } from '@/hooks/useSorting';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
@@ -43,15 +39,10 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { tabType } = useTabType();
-  const { toggles } = useFeatureToggles();
 
   const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(0);
-  const [sortingType, setSortingType] = useLocalStorageState<SortingType>(
-    StoreKey.SORT,
-    'FNR_ASC'
-  );
 
   useEffect(() => {
     setMarkertePersoner([]);
@@ -76,17 +67,6 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
     );
 
   const allFnr = Object.keys(filteredEvents.value);
-
-  const checkboxHandler = (fnr: string): void => {
-    const fnrIndex = markertePersoner.indexOf(fnr);
-    const personIsMarked = fnrIndex !== -1;
-
-    if (personIsMarked) {
-      setMarkertePersoner(markertePersoner.filter((p) => p !== fnr));
-    } else {
-      setMarkertePersoner([...markertePersoner, fnr]);
-    }
-  };
 
   const checkAllHandler = (checked: boolean): void => {
     setMarkertePersoner(checked ? allFnr : []);
@@ -116,28 +96,14 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         buttonHandler={buttonHandler}
         checkAllHandler={checkAllHandler}
         markertePersoner={markertePersoner}
-        setSortingType={setSortingType}
       />
-      {toggles.isAkselOversiktEnabled ? (
-        <NewOversikt
-          personregister={filteredEvents.value}
-          startItem={startItem}
-          endItem={endItem}
-          sortingType={sortingType}
-          setSortingType={setSortingType}
-          selectedRows={markertePersoner}
-          setSelectedRows={setMarkertePersoner}
-        />
-      ) : (
-        <Personliste
-          personregister={filteredEvents.value}
-          startItem={startItem}
-          endItem={endItem}
-          checkboxHandler={checkboxHandler}
-          markertePersoner={markertePersoner}
-          sortingType={sortingType}
-        />
-      )}
+      <NewOversikt
+        personregister={filteredEvents.value}
+        startItem={startItem}
+        endItem={endItem}
+        selectedRows={markertePersoner}
+        setSelectedRows={setMarkertePersoner}
+      />
     </div>
   );
 };

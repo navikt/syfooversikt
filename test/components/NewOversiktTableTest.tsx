@@ -1,45 +1,21 @@
-import React from 'react';
-import { testdata, veiledere } from '../data/fellesTestdata';
-import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
-import { Personrad } from '@/components/Personrad';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
-import { formatNameCorrectly } from '@/utils/lenkeUtil';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import { testQueryClient } from '../testQueryClient';
-import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
-import { veilederMock } from '../../mock/syfoveileder/veilederMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
-import { unleashMock } from '../../mock/mockUnleash';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { personregister, testdata } from '../data/fellesTestdata';
+import React from 'react';
+import { testQueryClient } from '../testQueryClient';
+import { NewOversiktTable } from '@/components/NewOversiktTable';
+import {
+  PersonData,
+  PersonregisterState,
+  Skjermingskode,
+} from '@/api/types/personregisterTypes';
+import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import { formatNameCorrectly } from '@/utils/lenkeUtil';
 
-let queryClient: QueryClient;
-
-const renderPersonrad = (personData: PersonData) =>
-  render(
-    <NotificationProvider>
-      <AktivEnhetContext.Provider
-        value={{
-          aktivEnhet: aktivEnhetMock.aktivEnhet,
-          handleAktivEnhetChanged: () => void 0,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <Personrad
-            index={1}
-            fnr={testdata.fnr1}
-            veilederName={`${veiledere[0]?.etternavn}, ${veiledere[0]?.fornavn}`}
-            personData={personData}
-            checkboxHandler={() => void 0}
-            kryssAv={false}
-          />
-        </QueryClientProvider>
-      </AktivEnhetContext.Provider>
-    </NotificationProvider>
-  );
+const queryClient = testQueryClient();
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -84,21 +60,41 @@ const personWithOppfolgingstilfelle: PersonData = {
   },
 };
 
-describe('Personrad', () => {
-  beforeEach(() => {
-    queryClient = testQueryClient();
-    queryClient.setQueryData(
-      veiledereQueryKeys.veiledereInfo,
-      () => veilederMock
-    );
-    queryClient.setQueryData(
-      unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, 'Z101010'),
-      () => unleashMock
-    );
+const renderOversikt = (personer: PersonregisterState) =>
+  render(
+    <NotificationProvider>
+      <QueryClientProvider client={queryClient}>
+        <AktivEnhetProvider>
+          <NewOversiktTable
+            personListe={Object.entries(personer)}
+            selectedRows={[]}
+            setSelectedRows={() => void 0}
+            setSorting={() => void 0}
+            sorting={{ orderBy: 'FNR', direction: 'ascending' }}
+          />
+        </AktivEnhetProvider>
+      </QueryClientProvider>
+    </NotificationProvider>
+  );
+
+describe('NewOversiktTable', () => {
+  it('rendrer overskrifter for navn, fodselsnummer, virksomhet og veileder', () => {
+    renderOversikt(personregister);
+
+    expect(screen.getByText('Navn')).to.exist;
+    expect(screen.getByText('Fødselsnummer')).to.exist;
+    expect(screen.getByText('Virksomhet')).to.exist;
+    expect(screen.getByText('Veileder')).to.exist;
+  });
+  it('rendrer en rad per person', () => {
+    renderOversikt(personregister);
+
+    expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
+    expect(screen.getByRole('link', { name: 'Navn, Et Annet' })).to.exist;
   });
 
   it('Skal rendre riktig navn, fodselsnummer og ikon for skjermingskode', () => {
-    renderPersonrad(defaultPersonData);
+    renderOversikt({ [testdata.fnr1]: defaultPersonData });
 
     expect(
       screen.getByRole('link', {
@@ -110,25 +106,29 @@ describe('Personrad', () => {
   });
 
   it('Rendrer ikke ikon når person mangler skjermingskode', () => {
-    renderPersonrad({ ...defaultPersonData, skjermingskode: 'INGEN' });
+    renderOversikt({
+      [testdata.fnr1]: { ...defaultPersonData, skjermingskode: 'INGEN' },
+    });
 
     expect(screen.queryByRole('img')).to.not.exist;
   });
 
   it('Skal rendre frist-dato for aktivitetskrav AVVENT', () => {
-    renderPersonrad(personDataAktivitetskravAvventMedFrist);
+    renderOversikt({ [testdata.fnr1]: personDataAktivitetskravAvventMedFrist });
 
     expect(screen.getByText('01.04.2023')).to.exist;
   });
 
   it('Rendrer ingen frist-dato for aktivitetskrav AVVENT når frist mangler', () => {
-    renderPersonrad(personDataAktivitetskravAvventUtenFrist);
+    renderOversikt({
+      [testdata.fnr1]: personDataAktivitetskravAvventUtenFrist,
+    });
 
     expect(screen.queryByText('01.04.2023')).to.not.exist;
   });
 
   it('Viser riktig utregning av varighet på sykefraværet', () => {
-    renderPersonrad(personWithOppfolgingstilfelle);
+    renderOversikt({ [testdata.fnr1]: personWithOppfolgingstilfelle });
 
     expect(screen.getByText('2 uker')).to.exist;
   });
