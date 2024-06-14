@@ -27,10 +27,10 @@ export interface PersonOversiktUbehandletStatusDTO {
   behandlerdialogUbehandlet: boolean;
   aktivitetskravActive: boolean;
   aktivitetskravVurderStansUbehandlet: boolean;
-  trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
+  oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 
 export interface PersonOversiktStatusDTO
@@ -44,7 +44,6 @@ export interface PersonOversiktStatusDTO
   aktivitetskrav: AktivitetskravStatus | null;
   aktivitetskravSistVurdert: Date | null;
   aktivitetskravVurderingFrist: Date | null;
-  trengerOppfolgingFrist: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {
@@ -65,4 +64,28 @@ export interface ArbeidsuforhetvurderingDTO {
 
 export interface ArbeidsuforhetVarselDTO {
   svarfrist: Date;
+}
+
+export interface OppfolgingsoppgaveDTO {
+  uuid: string;
+  createdBy: string;
+  updatedAt: Date;
+  createdAt: Date;
+  tekst: string | null;
+  oppfolgingsgrunn: Oppfolgingsgrunn;
+  frist: Date | null;
+}
+
+export enum Oppfolgingsgrunn {
+  TA_KONTAKT_SYKEMELDT = 'TA_KONTAKT_SYKEMELDT',
+  TA_KONTAKT_ARBEIDSGIVER = 'TA_KONTAKT_ARBEIDSGIVER',
+  TA_KONTAKT_BEHANDLER = 'TA_KONTAKT_BEHANDLER',
+  VURDER_DIALOGMOTE_SENERE = 'VURDER_DIALOGMOTE_SENERE',
+  FOLG_OPP_ETTER_NESTE_SYKMELDING = 'FOLG_OPP_ETTER_NESTE_SYKMELDING',
+  VURDER_TILTAK_BEHOV = 'VURDER_TILTAK_BEHOV',
+  VURDER_ARBEIDSUFORHET = 'VURDER_ARBEIDSUFORHET',
+  FRISKMELDING_TIL_ARBEIDSFORMIDLING = 'FRISKMELDING_TIL_ARBEIDSFORMIDLING',
+  VURDER_14A = 'VURDER_14A',
+  VURDER_ANNEN_YTELSE = 'VURDER_ANNEN_YTELSE',
+  ANNET = 'ANNET',
 }

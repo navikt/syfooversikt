@@ -27,7 +27,6 @@ const filteredPersonOversiktStatusList = (
       behandlerdialogUbehandlet: personOversiktStatus.behandlerdialogUbehandlet,
       dialogmotekandidat: personOversiktStatus.dialogmotekandidat,
       dialogmotesvarUbehandlet: personOversiktStatus.dialogmotesvarUbehandlet,
-      trengerOppfolging: personOversiktStatus.trengerOppfolging,
       motebehovUbehandlet: personOversiktStatus.motebehovUbehandlet,
       oppfolgingsplanLPSBistandUbehandlet:
         personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet,
@@ -37,6 +36,7 @@ const filteredPersonOversiktStatusList = (
       arbeidsuforhetvurdering: personOversiktStatus.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         personOversiktStatus.friskmeldingTilArbeidsformidlingFom,
+      oppfolgingsoppgave: personOversiktStatus.oppfolgingsoppgave,
     };
 
     return isUbehandlet(ubehandletStatus);

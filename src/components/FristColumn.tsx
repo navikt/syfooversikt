@@ -6,7 +6,10 @@ import {
   BriefcaseIcon,
 } from '@navikt/aksel-icons';
 import React, { ReactElement } from 'react';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import {
+  AktivitetskravStatus,
+  Oppfolgingsgrunn,
+} from '@/api/types/personoversiktTypes';
 import { Tooltip } from '@navikt/ds-react';
 
 const texts = {
@@ -30,11 +33,42 @@ const byFristAsc = (fristA: Frist, fristB: Frist) => {
   return fristA.date > fristB.date ? 1 : -1;
 };
 
+const oppfolgingsgrunnTekster = (
+  oppfolgingsgrunn: Oppfolgingsgrunn
+): string => {
+  switch (oppfolgingsgrunn) {
+    case Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT:
+      return 'Ta kontakt med den sykmeldte';
+    case Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER:
+      return 'Ta kontakt med arbeidsgiver';
+    case Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER:
+      return 'Ta kontakt med behandler';
+    case Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE:
+      return 'Vurder behov for dialogmøte';
+    case Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING:
+      return 'Følg opp etter neste sykmelding';
+    case Oppfolgingsgrunn.VURDER_TILTAK_BEHOV:
+      return 'Vurder behov for tiltak';
+    case Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET:
+      return 'Vurder §8-4 - Arbeidsuførhet';
+    case Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
+      return 'Vurder §8-5 - Friskmelding til arbeidsformidling';
+    case Oppfolgingsgrunn.VURDER_14A:
+      return 'Vurder §14a';
+    case Oppfolgingsgrunn.VURDER_ANNEN_YTELSE:
+      return 'Vurder annen ytelse';
+    case Oppfolgingsgrunn.ANNET:
+      return 'Annet';
+    default:
+      return 'Ukjent oppfølgingsgrunn';
+  }
+};
+
 export const FristColumn = ({ personData }: FristColumnProps) => {
   const {
     aktivitetskrav,
     aktivitetskravVurderingFrist,
-    oppfolgingsoppgaveFrist,
+    oppfolgingsoppgave,
     friskmeldingTilArbeidsformidlingFom,
     arbeidsuforhetvurdering,
   } = personData;
@@ -49,11 +83,13 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
       tooltip: texts.tooltipAvventer,
     });
   }
-  if (oppfolgingsoppgaveFrist) {
+  if (oppfolgingsoppgave?.frist) {
     frister.push({
       icon: () => <FileTextIcon aria-hidden fontSize="1.5rem" />,
-      date: oppfolgingsoppgaveFrist,
-      tooltip: texts.tooltipOppfolgingsoppgave,
+      date: oppfolgingsoppgave.frist,
+      tooltip: `${oppfolgingsgrunnTekster(
+        oppfolgingsoppgave.oppfolgingsgrunn
+      )}`,
     });
   }
 

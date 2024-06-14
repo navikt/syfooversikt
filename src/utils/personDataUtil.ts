@@ -50,7 +50,7 @@ export const firstCompanyNameFromPersonData = (
 const allFrister = (personData: PersonData): Date[] => {
   return [
     personData.aktivitetskravVurderingFrist,
-    personData.oppfolgingsoppgaveFrist,
+    personData.oppfolgingsoppgave?.frist,
     personData.friskmeldingTilArbeidsformidlingFom,
     personData.arbeidsuforhetvurdering?.varsel?.svarfrist,
   ].filter((frist) => frist) as Date[];

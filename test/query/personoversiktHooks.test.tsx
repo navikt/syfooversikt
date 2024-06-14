@@ -63,7 +63,7 @@ describe('personoversiktHooks tests', () => {
     const allPersonsUbehandlet = persons.every((person) => {
       return (
         person.aktivitetskravActive ||
-        person.trengerOppfolging ||
+        person.oppfolgingsoppgave ||
         person.behandlerdialogUbehandlet ||
         person.aktivitetskravVurderStansUbehandlet ||
         person.dialogmotekandidat ||

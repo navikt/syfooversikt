@@ -21,7 +21,7 @@ import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
 
 const SokeresultatFiltre = styled.div`
-  margin-right: 2rem;
+  margin-right: 1rem;
   width: 18em;
 `;
 

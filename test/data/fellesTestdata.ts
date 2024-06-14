@@ -2,10 +2,7 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import {
-  AktivitetskravStatus,
-  PersonOversiktStatusDTO,
-} from '@/api/types/personoversiktTypes';
+import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
 const enhetId = '0316';
@@ -51,58 +48,6 @@ export const personregister: PersonregisterState = {
     aktivitetskravSistVurdert: null,
     aktivitetskravActive: false,
   } as PersonData,
-};
-
-export const personoversikt: PersonOversiktStatusDTO[] = [
-  {
-    fnr: testdata.fnr1,
-    navn: testdata.navn1,
-    enhet: enhetId,
-    veilederIdent: null,
-    motebehovUbehandlet: true,
-    dialogmotesvarUbehandlet: false,
-    oppfolgingsplanLPSBistandUbehandlet: null,
-    dialogmotekandidat: undefined,
-    motestatus: undefined,
-    aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
-    behandlerdialogUbehandlet: false,
-    aktivitetskravVurderStansUbehandlet: false,
-    trengerOppfolging: false,
-    trengerOppfolgingFrist: null,
-    behandlerBerOmBistandUbehandlet: false,
-    arbeidsuforhetvurdering: null,
-    friskmeldingTilArbeidsformidlingFom: null,
-  },
-  {
-    fnr: testdata.fnr4,
-    navn: testdata.navn4,
-    enhet: enhetId,
-    veilederIdent,
-    motebehovUbehandlet: null,
-    dialogmotesvarUbehandlet: false,
-    oppfolgingsplanLPSBistandUbehandlet: false,
-    dialogmotekandidat: undefined,
-    motestatus: undefined,
-    aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
-    behandlerdialogUbehandlet: false,
-    aktivitetskravVurderStansUbehandlet: false,
-    trengerOppfolging: false,
-    trengerOppfolgingFrist: null,
-    behandlerBerOmBistandUbehandlet: false,
-    arbeidsuforhetvurdering: null,
-    friskmeldingTilArbeidsformidlingFom: null,
-  },
-];
-
-export const enhet = {
-  enhetId: '0101',
-  navn: 'Enhet',
 };
 
 export const veiledere = [
