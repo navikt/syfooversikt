@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Checkbox, SortState, Table } from '@navikt/ds-react';
+import { Checkbox, Table } from '@navikt/ds-react';
 import { VeilederColumn } from '@/components/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
 import {
@@ -12,7 +12,7 @@ import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColum
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { FristColumn } from '@/components/FristColumn';
 import { Labels } from '@/components/Labels';
-import { SortingKey, SortingType, useSorting } from '@/hooks/useSorting';
+import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -26,26 +26,33 @@ interface Props {
   personListe: [string, PersonData][];
   selectedRows: string[];
   setSelectedRows: (rows: string[]) => void;
-  sortingType: SortingType;
-  setSortingType: (sortingType: SortingType) => void;
+  sorting: Sorting;
+  setSorting: (sorting: Sorting) => void;
 }
 
 export const NewOversiktTable = ({
   personListe,
   selectedRows,
   setSelectedRows,
-  sortingType,
-  setSortingType,
+  sorting,
+  setSorting,
 }: Props): ReactElement => {
   const aktivBruker = useAktivBruker();
-  const { columns, toSortState, toSortingType } = useSorting();
+  const { columns } = useSorting();
 
-  const sortState: SortState | undefined = toSortState(sortingType);
   const handleSort = (sortKey: string | undefined) => {
-    if (sortKey && sortState) {
-      setSortingType(toSortingType(sortKey as SortingKey, sortState.direction));
+    if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
+      setSorting({
+        orderBy: 'NONE',
+        direction: 'none',
+      });
     } else {
-      setSortingType('NONE');
+      const newDirection =
+        sorting.direction === 'ascending' ? 'descending' : 'ascending';
+      setSorting({
+        orderBy: sortKey as SortingKey,
+        direction: newDirection,
+      });
     }
   };
 
@@ -79,7 +86,7 @@ export const NewOversiktTable = ({
 
   return (
     <Table
-      sort={sortState}
+      sort={sorting}
       size="small"
       zebraStripes
       className="bg-white mt-2"

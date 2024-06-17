@@ -1,15 +1,11 @@
 import TildelVeileder from './AssignVeileder/TildelVeileder';
 import { OverviewTabType } from '@/konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
-import { Column, Row } from 'nav-frontend-grid';
-import Sorteringsrad from '../Sorteringsrad';
 import React from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
-import { Checkbox } from 'nav-frontend-skjema';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import PaginationContainer from '@/components/toolbar/PaginationContainer';
 
 const Innhold = styled.section`
@@ -29,16 +25,6 @@ const Element = styled.div`
   }
 `;
 
-const VelgBoks = styled(Checkbox)`
-  > .skjemaelement {
-    margin: 0;
-    padding: 0;
-  }
-
-  margin: 0;
-  margin-left: 0.5em;
-`;
-
 const ToolbarStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -51,10 +37,6 @@ const ToolbarStyled = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 `;
 
-const tekster = {
-  selectAll: 'Velg alle',
-};
-
 interface ToolbarProps extends ToolbarWrapperProps {
   setPageInfo: (indices: {
     firstVisibleIndex: number;
@@ -63,7 +45,6 @@ interface ToolbarProps extends ToolbarWrapperProps {
 }
 
 const Toolbar = (props: ToolbarProps) => {
-  const { toggles } = useFeatureToggles();
   const { tabType } = useTabType();
 
   return (
@@ -83,27 +64,6 @@ const Toolbar = (props: ToolbarProps) => {
           setPageInfo={props.setPageInfo}
         />
       </Innhold>
-      {!toggles.isAkselOversiktEnabled && (
-        <Row className="flex ml-0 mr-0 items-center">
-          <Column xs="1">
-            <VelgBoks
-              className="toolbar__velgBoks"
-              aria-label={tekster.selectAll}
-              label="&nbsp;"
-              checked={props.alleMarkert}
-              onChange={(event) => {
-                props.checkAllHandler(event.target.checked);
-              }}
-            />
-          </Column>
-          <Sorteringsrad
-            onSortClick={(type) => {
-              props.setSortingType(type);
-            }}
-          />
-          <Column xs={'1'} />
-        </Row>
-      )}
     </ToolbarStyled>
   );
 };

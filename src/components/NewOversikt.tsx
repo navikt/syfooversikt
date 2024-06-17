@@ -4,12 +4,10 @@ import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
 import { NewOversiktTable } from '@/components/NewOversiktTable';
-import { SortingType } from '@/hooks/useSorting';
+import { useSorting } from '@/hooks/useSorting';
 
 interface Props {
   personregister: PersonregisterState;
-  sortingType: SortingType;
-  setSortingType: (sortingType: SortingType) => void;
   startItem: number;
   endItem: number;
   selectedRows: string[];
@@ -18,18 +16,17 @@ interface Props {
 
 export const NewOversikt = ({
   personregister,
-  sortingType,
-  setSortingType,
   startItem,
   endItem,
   selectedRows,
   setSelectedRows,
 }: Props) => {
+  const { sorting, setSorting } = useSorting();
   const veiledereQuery = useVeiledereQuery();
   const sortedPersonregister = getSortedEventsFromSortingType(
     personregister,
     veiledereQuery.data || [],
-    sortingType
+    sorting
   );
   const paginatedPersonregister = Object.fromEntries(
     Object.entries(sortedPersonregister).slice(startItem, endItem + 1)
@@ -42,8 +39,8 @@ export const NewOversikt = ({
 
   return (
     <NewOversiktTable
-      sortingType={sortingType}
-      setSortingType={setSortingType}
+      sorting={sorting}
+      setSorting={setSorting}
       personListe={personListe}
       selectedRows={selectedRows}
       setSelectedRows={setSelectedRows}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 export enum StoreKey {
   SORT = 'sortBy',
+  SORTING = 'sorting',
   FLEXJAR_ARENABRUK_FEEDBACK_DATE = 'flexjarArenabrukFeedbackDate',
 }
 
