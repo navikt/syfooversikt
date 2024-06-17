@@ -17,8 +17,7 @@ export const lenkeTilModia = (personData: PersonData) => {
     personData.harAktivitetskravVurderStansUbehandlet;
   const isGoingToBehandlerdialog = personData.harBehandlerdialogUbehandlet;
   const isGoingToSykmeldinger = personData.behandlerBerOmBistandUbehandlet;
-  const isGoingToArbeidsuforhet =
-    personData.harArbeidsuforhetVurderAvslagUbehandlet;
+  const isGoingToArbeidsuforhet = !!personData.arbeidsuforhetvurdering;
 
   if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;

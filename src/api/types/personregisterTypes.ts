@@ -31,7 +31,6 @@ export interface PersonData {
   aktivitetskravVurderingFrist: Date | null;
   harBehandlerdialogUbehandlet: boolean;
   harAktivitetskravVurderStansUbehandlet: boolean;
-  harArbeidsuforhetVurderAvslagUbehandlet: boolean;
   harOppfolgingsoppgave: boolean;
   oppfolgingsoppgaveFrist: Date | null;
   behandlerBerOmBistandUbehandlet: boolean;

@@ -34,8 +34,6 @@ const filteredPersonOversiktStatusList = (
       aktivitetskravActive: personOversiktStatus.aktivitetskravActive,
       behandlerBerOmBistandUbehandlet:
         personOversiktStatus.behandlerBerOmBistandUbehandlet,
-      arbeidsuforhetVurderAvslagUbehandlet:
-        personOversiktStatus.arbeidsuforhetVurderAvslagUbehandlet,
       arbeidsuforhetvurdering: personOversiktStatus.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         personOversiktStatus.friskmeldingTilArbeidsformidlingFom,
