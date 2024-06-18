@@ -37,8 +37,6 @@ export const toPersonData = (
       harOppfolgingsoppgave: person.trengerOppfolging,
       oppfolgingsoppgaveFrist: person.trengerOppfolgingFrist,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
-      harArbeidsuforhetVurderAvslagUbehandlet:
-        person.arbeidsuforhetVurderAvslagUbehandlet,
       arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         person.friskmeldingTilArbeidsformidlingFom,

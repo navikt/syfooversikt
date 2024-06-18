@@ -9,7 +9,6 @@ import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { describe, expect, it } from 'vitest';
-import { isFuture } from '@/utils/dateUtils';
 import { renderHook, waitFor } from '@testing-library/react';
 
 describe('personoversiktHooks tests', () => {
@@ -72,10 +71,8 @@ describe('personoversiktHooks tests', () => {
         person.motebehovUbehandlet ||
         person.dialogmotesvarUbehandlet ||
         person.behandlerBerOmBistandUbehandlet ||
-        person.arbeidsuforhetVurderAvslagUbehandlet ||
         person.arbeidsuforhetvurdering !== null ||
-        (person.friskmeldingTilArbeidsformidlingFom &&
-          isFuture(person.friskmeldingTilArbeidsformidlingFom))
+        person.friskmeldingTilArbeidsformidlingFom
       );
     });
     expect(allPersonsUbehandlet).to.be.true;

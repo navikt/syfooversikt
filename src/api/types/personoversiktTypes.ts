@@ -29,7 +29,6 @@ export interface PersonOversiktUbehandletStatusDTO {
   aktivitetskravVurderStansUbehandlet: boolean;
   trengerOppfolging: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
-  arbeidsuforhetVurderAvslagUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
 }

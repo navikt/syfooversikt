@@ -208,11 +208,7 @@ const matchesFilter = (
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
     case 'isAktivArbeidsuforhetvurdering':
-      return (
-        !filters[key] ||
-        !!personData.arbeidsuforhetvurdering ||
-        personData.harArbeidsuforhetVurderAvslagUbehandlet
-      );
+      return !filters[key] || !!personData.arbeidsuforhetvurdering;
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
   }
