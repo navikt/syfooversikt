@@ -52,6 +52,7 @@ const allFrister = (personData: PersonData): Date[] => {
     personData.aktivitetskravVurderingFrist,
     personData.oppfolgingsoppgaveFrist,
     personData.friskmeldingTilArbeidsformidlingFom,
+    personData.arbeidsuforhetvurdering?.varsel?.svarfrist,
   ].filter((frist) => frist) as Date[];
 };
 
