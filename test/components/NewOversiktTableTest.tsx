@@ -32,11 +32,10 @@ const defaultPersonData: PersonData = {
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
   harAktivitetskravVurderStansUbehandlet: false,
-  harOppfolgingsoppgave: false,
-  oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
+  oppfolgingsoppgave: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,

@@ -100,7 +100,7 @@ export const filterOnFrist = (
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
     const frister = [
       persondata.aktivitetskravVurderingFrist,
-      persondata.oppfolgingsoppgaveFrist,
+      persondata.oppfolgingsoppgave?.frist,
       persondata.friskmeldingTilArbeidsformidlingFom,
     ];
 
@@ -204,7 +204,7 @@ const matchesFilter = (
     case 'aktivitetskravVurderStans':
       return !filters[key] || personData.harAktivitetskravVurderStansUbehandlet;
     case 'oppfolgingsoppgave':
-      return !filters[key] || personData.harOppfolgingsoppgave;
+      return !filters[key] || personData.oppfolgingsoppgave !== null;
     case 'behandlerBerOmBistand':
       return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
     case 'isAktivArbeidsuforhetvurdering':

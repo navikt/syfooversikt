@@ -1,6 +1,7 @@
 import {
   AktivitetskravStatus,
   ArbeidsuforhetvurderingDTO,
+  OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
 } from './personoversiktTypes';
 
@@ -31,11 +32,10 @@ export interface PersonData {
   aktivitetskravVurderingFrist: Date | null;
   harBehandlerdialogUbehandlet: boolean;
   harAktivitetskravVurderStansUbehandlet: boolean;
-  harOppfolgingsoppgave: boolean;
-  oppfolgingsoppgaveFrist: Date | null;
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
+  oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 
 export interface PersonregisterState {

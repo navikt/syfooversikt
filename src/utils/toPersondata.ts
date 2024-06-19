@@ -34,12 +34,11 @@ export const toPersonData = (
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
       harAktivitetskravVurderStansUbehandlet:
         person.aktivitetskravVurderStansUbehandlet,
-      harOppfolgingsoppgave: person.trengerOppfolging,
-      oppfolgingsoppgaveFrist: person.trengerOppfolgingFrist,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
       arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         person.friskmeldingTilArbeidsformidlingFom,
+      oppfolgingsoppgave: person.oppfolgingsoppgave,
     };
   });
 

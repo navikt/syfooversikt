@@ -1,9 +1,12 @@
 import {
   AktivitetskravStatus,
   MoteStatusType,
+  Oppfolgingsgrunn,
+  OppfolgingsoppgaveDTO,
   PersonOversiktStatusDTO,
   PersonOversiktUbehandletStatusDTO,
 } from '../../src/api/types/personoversiktTypes';
+import { veilederMock } from './veilederMock';
 
 const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   oppfolgingsplanLPSBistandUbehandlet: null,
@@ -12,7 +15,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   dialogmotesvarUbehandlet: false,
   aktivitetskravActive: false,
   behandlerdialogUbehandlet: false,
-  trengerOppfolging: false,
+  oppfolgingsoppgave: null,
   behandlerBerOmBistandUbehandlet: false,
   aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetvurdering: null,
@@ -32,7 +35,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     behandlerBerOmBistandUbehandlet: false,
     arbeidsuforhetvurdering: {
       varsel: {
@@ -53,7 +56,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     behandlerdialogUbehandlet: true,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
   },
   {
     ...behandletPerson,
@@ -68,7 +71,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     aktivitetskravVurderStansUbehandlet: true,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
   },
   {
     ...behandletPerson,
@@ -81,7 +84,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     arbeidsuforhetvurdering: {
       varsel: {
         svarfrist: new Date(),
@@ -99,8 +102,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
-    trengerOppfolging: true,
-    trengerOppfolgingFrist: new Date('2024-01-01'),
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
   {
     ...behandletPerson,
@@ -115,8 +117,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravVurderingFrist: new Date('2022-12-08'),
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
-    trengerOppfolging: true,
-    trengerOppfolgingFrist: new Date('2024-01-01'),
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
   {
     ...behandletPerson,
@@ -129,7 +130,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-04-01')),
     behandlerBerOmBistandUbehandlet: true,
   },
   {
@@ -144,7 +145,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
     motestatus: undefined,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-25'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -181,7 +182,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-03'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -215,7 +216,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: true,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2023-04-01'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-05-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -243,7 +244,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('1984-01-19T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2023-12-10'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -269,7 +270,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: true,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -294,7 +295,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -319,7 +320,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-05-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -344,7 +345,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -372,7 +373,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -397,7 +398,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -423,7 +424,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
   {
     ...behandletPerson,
@@ -438,7 +439,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     arbeidsuforhetvurdering: {
       varsel: null,
     },
@@ -454,7 +455,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-10-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -478,7 +479,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -503,7 +504,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2020-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -528,7 +529,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-20'),
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -552,7 +553,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -576,7 +577,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -600,7 +601,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -624,7 +625,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     aktivitetskravActive: false,
     aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
-    trengerOppfolgingFrist: null,
+    oppfolgingsoppgave: null,
     friskmeldingTilArbeidsformidlingFom: new Date('2099-01-01'),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2024-01-01'),
@@ -639,3 +640,21 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     },
   },
 ];
+
+export function getOppfolgingsoppgave(frist?: Date): OppfolgingsoppgaveDTO {
+  return {
+    uuid: '123',
+    createdBy: veilederMock.ident,
+    updatedAt: new Date(),
+    createdAt: new Date(),
+    tekst: 'En tekst',
+    oppfolgingsgrunn: getRandomOppfolgingsgrunn(),
+    frist: frist ?? null,
+  };
+}
+
+function getRandomOppfolgingsgrunn(): Oppfolgingsgrunn {
+  const oppfolgingsgrunnValues = Object.values(Oppfolgingsgrunn);
+  const randomIndex = Math.floor(Math.random() * oppfolgingsgrunnValues.length);
+  return oppfolgingsgrunnValues[randomIndex] ?? Oppfolgingsgrunn.VURDER_14A;
+}

@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
 import { addWeeks } from 'date-fns';
+import { getOppfolgingsoppgave } from '../../mock/data/personoversiktEnhetMock';
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -23,11 +24,10 @@ const defaultPersonData: PersonData = {
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
   harAktivitetskravVurderStansUbehandlet: false,
-  harOppfolgingsoppgave: false,
-  oppfolgingsoppgaveFrist: null,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
+  oppfolgingsoppgave: null,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
@@ -66,15 +66,15 @@ describe('FristColumn', () => {
       .exist;
   });
 
-  it('viser frist for person når oppfolgingsoppgave frist-dato er satt', () => {
-    const oppfolgingsoppgaveFrist = new Date('2023-12-31');
+  it('viser frist for person når person har oppfolgingsoppgave', () => {
+    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-31'));
     const personOppfolgingsoppgaveMedFrist: PersonData = {
       ...defaultPersonData,
-      oppfolgingsoppgaveFrist,
+      oppfolgingsoppgave,
     };
     render(<FristColumn personData={personOppfolgingsoppgaveMedFrist} />);
 
-    expect(screen.getByText(toReadableDate(oppfolgingsoppgaveFrist))).to.exist;
+    expect(screen.getByText(toReadableDate(oppfolgingsoppgave.frist))).to.exist;
   });
 
   it('viser frist for person når friskmelding til arbeidsformidling fom-dato er satt', () => {
@@ -92,13 +92,13 @@ describe('FristColumn', () => {
 
   it('viser tidligste frist først når person har flere frister', () => {
     const aktivitetskravVurderingFrist = new Date('2023-12-10');
-    const oppfolgingsoppgaveFrist = new Date('2023-12-05');
+    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-05'));
     const friskmeldingTilArbeidsformidlingFom = addWeeks(new Date(), 10);
     const personMedFlereFrister: PersonData = {
       ...defaultPersonData,
       aktivitetskrav: AktivitetskravStatus.AVVENT,
       aktivitetskravVurderingFrist: aktivitetskravVurderingFrist,
-      oppfolgingsoppgaveFrist,
+      oppfolgingsoppgave,
       friskmeldingTilArbeidsformidlingFom,
     };
 
@@ -107,7 +107,7 @@ describe('FristColumn', () => {
     const allFrister = screen.getAllByText(fristFormatRegex);
     expect(allFrister).to.have.length(3);
     expect(allFrister[0]?.textContent).to.eq(
-      toReadableDate(oppfolgingsoppgaveFrist)
+      toReadableDate(oppfolgingsoppgave.frist)
     );
     expect(allFrister[1]?.textContent).to.eq(
       toReadableDate(aktivitetskravVurderingFrist)
