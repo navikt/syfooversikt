@@ -34,7 +34,6 @@ export const personregister: PersonregisterState = {
     markert: false,
     tildeltVeilederIdent: 'Z999999',
     aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravSistVurdert: new Date(),
     aktivitetskravActive: true,
   } as PersonData,
   [testdata.fnr2]: {
@@ -45,7 +44,6 @@ export const personregister: PersonregisterState = {
     markert: false,
     tildeltVeilederIdent: 'Z999999',
     aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
     aktivitetskravActive: false,
   } as PersonData,
 };

@@ -42,7 +42,6 @@ export interface PersonOversiktStatusDTO
   motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravSistVurdert: Date | null;
   aktivitetskravVurderingFrist: Date | null;
 }
 

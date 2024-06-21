@@ -28,7 +28,6 @@ export const createPersonDataWithName = (name: string): PersonData => {
     dialogmotekandidat: undefined,
     latestOppfolgingstilfelle: undefined,
     aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
     aktivitetskravActive: false,
     aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
