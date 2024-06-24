@@ -27,7 +27,6 @@ const defaultPersonData: PersonData = {
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
   aktivitetskrav: null,
-  aktivitetskravSistVurdert: null,
   aktivitetskravActive: false,
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
@@ -40,7 +39,6 @@ const defaultPersonData: PersonData = {
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
   aktivitetskrav: AktivitetskravStatus.AVVENT,
-  aktivitetskravSistVurdert: new Date('2022-12-01'),
   aktivitetskravActive: true,
   aktivitetskravVurderingFrist: null,
 };

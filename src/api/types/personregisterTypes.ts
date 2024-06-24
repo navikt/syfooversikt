@@ -27,7 +27,6 @@ export interface PersonData {
   dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravSistVurdert: Date | null;
   aktivitetskravActive: boolean;
   aktivitetskravVurderingFrist: Date | null;
   harBehandlerdialogUbehandlet: boolean;

@@ -28,7 +28,6 @@ export const toPersonData = (
       dialogmotekandidat: person?.dialogmotekandidat,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       aktivitetskrav: person.aktivitetskrav,
-      aktivitetskravSistVurdert: person.aktivitetskravSistVurdert,
       aktivitetskravActive: person.aktivitetskravActive,
       aktivitetskravVurderingFrist: person.aktivitetskravVurderingFrist,
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,

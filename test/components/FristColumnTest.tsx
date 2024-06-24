@@ -19,7 +19,6 @@ const defaultPersonData: PersonData = {
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
   aktivitetskrav: null,
-  aktivitetskravSistVurdert: null,
   aktivitetskravActive: false,
   aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,

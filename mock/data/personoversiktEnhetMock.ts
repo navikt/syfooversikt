@@ -31,7 +31,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: null,
     aktivitetskrav: AktivitetskravStatus.OPPFYLT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
@@ -52,7 +51,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.UNNTAK,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     behandlerdialogUbehandlet: true,
@@ -67,7 +65,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     aktivitetskravVurderStansUbehandlet: true,
@@ -80,7 +77,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
@@ -99,7 +95,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: null,
     motebehovUbehandlet: true,
     aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
@@ -113,7 +108,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: true,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-08'),
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
@@ -127,7 +121,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: null,
     motebehovUbehandlet: true,
     aktivitetskrav: null,
-    aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-04-01')),
@@ -142,7 +135,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
     motestatus: undefined,
     oppfolgingsoppgave: null,
@@ -180,7 +172,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -214,7 +205,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: true,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2023-04-01'),
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-05-01')),
     latestOppfolgingstilfelle: {
@@ -242,7 +232,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.NYTT_TID_STED,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('1984-01-19T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2023-12-10'),
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -268,7 +257,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     dialogmotesvarUbehandlet: true,
     aktivitetskrav: AktivitetskravStatus.NY,
     aktivitetskravActive: true,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -293,7 +281,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.AVLYST,
     aktivitetskrav: AktivitetskravStatus.STANS,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -318,7 +305,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -343,7 +329,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.FERDIGSTILT,
     aktivitetskrav: AktivitetskravStatus.UNNTAK,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
@@ -371,7 +356,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AUTOMATISK_OPPFYLT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
@@ -396,7 +380,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.NY,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
@@ -422,7 +405,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: undefined,
     aktivitetskrav: AktivitetskravStatus.OPPFYLT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
@@ -437,7 +419,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     latestOppfolgingstilfelle: undefined,
     aktivitetskrav: null,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: null,
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     arbeidsuforhetvurdering: {
@@ -453,7 +434,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.NYTT_TID_STED,
     aktivitetskrav: AktivitetskravStatus.IKKE_OPPFYLT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-10-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -477,7 +457,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.INNKALT,
     aktivitetskrav: AktivitetskravStatus.NY,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -502,7 +481,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.AVLYST,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2020-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-10'),
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -527,7 +505,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: new Date('2022-12-20'),
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -551,7 +528,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: MoteStatusType.FERDIGSTILT,
     aktivitetskrav: AktivitetskravStatus.UNNTAK,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -575,7 +551,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.UNNTAK,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -599,7 +574,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.UNNTAK,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -623,7 +597,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
-    aktivitetskravSistVurdert: new Date('2022-12-01T10:12:05.913826'),
     aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     friskmeldingTilArbeidsformidlingFom: new Date('2099-01-01'),
