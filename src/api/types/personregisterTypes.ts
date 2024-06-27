@@ -6,14 +6,6 @@ import {
 } from './personoversiktTypes';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
-export type ReadableSkjermingskode =
-  | 'ingen'
-  | 'diskresjonsmerket'
-  | 'egen ansatt';
-export type ReadableSkjermingskodeMap = Record<
-  Skjermingskode,
-  ReadableSkjermingskode
->;
 
 export interface PersonData {
   navn: string;

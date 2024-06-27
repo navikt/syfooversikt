@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import {
-  PersonData,
-  ReadableSkjermingskode,
-} from '@/api/types/personregisterTypes';
+import { PersonData } from '@/api/types/personregisterTypes';
 import { getReadableSkjermingskode } from '@/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
 
-const INGEN: ReadableSkjermingskode = 'ingen';
-const EGEN_ANSATT: ReadableSkjermingskode = 'egen ansatt';
+const INGEN = 'Ingen';
+const EGEN_ANSATT = 'Egen ansatt';
 
 describe('personDataUtils', () => {
   describe('getReadableSkjermingskode', () => {

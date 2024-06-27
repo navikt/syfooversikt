@@ -129,7 +129,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   {
     ...behandletPerson,
     fnr: '59999933333',
-    navn: 'Korrupt Bolle',
+    navn: '',
     enhet: '0316',
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,

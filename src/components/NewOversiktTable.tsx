@@ -2,17 +2,12 @@ import React, { ReactElement } from 'react';
 import { Checkbox, Table } from '@navikt/ds-react';
 import { VeilederColumn } from '@/components/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
-import {
-  lenkeTilModia,
-  lenkeTilModiaEnkeltperson,
-  lenkeTilModiaEnkeltpersonFnr,
-} from '@/utils/lenkeUtil';
-import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { FristColumn } from '@/components/FristColumn';
-import { Labels } from '@/components/Labels';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
+import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
+import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -37,7 +32,6 @@ export const NewOversiktTable = ({
   sorting,
   setSorting,
 }: Props): ReactElement => {
-  const aktivBruker = useAktivBruker();
   const { columns } = useSorting();
 
   const handleSort = (sortKey: string | undefined) => {
@@ -54,14 +48,6 @@ export const NewOversiktTable = ({
         direction: newDirection,
       });
     }
-  };
-
-  const onPersonClick = (fnr: string, personData: PersonData) => {
-    aktivBruker.mutate(fnr, {
-      onSuccess: () => {
-        window.location.href = lenkeTilModia(personData);
-      },
-    });
   };
 
   const allRowsSelected = personListe.length === selectedRows.length;
@@ -126,13 +112,23 @@ export const NewOversiktTable = ({
               </Checkbox>
             </Table.DataCell>
             <Table.HeaderCell scope="row" textSize="small">
-              {lenkeTilModiaEnkeltperson(persondata, () =>
-                onPersonClick(fnr, persondata)
+              {persondata.navn.length > 0 && (
+                <LinkSyfomodiaperson
+                  personData={persondata}
+                  personident={fnr}
+                  linkText={toLastnameFirstnameFormat(persondata.navn)}
+                />
               )}
             </Table.HeaderCell>
             <Table.DataCell textSize="small">
-              {lenkeTilModiaEnkeltpersonFnr(persondata, fnr, () =>
-                onPersonClick(fnr, persondata)
+              {persondata.navn.length > 0 ? (
+                fnr
+              ) : (
+                <LinkSyfomodiaperson
+                  personData={persondata}
+                  personident={fnr}
+                  linkText={fnr}
+                />
               )}
             </Table.DataCell>
             <Table.DataCell textSize="small">
@@ -148,9 +144,6 @@ export const NewOversiktTable = ({
             </Table.DataCell>
             <Table.DataCell textSize="small">
               <FristColumn personData={persondata} />
-            </Table.DataCell>
-            <Table.DataCell textSize="small">
-              <Labels personData={persondata} />
             </Table.DataCell>
           </Table.Row>
         ))}
