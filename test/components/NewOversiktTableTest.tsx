@@ -13,7 +13,7 @@ import {
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import { formatNameCorrectly } from '@/utils/lenkeUtil';
+import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 
 const queryClient = testQueryClient();
 
@@ -94,7 +94,7 @@ describe('NewOversiktTable', () => {
 
     expect(
       screen.getByRole('link', {
-        name: formatNameCorrectly(defaultPersonData.navn),
+        name: toLastnameFirstnameFormat(defaultPersonData.navn),
       })
     ).to.exist;
     expect(screen.getByText(testdata.fnr1)).to.exist;

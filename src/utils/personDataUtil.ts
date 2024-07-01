@@ -1,18 +1,19 @@
 import {
   PersonData,
   PersonregisterState,
-  ReadableSkjermingskodeMap,
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
 import { earliestDate, latestDate } from '@/utils/dateUtils';
 
-const readableSkjermingskoder: ReadableSkjermingskodeMap = {
-  INGEN: 'ingen',
-  DISKRESJONSMERKET: 'diskresjonsmerket',
-  EGEN_ANSATT: 'egen ansatt',
-};
 export const getReadableSkjermingskode = (skjermingskode: Skjermingskode) => {
-  return readableSkjermingskoder[skjermingskode];
+  switch (skjermingskode) {
+    case 'INGEN':
+      return 'Ingen';
+    case 'DISKRESJONSMERKET':
+      return 'Diskresjonsmerket';
+    case 'EGEN_ANSATT':
+      return 'Egen ansatt';
+  }
 };
 
 export const mapPersonregisterToCompanyList = (
