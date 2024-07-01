@@ -24,6 +24,7 @@ export const HendelseTekster = {
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
   ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
   FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding',
+  SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -50,6 +51,7 @@ const enkeltFilterFraTekst = (
     behandlerBerOmBistand: false,
     isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
+    isSnartSluttPaSykepengeneChecked: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -110,6 +112,10 @@ const lagNyttFilter = (
       filter.harFriskmeldingTilArbeidsformidling = checked;
       return filter;
     }
+    case HendelseTekster.SNART_SLUTT_PA_SYKEPENGENE: {
+      filter.isSnartSluttPaSykepengeneChecked = checked;
+      return filter;
+    }
   }
 };
 
@@ -142,6 +148,8 @@ const isCheckedInState = (
       return state.isAktivArbeidsuforhetvurdering;
     case HendelseTekster.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
       return state.harFriskmeldingTilArbeidsformidling;
+    case HendelseTekster.SNART_SLUTT_PA_SYKEPENGENE:
+      return state.isSnartSluttPaSykepengeneChecked;
   }
 };
 
@@ -164,6 +172,8 @@ const showCheckbox = (
       return true;
     case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
       return toggles.isFrisktilarbeidEnabled;
+    case 'SNART_SLUTT_PA_SYKEPENGENE':
+      return toggles.isOppfolgingISenFaseEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }

@@ -3,6 +3,7 @@ import {
   ArbeidsuforhetvurderingDTO,
   OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
+  SnartSluttPaSykepengeneDTO,
 } from './personoversiktTypes';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
@@ -34,6 +35,7 @@ export interface PersonData {
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
+  snartSluttPaSykepengene: SnartSluttPaSykepengeneDTO | null;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 
