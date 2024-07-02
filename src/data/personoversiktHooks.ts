@@ -36,6 +36,8 @@ const filteredPersonOversiktStatusList = (
       arbeidsuforhetvurdering: personOversiktStatus.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         personOversiktStatus.friskmeldingTilArbeidsformidlingFom,
+      isAktivSenOppfolgingKandidat:
+        personOversiktStatus.isAktivSenOppfolgingKandidat,
       oppfolgingsoppgave: personOversiktStatus.oppfolgingsoppgave,
     };
 

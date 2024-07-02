@@ -26,6 +26,7 @@ export interface PersonData {
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
+  isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 

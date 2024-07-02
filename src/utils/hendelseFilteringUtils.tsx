@@ -10,7 +10,7 @@ import {
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
-import { Sorting, SortDirection } from '@/hooks/useSorting';
+import { SortDirection, Sorting } from '@/hooks/useSorting';
 
 export class Filterable<T> {
   value: T;
@@ -211,6 +211,8 @@ const matchesFilter = (
       return !filters[key] || !!personData.arbeidsuforhetvurdering;
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
+    case 'isSenOppfolgingChecked':
+      return !filters[key] || !!personData.isAktivSenOppfolgingKandidat;
   }
 };
 
