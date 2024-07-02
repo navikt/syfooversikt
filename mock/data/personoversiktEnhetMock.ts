@@ -20,7 +20,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
-  snartSluttPaSykepengene: null,
+  isAktivSenOppfolgingKandidat: false,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -130,7 +130,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   {
     ...behandletPerson,
     fnr: '59999933333',
-    navn: 'Korrupt Bolle',
+    navn: '',
     enhet: '0316',
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,
@@ -598,9 +598,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskrav: null,
     aktivitetskravVurderingFrist: null,
-    snartSluttPaSykepengene: {
-      uuid: 'uuid',
-    },
+    isAktivSenOppfolgingKandidat: true,
   },
 ];
 

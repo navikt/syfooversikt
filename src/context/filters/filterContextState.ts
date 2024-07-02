@@ -16,7 +16,7 @@ export interface HendelseTypeFilters {
   behandlerBerOmBistand: boolean;
   isAktivArbeidsuforhetvurdering: boolean;
   harFriskmeldingTilArbeidsformidling: boolean;
-  isSnartSluttPaSykepengeneChecked: boolean;
+  isSenOppfolgingChecked: boolean;
 }
 
 export interface FilterState {
@@ -51,6 +51,6 @@ export const filterInitialState: FilterState = {
     behandlerBerOmBistand: false,
     isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
-    isSnartSluttPaSykepengeneChecked: false,
+    isSenOppfolgingChecked: false,
   },
 };

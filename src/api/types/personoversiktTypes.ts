@@ -30,7 +30,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
-  snartSluttPaSykepengene: SnartSluttPaSykepengeneDTO | null;
+  isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 
@@ -64,11 +64,6 @@ export interface ArbeidsuforhetvurderingDTO {
 
 export interface ArbeidsuforhetVarselDTO {
   svarfrist: Date;
-}
-
-// Hva trenger vi at denne inneholder?
-export interface SnartSluttPaSykepengeneDTO {
-  uuid: string;
 }
 
 export interface OppfolgingsoppgaveDTO {

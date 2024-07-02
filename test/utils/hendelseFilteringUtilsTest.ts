@@ -35,7 +35,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     behandlerBerOmBistandUbehandlet: false,
     arbeidsuforhetvurdering: null,
     friskmeldingTilArbeidsformidlingFom: null,
-    snartSluttPaSykepengene: null,
+    isAktivSenOppfolgingKandidat: false,
     oppfolgingsoppgave: null,
   };
 };
@@ -53,7 +53,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   behandlerBerOmBistand: false,
   isAktivArbeidsuforhetvurdering: false,
   harFriskmeldingTilArbeidsformidling: false,
-  isSnartSluttPaSykepengeneChecked: false,
+  isSenOppfolgingChecked: false,
 };
 
 describe('hendelseFilteringUtils', () => {

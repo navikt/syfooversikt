@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
-import { fullNaisUrlDefault } from './miljoUtil';
-import { capitalizeHyphenatedWords } from './stringUtil';
+import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { Labels } from '@/components/Labels';
+import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 
 export const lenkeTilModia = (personData: PersonData) => {
   let path = `/sykefravaer`;
@@ -36,53 +37,38 @@ export const lenkeTilModia = (personData: PersonData) => {
   return fullNaisUrlDefault('syfomodiaperson', path);
 };
 
-export const formatNameCorrectly = (navn?: string): string => {
-  if (!navn) return '';
-  const nameList = navn.split(' ');
+interface Props {
+  personData: PersonData;
+  personident: string;
+  linkText: string;
+}
 
-  if (nameList.length > 1) {
-    const lastName = nameList.pop() || '';
-    nameList.unshift(`${lastName},`);
-  }
+export function LinkSyfomodiaperson({
+  personData,
+  personident,
+  linkText,
+}: Props): ReactElement {
+  const aktivBruker = useAktivBruker();
+  const onPersonClick = () => {
+    aktivBruker.mutate(personident, {
+      onSuccess: () => {
+        window.location.href = lenkeTilModia(personData);
+      },
+    });
+  };
 
-  return nameList.map(capitalizeHyphenatedWords).join(' ');
-};
-
-export const lenkeTilModiaEnkeltperson = (
-  personData: PersonData,
-  onClick: () => void
-) => {
   return (
-    <Lenke
-      onClick={(event) => {
-        event.preventDefault();
-        onClick();
-      }}
-      href={lenkeTilModia(personData)}
-    >
-      {formatNameCorrectly(personData.navn)}
-    </Lenke>
+    <div className="flex items-center gap-2">
+      <Lenke
+        onClick={(event) => {
+          event.preventDefault();
+          onPersonClick();
+        }}
+        href={lenkeTilModia(personData)}
+      >
+        {linkText}
+      </Lenke>
+      <Labels personData={personData} />
+    </div>
   );
-};
-
-export const lenkeTilModiaEnkeltpersonFnr = (
-  personData: PersonData,
-  fnr: string,
-  onClick: () => void
-): ReactElement | string => {
-  const hasPersonName = personData.navn && personData.navn.length > 0;
-  if (hasPersonName) {
-    return fnr;
-  }
-  return (
-    <Lenke
-      onClick={(event) => {
-        event.preventDefault();
-        onClick();
-      }}
-      href={lenkeTilModia(personData)}
-    >
-      {fnr}
-    </Lenke>
-  );
-};
+}

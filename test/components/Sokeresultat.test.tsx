@@ -70,7 +70,7 @@ describe('Sokeresultat', () => {
         behandlerBerOmBistand: false,
         isAktivArbeidsuforhetvurdering: false,
         harFriskmeldingTilArbeidsformidling: false,
-        isSnartSluttPaSykepengeneChecked: false,
+        isSenOppfolgingChecked: false,
       },
     };
 

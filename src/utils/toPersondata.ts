@@ -37,7 +37,7 @@ export const toPersonData = (
       arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         person.friskmeldingTilArbeidsformidlingFom,
-      snartSluttPaSykepengene: person.snartSluttPaSykepengene,
+      isAktivSenOppfolgingKandidat: person.isAktivSenOppfolgingKandidat,
       oppfolgingsoppgave: person.oppfolgingsoppgave,
     };
   });

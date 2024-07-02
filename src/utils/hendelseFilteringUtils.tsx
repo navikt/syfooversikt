@@ -211,8 +211,8 @@ const matchesFilter = (
       return !filters[key] || !!personData.arbeidsuforhetvurdering;
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
-    case 'isSnartSluttPaSykepengeneChecked':
-      return !filters[key] || !!personData.snartSluttPaSykepengene;
+    case 'isSenOppfolgingChecked':
+      return !filters[key] || !!personData.isAktivSenOppfolgingKandidat;
   }
 };
 

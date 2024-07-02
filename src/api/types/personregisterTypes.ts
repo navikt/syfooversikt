@@ -3,18 +3,9 @@ import {
   ArbeidsuforhetvurderingDTO,
   OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
-  SnartSluttPaSykepengeneDTO,
 } from './personoversiktTypes';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
-export type ReadableSkjermingskode =
-  | 'ingen'
-  | 'diskresjonsmerket'
-  | 'egen ansatt';
-export type ReadableSkjermingskodeMap = Record<
-  Skjermingskode,
-  ReadableSkjermingskode
->;
 
 export interface PersonData {
   navn: string;
@@ -35,7 +26,7 @@ export interface PersonData {
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
-  snartSluttPaSykepengene: SnartSluttPaSykepengeneDTO | null;
+  isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
 }
 

@@ -73,7 +73,7 @@ describe('personoversiktHooks tests', () => {
         person.behandlerBerOmBistandUbehandlet ||
         person.arbeidsuforhetvurdering !== null ||
         person.friskmeldingTilArbeidsformidlingFom ||
-        person.snartSluttPaSykepengene
+        person.isAktivSenOppfolgingKandidat
       );
     });
     expect(allPersonsUbehandlet).to.be.true;
