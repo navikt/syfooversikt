@@ -40,5 +40,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
   return {
     isFlexjarArenaEnabled: unleash.isEnabled('isFlexjarArenaEnabled', context),
     isFrisktilarbeidEnabled: unleash.isEnabled('isFrisktilarbeid', context),
+    isOppfolgingISenFaseEnabled: unleash.isEnabled(
+      'isOppfolgingISenFaseEnabled',
+      context
+    ),
   };
 };
