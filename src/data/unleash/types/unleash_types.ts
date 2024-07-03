@@ -12,5 +12,5 @@ export enum ToggleNames {
 export const defaultToggles: Toggles = {
   isFlexjarArenaEnabled: false,
   isFrisktilarbeidEnabled: false,
-  isOppfolgingISenFaseEnabled: true,
+  isOppfolgingISenFaseEnabled: false,
 };
