@@ -1,3 +1,5 @@
+import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
+
 export enum MoteStatusType {
   INNKALT = 'INNKALT',
   AVLYST = 'AVLYST',
@@ -32,6 +34,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   friskmeldingTilArbeidsformidlingFom: Date | null;
   isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
+  aktivitetskravvurdering: AktivitetskravDTO | null;
 }
 
 export interface PersonOversiktStatusDTO

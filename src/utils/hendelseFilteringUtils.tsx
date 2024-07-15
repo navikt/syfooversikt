@@ -197,12 +197,8 @@ const matchesFilter = (
       return !filters[key] || !personData.tildeltVeilederIdent;
     case 'dialogmotesvar':
       return !filters[key] || personData.harDialogmotesvar;
-    case 'aktivitetskrav':
-      return !filters[key] || personData.aktivitetskravActive;
     case 'behandlerdialog':
       return !filters[key] || personData.harBehandlerdialogUbehandlet;
-    case 'aktivitetskravVurderStans':
-      return !filters[key] || personData.harAktivitetskravVurderStansUbehandlet;
     case 'oppfolgingsoppgave':
       return !filters[key] || personData.oppfolgingsoppgave !== null;
     case 'behandlerBerOmBistand':
@@ -212,7 +208,14 @@ const matchesFilter = (
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
     case 'isSenOppfolgingChecked':
-      return !filters[key] || !!personData.isAktivSenOppfolgingKandidat;
+      return !filters[key] || personData.isAktivSenOppfolgingKandidat;
+    case 'isAktivitetskravChecked':
+      return (
+        !filters[key] ||
+        personData.aktivitetskravActive ||
+        personData.harAktivitetskravVurderStansUbehandlet ||
+        personData.aktivitetskravvurdering !== null
+      );
   }
 };
 

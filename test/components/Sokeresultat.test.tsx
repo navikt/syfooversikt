@@ -63,14 +63,13 @@ describe('Sokeresultat', () => {
         ufordeltBruker: false,
         dialogmotekandidat: false,
         dialogmotesvar: true,
-        aktivitetskrav: false,
         behandlerdialog: false,
-        aktivitetskravVurderStans: false,
         oppfolgingsoppgave: false,
         behandlerBerOmBistand: false,
         isAktivArbeidsuforhetvurdering: false,
         harFriskmeldingTilArbeidsformidling: false,
         isSenOppfolgingChecked: false,
+        isAktivitetskravChecked: false,
       },
     };
 

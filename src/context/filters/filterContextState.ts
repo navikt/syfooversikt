@@ -9,14 +9,13 @@ export interface HendelseTypeFilters {
   ufordeltBruker: boolean;
   dialogmotekandidat: boolean;
   dialogmotesvar: boolean;
-  aktivitetskrav: boolean;
   behandlerdialog: boolean;
-  aktivitetskravVurderStans: boolean;
   oppfolgingsoppgave: boolean;
   behandlerBerOmBistand: boolean;
   isAktivArbeidsuforhetvurdering: boolean;
   harFriskmeldingTilArbeidsformidling: boolean;
   isSenOppfolgingChecked: boolean;
+  isAktivitetskravChecked: boolean;
 }
 
 export interface FilterState {
@@ -44,13 +43,12 @@ export const filterInitialState: FilterState = {
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
-    aktivitetskrav: false,
     behandlerdialog: false,
-    aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
     isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
     isSenOppfolgingChecked: false,
+    isAktivitetskravChecked: false,
   },
 };

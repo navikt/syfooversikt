@@ -19,7 +19,6 @@ export const HendelseTekster = {
   DIALOGMOTESVAR: 'Svar dialogmøte',
   AKTIVITETSKRAV: 'Aktivitetskrav',
   BEHANDLERDIALOG: 'Dialog med behandler',
-  AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
   ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
@@ -44,9 +43,8 @@ const enkeltFilterFraTekst = (
     ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
-    aktivitetskrav: false,
+    isAktivitetskravChecked: false,
     behandlerdialog: false,
-    aktivitetskravVurderStans: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
     isAktivArbeidsuforhetvurdering: false,
@@ -85,15 +83,11 @@ const lagNyttFilter = (
       return filter;
     }
     case HendelseTekster.AKTIVITETSKRAV: {
-      filter.aktivitetskrav = checked;
+      filter.isAktivitetskravChecked = checked;
       return filter;
     }
     case HendelseTekster.BEHANDLERDIALOG: {
       filter.behandlerdialog = checked;
-      return filter;
-    }
-    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS: {
-      filter.aktivitetskravVurderStans = checked;
       return filter;
     }
     case HendelseTekster.OPPFOLGINGSOPPGAVE: {
@@ -135,11 +129,9 @@ const isCheckedInState = (
     case HendelseTekster.DIALOGMOTESVAR:
       return state.dialogmotesvar;
     case HendelseTekster.AKTIVITETSKRAV:
-      return state.aktivitetskrav;
+      return state.isAktivitetskravChecked;
     case HendelseTekster.BEHANDLERDIALOG:
       return state.behandlerdialog;
-    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
-      return state.aktivitetskravVurderStans;
     case HendelseTekster.OPPFOLGINGSOPPGAVE:
       return state.oppfolgingsoppgave;
     case HendelseTekster.BEHANDLER_BER_OM_BISTAND:
@@ -160,7 +152,6 @@ const showCheckbox = (
 ): boolean => {
   switch (key) {
     case 'AKTIVITETSKRAV':
-    case 'AKTIVITETSKRAV_VURDER_STANS':
     case 'BEHANDLERDIALOG':
     case 'DIALOGMOTEKANDIDAT':
     case 'DIALOGMOTESVAR':
