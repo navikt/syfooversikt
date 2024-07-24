@@ -9,15 +9,17 @@ interface Markup {
 export interface ControlledContextvalue<T> extends BaseContextvalue<T> {
   value?: string;
 }
+
 interface UncontrolledContextvalue<T> extends BaseContextvalue<T> {
   initialValue?: string;
 }
 
 interface BaseContextvalue<T> {
   display: T;
-  onChange(value?: string): void;
   skipModal?: boolean;
   ignoreWsEvents?: boolean;
+
+  onChange(value?: string): void;
 }
 
 export type Contextvalue<T> =
@@ -37,8 +39,27 @@ type EnhetContextvalue = Contextvalue<EnhetDisplay>;
 type FnrContextvalue = Contextvalue<FnrDisplay>;
 type ProxyConfig = boolean | string;
 
+export type Environment =
+  | 'q0'
+  | 'q1'
+  | 'q2'
+  | 'q3'
+  | 'q4'
+  | 'prod'
+  | 'local'
+  | 'mock';
+
+type UrlFormat = 'LOCAL' | 'ADEO' | 'NAV_NO';
+
 export interface DecoratorProps {
   appname: string;
+  showEnheter: boolean;
+  showSearchArea: boolean;
+  showHotkeys: boolean;
+  environment: Environment;
+  urlFormat: UrlFormat;
+  onEnhetChanged: (enhet?: string | null, enhetValue?: Enhet) => void;
+  onFnrChanged: (fnr?: string | null) => void;
   fnr?: FnrContextvalue;
   enhet?: EnhetContextvalue;
   toggles?: TogglesConfig;

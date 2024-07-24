@@ -7,7 +7,7 @@ import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { fullNaisUrlDefault } from '@/utils/miljoUtil';
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
-  'internarbeidsflatefs'
+  'internarbeidsflate-decorator-v3'
 );
 
 const Decorator = () => {
