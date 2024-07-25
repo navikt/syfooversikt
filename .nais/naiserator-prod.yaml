@@ -52,7 +52,6 @@ spec:
       external:
         - host: "login.microsoftonline.com"
         - host: "internarbeidsflatedecorator.prod-fss-pub.nais.io"
-        - host: "modiacontextholder.prod-fss-pub.nais.io"
         - host: "ereg-services.prod-fss-pub.nais.io"
         - host: "teamsykefravr-unleash-api.nav.cloud.nais.io"
       rules:
@@ -62,6 +61,8 @@ spec:
         - application: syfooversikt-redis
         - application: flexjar-backend
           namespace: flex
+        - application: modiacontextholder
+          namespace: personoversikt
   ingresses:
     - "https://syfooversikt.intern.nav.no"
   env:
@@ -84,9 +85,9 @@ spec:
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "prod-gcp.teamsykefravr.syfoveileder"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
-      value: "prod-fss.personoversikt.modiacontextholder"
+      value: "prod-gcp.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST
-      value: "https://modiacontextholder.prod-fss-pub.nais.io"
+      value: "http://modiacontextholder.personoversikt"
     - name: SYFOOVERSIKTSRV_HOST
       value: "http://syfooversiktsrv"
     - name: SYFOPERSON_HOST
