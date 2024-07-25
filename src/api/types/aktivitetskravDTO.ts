@@ -12,5 +12,5 @@ interface AktivitetskravvurderingDTO {
 }
 
 interface AktivitetskravVarselDTO {
-  svarfrist: Date;
+  svarfrist?: Date;
 }

@@ -76,7 +76,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
   } = personData;
   const frister: Frist[] = [];
   if (
-    !!aktivitetskravvurdering?.vurderinger.length &&
+    aktivitetskravvurdering?.vurderinger.length &&
     aktivitetskravvurdering?.vurderinger.length > 0
   ) {
     const frist = aktivitetskravvurdering.vurderinger[0]?.frist;
