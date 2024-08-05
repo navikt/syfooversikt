@@ -65,6 +65,7 @@ spec:
           namespace: personoversikt
   ingresses:
     - "https://syfooversikt.intern.dev.nav.no"
+    - "https://syfooversikt.ansatt.dev.nav.no"
   env:
     - name: NAIS_CONTEXT
       value: "dev"
