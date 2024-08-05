@@ -37,6 +37,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     friskmeldingTilArbeidsformidlingFom: null,
     isAktivSenOppfolgingKandidat: false,
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: null,
   };
 };
 
@@ -46,14 +47,13 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   ufordeltBruker: false,
   dialogmotekandidat: false,
   dialogmotesvar: false,
-  aktivitetskrav: false,
   behandlerdialog: false,
-  aktivitetskravVurderStans: false,
   oppfolgingsoppgave: false,
   behandlerBerOmBistand: false,
   isAktivArbeidsuforhetvurdering: false,
   harFriskmeldingTilArbeidsformidling: false,
   isSenOppfolgingChecked: false,
+  isAktivitetskravChecked: false,
 };
 
 describe('hendelseFilteringUtils', () => {
@@ -578,7 +578,7 @@ describe('hendelseFilteringUtils', () => {
       const filterWithMotebehovAndAktivitetskrav: HendelseTypeFilters = {
         ...defaulthendelseFilter,
         onskerMote: true,
-        aktivitetskrav: true,
+        isAktivitetskravChecked: true,
       };
 
       const filteredPersonregister = filterOnPersonregister(

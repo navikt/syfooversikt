@@ -21,6 +21,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
   isAktivSenOppfolgingKandidat: false,
+  aktivitetskravvurdering: null,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -70,6 +71,17 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     aktivitetskravVurderStansUbehandlet: true,
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.FORHANDSVARSEL,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.FORHANDSVARSEL,
+          varsel: {
+            svarfrist: new Date('2022-12-01T10:12:05.913826'),
+          },
+        },
+      ],
+    },
   },
   {
     ...behandletPerson,

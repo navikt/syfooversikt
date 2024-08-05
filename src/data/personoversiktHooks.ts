@@ -39,6 +39,7 @@ const filteredPersonOversiktStatusList = (
       isAktivSenOppfolgingKandidat:
         personOversiktStatus.isAktivSenOppfolgingKandidat,
       oppfolgingsoppgave: personOversiktStatus.oppfolgingsoppgave,
+      aktivitetskravvurdering: personOversiktStatus.aktivitetskravvurdering,
     };
 
     return isUbehandlet(ubehandletStatus);

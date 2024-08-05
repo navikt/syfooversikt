@@ -28,6 +28,7 @@ const defaultPersonData: PersonData = {
   friskmeldingTilArbeidsformidlingFom: null,
   isAktivSenOppfolgingKandidat: false,
   oppfolgingsoppgave: null,
+  aktivitetskravvurdering: null,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
@@ -115,5 +116,105 @@ describe('FristColumn', () => {
     expect(allFrister[2]?.textContent).to.eq(
       toReadableDate(friskmeldingTilArbeidsformidlingFom)
     );
+  });
+
+  describe('aktivitetskravvurdering frister', () => {
+    it('viser frist for person når aktivitetskravvurdering har frist', () => {
+      const aktivitetskravVurderingFrist = new Date('2024-07-15');
+      const personMedAvventerFrist: PersonData = {
+        ...defaultPersonData,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: aktivitetskravVurderingFrist,
+            },
+          ],
+        },
+      };
+      render(<FristColumn personData={personMedAvventerFrist} />);
+
+      expect(screen.getByText(toReadableDate(aktivitetskravVurderingFrist))).to
+        .exist;
+    });
+
+    it('viser svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel', () => {
+      const aktivitetskravSvarfristForhandsvarsel = new Date('2024-07-16');
+      const personMedForhandsvarsel: PersonData = {
+        ...defaultPersonData,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.FORHANDSVARSEL,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.FORHANDSVARSEL,
+              varsel: {
+                svarfrist: aktivitetskravSvarfristForhandsvarsel,
+              },
+            },
+          ],
+        },
+      };
+      render(<FristColumn personData={personMedForhandsvarsel} />);
+
+      expect(
+        screen.getByText(toReadableDate(aktivitetskravSvarfristForhandsvarsel))
+      ).to.exist;
+    });
+
+    it('viser ikke dobbel svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel og aktivitetskravVurderingFrist har verdi', () => {
+      const svarfristForhandsvarselVis = new Date('2024-07-16');
+      const svarfristForhandsvarselIkkeVis = new Date('2024-07-17');
+      const personMedForhandsvarsel: PersonData = {
+        ...defaultPersonData,
+        aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
+        aktivitetskravVurderingFrist: svarfristForhandsvarselIkkeVis,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.FORHANDSVARSEL,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.FORHANDSVARSEL,
+              varsel: {
+                svarfrist: svarfristForhandsvarselVis,
+              },
+            },
+          ],
+        },
+      };
+      render(<FristColumn personData={personMedForhandsvarsel} />);
+
+      expect(screen.getByText(toReadableDate(svarfristForhandsvarselVis))).to
+        .exist;
+      expect(screen.queryByText(toReadableDate(svarfristForhandsvarselIkkeVis)))
+        .to.not.exist;
+    });
+
+    it('viser ikke dobbel frist for avvent når aktivitetskravvurdering har frist og aktivitetskravVurderingFrist har verdi', () => {
+      const aktivitetskravAvventFristVis = new Date('2024-07-16');
+      const aktivitetskravAvventFristIkkeVis = new Date('2024-07-17');
+      const personMedForhandsvarsel: PersonData = {
+        ...defaultPersonData,
+        aktivitetskrav: AktivitetskravStatus.AVVENT,
+        aktivitetskravVurderingFrist: aktivitetskravAvventFristIkkeVis,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              varsel: {
+                svarfrist: aktivitetskravAvventFristVis,
+              },
+            },
+          ],
+        },
+      };
+      render(<FristColumn personData={personMedForhandsvarsel} />);
+
+      expect(screen.getByText(toReadableDate(aktivitetskravAvventFristVis))).to
+        .exist;
+      expect(
+        screen.queryByText(toReadableDate(aktivitetskravAvventFristIkkeVis))
+      ).to.not.exist;
+    });
   });
 });

@@ -1,9 +1,9 @@
 import { PersonData } from '@/api/types/personregisterTypes';
 import { toReadableDate } from '@/utils/dateUtils';
 import {
+  BriefcaseIcon,
   FileTextIcon,
   HourglassTopFilledIcon,
-  BriefcaseIcon,
 } from '@navikt/aksel-icons';
 import React, { ReactElement } from 'react';
 import {
@@ -17,6 +17,7 @@ const texts = {
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
   arbeidsuforhetvarselFrist: '§8-4: Svarfrist forhåndsvarsel',
+  aktivitetskravvarselFrist: 'Aktivitetskrav: Svarfrist forhåndsvarsel',
 };
 
 interface FristColumnProps {
@@ -71,9 +72,29 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     oppfolgingsoppgave,
     friskmeldingTilArbeidsformidlingFom,
     arbeidsuforhetvurdering,
+    aktivitetskravvurdering,
   } = personData;
   const frister: Frist[] = [];
   if (
+    aktivitetskravvurdering?.vurderinger.length &&
+    aktivitetskravvurdering?.vurderinger.length > 0
+  ) {
+    const frist = aktivitetskravvurdering.vurderinger[0]?.frist;
+    const varselFrist =
+      aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist;
+    frist &&
+      frister.push({
+        icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+        date: frist,
+        tooltip: texts.tooltipAvventer,
+      });
+    varselFrist &&
+      frister.push({
+        icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+        date: varselFrist,
+        tooltip: texts.aktivitetskravvarselFrist,
+      });
+  } else if (
     aktivitetskrav === AktivitetskravStatus.AVVENT &&
     aktivitetskravVurderingFrist
   ) {

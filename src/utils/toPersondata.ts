@@ -39,6 +39,7 @@ export const toPersonData = (
         person.friskmeldingTilArbeidsformidlingFom,
       isAktivSenOppfolgingKandidat: person.isAktivSenOppfolgingKandidat,
       oppfolgingsoppgave: person.oppfolgingsoppgave,
+      aktivitetskravvurdering: person.aktivitetskravvurdering,
     };
   });
 

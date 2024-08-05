@@ -36,6 +36,7 @@ const defaultPersonData: PersonData = {
   friskmeldingTilArbeidsformidlingFom: null,
   isAktivSenOppfolgingKandidat: false,
   oppfolgingsoppgave: null,
+  aktivitetskravvurdering: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
