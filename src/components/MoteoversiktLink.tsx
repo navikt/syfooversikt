@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
 import { Link } from '@navikt/ds-react';
 
 const texts = {
@@ -8,7 +8,10 @@ const texts = {
 
 export const MoteoversiktLink = (): ReactElement => (
   <Link
-    href={fullNaisUrlDefault('syfomoteoversikt', '/syfomoteoversikt/minemoter')}
+    href={linkToNewHostAndPath(
+      Subdomain.SYFOMOTEOVERSIKT,
+      '/syfomoteoversikt/minemoter'
+    )}
   >
     {texts.moteoversikt}
   </Link>
