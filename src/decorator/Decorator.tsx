@@ -4,7 +4,7 @@ import { DecoratorProps } from './decoratorProps';
 import decoratorConfig from './decoratorConfig';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
-import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
 
 const InternflateDecorator = NAVSPA.importer<DecoratorProps>(
   'internarbeidsflatefs'
@@ -17,9 +17,10 @@ const Decorator = () => {
   const handlePersonsokSubmit = (nyttFnr: string) => {
     aktivBruker.mutate(nyttFnr, {
       onSuccess: () => {
-        const host = 'syfomodiaperson';
-        const path = `/sykefravaer`;
-        window.location.href = fullNaisUrlDefault(host, path);
+        window.location.href = linkToNewHostAndPath(
+          Subdomain.SYFOMODIAPERSON,
+          `/sykefravaer`
+        );
       },
     });
   };

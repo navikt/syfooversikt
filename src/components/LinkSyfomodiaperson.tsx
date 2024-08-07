@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
-import { fullNaisUrlDefault } from '@/utils/miljoUtil';
+import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
 import { Labels } from '@/components/Labels';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 
@@ -34,7 +34,7 @@ export const lenkeTilModia = (personData: PersonData) => {
     path = `${path}/arbeidsuforhet`;
   }
 
-  return fullNaisUrlDefault('syfomodiaperson', path);
+  return linkToNewHostAndPath(Subdomain.SYFOMODIAPERSON, path);
 };
 
 interface Props {

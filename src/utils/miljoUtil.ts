@@ -1,25 +1,33 @@
-export const erPreProd = (): boolean => {
+export function isDev(): boolean {
   return (
     window.location.href.indexOf('dev.intern.nav.no') > -1 ||
-    window.location.href.indexOf('intern.dev.nav.no') > -1
+    window.location.href.indexOf('intern.dev.nav.no') > -1 ||
+    window.location.href.indexOf('ansatt.dev.nav.no') > -1
   );
-};
+}
 
-export const erLokal = (): boolean => {
+export function isLocal(): boolean {
   return window.location.host.indexOf('localhost') > -1;
-};
+}
 
 export function isProd(): boolean {
   return window.location.href.indexOf('syfooversikt.intern.nav.no') > -1;
 }
 
-export const finnNaisUrlDefault = (): string => {
-  return erPreProd() ? '.intern.dev.nav.no' : '.intern.nav.no';
-};
-
-export const fullNaisUrlDefault = (host: string, path: string): string => {
-  if (erLokal()) {
-    return `http://localhost:8081${path}`;
+export function linkToNewHostAndPath(
+  newSubdomain: Subdomain,
+  pathname: string
+): string {
+  if (isLocal()) {
+    return `http://localhost:8081${pathname}`;
   }
-  return `https://${host}${finnNaisUrlDefault()}${path}`;
-};
+  const { hostname } = window.location;
+  const newHost = hostname.replace(Subdomain.SYFOOVERSIKT, newSubdomain);
+  return `https://${newHost}${pathname}`;
+}
+
+export enum Subdomain {
+  SYFOOVERSIKT = 'syfooversikt',
+  SYFOMODIAPERSON = 'syfomodiaperson',
+  SYFOMOTEOVERSIKT = 'syfomoteoversikt',
+}
