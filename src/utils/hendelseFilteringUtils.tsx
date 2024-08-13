@@ -11,6 +11,7 @@ import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
+import { getHendelser } from './statusColumnUtils';
 
 export class Filterable<T> {
   value: T;
@@ -274,6 +275,8 @@ export const getSortedEventsFromSortingType = (
       return sortEventsOnTilfelleVarighet(personregister, direction);
     case 'DATO':
       return sortEventsOnFrist(personregister, direction);
+    case 'HENDELSE':
+      return sortEventsOnStatus(personregister, direction);
     case 'NONE':
       return personregister;
   }
@@ -369,6 +372,24 @@ const sortEventsOnName = (
       const lastNameB = persondataB.navn.split(' ').pop() || '';
 
       return lastNameA.localeCompare(lastNameB);
+    }
+  );
+
+  return direction === 'ascending'
+    ? Object.fromEntries(sorted)
+    : Object.fromEntries(sorted.reverse());
+};
+
+const sortEventsOnStatus = (
+  personregister: PersonregisterState,
+  direction: SortDirection
+): PersonregisterState => {
+  const sorted = Object.entries(personregister).sort(
+    ([, persondataA], [, persondataB]) => {
+      const statusA = getHendelser(persondataA)[0] || '';
+      const statusB = getHendelser(persondataB)[0];
+
+      return statusA.localeCompare(statusB);
     }
   );
 

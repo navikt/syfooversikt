@@ -44,5 +44,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       'isOppfolgingISenFaseEnabled',
       context
     ),
+    isHendelseColumnEnabled: unleash.isEnabled(
+      'isHendelseColumnEnabled',
+      context
+    ),
   };
 };

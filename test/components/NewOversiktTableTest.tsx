@@ -76,13 +76,16 @@ const renderOversikt = (personer: PersonregisterState) =>
   );
 
 describe('NewOversiktTable', () => {
-  it('rendrer overskrifter for navn, fodselsnummer, virksomhet og veileder', () => {
+  it('rendrer kolonnenavn', () => {
     renderOversikt(personregister);
 
     expect(screen.getByText('Navn')).to.exist;
     expect(screen.getByText('Fødselsnummer')).to.exist;
     expect(screen.getByText('Virksomhet')).to.exist;
     expect(screen.getByText('Veileder')).to.exist;
+    expect(screen.getByText('Sykefravær')).to.exist;
+    expect(screen.getByText('Frist/Dato')).to.exist;
+    expect(screen.getByText('Status')).to.exist;
   });
   it('rendrer en rad per person', () => {
     renderOversikt(personregister);
@@ -129,5 +132,29 @@ describe('NewOversiktTable', () => {
     renderOversikt({ [testdata.fnr1]: personWithOppfolgingstilfelle });
 
     expect(screen.getByText('2 uker')).to.exist;
+  });
+
+  it('Viser hendelse for en rad', () => {
+    renderOversikt({
+      [testdata.fnr1]: {
+        ...defaultPersonData,
+        harDialogmotesvar: true,
+      },
+    });
+
+    expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
+  });
+
+  it('Viser flere hendelser for en rad', () => {
+    renderOversikt({
+      [testdata.fnr1]: {
+        ...defaultPersonData,
+        harDialogmotesvar: true,
+        dialogmotekandidat: true,
+      },
+    });
+
+    // expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
+    expect(screen.getByText('Dialogmøte - Kandidat')).to.exist;
   });
 });
