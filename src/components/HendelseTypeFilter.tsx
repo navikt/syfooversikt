@@ -22,7 +22,7 @@ export const HendelseTekster = {
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
   ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
-  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding',
+  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding til arbeidsformidling',
   SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
 } as const;
 
