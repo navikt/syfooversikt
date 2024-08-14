@@ -7,6 +7,7 @@ import {
   PersonOversiktUbehandletStatusDTO,
 } from '../../src/api/types/personoversiktTypes';
 import { veilederMock } from './veilederMock';
+import dayjs from 'dayjs';
 
 const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   oppfolgingsplanLPSBistandUbehandlet: null,
@@ -40,7 +41,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     behandlerBerOmBistandUbehandlet: false,
     arbeidsuforhetvurdering: {
       varsel: {
-        svarfrist: new Date('2022-12-01T10:12:05.913826'),
+        svarfrist: new Date('2026-12-01T10:12:05.913826'),
       },
     },
   },
@@ -51,9 +52,18 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.UNNTAK,
+    aktivitetskrav: AktivitetskravStatus.AVVENT,
     aktivitetskravActive: false,
     aktivitetskravVurderingFrist: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: dayjs(new Date()).add(-2, 'day').toDate(),
+        },
+      ],
+    },
     motestatus: undefined,
     behandlerdialogUbehandlet: true,
     oppfolgingsoppgave: null,
@@ -77,7 +87,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.FORHANDSVARSEL,
           varsel: {
-            svarfrist: new Date('2022-12-01T10:12:05.913826'),
+            svarfrist: new Date('2024-12-01'),
           },
         },
       ],
@@ -212,7 +222,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fnr: '18999955555',
     navn: 'Bord Stolesen',
     enhet: '0316',
-    veilederIdent: null,
+    veilederIdent: 'Z999999',
     motebehovUbehandlet: true,
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,

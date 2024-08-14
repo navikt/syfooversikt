@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
+import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { personregister, testdata } from '../data/fellesTestdata';
 import React from 'react';
 import {
@@ -15,13 +15,13 @@ import {
   PersonregisterState,
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import {
+  AktivitetskravStatus,
+  Oppfolgingsgrunn,
+} from '@/api/types/personoversiktTypes';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
-import { stubPersonregister } from '../stubs/stubPersonregister';
-import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
-import { stubModiaContext } from '../stubs/stubModiaContext';
-import { stubVeiledere } from '../stubs/stubVeiledere';
+import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import dayjs from 'dayjs';
 
 let queryClient = testQueryClient();
 
@@ -70,7 +70,12 @@ const renderOversikt = (personer: PersonregisterState) =>
   render(
     <NotificationProvider>
       <QueryClientProvider client={queryClient}>
-        <AktivEnhetProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
           <NewOversiktTable
             personListe={Object.entries(personer)}
             selectedRows={[]}
@@ -78,7 +83,7 @@ const renderOversikt = (personer: PersonregisterState) =>
             setSorting={() => void 0}
             sorting={{ orderBy: 'FNR', direction: 'ascending' }}
           />
-        </AktivEnhetProvider>
+        </AktivEnhetContext.Provider>
       </QueryClientProvider>
     </NotificationProvider>
   );
@@ -86,11 +91,6 @@ const renderOversikt = (personer: PersonregisterState) =>
 describe('NewOversiktTable', () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
-    stubPersonoversikt();
-    stubPersonregister();
-    stubAktivVeileder();
-    stubModiaContext();
-    stubVeiledere();
   });
 
   it('rendrer kolonnenavn', () => {
@@ -102,8 +102,9 @@ describe('NewOversiktTable', () => {
     expect(screen.getByText('Veileder')).to.exist;
     expect(screen.getByText('Sykefravær')).to.exist;
     expect(screen.getByText('Frist/Dato')).to.exist;
-    // expect(screen.getByText('Hendelse')).to.exist;
+    expect(screen.getByText('Hendelse')).to.exist;
   });
+
   it('rendrer en rad per person', () => {
     renderOversikt(personregister);
 
@@ -151,29 +152,68 @@ describe('NewOversiktTable', () => {
     expect(screen.getByText('2 uker')).to.exist;
   });
 
-  // it('Viser hendelse for en rad', () => {
-  //   renderOversikt({
-  //     [testdata.fnr1]: {
-  //       ...defaultPersonData,
-  //       harDialogmotesvar: true,
-  //     },
-  //   });
-  //
-  //   expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
-  // });
-  //
-  // it('Viser flere hendelser for en rad', () => {
-  //   renderOversikt({
-  //     [testdata.fnr1]: {
-  //       ...defaultPersonData,
-  //       harDialogmotesvar: true,
-  //       dialogmotekandidat: true,
-  //     },
-  //   });
-  //
-  //   screen.debug(undefined, 10000000);
-  //
-  //   // expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
-  //   expect(screen.getByText('Dialogmøte - Kandidat')).to.exist;
-  // });
+  it('Viser hendelse for en rad', () => {
+    renderOversikt({
+      [testdata.fnr1]: {
+        ...defaultPersonData,
+        harDialogmotesvar: true,
+      },
+    });
+
+    expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
+  });
+
+  it('Viser flere hendelser for en rad', () => {
+    renderOversikt({
+      [testdata.fnr1]: {
+        ...defaultPersonData,
+        harDialogmotesvar: true,
+        dialogmotekandidat: true,
+        harMotebehovUbehandlet: true,
+        harOppfolgingsplanLPSBistandUbehandlet: true,
+        harBehandlerdialogUbehandlet: true,
+        aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.FORHANDSVARSEL,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.FORHANDSVARSEL,
+              varsel: {
+                svarfrist: dayjs().add(-1, 'day').toDate(),
+              },
+            },
+          ],
+        },
+        behandlerBerOmBistandUbehandlet: true,
+        friskmeldingTilArbeidsformidlingFom: dayjs().add(1, 'week').toDate(),
+        arbeidsuforhetvurdering: {
+          varsel: {
+            svarfrist: dayjs().add(1, 'week').toDate(),
+          },
+        },
+        isAktivSenOppfolgingKandidat: true,
+        oppfolgingsoppgave: {
+          uuid: '123',
+          createdBy: '432',
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          tekst: 'Oppfølgingsoppgave',
+          oppfolgingsgrunn: Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT,
+          frist: new Date(),
+        },
+      },
+    });
+
+    expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
+    expect(screen.getByText('Dialogmøte - Kandidat')).to.exist;
+    expect(screen.getByText('Dialogmøte - Møtebehov')).to.exist;
+    expect(screen.getByText('Akt.krav - Forhåndsvarsel utløpt')).to.exist;
+    expect(screen.getByText('Arbeidsuførhet - Forhåndsvarsel sendt')).to.exist;
+    expect(screen.getByText('Friskmelding til arbeidsformidling')).to.exist;
+    expect(screen.getByText('Oppf.oppgave - Kontakt sykmeldt')).to.exist;
+    expect(screen.getByText('Bistandsbehov fra behandler')).to.exist;
+    expect(screen.getByText('Dialogmelding')).to.exist;
+    expect(screen.getByText('Oppfølgingsplan')).to.exist;
+    expect(screen.getByText('Snart slutt på sykepengene')).to.exist;
+  });
 });

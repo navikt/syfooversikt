@@ -1,4 +1,3 @@
-import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import {
   Oppfolgingsgrunn,
   AktivitetskravStatus,
@@ -34,18 +33,24 @@ function mapOppfolgingsgrunn(oppfolgingsgrunn: Oppfolgingsgrunn) {
   }
 }
 
-function mapAktivitetskravStatus(aktivitetskrav: AktivitetskravDTO): string {
-  switch (aktivitetskrav.status) {
+function mapAktivitetskravStatus(personData: PersonData): string {
+  const status =
+    personData?.aktivitetskravvurdering?.status ?? personData.aktivitetskrav;
+  switch (status) {
     case AktivitetskravStatus.NY:
       return '- Ny kandidat';
+    case AktivitetskravStatus.NY_VURDERING:
+      return '- Ny vurdering';
     case AktivitetskravStatus.AVVENT:
       return '- Avventer';
     case AktivitetskravStatus.FORHANDSVARSEL:
-      const svarfrist = aktivitetskrav.vurderinger[0]?.varsel?.svarfrist;
+      const svarfrist =
+        personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
+      const fristDate = svarfrist ? new Date(svarfrist) : undefined;
       const today = new Date();
 
-      if (svarfrist && svarfrist >= today) {
-        return '- Forhåndsvarsel';
+      if (fristDate && fristDate >= today) {
+        return '- Forhåndsvarsel sendt';
       } else {
         return '- Forhåndsvarsel utløpt';
       }
@@ -55,10 +60,11 @@ function mapAktivitetskravStatus(aktivitetskrav: AktivitetskravDTO): string {
 }
 
 function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
+  const fristDate = svarfrist ? new Date(svarfrist) : undefined;
   const today = new Date();
 
-  if (svarfrist && svarfrist >= today) {
-    return 'Forhåndsvarsel';
+  if (fristDate && fristDate >= today) {
+    return 'Forhåndsvarsel sendt';
   } else {
     return 'Forhåndsvarsel utløpt';
   }
@@ -66,43 +72,12 @@ function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
 
 export function getHendelser(personData: PersonData): string[] {
   const hendelser: string[] = [];
-  if (personData.oppfolgingsoppgave) {
-    hendelser.push(
-      `Oppfølgingsoppgave - ${mapOppfolgingsgrunn(
-        personData.oppfolgingsoppgave.oppfolgingsgrunn
-      )}`
-    );
-  }
-  if (personData.harAktivitetskravVurderStansUbehandlet) {
-    hendelser.push('Aktivitetskrav - Forhåndsvarsel utløpt');
-  }
-  if (personData.aktivitetskravvurdering) {
-    hendelser.push(
-      `Aktivitetskrav ${mapAktivitetskravStatus(
-        personData.aktivitetskravvurdering
-      )}`
-    );
-  }
-  if (personData.dialogmotekandidat) {
-    hendelser.push('Dialogmøte - Kandidat');
-  }
-  if (personData.harDialogmotesvar) {
-    hendelser.push('Dialogmøte - Nytt svar');
-  }
-  if (personData.harMotebehovUbehandlet) {
-    hendelser.push('Dialogmøte - Møtebehov');
-  }
-  if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
-    hendelser.push('Oppfølgingsplan'); //TODO: Hva skal denne egt gjøre?
-  }
-  if (personData.harBehandlerdialogUbehandlet) {
-    hendelser.push('Dialogmelding');
-  }
-  if (personData.friskmeldingTilArbeidsformidlingFom) {
-    hendelser.push('Friskmelding til arbeidsformidling');
-  }
-  if (personData.behandlerBerOmBistandUbehandlet) {
-    hendelser.push('Bistandsbehov fra behandler');
+  if (
+    personData.aktivitetskravvurdering ||
+    personData.aktivitetskrav === AktivitetskravStatus.NY ||
+    personData.aktivitetskrav === AktivitetskravStatus.NY_VURDERING
+  ) {
+    hendelser.push(`Akt.krav ${mapAktivitetskravStatus(personData)}`);
   }
   if (personData.arbeidsuforhetvurdering) {
     hendelser.push(
@@ -110,6 +85,34 @@ export function getHendelser(personData: PersonData): string[] {
         personData.arbeidsuforhetvurdering.varsel?.svarfrist
       )}`
     );
+  }
+  if (personData.behandlerBerOmBistandUbehandlet) {
+    hendelser.push('Bistandsbehov fra behandler');
+  }
+  if (personData.harBehandlerdialogUbehandlet) {
+    hendelser.push('Dialogmelding');
+  }
+  if (personData.dialogmotekandidat) {
+    hendelser.push('Dialogmøte - Kandidat');
+  }
+  if (personData.harMotebehovUbehandlet) {
+    hendelser.push('Dialogmøte - Møtebehov');
+  }
+  if (personData.harDialogmotesvar) {
+    hendelser.push('Dialogmøte - Nytt svar');
+  }
+  if (personData.friskmeldingTilArbeidsformidlingFom) {
+    hendelser.push('Friskmelding til arbeidsformidling');
+  }
+  if (personData.oppfolgingsoppgave) {
+    hendelser.push(
+      `Oppf.oppgave - ${mapOppfolgingsgrunn(
+        personData.oppfolgingsoppgave.oppfolgingsgrunn
+      )}`
+    );
+  }
+  if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
+    hendelser.push('Oppfølgingsplan'); //TODO: Hva skal denne egt gjøre?
   }
   if (personData.isAktivSenOppfolgingKandidat) {
     hendelser.push('Snart slutt på sykepengene');
