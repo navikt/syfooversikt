@@ -8,6 +8,8 @@ import { FristColumn } from '@/components/FristColumn';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
+import { getHendelser } from '@/utils/statusColumnUtils';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -33,6 +35,7 @@ export const NewOversiktTable = ({
   setSorting,
 }: Props): ReactElement => {
   const { columns } = useSorting();
+  const { toggles } = useFeatureToggles();
 
   const handleSort = (sortKey: string | undefined) => {
     if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
@@ -90,11 +93,16 @@ export const NewOversiktTable = ({
               Velg alle
             </Checkbox>
           </Table.DataCell>
-          {columns.map((col, index) => (
-            <Table.ColumnHeader key={index} sortKey={col.sortKey} sortable>
-              {col.sortingText}
-            </Table.ColumnHeader>
-          ))}
+          {columns
+            .filter(
+              (column) =>
+                toggles.isHendelseColumnEnabled || column.sortKey !== 'HENDELSE'
+            )
+            .map((col, index) => (
+              <Table.ColumnHeader key={index} sortKey={col.sortKey} sortable>
+                {col.sortingText}
+              </Table.ColumnHeader>
+            ))}
           <Table.DataCell />
         </Table.Row>
       </Table.Header>
@@ -145,6 +153,15 @@ export const NewOversiktTable = ({
             <Table.DataCell textSize="small">
               <FristColumn personData={persondata} />
             </Table.DataCell>
+            {toggles.isHendelseColumnEnabled && (
+              <Table.DataCell textSize="small">
+                {getHendelser(persondata).map((status, index) => (
+                  <p key={index} className="m-0">
+                    {status}
+                  </p>
+                ))}
+              </Table.DataCell>
+            )}
           </Table.Row>
         ))}
       </Table.Body>

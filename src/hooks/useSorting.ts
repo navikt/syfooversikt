@@ -8,6 +8,7 @@ export type SortingKey =
   | 'VEILEDER'
   | 'UKE'
   | 'DATO'
+  | 'HENDELSE'
   | 'NONE';
 
 export type SortDirection = SortState['direction'];
@@ -46,6 +47,10 @@ const columns: SortColumn[] = [
   {
     sortKey: 'DATO',
     sortingText: 'Frist/Dato',
+  },
+  {
+    sortKey: 'HENDELSE',
+    sortingText: 'Hendelse',
   },
 ];
 
