@@ -19,6 +19,7 @@ export enum AktivitetskravStatus {
   FORHANDSVARSEL = 'FORHANDSVARSEL',
   IKKE_AKTUELL = 'IKKE_AKTUELL',
   LUKKET = 'LUKKET',
+  NY_VURDERING = 'NY_VURDERING',
 }
 
 export interface PersonOversiktUbehandletStatusDTO {

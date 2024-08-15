@@ -10,6 +10,8 @@ import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 import { getHendelser } from '@/utils/statusColumnUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { useTabType } from '@/context/tab/TabTypeContext';
+import { OverviewTabType } from '@/konstanter';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -36,6 +38,7 @@ export const NewOversiktTable = ({
 }: Props): ReactElement => {
   const { columns } = useSorting();
   const { toggles } = useFeatureToggles();
+  const { tabType } = useTabType();
 
   const handleSort = (sortKey: string | undefined) => {
     if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
@@ -96,7 +99,10 @@ export const NewOversiktTable = ({
           {columns
             .filter(
               (column) =>
-                toggles.isHendelseColumnEnabled || column.sortKey !== 'HENDELSE'
+                (toggles.isHendelseColumnEnabled ||
+                  column.sortKey !== 'HENDELSE') &&
+                (tabType === OverviewTabType.ENHET_OVERVIEW ||
+                  column.sortKey !== 'VEILEDER')
             )
             .map((col, index) => (
               <Table.ColumnHeader key={index} sortKey={col.sortKey} sortable>
@@ -142,9 +148,11 @@ export const NewOversiktTable = ({
             <Table.DataCell textSize="small">
               <PersonRadVirksomhetColumn personData={persondata} />
             </Table.DataCell>
-            <Table.DataCell textSize="small">
-              <VeilederColumn personData={persondata} />
-            </Table.DataCell>
+            {tabType === OverviewTabType.ENHET_OVERVIEW && (
+              <Table.DataCell textSize="small">
+                <VeilederColumn personData={persondata} />
+              </Table.DataCell>
+            )}
             <Table.DataCell textSize="small">
               {getVarighetOppfolgingstilfelle(
                 persondata.latestOppfolgingstilfelle
@@ -154,7 +162,10 @@ export const NewOversiktTable = ({
               <FristColumn personData={persondata} />
             </Table.DataCell>
             {toggles.isHendelseColumnEnabled && (
-              <Table.DataCell textSize="small">
+              <Table.DataCell
+                textSize="small"
+                className="[&>*:not(:last-child)]:mb-1.5"
+              >
                 {getHendelser(persondata).map((status, index) => (
                   <p key={index} className="m-0">
                     {status}
