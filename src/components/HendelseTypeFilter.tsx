@@ -18,6 +18,7 @@ export const HendelseTekster = {
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
   AKTIVITETSKRAV: 'Aktivitetskrav',
+  AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   BEHANDLERDIALOG: 'Dialog med behandler',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
@@ -44,6 +45,7 @@ const enkeltFilterFraTekst = (
     dialogmotekandidat: false,
     dialogmotesvar: false,
     isAktivitetskravChecked: false,
+    isAktivitetskravVurderStansChecked: false,
     behandlerdialog: false,
     oppfolgingsoppgave: false,
     behandlerBerOmBistand: false,
@@ -84,6 +86,10 @@ const lagNyttFilter = (
     }
     case HendelseTekster.AKTIVITETSKRAV: {
       filter.isAktivitetskravChecked = checked;
+      return filter;
+    }
+    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS: {
+      filter.isAktivitetskravVurderStansChecked = checked;
       return filter;
     }
     case HendelseTekster.BEHANDLERDIALOG: {
@@ -130,6 +136,8 @@ const isCheckedInState = (
       return state.dialogmotesvar;
     case HendelseTekster.AKTIVITETSKRAV:
       return state.isAktivitetskravChecked;
+    case HendelseTekster.AKTIVITETSKRAV_VURDER_STANS:
+      return state.isAktivitetskravVurderStansChecked;
     case HendelseTekster.BEHANDLERDIALOG:
       return state.behandlerdialog;
     case HendelseTekster.OPPFOLGINGSOPPGAVE:
@@ -152,6 +160,7 @@ const showCheckbox = (
 ): boolean => {
   switch (key) {
     case 'AKTIVITETSKRAV':
+    case 'AKTIVITETSKRAV_VURDER_STANS':
     case 'BEHANDLERDIALOG':
     case 'DIALOGMOTEKANDIDAT':
     case 'DIALOGMOTESVAR':

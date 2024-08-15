@@ -217,6 +217,18 @@ const matchesFilter = (
         personData.harAktivitetskravVurderStansUbehandlet ||
         personData.aktivitetskravvurdering !== null
       );
+    case 'isAktivitetskravVurderStansChecked':
+      const isExpiredVarsel =
+        !!personData?.aktivitetskravvurdering?.vurderinger[0]?.varsel
+          ?.svarfrist &&
+        isPast(
+          personData?.aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist
+        );
+      return (
+        !filters[key] ||
+        personData.harAktivitetskravVurderStansUbehandlet ||
+        isExpiredVarsel
+      );
   }
 };
 

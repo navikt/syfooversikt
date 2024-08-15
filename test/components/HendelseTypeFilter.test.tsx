@@ -81,6 +81,12 @@ describe('HendelseTypeFilter', () => {
     });
     expect(aktivitetskravCheckbox).to.exist;
 
+    const vurderStansCheckbox = screen.getByRole('checkbox', {
+      name: /Vurder stans/,
+      checked: false,
+    });
+    expect(vurderStansCheckbox).to.exist;
+
     const behandlerdialogCheckbox = screen.getByRole('checkbox', {
       name: /Dialog med behandler/,
       checked: false,

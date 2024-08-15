@@ -54,6 +54,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   harFriskmeldingTilArbeidsformidling: false,
   isSenOppfolgingChecked: false,
   isAktivitetskravChecked: false,
+  isAktivitetskravVurderStansChecked: false,
 };
 
 describe('hendelseFilteringUtils', () => {

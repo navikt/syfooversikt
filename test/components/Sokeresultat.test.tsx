@@ -70,6 +70,7 @@ describe('Sokeresultat', () => {
         harFriskmeldingTilArbeidsformidling: false,
         isSenOppfolgingChecked: false,
         isAktivitetskravChecked: false,
+        isAktivitetskravVurderStansChecked: false,
       },
     };
 

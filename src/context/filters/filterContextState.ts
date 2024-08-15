@@ -16,6 +16,7 @@ export interface HendelseTypeFilters {
   harFriskmeldingTilArbeidsformidling: boolean;
   isSenOppfolgingChecked: boolean;
   isAktivitetskravChecked: boolean;
+  isAktivitetskravVurderStansChecked: boolean;
 }
 
 export interface FilterState {
@@ -50,5 +51,6 @@ export const filterInitialState: FilterState = {
     harFriskmeldingTilArbeidsformidling: false,
     isSenOppfolgingChecked: false,
     isAktivitetskravChecked: false,
+    isAktivitetskravVurderStansChecked: false,
   },
 };
