@@ -18,11 +18,7 @@ const defaultPersonData: PersonData = {
   harOppfolgingsplanLPSBistandUbehandlet: false,
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
-  aktivitetskrav: null,
-  aktivitetskravActive: false,
-  aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
-  harAktivitetskravVurderStansUbehandlet: false,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
@@ -41,25 +37,19 @@ describe('FristColumn', () => {
     expect(screen.queryAllByText(fristFormatRegex)).to.be.empty;
   });
 
-  it('viser ingen frist for person når aktivitetskrav har frist, men ikke AVVENT', () => {
-    const aktivitetskravVurderingFrist = new Date('2023-12-18');
-    const personForhandsvarselMedFrist: PersonData = {
-      ...defaultPersonData,
-      aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
-      aktivitetskravVurderingFrist: aktivitetskravVurderingFrist,
-    };
-    render(<FristColumn personData={personForhandsvarselMedFrist} />);
-
-    expect(screen.queryByText(toReadableDate(aktivitetskravVurderingFrist))).to
-      .not.exist;
-  });
-
   it('viser frist for person når aktivitetskrav AVVENT med frist', () => {
     const aktivitetskravVurderingFrist = new Date('2023-12-18');
     const personAvventerMedFrist: PersonData = {
       ...defaultPersonData,
-      aktivitetskrav: AktivitetskravStatus.AVVENT,
-      aktivitetskravVurderingFrist: aktivitetskravVurderingFrist,
+      aktivitetskravvurdering: {
+        status: AktivitetskravStatus.AVVENT,
+        vurderinger: [
+          {
+            status: AktivitetskravStatus.AVVENT,
+            frist: aktivitetskravVurderingFrist,
+          },
+        ],
+      },
     };
     render(<FristColumn personData={personAvventerMedFrist} />);
 
@@ -97,8 +87,15 @@ describe('FristColumn', () => {
     const friskmeldingTilArbeidsformidlingFom = addWeeks(new Date(), 10);
     const personMedFlereFrister: PersonData = {
       ...defaultPersonData,
-      aktivitetskrav: AktivitetskravStatus.AVVENT,
-      aktivitetskravVurderingFrist: aktivitetskravVurderingFrist,
+      aktivitetskravvurdering: {
+        status: AktivitetskravStatus.AVVENT,
+        vurderinger: [
+          {
+            status: AktivitetskravStatus.AVVENT,
+            frist: aktivitetskravVurderingFrist,
+          },
+        ],
+      },
       oppfolgingsoppgave,
       friskmeldingTilArbeidsformidlingFom,
     };
@@ -167,8 +164,6 @@ describe('FristColumn', () => {
       const svarfristForhandsvarselIkkeVis = new Date('2024-07-17');
       const personMedForhandsvarsel: PersonData = {
         ...defaultPersonData,
-        aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
-        aktivitetskravVurderingFrist: svarfristForhandsvarselIkkeVis,
         aktivitetskravvurdering: {
           status: AktivitetskravStatus.FORHANDSVARSEL,
           vurderinger: [
@@ -194,8 +189,6 @@ describe('FristColumn', () => {
       const aktivitetskravAvventFristIkkeVis = new Date('2024-07-17');
       const personMedForhandsvarsel: PersonData = {
         ...defaultPersonData,
-        aktivitetskrav: AktivitetskravStatus.AVVENT,
-        aktivitetskravVurderingFrist: aktivitetskravAvventFristIkkeVis,
         aktivitetskravvurdering: {
           status: AktivitetskravStatus.AVVENT,
           vurderinger: [

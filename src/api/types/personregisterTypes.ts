@@ -1,5 +1,4 @@
 import {
-  AktivitetskravStatus,
   ArbeidsuforhetvurderingDTO,
   OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
@@ -19,11 +18,7 @@ export interface PersonData {
   tildeltVeilederIdent: string;
   dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
-  aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravActive: boolean;
-  aktivitetskravVurderingFrist: Date | null;
   harBehandlerdialogUbehandlet: boolean;
-  harAktivitetskravVurderStansUbehandlet: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;

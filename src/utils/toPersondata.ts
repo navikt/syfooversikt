@@ -27,12 +27,7 @@ export const toPersonData = (
       tildeltVeilederIdent: person.veilederIdent || '',
       dialogmotekandidat: person?.dialogmotekandidat,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
-      aktivitetskrav: person.aktivitetskrav,
-      aktivitetskravActive: person.aktivitetskravActive,
-      aktivitetskravVurderingFrist: person.aktivitetskravVurderingFrist,
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
-      harAktivitetskravVurderStansUbehandlet:
-        person.aktivitetskravVurderStansUbehandlet,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
       arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
