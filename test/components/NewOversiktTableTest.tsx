@@ -34,11 +34,7 @@ const defaultPersonData: PersonData = {
   harOppfolgingsplanLPSBistandUbehandlet: false,
   tildeltEnhetId: '123',
   tildeltVeilederIdent: '234',
-  aktivitetskrav: null,
-  aktivitetskravActive: false,
-  aktivitetskravVurderingFrist: null,
   harBehandlerdialogUbehandlet: false,
-  harAktivitetskravVurderStansUbehandlet: false,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
@@ -48,13 +44,26 @@ const defaultPersonData: PersonData = {
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
-  aktivitetskrav: AktivitetskravStatus.AVVENT,
-  aktivitetskravActive: true,
-  aktivitetskravVurderingFrist: null,
+  aktivitetskravvurdering: {
+    status: AktivitetskravStatus.AVVENT,
+    vurderinger: [
+      {
+        status: AktivitetskravStatus.AVVENT,
+      },
+    ],
+  },
 };
 const personDataAktivitetskravAvventMedFrist: PersonData = {
   ...personDataAktivitetskravAvventUtenFrist,
-  aktivitetskravVurderingFrist: new Date('2023-04-01'),
+  aktivitetskravvurdering: {
+    status: AktivitetskravStatus.AVVENT,
+    vurderinger: [
+      {
+        status: AktivitetskravStatus.AVVENT,
+        frist: new Date('2023-04-01'),
+      },
+    ],
+  },
 };
 const personWithOppfolgingstilfelle: PersonData = {
   ...defaultPersonData,
@@ -172,7 +181,6 @@ describe('NewOversiktTable', () => {
         harMotebehovUbehandlet: true,
         harOppfolgingsplanLPSBistandUbehandlet: true,
         harBehandlerdialogUbehandlet: true,
-        aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
         aktivitetskravvurdering: {
           status: AktivitetskravStatus.FORHANDSVARSEL,
           vurderinger: [

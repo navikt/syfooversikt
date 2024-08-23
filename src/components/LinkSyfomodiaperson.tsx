@@ -13,9 +13,7 @@ export const lenkeTilModia = (personData: PersonData) => {
     personData.dialogmotekandidat;
   const isGoingToOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
-  const isGoingToAktivitetskrav =
-    personData.aktivitetskravActive ||
-    personData.harAktivitetskravVurderStansUbehandlet;
+  const isGoingToAktivitetskrav = !!personData.aktivitetskravvurdering;
   const isGoingToBehandlerdialog = personData.harBehandlerdialogUbehandlet;
   const isGoingToSykmeldinger = personData.behandlerBerOmBistandUbehandlet;
   const isGoingToArbeidsuforhet = !!personData.arbeidsuforhetvurdering;

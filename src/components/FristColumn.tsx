@@ -67,35 +67,35 @@ const oppfolgingsgrunnTekster = (
 
 export const FristColumn = ({ personData }: FristColumnProps) => {
   const {
-    aktivitetskrav,
-    aktivitetskravVurderingFrist,
     oppfolgingsoppgave,
     friskmeldingTilArbeidsformidlingFom,
     arbeidsuforhetvurdering,
     aktivitetskravvurdering,
   } = personData;
   const frister: Frist[] = [];
+  const aktivitetskravStatus = aktivitetskravvurdering?.status;
+  const aktivitetskravVurderingFrist =
+    aktivitetskravvurdering?.vurderinger[0]?.frist;
+  const aktivitetskravVarselFrist =
+    aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
   if (
     aktivitetskravvurdering?.vurderinger.length &&
     aktivitetskravvurdering?.vurderinger.length > 0
   ) {
-    const frist = aktivitetskravvurdering.vurderinger[0]?.frist;
-    const varselFrist =
-      aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist;
-    frist &&
+    aktivitetskravVurderingFrist &&
       frister.push({
         icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
-        date: frist,
+        date: aktivitetskravVurderingFrist,
         tooltip: texts.tooltipAvventer,
       });
-    varselFrist &&
+    aktivitetskravVarselFrist &&
       frister.push({
         icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
-        date: varselFrist,
+        date: aktivitetskravVarselFrist,
         tooltip: texts.aktivitetskravvarselFrist,
       });
   } else if (
-    aktivitetskrav === AktivitetskravStatus.AVVENT &&
+    aktivitetskravStatus === AktivitetskravStatus.AVVENT &&
     aktivitetskravVurderingFrist
   ) {
     frister.push({

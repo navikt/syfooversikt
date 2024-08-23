@@ -2,7 +2,6 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
 const veilederIdent = 'Z101010';
 const enhetId = '0316';
@@ -33,8 +32,6 @@ export const personregister: PersonregisterState = {
     skjermingskode: testdata.skjermingskode.ingen,
     markert: false,
     tildeltVeilederIdent: 'Z999999',
-    aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravActive: true,
   } as PersonData,
   [testdata.fnr2]: {
     navn: testdata.navn2,
@@ -43,8 +40,6 @@ export const personregister: PersonregisterState = {
     skjermingskode: testdata.skjermingskode.egenAnsatt,
     markert: false,
     tildeltVeilederIdent: 'Z999999',
-    aktivitetskrav: null,
-    aktivitetskravActive: false,
   } as PersonData,
 };
 

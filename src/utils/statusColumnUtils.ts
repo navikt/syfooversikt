@@ -34,8 +34,7 @@ function mapOppfolgingsgrunn(oppfolgingsgrunn: Oppfolgingsgrunn) {
 }
 
 function mapAktivitetskravStatus(personData: PersonData): string {
-  const status =
-    personData?.aktivitetskravvurdering?.status ?? personData.aktivitetskrav;
+  const status = personData?.aktivitetskravvurdering?.status;
   switch (status) {
     case AktivitetskravStatus.NY:
       return '- Ny kandidat';
@@ -72,11 +71,7 @@ function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
 
 export function getHendelser(personData: PersonData): string[] {
   const hendelser: string[] = [];
-  if (
-    personData.aktivitetskravvurdering ||
-    personData.aktivitetskrav === AktivitetskravStatus.NY ||
-    personData.aktivitetskrav === AktivitetskravStatus.NY_VURDERING
-  ) {
+  if (personData.aktivitetskravvurdering) {
     hendelser.push(`Akt.krav ${mapAktivitetskravStatus(personData)}`);
   }
   if (personData.arbeidsuforhetvurdering) {

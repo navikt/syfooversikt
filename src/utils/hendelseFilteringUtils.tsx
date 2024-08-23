@@ -100,7 +100,9 @@ export const filterOnFrist = (
   }
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
     const frister = [
-      persondata.aktivitetskravVurderingFrist,
+      persondata.arbeidsuforhetvurdering?.varsel?.svarfrist,
+      persondata.aktivitetskravvurdering?.vurderinger[0]?.frist,
+      persondata.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
       persondata.oppfolgingsoppgave?.frist,
       persondata.friskmeldingTilArbeidsformidlingFom,
     ];
@@ -211,12 +213,7 @@ const matchesFilter = (
     case 'isSenOppfolgingChecked':
       return !filters[key] || personData.isAktivSenOppfolgingKandidat;
     case 'isAktivitetskravChecked':
-      return (
-        !filters[key] ||
-        personData.aktivitetskravActive ||
-        personData.harAktivitetskravVurderStansUbehandlet ||
-        personData.aktivitetskravvurdering !== null
-      );
+      return !filters[key] || personData.aktivitetskravvurdering !== null;
     case 'isAktivitetskravVurderStansChecked':
       const isExpiredVarsel =
         !!personData?.aktivitetskravvurdering?.vurderinger[0]?.varsel
@@ -224,11 +221,7 @@ const matchesFilter = (
         isPast(
           personData?.aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist
         );
-      return (
-        !filters[key] ||
-        personData.harAktivitetskravVurderStansUbehandlet ||
-        isExpiredVarsel
-      );
+      return !filters[key] || isExpiredVarsel;
   }
 };
 

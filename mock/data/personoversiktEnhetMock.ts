@@ -14,11 +14,9 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   motebehovUbehandlet: null,
   dialogmotekandidat: undefined,
   dialogmotesvarUbehandlet: false,
-  aktivitetskravActive: false,
   behandlerdialogUbehandlet: false,
   oppfolgingsoppgave: null,
   behandlerBerOmBistandUbehandlet: false,
-  aktivitetskravVurderStansUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
   isAktivSenOppfolgingKandidat: false,
@@ -32,9 +30,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     navn: 'Korrupt Heis',
     enhet: '0316',
     veilederIdent: null,
-    aktivitetskrav: AktivitetskravStatus.OPPFYLT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
     oppfolgingsoppgave: null,
@@ -52,9 +47,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     aktivitetskravvurdering: {
       status: AktivitetskravStatus.AVVENT,
       vurderinger: [
@@ -75,11 +67,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.FORHANDSVARSEL,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     motestatus: undefined,
-    aktivitetskravVurderStansUbehandlet: true,
     oppfolgingsoppgave: null,
     aktivitetskravvurdering: {
       status: AktivitetskravStatus.FORHANDSVARSEL,
@@ -99,8 +87,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     navn: 'Per Arbeidsuforvarselsen',
     enhet: '0316',
     veilederIdent: null,
-    aktivitetskrav: null,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
     oppfolgingsoppgave: null,
@@ -117,8 +103,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: null,
-    aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
@@ -129,12 +113,18 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: true,
-    aktivitetskravVurderingFrist: new Date('2022-12-08'),
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-08'),
+        },
+      ],
+    },
   },
   {
     ...behandletPerson,
@@ -143,8 +133,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: null,
     motebehovUbehandlet: true,
-    aktivitetskrav: null,
-    aktivitetskravVurderingFrist: null,
     motestatus: undefined,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-04-01')),
     behandlerBerOmBistandUbehandlet: true,
@@ -156,11 +144,17 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2022-12-10'),
     motestatus: undefined,
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-10'),
+        },
+      ],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-25'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -193,10 +187,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z101010',
     motebehovUbehandlet: true,
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2022-12-10'),
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-10'),
+        },
+      ],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-03'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -226,10 +226,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: true,
-    aktivitetskravVurderingFrist: new Date('2023-04-01'),
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-05-01')),
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2023-04-01'),
+        },
+      ],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-08-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -253,10 +259,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'M987654',
     motestatus: MoteStatusType.NYTT_TID_STED,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2023-12-10'),
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2023-12-10'),
+        },
+      ],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -278,10 +290,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motebehovUbehandlet: true,
     motestatus: MoteStatusType.INNKALT,
     dialogmotesvarUbehandlet: true,
-    aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravActive: true,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.NY,
+      vurderinger: [],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -302,9 +315,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'M987654',
     dialogmotekandidat: true,
     motestatus: MoteStatusType.AVLYST,
-    aktivitetskrav: AktivitetskravStatus.STANS,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -326,10 +336,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'M987654',
     dialogmotekandidat: true,
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2022-12-10'),
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-10'),
+        },
+      ],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-05-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -350,9 +366,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Wienerbrød',
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: MoteStatusType.FERDIGSTILT,
-    aktivitetskrav: AktivitetskravStatus.UNNTAK,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-10-01'),
@@ -377,9 +390,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Wienerbrød',
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.AUTOMATISK_OPPFYLT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -401,10 +411,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z999991',
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.NY,
+      vurderinger: [],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -426,9 +437,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
     latestOppfolgingstilfelle: undefined,
-    aktivitetskrav: AktivitetskravStatus.OPPFYLT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
   },
   {
@@ -440,9 +448,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     oppfolgingsplanLPSBistandUbehandlet: null,
     motestatus: undefined,
     latestOppfolgingstilfelle: undefined,
-    aktivitetskrav: null,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     arbeidsuforhetvurdering: {
       varsel: null,
@@ -455,9 +460,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: MoteStatusType.NYTT_TID_STED,
-    aktivitetskrav: AktivitetskravStatus.IKKE_OPPFYLT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -478,10 +480,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: MoteStatusType.INNKALT,
-    aktivitetskrav: AktivitetskravStatus.NY,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.NY,
+      vurderinger: [],
+    },
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
@@ -502,9 +505,15 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z101010',
     dialogmotekandidat: true,
     motestatus: MoteStatusType.AVLYST,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2022-12-10'),
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-10'),
+        },
+      ],
+    },
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -526,9 +535,15 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z101010',
     dialogmotekandidat: true,
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.AVVENT,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: new Date('2022-12-20'),
+    aktivitetskravvurdering: {
+      status: AktivitetskravStatus.AVVENT,
+      vurderinger: [
+        {
+          status: AktivitetskravStatus.AVVENT,
+          frist: new Date('2022-12-20'),
+        },
+      ],
+    },
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -549,9 +564,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: MoteStatusType.FERDIGSTILT,
-    aktivitetskrav: AktivitetskravStatus.UNNTAK,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -572,9 +584,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.UNNTAK,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -595,9 +604,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: undefined,
-    aktivitetskrav: AktivitetskravStatus.UNNTAK,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
@@ -618,8 +624,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: undefined,
-    aktivitetskrav: null,
-    aktivitetskravVurderingFrist: null,
     isAktivSenOppfolgingKandidat: true,
   },
 ];

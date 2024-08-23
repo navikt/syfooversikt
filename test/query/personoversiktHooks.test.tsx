@@ -62,10 +62,9 @@ describe('personoversiktHooks tests', () => {
 
     const allPersonsUbehandlet = persons.every((person) => {
       return (
-        person.aktivitetskravActive ||
+        !!person.aktivitetskravvurdering ||
         person.oppfolgingsoppgave ||
         person.behandlerdialogUbehandlet ||
-        person.aktivitetskravVurderStansUbehandlet ||
         person.dialogmotekandidat ||
         person.oppfolgingsplanLPSBistandUbehandlet ||
         person.motebehovUbehandlet ||

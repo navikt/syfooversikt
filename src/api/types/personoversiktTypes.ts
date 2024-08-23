@@ -28,8 +28,6 @@ export interface PersonOversiktUbehandletStatusDTO {
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
   dialogmotekandidat: boolean | undefined;
   behandlerdialogUbehandlet: boolean;
-  aktivitetskravActive: boolean;
-  aktivitetskravVurderStansUbehandlet: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
@@ -46,8 +44,6 @@ export interface PersonOversiktStatusDTO
   veilederIdent: string | null;
   motestatus: MoteStatusType | undefined;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
-  aktivitetskrav: AktivitetskravStatus | null;
-  aktivitetskravVurderingFrist: Date | null;
 }
 
 export interface OppfolgingstilfelleDTO {

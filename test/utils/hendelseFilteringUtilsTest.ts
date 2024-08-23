@@ -14,6 +14,7 @@ import { testdata } from '../data/fellesTestdata';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from 'date-fns';
 import { getOppfolgingsoppgave } from '../../mock/data/personoversiktEnhetMock';
+import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
 export const createPersonDataWithName = (name: string): PersonData => {
   return {
@@ -27,11 +28,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     tildeltVeilederIdent: '234',
     dialogmotekandidat: undefined,
     latestOppfolgingstilfelle: undefined,
-    aktivitetskrav: null,
-    aktivitetskravActive: false,
-    aktivitetskravVurderingFrist: null,
     harBehandlerdialogUbehandlet: false,
-    harAktivitetskravVurderStansUbehandlet: false,
     behandlerBerOmBistandUbehandlet: false,
     arbeidsuforhetvurdering: null,
     friskmeldingTilArbeidsformidlingFom: null,
@@ -199,11 +196,27 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by aktivitetskrav avventer-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        aktivitetskravVurderingFrist: new Date('2023-12-10'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-10'),
+            },
+          ],
+        },
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -231,11 +244,27 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by aktivitetskrav avventer-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        aktivitetskravVurderingFrist: new Date('2023-12-10'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-10'),
+            },
+          ],
+        },
       };
       const personWithNoFrist = createPersonDataWithName('Navn Navnesen');
 
@@ -407,7 +436,15 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by avventer and trenger oppfolging-frist ascending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
@@ -439,7 +476,15 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts by avventer and trenger oppfolging-frist descending', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
@@ -471,12 +516,28 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts ascending by earliest frist per person when person have both frist', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
         oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2023-12-10')),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        aktivitetskravVurderingFrist: new Date('2023-12-08'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-08'),
+            },
+          ],
+        },
         oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2023-12-15')),
       };
 
@@ -500,12 +561,28 @@ describe('hendelseFilteringUtils', () => {
     it('Sorts descending by earliest frist per person when person have both frist', () => {
       const personWithEarliestFrist: PersonData = {
         ...createPersonDataWithName('Agnes Agnes'),
-        aktivitetskravVurderingFrist: new Date('2023-12-05'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-05'),
+            },
+          ],
+        },
         oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2023-12-10')),
       };
       const personWithLatestFrist: PersonData = {
         ...createPersonDataWithName('Bjarne Bjarne'),
-        aktivitetskravVurderingFrist: new Date('2023-12-08'),
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: new Date('2023-12-08'),
+            },
+          ],
+        },
         oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2023-12-15')),
       };
 
@@ -544,7 +621,10 @@ describe('hendelseFilteringUtils', () => {
     it('Return no elements in personregister if no personer matches filter', () => {
       const personDataWithAktivitetskrav: PersonData = {
         ...createPersonDataWithName('Navn Navnesen'),
-        aktivitetskravActive: true,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.NY,
+          vurderinger: [],
+        },
       };
       const personregister: PersonregisterState = {
         '16614407794': personDataWithAktivitetskrav,
@@ -565,12 +645,18 @@ describe('hendelseFilteringUtils', () => {
     it('Return only elements matching all active filters', () => {
       const personDataWithAktivitetskrav: PersonData = {
         ...createPersonDataWithName('Fox Mulder'),
-        aktivitetskravActive: true,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.NY,
+          vurderinger: [],
+        },
       };
       const personDataWithMotebehovAndAktivitetskrav: PersonData = {
         ...createPersonDataWithName('Dana Scully'),
         harMotebehovUbehandlet: true,
-        aktivitetskravActive: true,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.NY,
+          vurderinger: [],
+        },
       };
       const personregister: PersonregisterState = {
         '16614407794': personDataWithAktivitetskrav,
@@ -602,8 +688,15 @@ describe('hendelseFilteringUtils', () => {
       };
       const aktivitetskravVurderingFristBeforeToday: PersonData = {
         ...createPersonDataWithName('Cox Dulder'),
-        aktivitetskravActive: true,
-        aktivitetskravVurderingFrist: oneWeekAgo,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: oneWeekAgo,
+            },
+          ],
+        },
       };
       const oppfolgingsOppgaveFristToday: PersonData = {
         ...createPersonDataWithName('Dox Fulder'),
@@ -611,8 +704,15 @@ describe('hendelseFilteringUtils', () => {
       };
       const aktivitetskravVurderingFristToday: PersonData = {
         ...createPersonDataWithName('Fox Gulder'),
-        aktivitetskravActive: true,
-        aktivitetskravVurderingFrist: today,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: today,
+            },
+          ],
+        },
       };
       const oppfolgingsOppgaveFristFuture: PersonData = {
         ...createPersonDataWithName('Gox Hulder'),
@@ -620,8 +720,15 @@ describe('hendelseFilteringUtils', () => {
       };
       const aktivitetskravVurderingFristFuture: PersonData = {
         ...createPersonDataWithName('Jox Kulder'),
-        aktivitetskravActive: true,
-        aktivitetskravVurderingFrist: oneWeekFromToday,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              frist: oneWeekFromToday,
+            },
+          ],
+        },
       };
       const friskmeldingTilArbeidsformidlingFomFuture: PersonData = {
         ...createPersonDataWithName('Box Bulder'),
