@@ -25,6 +25,7 @@ export const HendelseTekster = {
   ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
   FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding til arbeidsformidling',
   SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
+  MANGLENDE_MEDVIRKNING: '§8-8 Manglende medvirkning',
 } as const;
 
 type HendelseTeksterKeys = keyof typeof HendelseTekster;
@@ -52,6 +53,7 @@ const enkeltFilterFraTekst = (
     isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
     isSenOppfolgingChecked: false,
+    isAktivManglendeMedvirkning: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -116,6 +118,10 @@ const lagNyttFilter = (
       filter.isSenOppfolgingChecked = checked;
       return filter;
     }
+    case HendelseTekster.MANGLENDE_MEDVIRKNING: {
+      filter.isAktivManglendeMedvirkning = checked;
+      return filter;
+    }
   }
 };
 
@@ -150,6 +156,8 @@ const isCheckedInState = (
       return state.harFriskmeldingTilArbeidsformidling;
     case HendelseTekster.SNART_SLUTT_PA_SYKEPENGENE:
       return state.isSenOppfolgingChecked;
+    case HendelseTekster.MANGLENDE_MEDVIRKNING:
+      return state.isAktivManglendeMedvirkning;
   }
 };
 
@@ -174,6 +182,8 @@ const showCheckbox = (
       return toggles.isFrisktilarbeidEnabled;
     case 'SNART_SLUTT_PA_SYKEPENGENE':
       return toggles.isOppfolgingISenFaseEnabled;
+    case 'MANGLENDE_MEDVIRKNING':
+      return toggles.isManglendeMedvirkningEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }

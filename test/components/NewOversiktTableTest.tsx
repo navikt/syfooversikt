@@ -41,6 +41,7 @@ const defaultPersonData: PersonData = {
   isAktivSenOppfolgingKandidat: false,
   oppfolgingsoppgave: null,
   aktivitetskravvurdering: null,
+  manglendeMedvirkning: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
@@ -209,6 +210,11 @@ describe('NewOversiktTable', () => {
           oppfolgingsgrunn: Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT,
           frist: new Date(),
         },
+        manglendeMedvirkning: {
+          varsel: {
+            svarfrist: dayjs().subtract(1, 'week').toDate(),
+          },
+        },
       },
     });
 
@@ -223,5 +229,7 @@ describe('NewOversiktTable', () => {
     expect(screen.getByText('Dialogmelding')).to.exist;
     expect(screen.getByText('Oppfølgingsplan')).to.exist;
     expect(screen.getByText('Snart slutt på sykepengene')).to.exist;
+    expect(screen.getByText('Manglende medvirkning - Forhåndsvarsel utløpt')).to
+      .exist;
   });
 });

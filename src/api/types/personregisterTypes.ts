@@ -4,6 +4,7 @@ import {
   OppfolgingstilfelleDTO,
 } from './personoversiktTypes';
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
+import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 
@@ -25,6 +26,7 @@ export interface PersonData {
   isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
+  manglendeMedvirkning: ManglendeMedvirkningDTO | null;
 }
 
 export interface PersonregisterState {

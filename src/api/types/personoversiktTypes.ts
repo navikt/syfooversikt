@@ -1,4 +1,5 @@
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
+import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 
 export enum MoteStatusType {
   INNKALT = 'INNKALT',
@@ -34,6 +35,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   isAktivSenOppfolgingKandidat: boolean;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
+  manglendeMedvirkning: ManglendeMedvirkningDTO | null;
 }
 
 export interface PersonOversiktStatusDTO

@@ -48,5 +48,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       'isHendelseColumnEnabled',
       context
     ),
+    isManglendeMedvirkningEnabled: unleash.isEnabled(
+      'isManglendeMedvirkningEnabled',
+      context
+    ),
   };
 };

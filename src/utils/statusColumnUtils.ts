@@ -3,6 +3,7 @@ import {
   AktivitetskravStatus,
 } from '@/api/types/personoversiktTypes';
 import { PersonData } from '@/api/types/personregisterTypes';
+import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 
 function mapOppfolgingsgrunn(oppfolgingsgrunn: Oppfolgingsgrunn) {
   switch (oppfolgingsgrunn) {
@@ -69,6 +70,21 @@ function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
   }
 }
 
+function mapManglendeMedvirkningStatus(
+  manglendeMedvirkning: ManglendeMedvirkningDTO
+) {
+  const fristDate = manglendeMedvirkning.varsel?.svarfrist
+    ? new Date(manglendeMedvirkning.varsel.svarfrist)
+    : undefined;
+  const today = new Date();
+
+  if (fristDate && fristDate >= today) {
+    return 'Forhåndsvarsel sendt';
+  } else {
+    return 'Forhåndsvarsel utløpt';
+  }
+}
+
 export function getHendelser(personData: PersonData): string[] {
   const hendelser: string[] = [];
   if (personData.aktivitetskravvurdering) {
@@ -112,5 +128,13 @@ export function getHendelser(personData: PersonData): string[] {
   if (personData.isAktivSenOppfolgingKandidat) {
     hendelser.push('Snart slutt på sykepengene');
   }
+  if (personData.manglendeMedvirkning) {
+    hendelser.push(
+      `Manglende medvirkning - ${mapManglendeMedvirkningStatus(
+        personData.manglendeMedvirkning
+      )}`
+    );
+  }
+
   return hendelser;
 }
