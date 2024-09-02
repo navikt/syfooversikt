@@ -17,7 +17,7 @@ export interface HendelseTypeFilters {
   isSenOppfolgingChecked: boolean;
   isAktivitetskravChecked: boolean;
   isAktivitetskravVurderStansChecked: boolean;
-  isAktivManglendeMedvirkning: boolean;
+  isManglendeMedvirkningChecked: boolean;
 }
 
 export interface FilterState {
@@ -53,6 +53,6 @@ export const filterInitialState: FilterState = {
     isSenOppfolgingChecked: false,
     isAktivitetskravChecked: false,
     isAktivitetskravVurderStansChecked: false,
-    isAktivManglendeMedvirkning: false,
+    isManglendeMedvirkningChecked: false,
   },
 };

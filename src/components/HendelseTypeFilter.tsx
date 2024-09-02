@@ -53,7 +53,7 @@ const enkeltFilterFraTekst = (
     isAktivArbeidsuforhetvurdering: false,
     harFriskmeldingTilArbeidsformidling: false,
     isSenOppfolgingChecked: false,
-    isAktivManglendeMedvirkning: false,
+    isManglendeMedvirkningChecked: false,
   };
   return lagNyttFilter(filter, tekst, checked);
 };
@@ -119,7 +119,7 @@ const lagNyttFilter = (
       return filter;
     }
     case HendelseTekster.MANGLENDE_MEDVIRKNING: {
-      filter.isAktivManglendeMedvirkning = checked;
+      filter.isManglendeMedvirkningChecked = checked;
       return filter;
     }
   }
@@ -157,7 +157,7 @@ const isCheckedInState = (
     case HendelseTekster.SNART_SLUTT_PA_SYKEPENGENE:
       return state.isSenOppfolgingChecked;
     case HendelseTekster.MANGLENDE_MEDVIRKNING:
-      return state.isAktivManglendeMedvirkning;
+      return state.isManglendeMedvirkningChecked;
   }
 };
 

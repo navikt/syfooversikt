@@ -53,7 +53,7 @@ const defaulthendelseFilter: HendelseTypeFilters = {
   isSenOppfolgingChecked: false,
   isAktivitetskravChecked: false,
   isAktivitetskravVurderStansChecked: false,
-  isAktivManglendeMedvirkning: false,
+  isManglendeMedvirkningChecked: false,
 };
 
 describe('hendelseFilteringUtils', () => {

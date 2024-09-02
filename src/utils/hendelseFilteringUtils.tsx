@@ -212,7 +212,7 @@ const matchesFilter = (
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
     case 'isSenOppfolgingChecked':
       return !filters[key] || personData.isAktivSenOppfolgingKandidat;
-    case 'isAktivManglendeMedvirkning':
+    case 'isManglendeMedvirkningChecked':
       return !filters[key] || !!personData.manglendeMedvirkning;
     case 'isAktivitetskravChecked':
       return !filters[key] || personData.aktivitetskravvurdering !== null;
