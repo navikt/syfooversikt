@@ -14,7 +14,6 @@ import {
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { OverviewTabType } from '@/konstanter';
 import { NewOversikt } from '@/components/NewOversikt';
 
@@ -24,18 +23,15 @@ interface SokeresultatProps {
 
 const lagListe = (
   markertePersoner: string[],
-  veilederIdent: string,
-  enhet: string
+  veilederIdent: string
 ): VeilederArbeidstaker[] => {
   return markertePersoner.map((fnr: string) => ({
     veilederIdent,
     fnr,
-    enhet,
   }));
 };
 
 const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
-  const { aktivEnhet } = useAktivEnhet();
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { tabType } = useTabType();
@@ -73,11 +69,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   };
 
   const buttonHandler = (veilederIdent: string): void => {
-    const veilederArbeidstakerListe = lagListe(
-      markertePersoner,
-      veilederIdent,
-      aktivEnhet || ''
-    );
+    const veilederArbeidstakerListe = lagListe(markertePersoner, veilederIdent);
 
     tildelVeileder.mutate(veilederArbeidstakerListe);
   };
