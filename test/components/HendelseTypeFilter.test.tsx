@@ -110,6 +110,18 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(friskmeldingCheckbox).to.exist;
+
+    const senOppfolgingCheckbox = screen.getByRole('checkbox', {
+      name: /Snart slutt/,
+      checked: false,
+    });
+    expect(senOppfolgingCheckbox).to.exist;
+
+    const manglendeMedvirkningCheckbox = screen.getByRole('checkbox', {
+      name: /Manglende medvirkning/,
+      checked: false,
+    });
+    expect(manglendeMedvirkningCheckbox).to.exist;
   });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
     render(

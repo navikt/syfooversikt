@@ -21,6 +21,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   friskmeldingTilArbeidsformidlingFom: null,
   isAktivSenOppfolgingKandidat: false,
   aktivitetskravvurdering: null,
+  manglendeMedvirkning: null,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -625,6 +626,19 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z101010',
     motestatus: undefined,
     isAktivSenOppfolgingKandidat: true,
+  },
+  {
+    ...behandletPerson,
+    fnr: '99918965679',
+    navn: 'Manglende Medvirksen',
+    enhet: '0316',
+    veilederIdent: 'Z101010',
+    motestatus: undefined,
+    manglendeMedvirkning: {
+      varsel: {
+        svarfrist: new Date(),
+      },
+    },
   },
 ];
 

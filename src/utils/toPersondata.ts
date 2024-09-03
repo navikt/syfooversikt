@@ -35,6 +35,7 @@ export const toPersonData = (
       isAktivSenOppfolgingKandidat: person.isAktivSenOppfolgingKandidat,
       oppfolgingsoppgave: person.oppfolgingsoppgave,
       aktivitetskravvurdering: person.aktivitetskravvurdering,
+      manglendeMedvirkning: person.manglendeMedvirkning,
     };
   });
 

@@ -71,6 +71,7 @@ describe('Sokeresultat', () => {
         isSenOppfolgingChecked: false,
         isAktivitetskravChecked: false,
         isAktivitetskravVurderStansChecked: false,
+        isManglendeMedvirkningChecked: false,
       },
     };
 
