@@ -100,7 +100,6 @@ export const useTildelVeileder = () => {
 
           return {
             ...person,
-            enhet: tilknytning?.enhet || person.enhet,
             veilederIdent: tilknytning?.veilederIdent || person.veilederIdent,
           };
         }
