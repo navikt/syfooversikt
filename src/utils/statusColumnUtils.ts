@@ -4,6 +4,7 @@ import {
 } from '@/api/types/personoversiktTypes';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
+import { isPast } from '@/utils/dateUtils';
 
 function mapOppfolgingsgrunn(oppfolgingsgrunn: Oppfolgingsgrunn) {
   switch (oppfolgingsgrunn) {
@@ -46,43 +47,36 @@ function mapAktivitetskravStatus(personData: PersonData): string {
     case AktivitetskravStatus.FORHANDSVARSEL:
       const svarfrist =
         personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
-      const fristDate = svarfrist ? new Date(svarfrist) : undefined;
-      const today = new Date();
 
-      if (fristDate && fristDate >= today) {
-        return '- Forhåndsvarsel sendt';
-      } else {
-        return '- Forhåndsvarsel utløpt';
+      if (svarfrist) {
+        return isPast(svarfrist)
+          ? '- Forhåndsvarsel utløpt'
+          : '- Forhåndsvarsel sendt';
       }
+
+      return '';
     default:
       return '';
   }
 }
 
 function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
-  const fristDate = svarfrist ? new Date(svarfrist) : undefined;
-  const today = new Date();
-
-  if (fristDate && fristDate >= today) {
-    return 'Forhåndsvarsel sendt';
-  } else {
-    return 'Forhåndsvarsel utløpt';
+  if (svarfrist) {
+    return isPast(svarfrist) ? 'Forhåndsvarsel utløpt' : 'Forhåndsvarsel sendt';
   }
+
+  return '';
 }
 
 function mapManglendeMedvirkningStatus(
   manglendeMedvirkning: ManglendeMedvirkningDTO
 ) {
-  const fristDate = manglendeMedvirkning.varsel?.svarfrist
-    ? new Date(manglendeMedvirkning.varsel.svarfrist)
-    : undefined;
-  const today = new Date();
-
-  if (fristDate && fristDate >= today) {
-    return 'Forhåndsvarsel sendt';
-  } else {
-    return 'Forhåndsvarsel utløpt';
+  const svarfrist = manglendeMedvirkning.varsel?.svarfrist;
+  if (svarfrist) {
+    return isPast(svarfrist) ? 'Forhåndsvarsel utløpt' : 'Forhåndsvarsel sendt';
   }
+
+  return '';
 }
 
 export function getHendelser(personData: PersonData): string[] {
