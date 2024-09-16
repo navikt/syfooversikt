@@ -4,7 +4,7 @@ import {
   Environment,
   UrlFormat,
 } from './decoratorProps';
-import { erAnsattDev, erDev, erLokal, erProd } from '@/utils/miljoUtil';
+import { isAnsattDev, isDev, isProd } from '@/utils/miljoUtil';
 
 const decoratorConfig = (
   setFnr: (fnr: string) => void,
@@ -31,9 +31,9 @@ const decoratorConfig = (
 };
 
 const getEnvironment = (): Environment => {
-  if (erProd()) {
+  if (isProd()) {
     return 'prod';
-  } else if (erDev()) {
+  } else if (isDev()) {
     return 'q2';
   } else {
     return 'local';
@@ -41,7 +41,7 @@ const getEnvironment = (): Environment => {
 };
 
 const getUrlFormat = (): UrlFormat => {
-  if (erAnsattDev()) {
+  if (isAnsattDev()) {
     return 'ANSATT';
   } else if (erLokal()) {
     return 'LOCAL';
