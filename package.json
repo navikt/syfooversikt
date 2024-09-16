@@ -45,7 +45,7 @@
     "@types/redis": "2.8.32",
     "@types/styled-components": "5.1.26",
     "autoprefixer": "10.4.19",
-    "axios": "1.7.2",
+    "axios": "1.7.4",
     "classnames": "2.5.1",
     "connect-redis": "4.0.4",
     "core-js": "3.37.1",
