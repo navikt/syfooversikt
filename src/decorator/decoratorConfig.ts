@@ -4,7 +4,7 @@ import {
   Environment,
   UrlFormat,
 } from './decoratorProps';
-import { isAnsattDev, isDev, isProd } from '@/utils/miljoUtil';
+import { isAnsattDev, isDev, isLocal, isProd } from '@/utils/miljoUtil';
 
 const decoratorConfig = (
   setFnr: (fnr: string) => void,
@@ -43,7 +43,7 @@ const getEnvironment = (): Environment => {
 const getUrlFormat = (): UrlFormat => {
   if (isAnsattDev()) {
     return 'ANSATT';
-  } else if (erLokal()) {
+  } else if (isLocal()) {
     return 'LOCAL';
   } else return 'NAV_NO';
 };
