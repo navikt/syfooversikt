@@ -1,38 +1,51 @@
-import { DecoratorProps, EnhetDisplay, FnrDisplay } from './decoratorProps';
-
-const RESET_VALUE = '\u0000';
+import {
+  DecoratorProps,
+  Enhet,
+  Environment,
+  UrlFormat,
+} from './decoratorProps';
+import { isAnsattDev, isDev, isLocal, isProd } from '@/utils/miljoUtil';
 
 const decoratorConfig = (
   setFnr: (fnr: string) => void,
   setEnhet: (enhet: string) => void
 ): DecoratorProps => {
   return {
-    appname: 'Sykefraværsoppfølging',
-    fnr: {
-      initialValue: RESET_VALUE,
-      display: FnrDisplay.SOKEFELT,
-      ignoreWsEvents: true,
-      skipModal: true,
-      onChange: (value) => {
-        if (value) {
-          setFnr(value);
-        }
-      },
+    appName: 'Sykefraværsoppfølging',
+    fetchActiveEnhetOnMount: true,
+    onEnhetChanged: (enhetId?: string | null, enhet?: Enhet) => {
+      setEnhet(enhetId || enhet?.enhetId || '');
     },
-    enhet: {
-      initialValue: undefined,
-      display: EnhetDisplay.ENHET_VALG,
-      onChange(value): void {
-        if (value) {
-          setEnhet(value);
-        }
-      },
+    onFnrChanged: (fnr?: string | null) => {
+      if (fnr) {
+        setFnr(fnr);
+      }
     },
-    toggles: {
-      visVeileder: true,
-    },
-    useProxy: true,
+    showEnheter: true,
+    showSearchArea: true,
+    showHotkeys: false,
+    environment: getEnvironment(),
+    urlFormat: getUrlFormat(),
+    proxy: '/modiacontextholder',
   };
+};
+
+const getEnvironment = (): Environment => {
+  if (isProd()) {
+    return 'prod';
+  } else if (isDev()) {
+    return 'q2';
+  } else {
+    return 'local';
+  }
+};
+
+const getUrlFormat = (): UrlFormat => {
+  if (isAnsattDev()) {
+    return 'ANSATT';
+  } else if (isLocal()) {
+    return 'LOCAL';
+  } else return 'NAV_NO';
 };
 
 export default decoratorConfig;

@@ -107,10 +107,6 @@ export const auth = {
   responseMode: 'query',
   tokenEndpointAuthSigningAlg: 'RS256',
 
-  internarbeidsflatedecoratorHost: envVar({
-    name: 'INTERNARBEIDSFLATEDECORATOR_HOST',
-  }),
-
   ereg: {
     applicationName: 'ereg',
     clientId: '',
@@ -126,6 +122,7 @@ export const auth = {
     host: envVar({
       name: 'MODIACONTEXTHOLDER_HOST',
     }),
+    removePathPrefix: true,
   },
   syfooversiktsrv: {
     applicationName: 'syfooversiktsrv',
