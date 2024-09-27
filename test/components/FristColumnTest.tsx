@@ -82,6 +82,21 @@ describe('FristColumn', () => {
     ).to.exist;
   });
 
+  it('viser frist for person med manglende medvirkning forhåndsvarsel med svarfrist', () => {
+    const svarfrist = addWeeks(new Date(), 3);
+    const personManglendeMedvirkning: PersonData = {
+      ...defaultPersonData,
+      manglendeMedvirkning: {
+        varsel: {
+          svarfrist: addWeeks(new Date(), 3),
+        },
+      },
+    };
+    render(<FristColumn personData={personManglendeMedvirkning} />);
+
+    expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
+  });
+
   it('viser tidligste frist først når person har flere frister', () => {
     const aktivitetskravVurderingFrist = new Date('2023-12-10');
     const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-05'));

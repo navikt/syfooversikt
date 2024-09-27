@@ -101,6 +101,7 @@ export const filterOnFrist = (
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
     const frister = [
       persondata.arbeidsuforhetvurdering?.varsel?.svarfrist,
+      persondata.manglendeMedvirkning?.varsel?.svarfrist,
       persondata.aktivitetskravvurdering?.vurderinger[0]?.frist,
       persondata.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
       persondata.oppfolgingsoppgave?.frist,

@@ -17,6 +17,7 @@ const texts = {
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
   arbeidsuforhetvarselFrist: '§8-4: Svarfrist forhåndsvarsel',
+  manglendeMedvirkningVarselFrist: '§8-8: Svarfrist forhåndsvarsel',
   aktivitetskravvarselFrist: 'Aktivitetskrav: Svarfrist forhåndsvarsel',
 };
 
@@ -71,6 +72,7 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
     friskmeldingTilArbeidsformidlingFom,
     arbeidsuforhetvurdering,
     aktivitetskravvurdering,
+    manglendeMedvirkning,
   } = personData;
   const frister: Frist[] = [];
   const aktivitetskravStatus = aktivitetskravvurdering?.status;
@@ -127,6 +129,14 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
       icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
       date: arbeidsuforhetvurdering.varsel.svarfrist,
       tooltip: texts.arbeidsuforhetvarselFrist,
+    });
+  }
+
+  if (manglendeMedvirkning && manglendeMedvirkning.varsel) {
+    frister.push({
+      icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+      date: manglendeMedvirkning.varsel.svarfrist,
+      tooltip: texts.manglendeMedvirkningVarselFrist,
     });
   }
 
