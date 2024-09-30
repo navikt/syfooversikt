@@ -20,7 +20,7 @@ import {
   Oppfolgingsgrunn,
 } from '@/api/types/personoversiktTypes';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import dayjs from 'dayjs';
 
 let queryClient = testQueryClient();

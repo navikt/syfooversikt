@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import nock from 'nock';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -8,11 +7,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { defaultErrorTexts } from '@/api/errors';
 import { FlexjarFeedbackDTO } from '@/data/flexjar/useFlexjarFeedback';
 import { StoreKey } from '@/hooks/useLocalStorageState';
-import { aktivEnhetMock } from '../../../mock/data/aktivEnhetMock';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { testQueryClient } from '../../testQueryClient';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
-import { veilederMock } from '../../../mock/syfoveileder/veilederMock';
+import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
 import { stubFlexjarApiError, stubFlexjarApiOk } from '../../stubs/stubFlexjar';
 
 let queryClient: QueryClient;
@@ -48,7 +47,6 @@ describe('Flexjar', () => {
     );
   });
   afterEach(() => {
-    nock.cleanAll();
     localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
   });
 

@@ -5,7 +5,7 @@ import {
   OppfolgingsoppgaveDTO,
   PersonOversiktStatusDTO,
   PersonOversiktUbehandletStatusDTO,
-} from '../../src/api/types/personoversiktTypes';
+} from '../../api/types/personoversiktTypes';
 import { veilederMock } from './veilederMock';
 import dayjs from 'dayjs';
 

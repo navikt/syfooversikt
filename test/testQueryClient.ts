@@ -1,9 +1,9 @@
 import { QueryClient } from '@tanstack/react-query';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { aktivEnhetMock } from '../mock/data/aktivEnhetMock';
-import { unleashMock } from '../mock/mockUnleash';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
+import { unleashMock } from '@/mocks/mockUnleash';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
-import { personoversiktEnhetMock } from '../mock/data/personoversiktEnhetMock';
+import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 
 export const testQueryClient = () =>
   new QueryClient({

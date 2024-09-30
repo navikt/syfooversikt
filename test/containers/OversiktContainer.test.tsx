@@ -10,7 +10,7 @@ import { stubPersonregister } from '../stubs/stubPersonregister';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { stubVeiledere } from '../stubs/stubVeiledere';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import {
   FetchVeiledereFailed,
   Notification,
@@ -20,10 +20,9 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { enhetOversiktRoutePath } from '@/routers/AppRouter';
 import { getQueryClientWithMockdata } from '../testQueryClient';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { unleashMock } from '../../mock/mockUnleash';
+import { unleashMock } from '@/mocks/mockUnleash';
 import { StoreKey } from '@/hooks/useLocalStorageState';
 import { addWeeks } from '@/utils/dateUtils';
-import nock from 'nock';
 
 let queryClient: QueryClient;
 
@@ -67,7 +66,6 @@ describe('OversiktContainer', () => {
 
   afterEach(() => {
     localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
-    nock.cleanAll();
   });
 
   it('Skal vise notifikasjon ved feilende apikall', async () => {

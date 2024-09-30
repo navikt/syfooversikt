@@ -1,16 +1,21 @@
-import nock from 'nock';
 import { FLEXJAR_ROOT } from '@/apiConstants';
-import axios from 'axios';
-import { nockBasePath } from './nockDefaults';
+import { mockServer } from '../setup';
+import { http, HttpResponse } from 'msw';
 
 export const stubFlexjarApiOk = () => {
-  axios.defaults.adapter = 'http';
-
-  nock(nockBasePath).post(`${FLEXJAR_ROOT}/feedback/azure`).reply(200);
+  mockServer.use(
+    http.post(
+      `*${FLEXJAR_ROOT}/feedback/azure`,
+      () => new HttpResponse(null, { status: 200 })
+    )
+  );
 };
 
 export const stubFlexjarApiError = () => {
-  axios.defaults.adapter = 'http';
-
-  nock(nockBasePath).post(`${FLEXJAR_ROOT}/feedback/azure`).reply(500);
+  mockServer.use(
+    http.post(
+      `*${FLEXJAR_ROOT}/feedback/azure`,
+      () => new HttpResponse(null, { status: 500 })
+    )
+  );
 };

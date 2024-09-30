@@ -21,13 +21,6 @@ Du må ha Node v18 og npm v9 installert.
 - Kjør prettier og lint med `npm run prettier-lint`, de kan også kjøres hver for seg
 - Appen finner du [her](http://localhost:8080/minoversikt)
 
-## Mocha tester i IntelliJ
-
-IDEA genererer run configs for å kjøre testene. Det er viktig å kjøre med samme oppsett som `npm run test` gjør, definert i `package.json`.
-Oppdater Mocha-template i run-configs, og legg til Extra Mocha options:
-
-- `--require dotenv/config --require ts-node/register --require ignore-styles --require jsdom-global/register`
-
 ## Logge på i Q1-miljø
 
 Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).

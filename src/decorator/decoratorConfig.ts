@@ -36,7 +36,7 @@ const getEnvironment = (): Environment => {
   } else if (isDev()) {
     return 'q2';
   } else {
-    return 'local';
+    return 'mock';
   }
 };
 

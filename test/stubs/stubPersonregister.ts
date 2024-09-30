@@ -1,13 +1,12 @@
-import nock from 'nock';
 import { SYFOPERSON_ROOT } from '@/apiConstants';
-import { personInfoMock } from '../../mock/data/personInfoMock';
-import axios from 'axios';
-import { nockBasePath } from './nockDefaults';
+import { personInfoMock } from '@/mocks/data/personInfoMock';
+import { mockServer } from '../setup';
+import { http, HttpResponse } from 'msw';
 
 export const stubPersonregister = () => {
-  axios.defaults.adapter = 'http';
-
-  nock(nockBasePath)
-    .post(`${SYFOPERSON_ROOT}/person/info`)
-    .reply(200, () => [...personInfoMock]);
+  mockServer.use(
+    http.post(`*${SYFOPERSON_ROOT}/person/info`, () =>
+      HttpResponse.json([...personInfoMock])
+    )
+  );
 };

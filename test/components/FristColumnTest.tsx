@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
 import { addWeeks } from 'date-fns';
-import { getOppfolgingsoppgave } from '../../mock/data/personoversiktEnhetMock';
+import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,

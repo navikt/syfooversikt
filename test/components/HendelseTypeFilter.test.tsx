@@ -7,10 +7,10 @@ import { NotificationProvider } from '@/context/notification/NotificationContext
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { veilederMock } from '../../mock/syfoveileder/veilederMock';
+import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
-import { unleashMock } from '../../mock/mockUnleash';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
+import { unleashMock } from '@/mocks/mockUnleash';
 import { TabTypeContext } from '@/context/tab/TabTypeContext';
 import { OverviewTabType } from '@/konstanter';
 
