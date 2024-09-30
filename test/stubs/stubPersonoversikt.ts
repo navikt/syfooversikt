@@ -1,14 +1,13 @@
-import nock from 'nock';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
-import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
-import axios from 'axios';
-import { nockBasePath } from './nockDefaults';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
+import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
+import { mockServer } from '../setup';
+import { http, HttpResponse } from 'msw';
 
 export const stubPersonoversikt = () => {
-  axios.defaults.adapter = 'http';
-
-  nock(nockBasePath)
-    .get(`${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhetMock.aktivEnhet}`)
-    .reply(200, () => [...personoversiktEnhetMock]);
+  mockServer.use(
+    http.get(`*${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhetMock.aktivEnhet}`, () =>
+      HttpResponse.json([...personoversiktEnhetMock])
+    )
+  );
 };

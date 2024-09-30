@@ -5,16 +5,13 @@ import * as Webpack from 'webpack';
 import * as WebpackDevServer from 'webpack-dev-server';
 
 import common from './webpack.common';
-import mockEndepunkter from './mock/mockEndepunkter';
 import * as Session from './server/session';
 
 const devConfig: Webpack.Configuration = {
   mode: 'development',
   devtool: 'eval-source-map',
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
+    static: './public',
     port: 8080,
     setupMiddlewares: (
       middlewares: WebpackDevServer.Middleware[],
@@ -34,9 +31,6 @@ const setupDev = async (devServer: WebpackDevServer) => {
   const compiler = devServer.compiler;
 
   await Session.setupSession(app);
-
-  mockEndepunkter(app);
-  app.use('/static', express.static(path.resolve(__dirname, 'dist')));
 
   app.use('*', (req: express.Request, res: express.Response) => {
     const filename = path.join(compiler.outputPath, 'index.html');

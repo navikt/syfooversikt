@@ -1,13 +1,13 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { ReactNode } from 'react';
 import { stubModiaContext } from '../stubs/stubModiaContext';
-import { personoversiktEnhetMock } from '../../mock/data/personoversiktEnhetMock';
+import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
 import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { PersonregisterData } from '@/api/types/personregisterTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { describe, expect, it } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';

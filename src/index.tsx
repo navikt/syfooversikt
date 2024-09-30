@@ -15,6 +15,7 @@ import { minutesToMillis } from '@/utils/timeUtils';
 import { isClientError } from '@/api/errors';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import { initFaro } from '@/faro';
+import { isLocal } from '@/utils/miljoUtil';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,4 +63,19 @@ const container =
   document.getElementById('maincontent') || new DocumentFragment();
 const root = createRoot(container);
 
-root.render(<App />);
+function renderApp() {
+  root.render(<App />);
+}
+
+async function setupMocking() {
+  const { worker } = await import('./mocks/browser');
+  return worker.start({
+    onUnhandledRequest: 'bypass',
+  });
+}
+
+if (isLocal()) {
+  setupMocking().then(() => renderApp());
+} else {
+  renderApp();
+}

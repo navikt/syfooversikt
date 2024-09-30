@@ -1,5 +1,5 @@
-import express from 'express';
 import { EregOrganisasjonResponseDTO } from '@/data/virksomhet/EregVirksomhetsnavn';
+import { http, HttpResponse } from 'msw';
 
 interface EregMockData {
   [key: string]: EregOrganisasjonResponseDTO;
@@ -35,13 +35,10 @@ const eregResponses: EregMockData = {
   },
 };
 
-export const mockEreg = (server: express.Application) => {
-  server.get(
-    '/ereg/api/v1/organisasjon/:orgnr',
-    (req: express.Request, res: express.Response) => {
-      const eregResponse = eregResponses[req.params.orgnr as string];
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(eregResponse));
-    }
-  );
-};
+export const mockEreg = http.get<{ orgnr: string }>(
+  '/ereg/api/v1/organisasjon/:orgnr',
+  ({ params }) => {
+    const eregResponse = eregResponses[params.orgnr];
+    return HttpResponse.json(eregResponse);
+  }
+);

@@ -8,10 +8,10 @@ import {
 } from '@/data/veiledereQueryHooks';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
-import { veiledereMock } from '../../mock/data/veiledereMock';
-import { veilederMock } from '../../mock/data/veilederMock';
+import { veiledereMock } from '@/mocks/data/veiledereMock';
+import { veilederMock } from '@/mocks/data/veilederMock';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { aktivEnhetMock } from '../../mock/data/aktivEnhetMock';
+import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { describe, expect, it } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';

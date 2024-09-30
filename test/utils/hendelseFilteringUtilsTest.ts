@@ -13,7 +13,7 @@ import {
 import { testdata } from '../data/fellesTestdata';
 import { HendelseTypeFilters } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from 'date-fns';
-import { getOppfolgingsoppgave } from '../../mock/data/personoversiktEnhetMock';
+import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
 export const createPersonDataWithName = (name: string): PersonData => {
