@@ -8,6 +8,8 @@ export interface DecoratorProps {
   fetchActiveUserOnMount?: boolean | undefined; // Om fnr er undefined fra container appen, og denne er satt til true for at den skal hente siste aktiv fnr.
   onEnhetChanged: (enhetId?: string | null, enhet?: Enhet) => void; // Kalles når enheten endres
   onFnrChanged: (fnr?: string | null) => void; // Kalles når fnr enheten endres
+  fnrSyncMode: 'sync' | 'writeOnly'; // Modus til fnr state management. "sync" er default. "writeOnly" gjør at endringer aldri hentes men vil settes dersom det oppdateres lokalt i appen
+  enhetSyncMode?: 'sync' | 'writeOnly'; // Samme som fnrSyncMode, men for enhet state.
   onLinkClick?: (link: { text: string; url: string }) => void; // Kan brukes for å legge til callbacks ved klikk på lenker i menyen. Merk at callbacken ikke kan awaites og man må selv håndtere at siden lukkes. Nyttig for å f.eks tracke navigasjon events i amplitude
   appName: string; // Navn på applikasjonen
   hotkeys?: Hotkey[]; // Konfigurasjon av hurtigtaster
