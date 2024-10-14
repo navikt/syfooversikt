@@ -11,7 +11,7 @@ import {
   Skjermingskode,
 } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
-import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from 'date-fns';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
@@ -39,7 +39,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
   };
 };
 
-const defaulthendelseFilter: HendelseTypeFilters = {
+const defaulthendelseFilter: HendelseTypeFilter = {
   arbeidsgiverOnskerMote: false,
   onskerMote: false,
   ufordeltBruker: false,
@@ -631,7 +631,7 @@ describe('hendelseFilteringUtils', () => {
       const personregister: PersonregisterState = {
         '16614407794': personDataWithAktivitetskrav,
       };
-      const filterWithDialogmotesvar: HendelseTypeFilters = {
+      const filterWithDialogmotesvar: HendelseTypeFilter = {
         ...defaulthendelseFilter,
         dialogmotesvar: true,
       };
@@ -664,7 +664,7 @@ describe('hendelseFilteringUtils', () => {
         '16614407794': personDataWithAktivitetskrav,
         '09128034883': personDataWithMotebehovAndAktivitetskrav,
       };
-      const filterWithMotebehovAndAktivitetskrav: HendelseTypeFilters = {
+      const filterWithMotebehovAndAktivitetskrav: HendelseTypeFilter = {
         ...defaulthendelseFilter,
         onskerMote: true,
         isAktivitetskravChecked: true,

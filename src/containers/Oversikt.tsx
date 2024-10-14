@@ -8,7 +8,6 @@ import { PersonFilter } from '@/components/Filter/PersonFilter';
 import Sokeresultat from '@/components/Sokeresultat';
 import styled from 'styled-components';
 import { TekstFilter } from '@/components/filters/TekstFilter';
-import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
 import { ClearFiltersButton } from '@/components/filters/ClearFiltersButton';
 import {
   Filterable,
@@ -19,6 +18,7 @@ import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
+import { HendelseFilterPanel } from '@/components/HendelseFilterPanel';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 1rem;
@@ -73,7 +73,7 @@ export const Oversikt = ({
       <SokeresultatFiltre>
         <ClearFiltersButton />
         <TekstFilter />
-        <HendelseTypeFilter personRegister={allEvents.value} />
+        <HendelseFilterPanel personRegister={allEvents.value} />
 
         <PersonFilter personregister={personData} />
       </SokeresultatFiltre>

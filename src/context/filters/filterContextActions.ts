@@ -1,4 +1,4 @@
-import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import {
   AgeFilterOption,
   FristFilterOption,
@@ -53,7 +53,7 @@ export interface SetSelectedBirthDates {
 
 export interface SetSelectedHendelseType {
   type: ActionType.SetSelectedHendelseType;
-  selectedHendelseType: HendelseTypeFilters;
+  selectedHendelseType: HendelseTypeFilter;
 }
 
 export interface ResetFilters {

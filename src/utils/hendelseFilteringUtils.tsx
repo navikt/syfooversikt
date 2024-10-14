@@ -8,7 +8,7 @@ import {
   getLatestFrist,
 } from './personDataUtil';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { HendelseTypeFilters } from '@/context/filters/filterContextState';
+import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
 import { getHendelser } from './statusColumnUtils';
@@ -183,11 +183,11 @@ function isAgeInFilters(
   });
 }
 
-type HendelseTypeFilterKey = keyof HendelseTypeFilters;
+type HendelseTypeFilterKey = keyof HendelseTypeFilter;
 
 const matchesFilter = (
   key: HendelseTypeFilterKey,
-  filters: HendelseTypeFilters,
+  filters: HendelseTypeFilter,
   personData: PersonData
 ): boolean => {
   switch (key) {
@@ -230,7 +230,7 @@ const matchesFilter = (
 
 export const filterOnPersonregister = (
   personregister: PersonregisterState,
-  filter?: HendelseTypeFilters
+  filter?: HendelseTypeFilter
 ): PersonregisterState => {
   if (!filter) return personregister;
 
