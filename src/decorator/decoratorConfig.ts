@@ -22,7 +22,6 @@ const decoratorConfig = (
       }
     },
     fnrSyncMode: 'writeOnly',
-    enhetSyncMode: 'writeOnly',
     showEnheter: true,
     showSearchArea: true,
     showHotkeys: false,
