@@ -3,7 +3,7 @@ import {
   FristFilterOption,
 } from '@/utils/hendelseFilteringUtils';
 
-export interface HendelseTypeFilters {
+export interface HendelseTypeFilter {
   arbeidsgiverOnskerMote: boolean;
   onskerMote: boolean;
   ufordeltBruker: boolean;
@@ -28,7 +28,7 @@ export interface FilterState {
   selectedBirthDates: string[];
   selectedFristFilters: FristFilterOption[];
   selectedAgeFilters: AgeFilterOption[];
-  selectedHendelseType: HendelseTypeFilters;
+  selectedHendelseType: HendelseTypeFilter;
 }
 
 export const filterInitialState: FilterState = {

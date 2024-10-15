@@ -1,5 +1,5 @@
 import React from 'react';
-import { HendelseTypeFilter } from '@/components/HendelseTypeFilter';
+import { HendelseFilterPanel } from '@/components/HendelseFilterPanel';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -39,7 +39,7 @@ describe('HendelseTypeFilter', () => {
           }}
         >
           <QueryClientProvider client={queryClient}>
-            <HendelseTypeFilter />
+            <HendelseFilterPanel />
           </QueryClientProvider>
         </AktivEnhetContext.Provider>
       </NotificationProvider>
@@ -139,7 +139,7 @@ describe('HendelseTypeFilter', () => {
             }}
           >
             <QueryClientProvider client={queryClient}>
-              <HendelseTypeFilter />
+              <HendelseFilterPanel />
             </QueryClientProvider>
           </AktivEnhetContext.Provider>
         </TabTypeContext.Provider>
