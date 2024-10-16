@@ -11,7 +11,7 @@ import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
-import { getHendelser } from './statusColumnUtils';
+import { getHendelser } from './hendelseColumnUtils';
 
 export class Filterable<T> {
   value: T;
@@ -212,7 +212,7 @@ const matchesFilter = (
     case 'harFriskmeldingTilArbeidsformidling':
       return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
     case 'isSenOppfolgingChecked':
-      return !filters[key] || personData.isAktivSenOppfolgingKandidat;
+      return !filters[key] || !!personData.senOppfolgingKandidat;
     case 'isManglendeMedvirkningChecked':
       return !filters[key] || !!personData.manglendeMedvirkning;
     case 'isAktivitetskravChecked':

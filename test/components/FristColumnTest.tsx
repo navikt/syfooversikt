@@ -22,7 +22,7 @@ const defaultPersonData: PersonData = {
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
-  isAktivSenOppfolgingKandidat: false,
+  senOppfolgingKandidat: null,
   oppfolgingsoppgave: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
