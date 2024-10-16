@@ -44,9 +44,5 @@ export function getToggles(veilederId: any, enhetId: any) {
       'isOppfolgingISenFaseEnabled',
       context
     ),
-    isManglendeMedvirkningEnabled: unleash.isEnabled(
-      'isManglendeMedvirkningEnabled',
-      context
-    ),
   };
 }
