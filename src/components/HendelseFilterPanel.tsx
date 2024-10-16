@@ -169,6 +169,7 @@ function showCheckbox(
     case 'MOTEBEHOV':
     case 'ARBEIDSGIVER_BISTAND':
     case 'BEHANDLER_BER_OM_BISTAND':
+    case 'MANGLENDE_MEDVIRKNING':
     case 'OPPFOLGINGSOPPGAVE':
     case 'ARBEIDSUFORHET':
       return true;
@@ -176,8 +177,6 @@ function showCheckbox(
       return toggles.isFrisktilarbeidEnabled;
     case 'SNART_SLUTT_PA_SYKEPENGENE':
       return toggles.isOppfolgingISenFaseEnabled;
-    case 'MANGLENDE_MEDVIRKNING':
-      return toggles.isManglendeMedvirkningEnabled;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }
