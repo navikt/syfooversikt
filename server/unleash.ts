@@ -1,6 +1,6 @@
 import unleashClient = require('unleash-client');
-import { Strategy } from 'unleash-client';
 import Config = require('./config');
+import { Strategy } from 'unleash-client';
 import { Context } from 'unleash-client/lib/context';
 
 const { initialize } = unleashClient;
@@ -32,7 +32,7 @@ export const unleash = initialize({
   strategies: [new VeilederIds(), new EnhetIds()],
 });
 
-export const getToggles = (veilederId: any, enhetId: any) => {
+export function getToggles(veilederId: any, enhetId: any) {
   const context = {
     veilederId: veilederId,
     enhetId: enhetId,
@@ -44,13 +44,9 @@ export const getToggles = (veilederId: any, enhetId: any) => {
       'isOppfolgingISenFaseEnabled',
       context
     ),
-    isHendelseColumnEnabled: unleash.isEnabled(
-      'isHendelseColumnEnabled',
-      context
-    ),
     isManglendeMedvirkningEnabled: unleash.isEnabled(
       'isManglendeMedvirkningEnabled',
       context
     ),
   };
-};
+}
