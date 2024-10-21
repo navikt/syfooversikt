@@ -10,6 +10,7 @@ export enum EventType {
   Navigation = 'navigere',
   OptionSelected = 'alternativ valgt',
   ButtonClick = 'knapp trykket',
+  SortingColumn = 'kolonne sortert på',
 }
 
 type EventPageView = {
@@ -45,7 +46,21 @@ type EventButtonClick = {
   };
 };
 
-type Event = EventPageView | Navigation | OptionSelected | EventButtonClick;
+type EventSortingColumn = {
+  type: EventType.SortingColumn;
+  data: {
+    url: string;
+    kolonne: string;
+    retning: string;
+  };
+};
+
+type Event =
+  | EventPageView
+  | Navigation
+  | OptionSelected
+  | EventButtonClick
+  | EventSortingColumn;
 
 export const logEvent = (event: Event) =>
   amplitude.track(event.type, { ...event.data });

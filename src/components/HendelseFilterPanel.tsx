@@ -13,6 +13,8 @@ import {
   HendelseTypeFilter,
 } from '@/context/filters/filterContextState';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -250,6 +252,19 @@ export function HendelseFilterPanel({ personRegister }: Props) {
       type: ActionType.SetSelectedHendelseType,
       selectedHendelseType: newFilterState,
     });
+    const shouldLogToAmplitude = checkboxElements.some(
+      (checkbox) => checkbox.hendelse === value && !checkbox.isChecked
+    );
+    if (shouldLogToAmplitude) {
+      Amplitude.logEvent({
+        type: EventType.OptionSelected,
+        data: {
+          url: window.location.href,
+          tekst: 'Hendelsesfilter valgt',
+          option: value,
+        },
+      });
+    }
   };
 
   return (
