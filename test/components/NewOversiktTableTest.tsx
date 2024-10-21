@@ -17,6 +17,7 @@ import {
 } from '@/api/types/personregisterTypes';
 import {
   AktivitetskravStatus,
+  OnskerOppfolging,
   Oppfolgingsgrunn,
 } from '@/api/types/personoversiktTypes';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
@@ -38,7 +39,7 @@ const defaultPersonData: PersonData = {
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
-  isAktivSenOppfolgingKandidat: false,
+  senOppfolgingKandidat: null,
   oppfolgingsoppgave: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
@@ -200,7 +201,14 @@ describe('NewOversiktTable', () => {
             svarfrist: dayjs().add(1, 'week').toDate(),
           },
         },
-        isAktivSenOppfolgingKandidat: true,
+        senOppfolgingKandidat: {
+          personident: '',
+          varselAt: new Date(),
+          svar: {
+            svarAt: new Date(),
+            onskerOppfolging: OnskerOppfolging.JA,
+          },
+        },
         oppfolgingsoppgave: {
           uuid: '123',
           createdBy: '432',
@@ -228,7 +236,8 @@ describe('NewOversiktTable', () => {
     expect(screen.getByText('Bistandsbehov fra behandler')).to.exist;
     expect(screen.getByText('Dialogmelding')).to.exist;
     expect(screen.getByText('Oppfølgingsplan')).to.exist;
-    expect(screen.getByText('Snart slutt på sykepengene')).to.exist;
+    expect(screen.getByText('Snart slutt på sykepengene - Ønsker oppfølging'))
+      .to.exist;
     expect(screen.getByText('Manglende medvirkning - Forhåndsvarsel utløpt')).to
       .exist;
   });

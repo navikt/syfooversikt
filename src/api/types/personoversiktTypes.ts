@@ -32,7 +32,7 @@ export interface PersonOversiktUbehandletStatusDTO {
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
   friskmeldingTilArbeidsformidlingFom: Date | null;
-  isAktivSenOppfolgingKandidat: boolean;
+  senOppfolgingKandidat: SenOppfolgingKandidatDTO | null;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
@@ -66,6 +66,22 @@ export interface ArbeidsuforhetvurderingDTO {
 
 export interface ArbeidsuforhetVarselDTO {
   svarfrist: Date;
+}
+
+export interface SenOppfolgingKandidatDTO {
+  personident: string;
+  varselAt: Date | null;
+  svar: SvarResponseDTO | null;
+}
+
+export interface SvarResponseDTO {
+  svarAt: Date;
+  onskerOppfolging: OnskerOppfolging;
+}
+
+export enum OnskerOppfolging {
+  JA = 'JA',
+  NEI = 'NEI',
 }
 
 export interface OppfolgingsoppgaveDTO {

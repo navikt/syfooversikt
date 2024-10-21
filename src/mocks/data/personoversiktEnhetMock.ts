@@ -1,6 +1,7 @@
 import {
   AktivitetskravStatus,
   MoteStatusType,
+  OnskerOppfolging,
   Oppfolgingsgrunn,
   OppfolgingsoppgaveDTO,
   PersonOversiktStatusDTO,
@@ -19,7 +20,7 @@ const behandletPerson: PersonOversiktUbehandletStatusDTO = {
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
   friskmeldingTilArbeidsformidlingFom: null,
-  isAktivSenOppfolgingKandidat: false,
+  senOppfolgingKandidat: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
 };
@@ -557,6 +558,14 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         },
       ],
     },
+    senOppfolgingKandidat: {
+      personident: '',
+      varselAt: new Date(),
+      svar: {
+        svarAt: new Date(),
+        onskerOppfolging: OnskerOppfolging.NEI,
+      },
+    },
   },
   {
     ...behandletPerson,
@@ -625,7 +634,14 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     motestatus: undefined,
-    isAktivSenOppfolgingKandidat: true,
+    senOppfolgingKandidat: {
+      personident: '',
+      varselAt: new Date(),
+      svar: {
+        svarAt: new Date(),
+        onskerOppfolging: OnskerOppfolging.JA,
+      },
+    },
   },
   {
     ...behandletPerson,
@@ -638,6 +654,11 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       varsel: {
         svarfrist: new Date(),
       },
+    },
+    senOppfolgingKandidat: {
+      personident: '',
+      varselAt: new Date(),
+      svar: null,
     },
   },
 ];
