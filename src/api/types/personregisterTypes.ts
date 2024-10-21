@@ -2,6 +2,7 @@ import {
   ArbeidsuforhetvurderingDTO,
   OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
+  SenOppfolgingKandidatDTO,
 } from './personoversiktTypes';
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
@@ -23,7 +24,7 @@ export interface PersonData {
   behandlerBerOmBistandUbehandlet: boolean;
   friskmeldingTilArbeidsformidlingFom: Date | null;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
-  isAktivSenOppfolgingKandidat: boolean;
+  senOppfolgingKandidat: SenOppfolgingKandidatDTO | null;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;

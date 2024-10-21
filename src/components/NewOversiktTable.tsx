@@ -8,7 +8,7 @@ import { FristColumn } from '@/components/FristColumn';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { getHendelser } from '@/utils/statusColumnUtils';
+import { getHendelser } from '@/utils/hendelseColumnUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { OverviewTabType } from '@/konstanter';

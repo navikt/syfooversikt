@@ -1,6 +1,8 @@
 import {
-  Oppfolgingsgrunn,
   AktivitetskravStatus,
+  OnskerOppfolging,
+  Oppfolgingsgrunn,
+  SenOppfolgingKandidatDTO,
 } from '@/api/types/personoversiktTypes';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
@@ -79,6 +81,24 @@ function mapManglendeMedvirkningStatus(
   return '';
 }
 
+function mapSenOppfolgingStatus(
+  senOppfolgingKandidat: SenOppfolgingKandidatDTO
+): string {
+  const svar = senOppfolgingKandidat.svar;
+  const varselAt = senOppfolgingKandidat.varselAt;
+
+  if (svar) {
+    if (svar.onskerOppfolging === OnskerOppfolging.JA) {
+      return 'Ønsker oppfølging';
+    } else {
+      return 'Ønsker ikke oppfølging';
+    }
+  } else if (varselAt && svar === null) {
+    return 'Ikke svart';
+  }
+  return '';
+}
+
 export function getHendelser(personData: PersonData): string[] {
   const hendelser: string[] = [];
   if (personData.aktivitetskravvurdering) {
@@ -119,8 +139,12 @@ export function getHendelser(personData: PersonData): string[] {
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
     hendelser.push('Oppfølgingsplan'); //TODO: Hva skal denne egt gjøre?
   }
-  if (personData.isAktivSenOppfolgingKandidat) {
-    hendelser.push('Snart slutt på sykepengene');
+  if (personData.senOppfolgingKandidat) {
+    hendelser.push(
+      `Snart slutt på sykepengene - ${mapSenOppfolgingStatus(
+        personData.senOppfolgingKandidat
+      )}`
+    );
   }
   if (personData.manglendeMedvirkning) {
     hendelser.push(

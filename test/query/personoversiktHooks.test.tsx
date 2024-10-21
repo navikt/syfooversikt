@@ -72,7 +72,7 @@ describe('personoversiktHooks tests', () => {
         person.behandlerBerOmBistandUbehandlet ||
         person.arbeidsuforhetvurdering !== null ||
         person.friskmeldingTilArbeidsformidlingFom ||
-        person.isAktivSenOppfolgingKandidat ||
+        person.senOppfolgingKandidat ||
         person.manglendeMedvirkning !== null
       );
     });

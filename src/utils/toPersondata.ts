@@ -32,7 +32,7 @@ export const toPersonData = (
       arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
       friskmeldingTilArbeidsformidlingFom:
         person.friskmeldingTilArbeidsformidlingFom,
-      isAktivSenOppfolgingKandidat: person.isAktivSenOppfolgingKandidat,
+      senOppfolgingKandidat: person.senOppfolgingKandidat,
       oppfolgingsoppgave: person.oppfolgingsoppgave,
       aktivitetskravvurdering: person.aktivitetskravvurdering,
       manglendeMedvirkning: person.manglendeMedvirkning,
