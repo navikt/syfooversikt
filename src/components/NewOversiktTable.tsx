@@ -11,6 +11,8 @@ import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 import { getHendelser } from '@/utils/hendelseColumnUtils';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { OverviewTabType } from '@/konstanter';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
 const getVarighetOppfolgingstilfelle = (
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -39,19 +41,29 @@ export const NewOversiktTable = ({
   const { tabType } = useTabType();
 
   const handleSort = (sortKey: string | undefined) => {
+    let direction: 'none' | 'ascending' | 'descending';
     if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
+      direction = 'none';
       setSorting({
         orderBy: 'NONE',
-        direction: 'none',
+        direction: direction,
       });
     } else {
-      const newDirection =
+      direction =
         sorting.direction === 'ascending' ? 'descending' : 'ascending';
       setSorting({
         orderBy: sortKey as SortingKey,
-        direction: newDirection,
+        direction: direction,
       });
     }
+    Amplitude.logEvent({
+      type: EventType.SortingColumn,
+      data: {
+        url: window.location.href,
+        kolonne: sortKey ?? '',
+        retning: direction,
+      },
+    });
   };
 
   const allRowsSelected = personListe.length === selectedRows.length;
