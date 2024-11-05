@@ -35,11 +35,11 @@ const TildelVeileder = ({
   const [showList, setShowList] = useState(false);
   const [veilederIsChosen, setVeilederIsChosen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
   useEffect(() => {
     setShowList(false);
-  }, [tabType]);
+  }, [selectedTab]);
 
   const resetStateToDefault = () => {
     setChosenVeilederIdent('');

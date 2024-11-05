@@ -107,3 +107,19 @@ export enum Oppfolgingsgrunn {
   VURDER_ANNEN_YTELSE = 'VURDER_ANNEN_YTELSE',
   ANNET = 'ANNET',
 }
+
+export const oppfolgingsgrunnToString = {
+  [Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT]: 'Ta kontakt med den sykmeldte',
+  [Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER]: 'Ta kontakt med arbeidsgiver',
+  [Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER]: 'Ta kontakt med behandler',
+  [Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE]: 'Vurder behov for dialogmøte',
+  [Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING]:
+    'Følg opp etter neste sykmelding',
+  [Oppfolgingsgrunn.VURDER_TILTAK_BEHOV]: 'Vurder behov for tiltak',
+  [Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET]: 'Vurder §8-4 - Arbeidsuførhet',
+  [Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING]:
+    'Vurder §8-5 - Friskmelding til arbeidsformidling',
+  [Oppfolgingsgrunn.VURDER_14A]: 'Vurder §14a',
+  [Oppfolgingsgrunn.VURDER_ANNEN_YTELSE]: 'Vurder annen ytelse',
+  [Oppfolgingsgrunn.ANNET]: 'Annet',
+};

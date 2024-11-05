@@ -45,7 +45,7 @@ interface ToolbarProps extends ToolbarWrapperProps {
 }
 
 const Toolbar = (props: ToolbarProps) => {
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
   return (
     <ToolbarStyled>
@@ -56,7 +56,7 @@ const Toolbar = (props: ToolbarProps) => {
             handleTildelVeileder={props.buttonHandler}
             handleSelectAll={props.checkAllHandler}
           />
-          {tabType === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
+          {selectedTab === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
         </Element>
         <PaginationContainer
           numberOfItemsTotal={props.numberOfItemsTotal}

@@ -50,7 +50,7 @@ export const Oversikt = ({
 }: OversiktProps) => {
   const aktivVeilederQuery = useAktivVeilederQuery();
   const { filterState } = useFilters();
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
   const personData: PersonregisterState = toPersonData(
     personoversiktData,
@@ -58,7 +58,7 @@ export const Oversikt = ({
   );
 
   const eventFilterValue =
-    tabType === OverviewTabType.MY_OVERVIEW
+    selectedTab === OverviewTabType.MY_OVERVIEW
       ? [aktivVeilederQuery.data?.ident || '']
       : filterState.selectedVeilederIdents;
 

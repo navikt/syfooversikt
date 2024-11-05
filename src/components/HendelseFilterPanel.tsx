@@ -234,12 +234,12 @@ function CheckboxLabel({ labelText, antallHendelser }: CheckboxLabelProps) {
 export function HendelseFilterPanel({ personRegister }: Props) {
   const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
   const checkboxElements = hendelseCheckboxes(
     personRegister,
     filterState,
-    tabType,
+    selectedTab,
     toggles
   ).filter((checkboksElement) => checkboksElement.isVisible);
 
