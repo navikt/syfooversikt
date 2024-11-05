@@ -39,16 +39,13 @@ const texts = {
 };
 
 const arenaOptions = [
-  '39-ukers oppgave',
-  'Sende ut 39-ukers informasjonsbrev',
+  'Lukke 39 ukers oppgave',
+  'Oppfølging av sykmeldte som nærmer seg maksdato',
   '14a-vurdering',
-  'Flytte personer mellom enheter',
+  'Flytte person til/fra virtuell enhet',
+  'Flytte person til/fra fysisk enhet',
   'Innkalle til samtale med bruker',
   'Historikk på sykmeldt',
-  'Dialogmelding i forbindelse med syfo',
-  'Sjekke om bruker er innlagt på instutisjon',
-  'Sjekke vedtak om unntak fra arbeidsgiverperioden § 8-20',
-  'Friskmelding til arbeidsformidling',
   'Tiltak',
   'AEV',
   'Forespørsel til arbeidsgiver',
@@ -56,9 +53,6 @@ const arenaOptions = [
   'Søke opp personer som ikke er i syfo-oversikten på navn/fnr/fødselsdato',
   'Søke opp hvilken bransje en virksomhet tilhører',
   'Oppgave/informasjon fra felter i sykmeldingen',
-  'Forhåndsvarsel § 8-4 medisinsk vilkår',
-  'Forhåndsvarsel § 8-8 manglende medvirkning',
-  'Forhåndsvarsel § 8-8 aktivitetskravet',
   'Oppfølgingsoppgave',
   'Sjekke arbeidsforhold til sykmeldt',
 ];
