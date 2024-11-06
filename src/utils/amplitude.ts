@@ -24,6 +24,7 @@ type EventPageView = {
 type Navigation = {
   type: EventType.Navigation;
   data: {
+    fromUrl: string;
     lenketekst: string;
     destinasjon: string;
   };
