@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react';
-import Lenke from 'nav-frontend-lenker';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
 import { Labels } from '@/components/Labels';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
+import { Link } from '@navikt/ds-react';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
-export const lenkeTilModia = (personData: PersonData) => {
+export function lenkeTilModia(personData: PersonData): string {
   let path = `/sykefravaer`;
   const isGoingToMoteoversikt =
     personData.harMotebehovUbehandlet ||
@@ -42,7 +44,18 @@ export const lenkeTilModia = (personData: PersonData) => {
   }
 
   return linkToNewHostAndPath(Subdomain.SYFOMODIAPERSON, path);
-};
+}
+
+function logNavigation(destinasjon: string) {
+  Amplitude.logEvent({
+    type: EventType.Navigation,
+    data: {
+      fromUrl: window.location.href,
+      lenketekst: 'personnavn',
+      destinasjon: destinasjon,
+    },
+  });
+}
 
 interface Props {
   personData: PersonData;
@@ -59,14 +72,16 @@ export function LinkSyfomodiaperson({
   const onPersonClick = () => {
     aktivBruker.mutate(personident, {
       onSuccess: () => {
-        window.location.href = lenkeTilModia(personData);
+        const destinasjon = lenkeTilModia(personData);
+        logNavigation(destinasjon);
+        window.location.href = destinasjon;
       },
     });
   };
 
   return (
     <div className="flex items-center gap-2">
-      <Lenke
+      <Link
         onClick={(event) => {
           event.preventDefault();
           onPersonClick();
@@ -74,7 +89,7 @@ export function LinkSyfomodiaperson({
         href={lenkeTilModia(personData)}
       >
         {linkText}
-      </Lenke>
+      </Link>
       <Labels personData={personData} />
     </div>
   );
