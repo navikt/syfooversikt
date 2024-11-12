@@ -5,12 +5,16 @@ import {
   FileTextIcon,
   HourglassTopFilledIcon,
 } from '@navikt/aksel-icons';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   AktivitetskravStatus,
-  Oppfolgingsgrunn,
+  oppfolgingsgrunnToString,
 } from '@/api/types/personoversiktTypes';
-import { Tooltip } from '@navikt/ds-react';
+import { Button, Table, Tooltip } from '@navikt/ds-react';
+import OppfolgingsoppgaveModal from '@/components/OppfolgingsoppgaveModal';
+import * as Amplitude from '@/utils/amplitude';
+import { useTabType } from '@/context/tab/TabTypeContext';
+import { OverviewTabType } from '@/konstanter';
 
 const texts = {
   tooltipAvventer: 'Avventer til',
@@ -21,8 +25,14 @@ const texts = {
   aktivitetskravvarselFrist: 'Aktivitetskrav: Svarfrist forhåndsvarsel',
 };
 
-interface FristColumnProps {
-  personData: PersonData;
+function logOppfolgingsOppgaveModalOpenEvent() {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ButtonClick,
+    data: {
+      url: window.location.href,
+      tekst: 'Åpnet oppfølgingsoppgave modal',
+    },
+  });
 }
 
 type Frist = {
@@ -31,49 +41,21 @@ type Frist = {
   tooltip: string;
 };
 
-const byFristAsc = (fristA: Frist, fristB: Frist) => {
+function byFristAsc(fristA: Frist, fristB: Frist) {
   return fristA.date > fristB.date ? 1 : -1;
-};
+}
 
-const oppfolgingsgrunnTekster = (
-  oppfolgingsgrunn: Oppfolgingsgrunn
-): string => {
-  switch (oppfolgingsgrunn) {
-    case Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT:
-      return 'Ta kontakt med den sykmeldte';
-    case Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER:
-      return 'Ta kontakt med arbeidsgiver';
-    case Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER:
-      return 'Ta kontakt med behandler';
-    case Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE:
-      return 'Vurder behov for dialogmøte';
-    case Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING:
-      return 'Følg opp etter neste sykmelding';
-    case Oppfolgingsgrunn.VURDER_TILTAK_BEHOV:
-      return 'Vurder behov for tiltak';
-    case Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET:
-      return 'Vurder §8-4 - Arbeidsuførhet';
-    case Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
-      return 'Vurder §8-5 - Friskmelding til arbeidsformidling';
-    case Oppfolgingsgrunn.VURDER_14A:
-      return 'Vurder §14a';
-    case Oppfolgingsgrunn.VURDER_ANNEN_YTELSE:
-      return 'Vurder annen ytelse';
-    case Oppfolgingsgrunn.ANNET:
-      return 'Annet';
-    default:
-      return 'Ukjent oppfølgingsgrunn';
-  }
-};
-
-export const FristColumn = ({ personData }: FristColumnProps) => {
-  const {
+function fristerInfo(
+  {
     oppfolgingsoppgave,
     friskmeldingTilArbeidsformidlingFom,
     arbeidsuforhetvurdering,
     aktivitetskravvurdering,
     manglendeMedvirkning,
-  } = personData;
+  }: PersonData,
+  setIsModalOpen: (open: boolean) => void,
+  selectedTab: OverviewTabType
+): Frist[] {
   const frister: Frist[] = [];
   const aktivitetskravStatus = aktivitetskravvurdering?.status;
   const aktivitetskravVurderingFrist =
@@ -108,11 +90,24 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
   }
   if (oppfolgingsoppgave?.frist) {
     frister.push({
-      icon: () => <FileTextIcon aria-hidden fontSize="1.5rem" />,
+      icon: () =>
+        selectedTab === OverviewTabType.MY_OVERVIEW ? (
+          <Button
+            size="xsmall"
+            icon={<FileTextIcon aria-hidden fontSize="1.5rem" />}
+            className="mr-1"
+            onClick={() => {
+              logOppfolgingsOppgaveModalOpenEvent();
+              setIsModalOpen(true);
+            }}
+          />
+        ) : (
+          <FileTextIcon aria-hidden fontSize="1.5rem" />
+        ),
       date: oppfolgingsoppgave.frist,
-      tooltip: `${oppfolgingsgrunnTekster(
-        oppfolgingsoppgave.oppfolgingsgrunn
-      )}`,
+      tooltip: `${
+        oppfolgingsgrunnToString[oppfolgingsoppgave.oppfolgingsgrunn]
+      }`,
     });
   }
 
@@ -139,9 +134,20 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
       tooltip: texts.manglendeMedvirkningVarselFrist,
     });
   }
+  return frister;
+}
+
+interface Props {
+  personData: PersonData;
+}
+
+export function FristDataCell({ personData }: Props) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { selectedTab } = useTabType();
+  const frister: Frist[] = fristerInfo(personData, setIsModalOpen, selectedTab);
 
   return (
-    <>
+    <Table.DataCell textSize="small">
       {frister.sort(byFristAsc).map(({ date, icon, tooltip }, index) => (
         <div key={index} className="flex flex-wrap items-center">
           <Tooltip content={tooltip} arrow={false}>
@@ -150,6 +156,14 @@ export const FristColumn = ({ personData }: FristColumnProps) => {
           <div>{toReadableDate(date)}</div>
         </div>
       ))}
-    </>
+      {personData.oppfolgingsoppgave && (
+        <OppfolgingsoppgaveModal
+          isOpen={isModalOpen}
+          setOpen={setIsModalOpen}
+          oppfolgingsoppgave={personData.oppfolgingsoppgave}
+          sykmeldtNavn={personData.navn}
+        />
+      )}
+    </Table.DataCell>
   );
-};
+}

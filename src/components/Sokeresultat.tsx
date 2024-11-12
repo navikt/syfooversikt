@@ -34,7 +34,7 @@ const lagListe = (
 const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
   const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
@@ -42,10 +42,10 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
 
   useEffect(() => {
     setMarkertePersoner([]);
-  }, [tabType]);
+  }, [selectedTab]);
 
   const selectedHendelsetypeFilter =
-    tabType === OverviewTabType.MY_OVERVIEW
+    selectedTab === OverviewTabType.MY_OVERVIEW
       ? {
           ...filterState.selectedHendelseType,
           ufordeltBruker: false,

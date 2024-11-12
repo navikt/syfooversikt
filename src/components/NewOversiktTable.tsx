@@ -4,7 +4,7 @@ import { VeilederColumn } from '@/components/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
-import { FristColumn } from '@/components/FristColumn';
+import { FristDataCell } from '@/components/FristDataCell';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
@@ -14,13 +14,13 @@ import { OverviewTabType } from '@/konstanter';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 
-const getVarighetOppfolgingstilfelle = (
+function getVarighetOppfolgingstilfelle(
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
-): string => {
+): string {
   return oppfolgingstilfelle
     ? `${oppfolgingstilfelle.varighetUker} uker`
     : 'Ukjent';
-};
+}
 
 interface Props {
   personListe: [string, PersonData][];
@@ -30,17 +30,17 @@ interface Props {
   setSorting: (sorting: Sorting) => void;
 }
 
-export const NewOversiktTable = ({
+export function NewOversiktTable({
   personListe,
   selectedRows,
   setSelectedRows,
   sorting,
   setSorting,
-}: Props): ReactElement => {
+}: Props): ReactElement {
   const { columns } = useSorting();
-  const { tabType } = useTabType();
+  const { selectedTab } = useTabType();
 
-  const handleSort = (sortKey: string | undefined) => {
+  function handleSort(sortKey: string | undefined) {
     let direction: 'none' | 'ascending' | 'descending';
     if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
       direction = 'none';
@@ -64,27 +64,27 @@ export const NewOversiktTable = ({
         retning: direction,
       },
     });
-  };
+  }
 
   const allRowsSelected = personListe.length === selectedRows.length;
   const anyRowsSelected = selectedRows.length > 0;
   const isRowSelected = (fnr: string) => selectedRows.includes(fnr);
 
-  const toggleSelectedRow = (fnr: string) => {
+  function toggleSelectedRow(fnr: string) {
     if (isRowSelected(fnr)) {
       setSelectedRows(selectedRows.filter((value) => value !== fnr));
     } else {
       setSelectedRows([...selectedRows, fnr]);
     }
-  };
+  }
 
-  const toggleSelectAllRows = () => {
+  function toggleSelectAllRows() {
     if (anyRowsSelected) {
       setSelectedRows([]);
     } else {
       setSelectedRows(personListe.map(([fnr]) => fnr));
     }
-  };
+  }
 
   return (
     <Table
@@ -109,7 +109,7 @@ export const NewOversiktTable = ({
           {columns
             .filter(
               (column) =>
-                tabType === OverviewTabType.ENHET_OVERVIEW ||
+                selectedTab === OverviewTabType.ENHET_OVERVIEW ||
                 column.sortKey !== 'VEILEDER'
             )
             .map((col, index) => (
@@ -156,7 +156,7 @@ export const NewOversiktTable = ({
             <Table.DataCell textSize="small">
               <PersonRadVirksomhetColumn personData={persondata} />
             </Table.DataCell>
-            {tabType === OverviewTabType.ENHET_OVERVIEW && (
+            {selectedTab === OverviewTabType.ENHET_OVERVIEW && (
               <Table.DataCell textSize="small">
                 <VeilederColumn personData={persondata} />
               </Table.DataCell>
@@ -166,9 +166,7 @@ export const NewOversiktTable = ({
                 persondata.latestOppfolgingstilfelle
               )}
             </Table.DataCell>
-            <Table.DataCell textSize="small">
-              <FristColumn personData={persondata} />
-            </Table.DataCell>
+            <FristDataCell personData={persondata} />
             <Table.DataCell
               textSize="small"
               className="[&>*:not(:last-child)]:mb-1.5"
@@ -184,4 +182,4 @@ export const NewOversiktTable = ({
       </Table.Body>
     </Table>
   );
-};
+}

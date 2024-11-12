@@ -5,10 +5,10 @@ import { OverviewTabType } from '@/konstanter';
 type TabTypeProviderProps = { children: React.ReactNode };
 
 export const TabTypeContext = React.createContext<{
-  tabType: OverviewTabType;
+  selectedTab: OverviewTabType;
   setTabType: (tabType: OverviewTabType) => void;
 }>({
-  tabType: OverviewTabType.ENHET_OVERVIEW,
+  selectedTab: OverviewTabType.ENHET_OVERVIEW,
   setTabType: () => undefined,
 });
 
@@ -16,7 +16,7 @@ const TabTypeProvider = ({ children }: TabTypeProviderProps) => {
   const [tabType, setTabType] = useState(OverviewTabType.ENHET_OVERVIEW);
 
   return (
-    <TabTypeContext.Provider value={{ tabType, setTabType }}>
+    <TabTypeContext.Provider value={{ selectedTab: tabType, setTabType }}>
       {children}
     </TabTypeContext.Provider>
   );

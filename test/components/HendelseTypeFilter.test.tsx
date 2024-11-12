@@ -128,7 +128,7 @@ describe('HendelseTypeFilter', () => {
       <NotificationProvider>
         <TabTypeContext.Provider
           value={{
-            tabType: OverviewTabType.MY_OVERVIEW,
+            selectedTab: OverviewTabType.MY_OVERVIEW,
             setTabType: () => void 0,
           }}
         >
