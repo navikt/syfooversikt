@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   PersonOversiktStatusDTO,
   PersonOversiktUbehandletStatusDTO,
 } from '@/api/types/personoversiktTypes';
-import { get } from '@/api/axios';
+import { get, post } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { FetchPersonoversiktFailed } from '@/context/notification/Notifications';
@@ -12,6 +12,7 @@ import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
+import { SokDTO } from '@/api/types/sokDTO';
 
 const isUbehandlet = (ubehandletStatus: PersonOversiktUbehandletStatusDTO) => {
   return Object.values(ubehandletStatus).some((value) => value);
@@ -86,5 +87,20 @@ export const usePersonoversiktQuery = () => {
       () => (query.data ? filteredPersonOversiktStatusList(query.data) : []),
       [query.data]
     ),
+  };
+};
+
+export const useSokPerson = () => {
+  const path = `${PERSONOVERSIKT_ROOT}/search`;
+  const postSok = (sokDTO: SokDTO) =>
+    post<PersonOversiktStatusDTO[]>(path, sokDTO);
+
+  const mutation = useMutation({
+    mutationFn: postSok,
+  });
+
+  return {
+    ...mutation,
+    data: mutation.data || [],
   };
 };

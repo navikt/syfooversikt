@@ -42,6 +42,7 @@ export interface PersonOversiktStatusDTO
   extends PersonOversiktUbehandletStatusDTO {
   fnr: string;
   navn: string;
+  fodselsdato: Date;
   enhet: string;
   veilederIdent: string | null;
   motestatus: MoteStatusType | undefined;

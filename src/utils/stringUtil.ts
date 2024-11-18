@@ -17,3 +17,11 @@ export const toLastnameFirstnameFormat = (navn: string): string => {
 
   return nameList.map(capitalizeHyphenatedWords).join(' ');
 };
+
+export function isNumeric(str: string): boolean {
+  return /^\d+$/.test(str);
+}
+
+export function removePunctuation(str: string): string {
+  return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+}

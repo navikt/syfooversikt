@@ -3,7 +3,6 @@ import { Checkbox, Table } from '@navikt/ds-react';
 import { VeilederColumn } from '@/components/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
-import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { FristDataCell } from '@/components/FristDataCell';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
@@ -13,6 +12,7 @@ import { useTabType } from '@/context/tab/TabTypeContext';
 import { OverviewTabType } from '@/konstanter';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 
 function getVarighetOppfolgingstilfelle(
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -117,7 +117,6 @@ export function NewOversiktTable({
                 {col.sortingText}
               </Table.ColumnHeader>
             ))}
-          <Table.DataCell />
         </Table.Row>
       </Table.Header>
       <Table.Body>
