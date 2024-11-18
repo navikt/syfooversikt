@@ -43,9 +43,11 @@ spec:
       claims:
         extra:
           - "NAVident"
+  redis:
+    - instance: cache
+      access: readwrite
   envFrom:
     - secret: syfooversikt-session-key
-    - secret: syfooversikt-redis-password
     - secret: syfooversikt-unleash-api-token
   accessPolicy:
     outbound:
@@ -57,7 +59,6 @@ spec:
         - application: syfooversiktsrv
         - application: syfoperson
         - application: syfoveileder
-        - application: syfooversikt-redis
         - application: flexjar-backend
           namespace: flex
         - application: modiacontextholder
@@ -72,8 +73,6 @@ spec:
       value: 'production'
     - name: AUTH_REDIRECT_URI
       value: "https://syfooversikt.intern.dev.nav.no/oauth2/callback"
-    - name: REDIS_HOST
-      value: "syfooversikt-redis"
     - name: EREG_HOST
       value: "https://ereg-services-q1.dev-fss-pub.nais.io"
     - name: SYFOOVERSIKTSRV_AAD_APP_CLIENT_ID
