@@ -6,10 +6,7 @@ import {
   HourglassTopFilledIcon,
 } from '@navikt/aksel-icons';
 import React, { ReactElement, useState } from 'react';
-import {
-  AktivitetskravStatus,
-  oppfolgingsgrunnToString,
-} from '@/api/types/personoversiktTypes';
+import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Button, Table, Tooltip } from '@navikt/ds-react';
 import OppfolgingsoppgaveModal from '@/components/OppfolgingsoppgaveModal';
 import * as Amplitude from '@/utils/amplitude';
@@ -106,7 +103,9 @@ function fristerInfo(
         ),
       date: oppfolgingsoppgave.frist,
       tooltip: `${
-        oppfolgingsgrunnToString[oppfolgingsoppgave.oppfolgingsgrunn]
+        selectedTab === OverviewTabType.MY_OVERVIEW
+          ? 'Åpne oppfølgingsoppgave'
+          : 'Oppfølgingsoppgave frist'
       }`,
     });
   }
