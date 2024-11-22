@@ -516,7 +516,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         },
       ],
     },
-    oppfolgingsoppgave: null,
+    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date('2022-01-01'),
       oppfolgingstilfelleEnd: new Date('2022-12-31'),
