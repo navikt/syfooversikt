@@ -13,14 +13,11 @@ const ClearFiltersWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   box-sizing: border-box;
-  border: 2px solid transparent;
   justify-content: flex-end;
-  border-radius: 2px;
   color: ${themes.color.navBla};
-  margin-bottom: 0.5em;
   font-size: 1em;
   font-weight: 500;
-  padding: 0.25em;
+  padding: 0.5rem 0.25rem;
   -webkit-user-select: none;
   user-select: none;
   :hover {

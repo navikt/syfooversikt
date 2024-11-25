@@ -1,23 +1,17 @@
-import React, { ReactElement, useState } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import BirthDateFilter from '../filters/BirthDateFilter';
-import CompanyFilter from '../filters/CompanyFilter';
+import React, { ReactElement } from 'react';
+import BirthDateFilter from './BirthDateFilter';
+import CompanyFilter from './CompanyFilter';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { FristFilter } from '@/components/filters/FristFilter';
+import { FristFilter } from '@/components/Filter/FristFilter';
 import {
   AgeFilterOption,
   FristFilterOption,
 } from '@/utils/hendelseFilteringUtils';
-import { AgeFilter } from '@/components/filters/AgeFilter';
-
-const texts = {
-  panelTitle: 'Filter',
-  trackingLabelCompanies: 'Filter - Virksomheter',
-  trackingLabelDate: 'Filter - Fødselsdato',
-};
+import { AgeFilter } from '@/components/Filter/AgeFilter';
+import { VStack } from '@navikt/ds-react';
 
 interface PersonFilterProps {
   personregister: PersonregisterState;
@@ -27,11 +21,6 @@ export const PersonFilter = ({
   personregister,
 }: PersonFilterProps): ReactElement => {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
-  const [panelOpen, setPanelOpen] = useState(true);
-
-  const togglePanel = () => {
-    setPanelOpen(panelOpen);
-  };
 
   const onBirthDateChange = (birthDates: string[]) => {
     dispatchFilterAction({
@@ -62,30 +51,24 @@ export const PersonFilter = ({
   };
 
   return (
-    <Ekspanderbartpanel
-      apen={panelOpen}
-      onClick={togglePanel}
-      tittel={texts.panelTitle}
-    >
-      <div className="flex flex-col gap-4">
-        <CompanyFilter
-          selectedCompanies={filterState.selectedCompanies}
-          options={mapPersonregisterToCompanyList(personregister)}
-          onSelect={onCompanyChange}
-        />
-        <BirthDateFilter
-          onSelect={onBirthDateChange}
-          selectedDates={filterState.selectedBirthDates}
-        />
-        <AgeFilter
-          onChange={onAgeFilterChange}
-          selectedAgeFilters={filterState.selectedAgeFilters}
-        />
-        <FristFilter
-          onChange={onFristFilterChange}
-          selectedFristFilters={filterState.selectedFristFilters}
-        />
-      </div>
-    </Ekspanderbartpanel>
+    <VStack className="gap-4">
+      <CompanyFilter
+        selectedCompanies={filterState.selectedCompanies}
+        options={mapPersonregisterToCompanyList(personregister)}
+        onSelect={onCompanyChange}
+      />
+      <BirthDateFilter
+        onSelect={onBirthDateChange}
+        selectedDates={filterState.selectedBirthDates}
+      />
+      <AgeFilter
+        onChange={onAgeFilterChange}
+        selectedAgeFilters={filterState.selectedAgeFilters}
+      />
+      <FristFilter
+        onChange={onFristFilterChange}
+        selectedFristFilters={filterState.selectedFristFilters}
+      />
+    </VStack>
   );
 };

@@ -7,8 +7,8 @@ import { toPersonData } from '@/utils/toPersondata';
 import { PersonFilter } from '@/components/Filter/PersonFilter';
 import Sokeresultat from '@/components/Sokeresultat';
 import styled from 'styled-components';
-import { TekstFilter } from '@/components/filters/TekstFilter';
-import { ClearFiltersButton } from '@/components/filters/ClearFiltersButton';
+import { TekstFilter } from '@/components/Filter/TekstFilter';
+import { ClearFiltersButton } from '@/components/Filter/ClearFiltersButton';
 import {
   Filterable,
   filterEventsOnVeileder,
@@ -18,7 +18,8 @@ import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import { HendelseFilterPanel } from '@/components/HendelseFilterPanel';
+import { HendelseFilter } from '@/components/Filter/HendelseFilter';
+import { Box } from '@navikt/ds-react';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 1rem;
@@ -72,10 +73,19 @@ export const Oversikt = ({
     <OversiktContainerInnhold>
       <SokeresultatFiltre>
         <ClearFiltersButton />
-        <TekstFilter />
-        <HendelseFilterPanel personRegister={allEvents.value} />
+        <Box
+          borderRadius="medium"
+          background="surface-default"
+          borderColor="border-strong"
+          padding="4"
+          borderWidth="1"
+          className="mb-4 flex flex-col gap-4"
+        >
+          <TekstFilter />
+          <HendelseFilter personRegister={allEvents.value} />
 
-        <PersonFilter personregister={personData} />
+          <PersonFilter personregister={personData} />
+        </Box>
       </SokeresultatFiltre>
 
       <Sokeresultat allEvents={allEvents} />
