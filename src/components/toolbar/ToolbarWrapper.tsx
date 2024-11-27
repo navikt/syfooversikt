@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import Toolbar from './Toolbar';
 import { Label } from '@navikt/ds-react';
 import { PAGINATED_NUMBER_OF_ITEMS } from '@/components/toolbar/PaginationContainer';
+import SokPerson from '@/components/sokperson/SokPerson';
 
 export interface ToolbarWrapperProps {
   alleMarkert: boolean;
@@ -38,15 +39,18 @@ const ToolbarWrapper = (props: ToolbarWrapperProps): ReactElement => {
 
   return (
     <>
-      <div className="px-1 py-2 flex flex-row gap-1">
-        <Label size="small">
-          {textPaginatedUsers(pageInfo, props.numberOfItemsTotal)}
-        </Label>
-        {props.markertePersoner.length > 0 && (
+      <div className="px-1 py-2 flex justify-between items-center">
+        <div className="flex gap-1">
           <Label size="small">
-            {textMarkedUsers(props.markertePersoner.length)}
+            {textPaginatedUsers(pageInfo, props.numberOfItemsTotal)}
           </Label>
-        )}
+          {props.markertePersoner.length > 0 && (
+            <Label size="small">
+              {textMarkedUsers(props.markertePersoner.length)}
+            </Label>
+          )}
+        </div>
+        <SokPerson />
       </div>
       <Toolbar {...props} setPageInfo={setPageInfo} />
     </>

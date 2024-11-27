@@ -64,3 +64,26 @@ export const getWeeksBetween = (date1: Date, date2: Date): number => {
 export const addWeeks = (date: Date, numberOfWeeks: number): Date => {
   return dayjs(date).add(numberOfWeeks, 'weeks').toDate();
 };
+
+export function parseDateString(dateString: string): Date | null {
+  const day = dateString.slice(0, 2);
+  const month = dateString.slice(2, 4);
+  let year = dateString.slice(4);
+  const today = new Date();
+
+  if (year.length === 2) {
+    const todayYear = today.getFullYear().toString().substring(2, 4);
+    year =
+      parseInt(year, 10) < parseInt(todayYear, 10) ? `20${year}` : `19${year}`;
+  }
+
+  const date = new Date(`${year}-${month}-${day}`);
+  if (
+    date.getMonth() + 1 !== parseInt(month, 10) ||
+    date.getDate() !== parseInt(day, 10)
+  ) {
+    return null;
+  } else {
+    return date;
+  }
+}

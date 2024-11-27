@@ -5,8 +5,6 @@ import { OverviewTabType } from '@/konstanter';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { useTabType } from '@/context/tab/TabTypeContext';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import { Toggles } from '@/data/unleash/types/unleash_types';
 import {
   FilterState,
   HendelseTypeFilter,
@@ -156,11 +154,7 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
   }
 }
 
-function showCheckbox(
-  toggles: Toggles,
-  hendelse: Hendelse,
-  tabType: OverviewTabType
-): boolean {
+function showCheckbox(hendelse: Hendelse, tabType: OverviewTabType): boolean {
   switch (hendelse) {
     case 'AKTIVITETSKRAV':
     case 'AKTIVITETSKRAV_VURDER_STANS':
@@ -173,11 +167,9 @@ function showCheckbox(
     case 'MANGLENDE_MEDVIRKNING':
     case 'OPPFOLGINGSOPPGAVE':
     case 'ARBEIDSUFORHET':
-      return true;
     case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
-      return toggles.isFrisktilarbeidEnabled;
     case 'SNART_SLUTT_PA_SYKEPENGENE':
-      return toggles.isOppfolgingISenFaseEnabled;
+      return true;
     case 'UFORDELTE_BRUKERE':
       return tabType === OverviewTabType.ENHET_OVERVIEW;
   }
@@ -194,8 +186,7 @@ interface CheckboxElement {
 function hendelseCheckboxes(
   personRegister: PersonregisterState | undefined,
   filterState: FilterState,
-  tabType: OverviewTabType,
-  toggles: Toggles
+  tabType: OverviewTabType
 ): CheckboxElement[] {
   return Object.entries(HendelseTekster).map(([hendelse, tekst]) => {
     const filter = initFilter(hendelse as Hendelse);
@@ -206,7 +197,7 @@ function hendelseCheckboxes(
       filterState.selectedHendelseType,
       hendelse as Hendelse
     );
-    const isVisible = showCheckbox(toggles, hendelse as Hendelse, tabType);
+    const isVisible = showCheckbox(hendelse as Hendelse, tabType);
     return {
       hendelse: hendelse,
       tekst,
@@ -231,15 +222,13 @@ function CheckboxLabel({ labelText, antallHendelser }: CheckboxLabelProps) {
 }
 
 export function HendelseFilter({ personRegister }: Props) {
-  const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { selectedTab } = useTabType();
 
   const checkboxElements = hendelseCheckboxes(
     personRegister,
     filterState,
-    selectedTab,
-    toggles
+    selectedTab
   ).filter((checkboksElement) => checkboksElement.isVisible);
 
   const onChange = (value: string) => {

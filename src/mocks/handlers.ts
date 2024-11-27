@@ -4,7 +4,10 @@ import { mockUnleash } from '@/mocks/mockUnleash';
 import { mockSyfoveileder } from '@/mocks/syfoveileder/mockSyfoveileder';
 import { mockSyfoperson } from '@/mocks/syfoperson/mockSyfoperson';
 import { mockPersontildeling } from '@/mocks/persontildeling/mockPersontildeling';
-import { mockPersonoversikt } from '@/mocks/personoversikt/mockPersonoversikt';
+import {
+  mockPersonoversikt,
+  mockSokPerson,
+} from '@/mocks/personoversikt/mockPersonoversikt';
 import { mockModiacontextholder } from '@/mocks/modiacontextholder/mockModiacontextholder';
 import { mockFlexjar } from '@/mocks/flexjar/mockFlexjar';
 import { mockEreg } from '@/mocks/ereg/mockEreg';
@@ -22,6 +25,7 @@ const handlers: HttpHandler[] = [
   mockSyfoperson(generatedPersons),
   mockPersontildeling,
   mockPersonoversikt(generatedPersons),
+  mockSokPerson(),
   ...mockModiacontextholder,
 ];
 
