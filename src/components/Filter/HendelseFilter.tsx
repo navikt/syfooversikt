@@ -1,5 +1,4 @@
 import React from 'react';
-import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { filterOnPersonregister } from '@/utils/hendelseFilteringUtils';
 import { OverviewTabType } from '@/konstanter';
@@ -231,7 +230,7 @@ function CheckboxLabel({ labelText, antallHendelser }: CheckboxLabelProps) {
   );
 }
 
-export function HendelseFilterPanel({ personRegister }: Props) {
+export function HendelseFilter({ personRegister }: Props) {
   const { toggles } = useFeatureToggles();
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { selectedTab } = useTabType();
@@ -268,24 +267,22 @@ export function HendelseFilterPanel({ personRegister }: Props) {
   };
 
   return (
-    <EkspanderbartPanel apen tittel="Hendelse" className="mb-4">
-      <CheckboxGroup legend="Hendelse" hideLegend={true} size="small">
-        {checkboxElements.map((checkbox) => {
-          return (
-            <Checkbox
-              key={checkbox.hendelse}
-              checked={checkbox.isChecked}
-              value={checkbox.hendelse}
-              onChange={(e) => onChange(e.target.value)}
-            >
-              <CheckboxLabel
-                labelText={checkbox.tekst}
-                antallHendelser={checkbox.antallHendelser}
-              />
-            </Checkbox>
-          );
-        })}
-      </CheckboxGroup>
-    </EkspanderbartPanel>
+    <CheckboxGroup legend="Hendelse" size="small">
+      {checkboxElements.map((checkbox) => {
+        return (
+          <Checkbox
+            key={checkbox.hendelse}
+            checked={checkbox.isChecked}
+            value={checkbox.hendelse}
+            onChange={(e) => onChange(e.target.value)}
+          >
+            <CheckboxLabel
+              labelText={checkbox.tekst}
+              antallHendelser={checkbox.antallHendelser}
+            />
+          </Checkbox>
+        );
+      })}
+    </CheckboxGroup>
   );
 }
