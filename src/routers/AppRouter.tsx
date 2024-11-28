@@ -5,9 +5,11 @@ import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
 import { OverviewTabType } from '@/konstanter';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
+import SokContainer from '@/components/sokperson/SokContainer';
 
-export const minOversiktRoutePathRoutePath = '/minoversikt';
+export const minOversiktRoutePath = '/minoversikt';
 export const enhetOversiktRoutePath = '/enhet';
+export const sokSykmeldtRoutePath = '/sok';
 
 const AppRouter = (): ReactElement => {
   return (
@@ -24,11 +26,12 @@ const AppRouter = (): ReactElement => {
                 }
               />
               <Route
-                path={minOversiktRoutePathRoutePath}
+                path={minOversiktRoutePath}
                 element={
                   <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
                 }
               />
+              <Route path={sokSykmeldtRoutePath} element={<SokContainer />} />
               <Route
                 path="*"
                 element={<Navigate to={enhetOversiktRoutePath} />}

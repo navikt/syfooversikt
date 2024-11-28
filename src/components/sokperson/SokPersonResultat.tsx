@@ -29,7 +29,7 @@ export default function SokPersonResultat({
   const personer = Object.entries(toPersonData(sokeresultater, []));
 
   return personer.length === 0 ? (
-    <Box>
+    <Box background="surface-default" padding="4" className="mt-2">
       <BodyShort>{texts.noResults.first}</BodyShort>
       <BodyShort>{texts.noResults.second}</BodyShort>
     </Box>

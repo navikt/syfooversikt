@@ -31,17 +31,9 @@ describe('SokPerson', () => {
     mockServer.use(mockSokPerson());
   });
 
-  it('should render SokPerson with fields', async () => {
+  it('should render SokPerson with fields', () => {
     renderSokPerson();
 
-    const modalButton = screen.getByRole('button', {
-      name: 'Søk etter sykmeldt',
-    });
-    expect(modalButton).to.exist;
-
-    await userEvent.click(modalButton);
-
-    expect(screen.getByRole('dialog', { name: 'Søk etter sykmeldt' })).to.exist;
     expect(screen.getByRole('heading', { name: 'Søk etter sykmeldt' })).to
       .exist;
     expect(
@@ -57,12 +49,6 @@ describe('SokPerson', () => {
   it('should render validation errors for fields', async () => {
     renderSokPerson();
 
-    await userEvent.click(
-      screen.getByRole('button', {
-        name: 'Søk etter sykmeldt',
-      })
-    );
-
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
     expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
@@ -71,12 +57,6 @@ describe('SokPerson', () => {
 
   it('should send correct parameters', async () => {
     renderSokPerson();
-
-    await userEvent.click(
-      screen.getByRole('button', {
-        name: 'Søk etter sykmeldt',
-      })
-    );
 
     const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
     const birthdateInput = screen.getByRole('textbox', { name: 'Fødselsdato' });
@@ -114,12 +94,6 @@ describe('SokPerson', () => {
 
   it('should show correct results', async () => {
     renderSokPerson();
-
-    await userEvent.click(
-      screen.getByRole('button', {
-        name: 'Søk etter sykmeldt',
-      })
-    );
 
     const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
     const birthdateInput = screen.getByRole('textbox', { name: 'Fødselsdato' });
