@@ -6,7 +6,6 @@ import {
   Button,
   Heading,
   HStack,
-  Modal,
   TextField,
   VStack,
 } from '@navikt/ds-react';
@@ -18,7 +17,6 @@ import { isNumeric, removePunctuation } from '@/utils/stringUtil';
 import { parseDateString } from '@/utils/dateUtils';
 
 const texts = {
-  buttonText: 'Søk etter sykmeldt',
   header: 'Søk etter sykmeldt',
   info:
     'Her kan du søke opp sykmeldte personer basert på initialer og fødselsdato.',
@@ -30,7 +28,6 @@ const texts = {
 };
 
 export default function SokPerson() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nameInitials, setNameInitials] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
   const {
@@ -70,70 +67,57 @@ export default function SokPerson() {
   };
 
   return (
-    <Box>
-      <Button onClick={() => setIsModalOpen(true)} size="small">
-        {texts.buttonText}
-      </Button>
-      <Modal
-        closeOnBackdropClick
-        className="w-[90%] max-w-[90%]"
-        open={isModalOpen}
-        aria-label={texts.buttonText}
-        onClose={() => setIsModalOpen(false)}
-      >
-        <Modal.Header>
-          <Heading level="2" size="medium">
-            {texts.header}
-          </Heading>
-        </Modal.Header>
-        <Modal.Body>
-          <VStack gap="4">
-            <BodyShort>{texts.info}</BodyShort>
-            <HStack gap="8" align="end">
-              <TextField
-                label="Initialer"
-                description="AB"
-                htmlSize={10}
-                type="text"
-                onChange={(e) => setNameInitials(e.target.value)}
-                error={
-                  isFormError && !validInitials(nameInitials)
-                    ? texts.validation.initials
-                    : undefined
-                }
-              />
-              <TextField
-                label="Fødselsdato"
-                description="ddmmåå"
-                htmlSize={14}
-                type="text"
-                onChange={(e) => setBirthdate(e.target.value)}
-                error={
-                  isFormError && parseBirthdate(birthdate) === null
-                    ? texts.validation.birthdate
-                    : undefined
-                }
-              />
-              <Button
-                onClick={handleSubmit}
-                loading={isLoading}
-                icon={<MagnifyingGlassIcon />}
-                type="submit"
-              >
-                Søk
-              </Button>
-            </HStack>
-            {searchResults && isSuccess && (
-              <SokPersonResultat sokeresultater={searchResults} />
-            )}
-            {isError && (
-              <Alert variant="error" size="small">
-                {texts.error}
-              </Alert>
-            )}
-          </VStack>
-        </Modal.Body>
-      </Modal>
-    </Box>
+    <>
+      <Box background="surface-default" padding="4">
+        <Heading level="2" size="medium">
+          {texts.header}
+        </Heading>
+        <VStack gap="4">
+          <BodyShort>{texts.info}</BodyShort>
+          <HStack gap="8" align="end">
+            <TextField
+              label="Initialer"
+              description="AB"
+              htmlSize={10}
+              type="text"
+              onChange={(e) => setNameInitials(e.target.value)}
+              error={
+                isFormError && !validInitials(nameInitials)
+                  ? texts.validation.initials
+                  : undefined
+              }
+            />
+            <TextField
+              label="Fødselsdato"
+              description="ddmmåå"
+              htmlSize={14}
+              type="text"
+              onChange={(e) => setBirthdate(e.target.value)}
+              error={
+                isFormError && parseBirthdate(birthdate) === null
+                  ? texts.validation.birthdate
+                  : undefined
+              }
+            />
+            <Button
+              onClick={handleSubmit}
+              loading={isLoading}
+              icon={<MagnifyingGlassIcon />}
+              type="submit"
+            >
+              Søk
+            </Button>
+          </HStack>
+          {isError && (
+            <Alert variant="error" size="small">
+              {texts.error}
+            </Alert>
+          )}
+        </VStack>
+      </Box>
+      {searchResults && isSuccess && (
+        <SokPersonResultat sokeresultater={searchResults} />
+      )}
+    </>
   );
 }

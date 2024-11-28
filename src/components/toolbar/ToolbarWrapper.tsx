@@ -2,8 +2,6 @@ import React, { ReactElement, useState } from 'react';
 import Toolbar from './Toolbar';
 import { Label } from '@navikt/ds-react';
 import { PAGINATED_NUMBER_OF_ITEMS } from '@/components/toolbar/PaginationContainer';
-import SokPerson from '@/components/sokperson/SokPerson';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 export interface ToolbarWrapperProps {
   alleMarkert: boolean;
@@ -37,7 +35,6 @@ const ToolbarWrapper = (props: ToolbarWrapperProps): ReactElement => {
     firstVisibleIndex: 0,
     lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,
   });
-  const { toggles } = useFeatureToggles();
 
   return (
     <>
@@ -52,7 +49,6 @@ const ToolbarWrapper = (props: ToolbarWrapperProps): ReactElement => {
             </Label>
           )}
         </div>
-        {toggles.isSokEnabled && <SokPerson />}
       </div>
       <Toolbar {...props} setPageInfo={setPageInfo} />
     </>
