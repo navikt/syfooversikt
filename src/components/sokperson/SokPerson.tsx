@@ -4,6 +4,7 @@ import {
   BodyShort,
   Box,
   Button,
+  ErrorMessage,
   Heading,
   HStack,
   TextField,
@@ -66,6 +67,9 @@ export default function SokPerson() {
     }
   };
 
+  const invalidInitials = isFormError && !validInitials(nameInitials);
+  const invalidBirthdate = isFormError && parseBirthdate(birthdate) === null;
+
   return (
     <>
       <Box background="surface-default" padding="4">
@@ -81,11 +85,7 @@ export default function SokPerson() {
               htmlSize={10}
               type="text"
               onChange={(e) => setNameInitials(e.target.value)}
-              error={
-                isFormError && !validInitials(nameInitials)
-                  ? texts.validation.initials
-                  : undefined
-              }
+              error={invalidInitials}
             />
             <TextField
               label="Fødselsdato"
@@ -93,11 +93,7 @@ export default function SokPerson() {
               htmlSize={14}
               type="text"
               onChange={(e) => setBirthdate(e.target.value)}
-              error={
-                isFormError && parseBirthdate(birthdate) === null
-                  ? texts.validation.birthdate
-                  : undefined
-              }
+              error={invalidBirthdate}
             />
             <Button
               onClick={handleSubmit}
@@ -108,6 +104,16 @@ export default function SokPerson() {
               Søk
             </Button>
           </HStack>
+          {invalidInitials && (
+            <ErrorMessage size="small">
+              {texts.validation.initials}
+            </ErrorMessage>
+          )}
+          {invalidBirthdate && (
+            <ErrorMessage size="small">
+              {texts.validation.birthdate}
+            </ErrorMessage>
+          )}
           {isError && (
             <Alert variant="error" size="small">
               {texts.error}
