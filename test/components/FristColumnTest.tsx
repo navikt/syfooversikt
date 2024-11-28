@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { FristDataCell } from '@/components/FristDataCell';
 import React from 'react';
 import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
@@ -8,6 +8,8 @@ import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
 import { addWeeks } from 'date-fns';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
+import { renderWithRouter } from '../testRenderUtils';
+import { routes } from '@/routers/routes';
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -30,10 +32,17 @@ const defaultPersonData: PersonData = {
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
 
+const renderFristColumn = (personData: PersonData) => {
+  renderWithRouter(
+    <FristDataCell personData={personData} />,
+    routes.ENHET_OVERSIKT
+  );
+};
+
 describe('FristColumn', () => {
   it('viser ingen frister når person har hverken aktivitetskrav AVVENT med frist eller oppfolgingsoppgave med frist', () => {
     const personUtenFrister: PersonData = { ...defaultPersonData };
-    render(<FristDataCell personData={personUtenFrister} />);
+    renderFristColumn(personUtenFrister);
 
     expect(screen.queryAllByText(fristFormatRegex)).to.be.empty;
   });
@@ -52,7 +61,7 @@ describe('FristColumn', () => {
         ],
       },
     };
-    render(<FristDataCell personData={personAvventerMedFrist} />);
+    renderFristColumn(personAvventerMedFrist);
 
     expect(screen.getByText(toReadableDate(aktivitetskravVurderingFrist))).to
       .exist;
@@ -64,7 +73,7 @@ describe('FristColumn', () => {
       ...defaultPersonData,
       oppfolgingsoppgave,
     };
-    render(<FristDataCell personData={personOppfolgingsoppgaveMedFrist} />);
+    renderFristColumn(personOppfolgingsoppgaveMedFrist);
 
     expect(screen.getAllByText(toReadableDate(oppfolgingsoppgave.frist))).to
       .exist;
@@ -76,9 +85,7 @@ describe('FristColumn', () => {
       ...defaultPersonData,
       friskmeldingTilArbeidsformidlingFom,
     };
-    render(
-      <FristDataCell personData={personFriskmeldingTilArbeidsformidling} />
-    );
+    renderFristColumn(personFriskmeldingTilArbeidsformidling);
 
     expect(
       screen.getByText(toReadableDate(friskmeldingTilArbeidsformidlingFom))
@@ -95,7 +102,7 @@ describe('FristColumn', () => {
         },
       },
     };
-    render(<FristDataCell personData={personManglendeMedvirkning} />);
+    renderFristColumn(personManglendeMedvirkning);
 
     expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
   });
@@ -119,7 +126,7 @@ describe('FristColumn', () => {
       friskmeldingTilArbeidsformidlingFom,
     };
 
-    render(<FristDataCell personData={personMedFlereFrister} />);
+    renderFristColumn(personMedFlereFrister);
 
     const allFrister = screen.getAllByText(fristFormatRegex);
     expect(allFrister).to.have.length(4); // 3 frister i oversikten + 1 i modal for oppfølgingsoppgave som finnes i DOM
@@ -149,7 +156,7 @@ describe('FristColumn', () => {
           ],
         },
       };
-      render(<FristDataCell personData={personMedAvventerFrist} />);
+      renderFristColumn(personMedAvventerFrist);
 
       expect(screen.getByText(toReadableDate(aktivitetskravVurderingFrist))).to
         .exist;
@@ -171,7 +178,7 @@ describe('FristColumn', () => {
           ],
         },
       };
-      render(<FristDataCell personData={personMedForhandsvarsel} />);
+      renderFristColumn(personMedForhandsvarsel);
 
       expect(
         screen.getByText(toReadableDate(aktivitetskravSvarfristForhandsvarsel))
@@ -195,7 +202,7 @@ describe('FristColumn', () => {
           ],
         },
       };
-      render(<FristDataCell personData={personMedForhandsvarsel} />);
+      renderFristColumn(personMedForhandsvarsel);
 
       expect(screen.getByText(toReadableDate(svarfristForhandsvarselVis))).to
         .exist;
@@ -220,7 +227,7 @@ describe('FristColumn', () => {
           ],
         },
       };
-      render(<FristDataCell personData={personMedForhandsvarsel} />);
+      renderFristColumn(personMedForhandsvarsel);
 
       expect(screen.getByText(toReadableDate(aktivitetskravAvventFristVis))).to
         .exist;

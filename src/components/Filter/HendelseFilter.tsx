@@ -1,10 +1,8 @@
 import React from 'react';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { filterOnPersonregister } from '@/utils/hendelseFilteringUtils';
-import { OverviewTabType } from '@/konstanter';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { useTabType } from '@/context/tab/TabTypeContext';
 import {
   FilterState,
   HendelseTypeFilter,
@@ -12,6 +10,7 @@ import {
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 export const HendelseTekster = {
   UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
@@ -154,7 +153,7 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
   }
 }
 
-function showCheckbox(hendelse: Hendelse, tabType: OverviewTabType): boolean {
+function showCheckbox(hendelse: Hendelse, tabType: TabType): boolean {
   switch (hendelse) {
     case 'AKTIVITETSKRAV':
     case 'AKTIVITETSKRAV_VURDER_STANS':
@@ -171,7 +170,7 @@ function showCheckbox(hendelse: Hendelse, tabType: OverviewTabType): boolean {
     case 'SNART_SLUTT_PA_SYKEPENGENE':
       return true;
     case 'UFORDELTE_BRUKERE':
-      return tabType === OverviewTabType.ENHET_OVERVIEW;
+      return tabType === TabType.ENHETENS_OVERSIKT;
   }
 }
 
@@ -186,7 +185,7 @@ interface CheckboxElement {
 function hendelseCheckboxes(
   personRegister: PersonregisterState | undefined,
   filterState: FilterState,
-  tabType: OverviewTabType
+  tabType: TabType
 ): CheckboxElement[] {
   return Object.entries(HendelseTekster).map(([hendelse, tekst]) => {
     const filter = initFilter(hendelse as Hendelse);

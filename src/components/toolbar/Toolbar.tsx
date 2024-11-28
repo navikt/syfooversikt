@@ -1,12 +1,11 @@
 import TildelVeileder from './AssignVeileder/TildelVeileder';
-import { OverviewTabType } from '@/konstanter';
 import SearchVeileder from './SearchVeileder/SearchVeileder';
 import React from 'react';
 import styled from 'styled-components';
 import themes from '../../styles/themes';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
-import { useTabType } from '@/context/tab/TabTypeContext';
 import PaginationContainer from '@/components/toolbar/PaginationContainer';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 const Innhold = styled.section`
   display: flex;
@@ -56,7 +55,7 @@ const Toolbar = (props: ToolbarProps) => {
             handleTildelVeileder={props.buttonHandler}
             handleSelectAll={props.checkAllHandler}
           />
-          {selectedTab === OverviewTabType.ENHET_OVERVIEW && <SearchVeileder />}
+          {selectedTab === TabType.ENHETENS_OVERSIKT && <SearchVeileder />}
         </Element>
         <PaginationContainer
           numberOfItemsTotal={props.numberOfItemsTotal}

@@ -10,8 +10,7 @@ import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Button, Table, Tooltip } from '@navikt/ds-react';
 import OppfolgingsoppgaveModal from '@/components/OppfolgingsoppgaveModal';
 import * as Amplitude from '@/utils/amplitude';
-import { useTabType } from '@/context/tab/TabTypeContext';
-import { OverviewTabType } from '@/konstanter';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 const texts = {
   tooltipAvventer: 'Avventer til',
@@ -51,7 +50,7 @@ function fristerInfo(
     manglendeMedvirkning,
   }: PersonData,
   setIsModalOpen: (open: boolean) => void,
-  selectedTab: OverviewTabType
+  selectedTab: TabType
 ): Frist[] {
   const frister: Frist[] = [];
   const aktivitetskravStatus = aktivitetskravvurdering?.status;
@@ -88,7 +87,7 @@ function fristerInfo(
   if (oppfolgingsoppgave?.frist) {
     frister.push({
       icon: () =>
-        selectedTab === OverviewTabType.MY_OVERVIEW ? (
+        selectedTab === TabType.MIN_OVERSIKT ? (
           <Button
             size="xsmall"
             icon={<FileTextIcon aria-hidden fontSize="1.5rem" />}
@@ -103,7 +102,7 @@ function fristerInfo(
         ),
       date: oppfolgingsoppgave.frist,
       tooltip: `${
-        selectedTab === OverviewTabType.MY_OVERVIEW
+        selectedTab === TabType.MIN_OVERSIKT
           ? 'Åpne oppfølgingsoppgave'
           : 'Oppfølgingsoppgave frist'
       }`,

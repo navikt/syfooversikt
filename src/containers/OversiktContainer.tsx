@@ -3,9 +3,7 @@ import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
 import { Oversikt } from '@/containers/Oversikt';
-import { OverviewTabType } from '@/konstanter';
 import { NavigationBar } from '@/components/NavigationBar';
-import { useTabType } from '@/context/tab/TabTypeContext';
 import { NotificationBar } from '@/components/error/NotificationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import * as Amplitude from '@/utils/amplitude';
@@ -14,31 +12,31 @@ import { Flexjar } from '@/components/flexjar/Flexjar';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
-interface Props {
-  tabType: OverviewTabType;
-}
-
-function logPageView(tab: OverviewTabType) {
+function logPageView(tab: TabType) {
   Amplitude.logEvent({
     type: EventType.PageView,
     data: { url: window.location.href, sidetittel: toReadableString(tab) },
   });
 }
 
-function toReadableString(overviewTabType: OverviewTabType): string {
+function toReadableString(overviewTabType: TabType): string {
   switch (overviewTabType) {
-    case OverviewTabType.ENHET_OVERVIEW:
+    case TabType.ENHETENS_OVERSIKT:
       return 'Enhetens oversikt';
-    case OverviewTabType.MY_OVERVIEW:
+    case TabType.MIN_OVERSIKT:
       return 'Min oversikt';
+    case TabType.SOK_SYKMELDT:
+      return 'Søk sykmeldt';
   }
 }
 
-const OversiktContainer = ({ tabType }: Props): ReactElement => {
+const OversiktContainer = (): ReactElement => {
   const personregisterQuery = usePersonregisterQuery();
   const personoversiktQuery = usePersonoversiktQuery();
   const { toggles } = useFeatureToggles();
+  const { selectedTab } = useTabType();
   const [feedbackDate] = useLocalStorageState<Date | null>(
     StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
     null
@@ -47,11 +45,9 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
     toggles.isFlexjarArenaEnabled &&
     (feedbackDate === null || getWeeksBetween(new Date(), feedbackDate) >= 8);
 
-  const { setTabType } = useTabType();
   useEffect(() => {
-    setTabType(tabType);
-    logPageView(tabType);
-  }, [setTabType, tabType]);
+    logPageView(selectedTab);
+  }, [selectedTab]);
 
   const ContainerContent = (): ReactElement => {
     if (personoversiktQuery.isInitialLoading) {
@@ -73,7 +69,7 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
         <NavigationBar />
         <ContainerContent />
         {showFlexjar && personoversiktQuery.isSuccess && (
-          <Flexjar side={toReadableString(tabType)} />
+          <Flexjar side={toReadableString(selectedTab)} />
         )}
       </div>
     </ErrorBoundary>

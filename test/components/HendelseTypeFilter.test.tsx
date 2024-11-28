@@ -1,7 +1,7 @@
 import React from 'react';
 import { HendelseFilter } from '@/components/Filter/HendelseFilter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -11,10 +11,28 @@ import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
 import { testQueryClient } from '../testQueryClient';
 import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { unleashMock } from '@/mocks/mockUnleash';
-import { TabTypeContext } from '@/context/tab/TabTypeContext';
-import { OverviewTabType } from '@/konstanter';
+import { renderWithRouter } from '../testRenderUtils';
+import { routes } from '@/routers/routes';
 
 let queryClient: QueryClient;
+
+const renderHendelseFilter = (path: string) => {
+  renderWithRouter(
+    <NotificationProvider>
+      <AktivEnhetContext.Provider
+        value={{
+          aktivEnhet: aktivEnhetMock.aktivEnhet,
+          handleAktivEnhetChanged: () => void 0,
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          <HendelseFilter />
+        </QueryClientProvider>
+      </AktivEnhetContext.Provider>
+    </NotificationProvider>,
+    path
+  );
+};
 
 describe('HendelseTypeFilter', () => {
   beforeEach(() => {
@@ -30,20 +48,7 @@ describe('HendelseTypeFilter', () => {
       () => unleashMock
     );
 
-    render(
-      <NotificationProvider>
-        <AktivEnhetContext.Provider
-          value={{
-            aktivEnhet: aktivEnhetMock.aktivEnhet,
-            handleAktivEnhetChanged: () => void 0,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            <HendelseFilter />
-          </QueryClientProvider>
-        </AktivEnhetContext.Provider>
-      </NotificationProvider>
-    );
+    renderHendelseFilter(routes.ENHET_OVERSIKT);
 
     const onskerMoteCheckbox = screen.getByRole('checkbox', {
       name: /Ber om dialogmøte/,
@@ -124,27 +129,7 @@ describe('HendelseTypeFilter', () => {
     expect(manglendeMedvirkningCheckbox).to.exist;
   });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
-    render(
-      <NotificationProvider>
-        <TabTypeContext.Provider
-          value={{
-            selectedTab: OverviewTabType.MY_OVERVIEW,
-            setTabType: () => void 0,
-          }}
-        >
-          <AktivEnhetContext.Provider
-            value={{
-              aktivEnhet: aktivEnhetMock.aktivEnhet,
-              handleAktivEnhetChanged: () => void 0,
-            }}
-          >
-            <QueryClientProvider client={queryClient}>
-              <HendelseFilter />
-            </QueryClientProvider>
-          </AktivEnhetContext.Provider>
-        </TabTypeContext.Provider>
-      </NotificationProvider>
-    );
+    renderHendelseFilter(routes.MIN_OVERSIKT);
 
     expect(
       screen.queryByRole('checkbox', {

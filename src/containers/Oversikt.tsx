@@ -13,13 +13,12 @@ import {
   Filterable,
   filterEventsOnVeileder,
 } from '@/utils/hendelseFilteringUtils';
-import { OverviewTabType } from '@/konstanter';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
-import { useTabType } from '@/context/tab/TabTypeContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
 import { HendelseFilter } from '@/components/Filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 1rem;
@@ -59,7 +58,7 @@ export const Oversikt = ({
   );
 
   const eventFilterValue =
-    selectedTab === OverviewTabType.MY_OVERVIEW
+    selectedTab === TabType.MIN_OVERSIKT
       ? [aktivVeilederQuery.data?.ident || '']
       : filterState.selectedVeilederIdents;
 

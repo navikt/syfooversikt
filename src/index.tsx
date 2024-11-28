@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { FilterProvider } from '@/context/filters/FilterContext';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
-import { TabTypeProvider } from '@/context/tab/TabTypeContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { isClientError } from '@/api/errors';
@@ -44,16 +43,14 @@ const App = () => {
   return (
     <ErrorBoundary>
       <NotificationProvider>
-        <TabTypeProvider>
-          <AktivEnhetProvider>
-            <FilterProvider>
-              <QueryClientProvider client={queryClient}>
-                <AppRouter />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </QueryClientProvider>
-            </FilterProvider>
-          </AktivEnhetProvider>
-        </TabTypeProvider>
+        <AktivEnhetProvider>
+          <FilterProvider>
+            <QueryClientProvider client={queryClient}>
+              <AppRouter />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </FilterProvider>
+        </AktivEnhetProvider>
       </NotificationProvider>
     </ErrorBoundary>
   );
