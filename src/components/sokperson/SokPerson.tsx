@@ -16,6 +16,7 @@ import SokPersonResultat from '@/components/sokperson/SokPersonResultat';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 import { isNumeric, removePunctuation } from '@/utils/stringUtil';
 import { parseDateString } from '@/utils/dateUtils';
+import * as Amplitude from '@/utils/amplitude';
 
 const texts = {
   header: 'Søk etter sykmeldt',
@@ -27,6 +28,27 @@ const texts = {
   },
   error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
 };
+
+function logSokPersonEvent() {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ButtonClick,
+    data: {
+      url: window.location.href,
+      tekst: 'Søk etter sykmeldt',
+    },
+  });
+}
+
+function logSokPersonResults(amount: number) {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.AmountDisplayed,
+    data: {
+      url: window.location.href,
+      antall: amount,
+      handling: 'Søk etter sykmeldt - resultater',
+    },
+  });
+}
 
 export default function SokPerson() {
   const [nameInitials, setNameInitials] = useState<string>('');
@@ -61,7 +83,10 @@ export default function SokPerson() {
         initials: nameInitials.toLowerCase(),
         birthdate: parsedBirthdate,
       };
-      mutate(requestDTO);
+      mutate(requestDTO, {
+        onSuccess: (data) => logSokPersonResults(data.length),
+        onSettled: () => logSokPersonEvent(),
+      });
     } else {
       setIsFormError(true);
     }

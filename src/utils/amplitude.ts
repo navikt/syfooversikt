@@ -11,6 +11,7 @@ export enum EventType {
   OptionSelected = 'alternativ valgt',
   ButtonClick = 'knapp trykket',
   SortingColumn = 'kolonne sortert på',
+  AmountDisplayed = 'antall vist',
 }
 
 type EventPageView = {
@@ -56,12 +57,22 @@ type EventSortingColumn = {
   };
 };
 
+type EventAmountDisplayed = {
+  type: EventType.AmountDisplayed;
+  data: {
+    url: string;
+    antall: number;
+    handling: string;
+  };
+};
+
 type Event =
   | EventPageView
   | Navigation
   | OptionSelected
   | EventButtonClick
-  | EventSortingColumn;
+  | EventSortingColumn
+  | EventAmountDisplayed;
 
 export const logEvent = (event: Event) =>
   amplitude.track(event.type, { ...event.data });
