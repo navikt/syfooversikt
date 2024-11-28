@@ -29,17 +29,17 @@ export const NavigationBar = (): ReactElement => {
             <Tabs.Tab
               value={minOversiktRoutePath}
               label={<Heading size="small">{texts.minOversikt}</Heading>}
-            ></Tabs.Tab>
+            />
             <Tabs.Tab
               value={enhetOversiktRoutePath}
               label={<Heading size="small">{texts.enhetensOversikt}</Heading>}
-            ></Tabs.Tab>
+            />
             {toggles.isSokEnabled && (
               <Tabs.Tab
                 value={sokSykmeldtRoutePath}
                 icon={<MagnifyingGlassIcon />}
                 label={<Heading size="small">{texts.sokSykmeldt}</Heading>}
-              ></Tabs.Tab>
+              />
             )}
           </Tabs.List>
         </Tabs>
