@@ -45,7 +45,7 @@ const OversiktContainer = ({ tabType }: Props): ReactElement => {
   );
   const showFlexjar =
     toggles.isFlexjarArenaEnabled &&
-    (feedbackDate === null || getWeeksBetween(new Date(), feedbackDate) >= 6);
+    (feedbackDate === null || getWeeksBetween(new Date(), feedbackDate) >= 8);
 
   const { setTabType } = useTabType();
   useEffect(() => {
