@@ -98,53 +98,59 @@ export default function SokPerson() {
   return (
     <>
       <Box background="surface-default" padding="4">
-        <Heading level="2" size="medium">
-          {texts.header}
-        </Heading>
-        <VStack gap="4">
-          <BodyShort>{texts.info}</BodyShort>
-          <HStack gap="8" align="end">
-            <TextField
-              label="Initialer"
-              description="AB"
-              htmlSize={10}
-              type="text"
-              onChange={(e) => setNameInitials(e.target.value)}
-              error={invalidInitials}
-            />
-            <TextField
-              label="Fødselsdato"
-              description="ddmmåå"
-              htmlSize={14}
-              type="text"
-              onChange={(e) => setBirthdate(e.target.value)}
-              error={invalidBirthdate}
-            />
-            <Button
-              onClick={handleSubmit}
-              loading={isLoading}
-              icon={<MagnifyingGlassIcon />}
-              type="submit"
-            >
-              Søk
-            </Button>
-          </HStack>
-          {invalidInitials && (
-            <ErrorMessage size="small">
-              {texts.validation.initials}
-            </ErrorMessage>
-          )}
-          {invalidBirthdate && (
-            <ErrorMessage size="small">
-              {texts.validation.birthdate}
-            </ErrorMessage>
-          )}
-          {isError && (
-            <Alert variant="error" size="small">
-              {texts.error}
-            </Alert>
-          )}
-        </VStack>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <Heading level="2" size="medium">
+            {texts.header}
+          </Heading>
+          <VStack gap="4">
+            <BodyShort>{texts.info}</BodyShort>
+            <HStack gap="8" align="end">
+              <TextField
+                label="Initialer"
+                description="AB"
+                htmlSize={10}
+                type="text"
+                onChange={(e) => setNameInitials(e.target.value)}
+                error={invalidInitials}
+              />
+              <TextField
+                label="Fødselsdato"
+                description="ddmmåå"
+                htmlSize={14}
+                type="text"
+                onChange={(e) => setBirthdate(e.target.value)}
+                error={invalidBirthdate}
+              />
+              <Button
+                loading={isLoading}
+                icon={<MagnifyingGlassIcon />}
+                type="submit"
+              >
+                Søk
+              </Button>
+            </HStack>
+            {invalidInitials && (
+              <ErrorMessage size="small">
+                {texts.validation.initials}
+              </ErrorMessage>
+            )}
+            {invalidBirthdate && (
+              <ErrorMessage size="small">
+                {texts.validation.birthdate}
+              </ErrorMessage>
+            )}
+            {isError && (
+              <Alert variant="error" size="small">
+                {texts.error}
+              </Alert>
+            )}
+          </VStack>
+        </form>
       </Box>
       {searchResults && isSuccess && (
         <SokPersonResultat sokeresultater={searchResults} />
