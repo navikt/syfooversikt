@@ -9,7 +9,7 @@ import {
   useAktivVeilederQuery,
   useVeiledereQuery,
 } from '@/data/veiledereQueryHooks';
-import { useTabType } from '@/context/tab/TabTypeContext';
+import { useTabType } from '@/hooks/useTabType';
 
 const dropdownButtonTexts: DropdownButtonTexts = {
   assign: 'Tildel veileder',

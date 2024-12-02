@@ -8,11 +8,10 @@ import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 import { getHendelser } from '@/utils/hendelseColumnUtils';
-import { useTabType } from '@/context/tab/TabTypeContext';
-import { OverviewTabType } from '@/konstanter';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 function getVarighetOppfolgingstilfelle(
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -109,7 +108,7 @@ export function NewOversiktTable({
           {columns
             .filter(
               (column) =>
-                selectedTab === OverviewTabType.ENHET_OVERVIEW ||
+                selectedTab === TabType.ENHETENS_OVERSIKT ||
                 column.sortKey !== 'VEILEDER'
             )
             .map((col, index) => (
@@ -155,7 +154,7 @@ export function NewOversiktTable({
             <Table.DataCell textSize="small">
               <PersonRadVirksomhetColumn personData={persondata} />
             </Table.DataCell>
-            {selectedTab === OverviewTabType.ENHET_OVERVIEW && (
+            {selectedTab === TabType.ENHETENS_OVERSIKT && (
               <Table.DataCell textSize="small">
                 <VeilederColumn personData={persondata} />
               </Table.DataCell>

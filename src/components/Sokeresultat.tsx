@@ -13,9 +13,8 @@ import {
   filterOnPersonregister,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
-import { useTabType } from '@/context/tab/TabTypeContext';
-import { OverviewTabType } from '@/konstanter';
 import { NewOversikt } from '@/components/NewOversikt';
+import { TabType, useTabType } from '@/hooks/useTabType';
 
 interface SokeresultatProps {
   allEvents: Filterable<PersonregisterState>;
@@ -45,7 +44,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
   }, [selectedTab]);
 
   const selectedHendelsetypeFilter =
-    selectedTab === OverviewTabType.MY_OVERVIEW
+    selectedTab === TabType.MIN_OVERSIKT
       ? {
           ...filterState.selectedHendelseType,
           ufordeltBruker: false,

@@ -1,14 +1,10 @@
 import React, { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MoteoversiktLink } from '@/components/MoteoversiktLink';
-import {
-  enhetOversiktRoutePath,
-  minOversiktRoutePath,
-  sokSykmeldtRoutePath,
-} from '@/routers/AppRouter';
 import { Box, Heading, HStack, Tabs } from '@navikt/ds-react';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
+import { routes } from '@/routers/routes';
 
 const texts = {
   enhetensOversikt: 'Enhetens oversikt',
@@ -27,16 +23,16 @@ export const NavigationBar = (): ReactElement => {
         <Tabs value={pathname} onChange={(value) => navigate(value)}>
           <Tabs.List>
             <Tabs.Tab
-              value={minOversiktRoutePath}
+              value={routes.MIN_OVERSIKT}
               label={<Heading size="small">{texts.minOversikt}</Heading>}
             />
             <Tabs.Tab
-              value={enhetOversiktRoutePath}
+              value={routes.ENHET_OVERSIKT}
               label={<Heading size="small">{texts.enhetensOversikt}</Heading>}
             />
             {toggles.isSokEnabled && (
               <Tabs.Tab
-                value={sokSykmeldtRoutePath}
+                value={routes.SOK_SYKMELDT}
                 icon={<MagnifyingGlassIcon />}
                 label={<Heading size="small">{texts.sokSykmeldt}</Heading>}
               />

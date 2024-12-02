@@ -3,13 +3,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Side from '../sider/Side';
 import Decorator from '../decorator/Decorator';
 import OversiktContainer from '@/containers/OversiktContainer';
-import { OverviewTabType } from '@/konstanter';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import SokContainer from '@/components/sokperson/SokContainer';
-
-export const minOversiktRoutePath = '/minoversikt';
-export const enhetOversiktRoutePath = '/enhet';
-export const sokSykmeldtRoutePath = '/sok';
+import { routes } from '@/routers/routes';
 
 const AppRouter = (): ReactElement => {
   return (
@@ -20,21 +16,17 @@ const AppRouter = (): ReactElement => {
           <ErrorBoundary>
             <Routes>
               <Route
-                path={enhetOversiktRoutePath}
-                element={
-                  <OversiktContainer tabType={OverviewTabType.ENHET_OVERVIEW} />
-                }
+                path={routes.ENHET_OVERSIKT}
+                element={<OversiktContainer />}
               />
               <Route
-                path={minOversiktRoutePath}
-                element={
-                  <OversiktContainer tabType={OverviewTabType.MY_OVERVIEW} />
-                }
+                path={routes.MIN_OVERSIKT}
+                element={<OversiktContainer />}
               />
-              <Route path={sokSykmeldtRoutePath} element={<SokContainer />} />
+              <Route path={routes.SOK_SYKMELDT} element={<SokContainer />} />
               <Route
                 path="*"
-                element={<Navigate to={enhetOversiktRoutePath} />}
+                element={<Navigate to={routes.ENHET_OVERSIKT} />}
               />
             </Routes>
           </ErrorBoundary>

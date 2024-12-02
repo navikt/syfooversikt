@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -23,6 +23,8 @@ import {
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import dayjs from 'dayjs';
+import { renderWithRouter } from '../testRenderUtils';
+import { routes } from '@/routers/routes';
 
 let queryClient = testQueryClient();
 
@@ -78,7 +80,7 @@ const personWithOppfolgingstilfelle: PersonData = {
 };
 
 const renderOversikt = (personer: PersonregisterState) =>
-  render(
+  renderWithRouter(
     <NotificationProvider>
       <QueryClientProvider client={queryClient}>
         <AktivEnhetContext.Provider
@@ -96,7 +98,8 @@ const renderOversikt = (personer: PersonregisterState) =>
           />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
-    </NotificationProvider>
+    </NotificationProvider>,
+    routes.ENHET_OVERSIKT
   );
 
 describe('NewOversiktTable', () => {
