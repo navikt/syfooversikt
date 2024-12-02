@@ -46,15 +46,24 @@ describe('SokPerson', () => {
     expect(screen.getByRole('button', { name: 'Søk' })).to.exist;
   });
 
-  it('should render validation errors for fields', async () => {
+  it('should render validation error for fodselsdato not initials', async () => {
     renderSokPerson();
 
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
-    expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
     expect(screen.getByText('Vennligst angi en gyldig fødselsdato')).to.exist;
+    expect(screen.queryByText('Vennligst angi gyldige initialer')).to.not.exist;
   });
+  it('should render validation error for initialer when blank and too many characters', async () => {
+    renderSokPerson();
 
+    const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
+    fireEvent.change(initialsInput, { target: { value: ' ' } });
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+    expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
+    fireEvent.change(initialsInput, { target: { value: 'ABCD' } });
+    expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
+  });
   it('should send correct parameters', async () => {
     renderSokPerson();
 
