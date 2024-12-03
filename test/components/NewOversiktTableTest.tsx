@@ -9,7 +9,7 @@ import {
   getQueryClientWithMockdata,
   testQueryClient,
 } from '../testQueryClient';
-import { NewOversiktTable } from '@/components/NewOversiktTable';
+import { OversiktTable } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
 import {
   PersonData,
   PersonregisterState,
@@ -89,7 +89,7 @@ const renderOversikt = (personer: PersonregisterState) =>
             handleAktivEnhetChanged: () => void 0,
           }}
         >
-          <NewOversiktTable
+          <OversiktTable
             personListe={Object.entries(personer)}
             selectedRows={[]}
             setSelectedRows={() => void 0}

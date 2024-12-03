@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationContext } from '@/context/notification/NotificationContext';
-import OversiktContainer from '@/containers/OversiktContainer';
+import OversiktContainer from '@/sider/oversikt/OversiktContainer';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
 import { stubAktivVeileder } from '../stubs/stubAktivVeileder';

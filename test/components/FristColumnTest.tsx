@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { FristDataCell } from '@/components/FristDataCell';
+import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell';
 import React from 'react';
 import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';

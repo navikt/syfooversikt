@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationBar } from '@/components/NavigationBar';
-import SokPerson from '@/components/sokperson/SokPerson';
+import SokPerson from '@/sider/sokperson/SokPerson';
 
 export default function SokContainer() {
   return (

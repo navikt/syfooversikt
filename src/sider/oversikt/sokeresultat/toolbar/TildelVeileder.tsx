@@ -2,9 +2,9 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
 import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
-import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
-import { Dropdown } from '../Dropdown/Dropdown';
-import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
+import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
+import { Dropdown } from '../../../../components/toolbar/Dropdown/Dropdown';
+import { DropdownButtonTexts } from '../../../../components/toolbar/Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,

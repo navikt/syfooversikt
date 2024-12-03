@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Side from '../sider/Side';
+import Side from '../components/Side';
 import Decorator from '../decorator/Decorator';
-import OversiktContainer from '@/containers/OversiktContainer';
+import OversiktContainer from '@/sider/oversikt/OversiktContainer';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
-import SokContainer from '@/components/sokperson/SokContainer';
+import SokContainer from '@/sider/sokperson/SokContainer';
 import { routes } from '@/routers/routes';
 
 const AppRouter = (): ReactElement => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Sokeresultat from '../../src/components/Sokeresultat';
+import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
 import { personregister } from '../data/fellesTestdata';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Filterable } from '@/utils/hendelseFilteringUtils';

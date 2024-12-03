@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect } from 'react';
 import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
-import { Oversikt } from '@/containers/Oversikt';
 import { NavigationBar } from '@/components/NavigationBar';
 import { NotificationBar } from '@/components/error/NotificationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
@@ -13,6 +12,7 @@ import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
+import Oversikt from '@/sider/oversikt/Oversikt';
 
 function logPageView(tab: TabType) {
   Amplitude.logEvent({
@@ -32,7 +32,7 @@ function toReadableString(overviewTabType: TabType): string {
   }
 }
 
-const OversiktContainer = (): ReactElement => {
+export default function OversiktContainer(): ReactElement {
   const personregisterQuery = usePersonregisterQuery();
   const personoversiktQuery = usePersonoversiktQuery();
   const { toggles } = useFeatureToggles();
@@ -74,6 +74,4 @@ const OversiktContainer = (): ReactElement => {
       </div>
     </ErrorBoundary>
   );
-};
-
-export default OversiktContainer;
+}

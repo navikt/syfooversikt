@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import Toolbar from './Toolbar';
 import { Label } from '@navikt/ds-react';
-import { PAGINATED_NUMBER_OF_ITEMS } from '@/components/toolbar/PaginationContainer';
+import { PAGINATED_NUMBER_OF_ITEMS } from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
 
 export interface ToolbarWrapperProps {
   alleMarkert: boolean;

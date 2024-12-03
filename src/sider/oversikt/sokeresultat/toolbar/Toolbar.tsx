@@ -1,10 +1,10 @@
-import TildelVeileder from './AssignVeileder/TildelVeileder';
-import SearchVeileder from './SearchVeileder/SearchVeileder';
+import TildelVeileder from './TildelVeileder';
+import SearchVeileder from './SearchVeileder';
 import React from 'react';
 import styled from 'styled-components';
-import themes from '../../styles/themes';
+import themes from '../../../../styles/themes';
 import { ToolbarWrapperProps } from './ToolbarWrapper';
-import PaginationContainer from '@/components/toolbar/PaginationContainer';
+import PaginationContainer from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 
 const Innhold = styled.section`

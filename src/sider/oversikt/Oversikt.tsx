@@ -4,11 +4,11 @@ import {
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
 import { toPersonData } from '@/utils/toPersondata';
-import { PersonFilter } from '@/components/Filter/PersonFilter';
-import Sokeresultat from '@/components/Sokeresultat';
+import { PersonFilter } from '@/sider/oversikt/filter/PersonFilter';
+import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
 import styled from 'styled-components';
-import { TekstFilter } from '@/components/Filter/TekstFilter';
-import { ClearFiltersButton } from '@/components/Filter/ClearFiltersButton';
+import { TekstFilter } from '@/sider/oversikt/filter/TekstFilter';
+import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
 import {
   Filterable,
   filterEventsOnVeileder,
@@ -16,7 +16,7 @@ import {
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import { HendelseFilter } from '@/components/Filter/HendelseFilter';
+import { HendelseFilter } from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
 
@@ -39,15 +39,15 @@ const OversiktContainerInnhold = styled.div`
   }
 `;
 
-interface OversiktProps {
+interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
   personregisterData: PersonregisterData[];
 }
 
-export const Oversikt = ({
+export default function Oversikt({
   personoversiktData,
   personregisterData,
-}: OversiktProps) => {
+}: Props) {
   const aktivVeilederQuery = useAktivVeilederQuery();
   const { filterState } = useFilters();
   const { selectedTab } = useTabType();
@@ -90,4 +90,4 @@ export const Oversikt = ({
       <Sokeresultat allEvents={allEvents} />
     </OversiktContainerInnhold>
   );
-};
+}
