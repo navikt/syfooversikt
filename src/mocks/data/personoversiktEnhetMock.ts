@@ -149,7 +149,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
   {
     ...behandletPerson,
     fnr: '59999933333',
-    navn: '',
+    navn: 'Navn Navnesen',
     fodselsdato: new Date('1990-01-01'),
     enhet: '0316',
     veilederIdent: 'Z101010',

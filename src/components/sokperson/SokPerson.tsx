@@ -51,7 +51,7 @@ function logSokPersonResults(amount: number) {
 }
 
 export default function SokPerson() {
-  const [nameInitials, setNameInitials] = useState<string>('');
+  const [initials, setInitials] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
   const {
     mutate,
@@ -72,15 +72,15 @@ export default function SokPerson() {
     }
   };
 
-  const validInitials = (initials: string): boolean => {
-    return initials.length <= 3 && initials.length > 1;
+  const isValidInitials = (initials: string): boolean => {
+    return initials === '' || (initials.length <= 3 && initials.length > 1);
   };
 
   const handleSubmit = () => {
     const parsedBirthdate = parseBirthdate(birthdate);
-    if (validInitials(nameInitials) && !!parsedBirthdate) {
+    if (isValidInitials(initials) && !!parsedBirthdate) {
       const requestDTO: SokDTO = {
-        initials: nameInitials.toLowerCase(),
+        initials: initials.toLowerCase(),
         birthdate: parsedBirthdate,
       };
       mutate(requestDTO, {
@@ -92,8 +92,8 @@ export default function SokPerson() {
     }
   };
 
-  const invalidInitials = isFormError && !validInitials(nameInitials);
-  const invalidBirthdate = isFormError && parseBirthdate(birthdate) === null;
+  const isInvalidInitials = isFormError && !isValidInitials(initials);
+  const isInvalidBirthdate = isFormError && parseBirthdate(birthdate) === null;
 
   return (
     <>
@@ -115,8 +115,8 @@ export default function SokPerson() {
                 description="AB"
                 htmlSize={10}
                 type="text"
-                onChange={(e) => setNameInitials(e.target.value)}
-                error={invalidInitials}
+                onChange={(e) => setInitials(e.target.value)}
+                error={isFormError && !isValidInitials(initials)}
               />
               <TextField
                 label="Fødselsdato"
@@ -124,7 +124,7 @@ export default function SokPerson() {
                 htmlSize={14}
                 type="text"
                 onChange={(e) => setBirthdate(e.target.value)}
-                error={invalidBirthdate}
+                error={isInvalidBirthdate}
               />
               <Button
                 loading={isLoading}
@@ -134,12 +134,12 @@ export default function SokPerson() {
                 Søk
               </Button>
             </HStack>
-            {invalidInitials && (
+            {isInvalidInitials && (
               <ErrorMessage size="small">
                 {texts.validation.initials}
               </ErrorMessage>
             )}
-            {invalidBirthdate && (
+            {isInvalidBirthdate && (
               <ErrorMessage size="small">
                 {texts.validation.birthdate}
               </ErrorMessage>
