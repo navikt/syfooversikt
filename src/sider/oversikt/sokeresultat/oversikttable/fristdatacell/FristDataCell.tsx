@@ -8,7 +8,7 @@ import {
 import React, { ReactElement, useState } from 'react';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Button, Table, Tooltip } from '@navikt/ds-react';
-import OppfolgingsoppgaveModal from '@/components/OppfolgingsoppgaveModal';
+import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/OppfolgingsoppgaveModal';
 import * as Amplitude from '@/utils/amplitude';
 import { TabType, useTabType } from '@/hooks/useTabType';
 

@@ -1,4 +1,4 @@
-import { EmptyDrawerImage } from '../../../img/ImageComponents';
+import { EmptyDrawerImage } from '../../../../../img/ImageComponents';
 import React from 'react';
 import { BodyShort } from '@navikt/ds-react';
 

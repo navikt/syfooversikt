@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { testQueryClient } from '../testQueryClient';
-import SokPerson from '@/components/sokperson/SokPerson';
+import SokPerson from '@/sider/sokperson/SokPerson';
 import userEvent from '@testing-library/user-event';
 import { SokDTO } from '@/api/types/sokDTO';
 import { parseDateString } from '@/utils/dateUtils';

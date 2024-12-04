@@ -12,7 +12,7 @@ import {
 } from '@navikt/ds-react';
 import { useSokPerson } from '@/data/personoversiktHooks';
 import { SokDTO } from '@/api/types/sokDTO';
-import SokPersonResultat from '@/components/sokperson/SokPersonResultat';
+import SokPersonResultat from '@/sider/sokperson/SokPersonResultat';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 import { isNumeric, removePunctuation } from '@/utils/stringUtil';
 import { parseDateString } from '@/utils/dateUtils';

@@ -5,12 +5,12 @@ import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { FristFilter } from '@/components/Filter/FristFilter';
+import { FristFilter } from '@/sider/oversikt/filter/FristFilter';
 import {
   AgeFilterOption,
   FristFilterOption,
 } from '@/utils/hendelseFilteringUtils';
-import { AgeFilter } from '@/components/Filter/AgeFilter';
+import { AgeFilter } from '@/sider/oversikt/filter/AgeFilter';
 import { VStack } from '@navikt/ds-react';
 
 interface PersonFilterProps {

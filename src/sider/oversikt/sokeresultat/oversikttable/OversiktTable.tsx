@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Checkbox, Table } from '@navikt/ds-react';
-import { VeilederColumn } from '@/components/VeilederColumn';
+import { VeilederColumn } from '@/sider/oversikt/sokeresultat/oversikttable/VeilederColumn';
 import { PersonData } from '@/api/types/personregisterTypes';
-import { PersonRadVirksomhetColumn } from '@/components/PersonRadVirksomhetColumn';
-import { FristDataCell } from '@/components/FristDataCell';
+import { PersonRadVirksomhetColumn } from '@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn';
+import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell';
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
@@ -29,7 +29,7 @@ interface Props {
   setSorting: (sorting: Sorting) => void;
 }
 
-export function NewOversiktTable({
+export function OversiktTable({
   personListe,
   selectedRows,
   setSelectedRows,

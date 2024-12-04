@@ -1,14 +1,14 @@
 import React, { ChangeEvent, ReactElement, useState } from 'react';
-import OpenDropdownButton from '../OpenDropdownButton/OpenDropdownButton';
+import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import styled from 'styled-components';
-import { Dropdown } from '../Dropdown/Dropdown';
+import { Dropdown } from '../../../../components/toolbar/Dropdown/Dropdown';
 import {
   filterVeiledereWithActiveOppgave,
   sortVeiledereAlphabeticallyWithGivenVeilederFirst,
 } from '@/utils/veiledereUtils';
 import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
-import { DropdownButtonTexts } from '../Dropdown/DropdownButtons';
+import { DropdownButtonTexts } from '../../../../components/toolbar/Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,

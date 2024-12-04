@@ -2,8 +2,8 @@ import React from 'react';
 import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
-import { EmptyDrawer } from '@/components/EmptyDrawer/EmptyDrawer';
-import { NewOversiktTable } from '@/components/NewOversiktTable';
+import { EmptyDrawer } from '@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer';
+import { OversiktTable } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
 import { useSorting } from '@/hooks/useSorting';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
   setSelectedRows: (rows: string[]) => void;
 }
 
-export const NewOversikt = ({
+export const OversiktTableContainer = ({
   personregister,
   startItem,
   endItem,
@@ -38,7 +38,7 @@ export const NewOversikt = ({
   }
 
   return (
-    <NewOversiktTable
+    <OversiktTable
       sorting={sorting}
       setSorting={setSorting}
       personListe={personListe}

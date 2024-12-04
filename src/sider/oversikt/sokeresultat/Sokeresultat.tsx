@@ -13,10 +13,10 @@ import {
   filterOnPersonregister,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
-import { NewOversikt } from '@/components/NewOversikt';
+import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 
-interface SokeresultatProps {
+interface Props {
   allEvents: Filterable<PersonregisterState>;
 }
 
@@ -30,7 +30,7 @@ const lagListe = (
   }));
 };
 
-const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
+export default function Sokeresultat({ allEvents }: Props) {
   const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { selectedTab } = useTabType();
@@ -88,7 +88,7 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
         checkAllHandler={checkAllHandler}
         markertePersoner={markertePersoner}
       />
-      <NewOversikt
+      <OversiktTableContainer
         personregister={filteredEvents.value}
         startItem={startItem}
         endItem={endItem}
@@ -97,6 +97,4 @@ const Sokeresultat = ({ allEvents }: SokeresultatProps) => {
       />
     </div>
   );
-};
-
-export default Sokeresultat;
+}
