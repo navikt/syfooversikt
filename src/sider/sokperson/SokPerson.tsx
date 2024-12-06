@@ -29,12 +29,17 @@ const texts = {
   error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
 };
 
-function logSokPersonEvent() {
+function logSokPersonEvent(requestDTO: SokDTO) {
+  const hasInitials = !!requestDTO.initials;
+  const hasBirthdate = !!requestDTO.birthdate;
   Amplitude.logEvent({
     type: Amplitude.EventType.ButtonClick,
     data: {
       url: window.location.href,
-      tekst: 'Søk etter sykmeldt',
+      tekst:
+        'Søk etter sykmeldt -' +
+        (hasBirthdate ? ' fødselsdato' : '') +
+        (hasInitials ? ' initialer' : ''),
     },
   });
 }
@@ -85,7 +90,7 @@ export default function SokPerson() {
       };
       mutate(requestDTO, {
         onSuccess: (data) => logSokPersonResults(data.length),
-        onSettled: () => logSokPersonEvent(),
+        onSettled: () => logSokPersonEvent(requestDTO),
       });
     } else {
       setIsFormError(true);
