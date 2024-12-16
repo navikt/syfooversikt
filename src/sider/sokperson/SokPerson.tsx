@@ -23,6 +23,8 @@ const texts = {
   info:
     'Her kan du søke opp sykmeldte personer basert på initialer og fødselsdato.',
   validation: {
+    birthdateOrName: 'Vennligst angi navn eller fødselsdato',
+    name: 'Vennligst angi gyldig navn',
     initials: 'Vennligst angi gyldige initialer',
     birthdate: 'Vennligst angi en gyldig fødselsdato',
   },
@@ -55,7 +57,66 @@ function logSokPersonResults(amount: number, requestDTO: SokDTO) {
   });
 }
 
+const parseBirthdate = (birthdate: string): Date | null => {
+  const cleanedDateStr = removePunctuation(birthdate);
+
+  if (
+    (cleanedDateStr.length !== 6 && cleanedDateStr.length !== 8) ||
+    !isNumeric(cleanedDateStr)
+  ) {
+    return null;
+  } else {
+    return parseDateString(cleanedDateStr);
+  }
+};
+
+function isValidInitials(initials: string): boolean {
+  return initials.length <= 3 && initials.length > 1;
+}
+
+function isValidName(name: string): boolean {
+  const names = name.split(' ');
+  return names.length > 1 && names.every((a) => a.length >= 2);
+}
+
+function isInvalidBirthdate(birthdate: string): boolean {
+  const parsedBirthdate = parseBirthdate(birthdate) === null;
+  return parsedBirthdate;
+}
+
+interface ErrorMessageProps {
+  name: string;
+  initials: string;
+  birthdate: string;
+}
+
+function ErrorMessageForm({ name, initials, birthdate }: ErrorMessageProps) {
+  const isInvalidName = !isValidName(name);
+  const isInvalidInitials = !isValidInitials(initials);
+  const isFormBlank = name === '' && initials === '' && birthdate === '';
+
+  return (
+    <>
+      {isFormBlank && (
+        <ErrorMessage size="small">
+          {texts.validation.birthdateOrName}
+        </ErrorMessage>
+      )}
+      {name !== '' && isInvalidName && (
+        <ErrorMessage size="small">{texts.validation.name}</ErrorMessage>
+      )}
+      {initials !== '' && isInvalidInitials && (
+        <ErrorMessage size="small">{texts.validation.initials}</ErrorMessage>
+      )}
+      {birthdate !== '' && isInvalidBirthdate(birthdate) && (
+        <ErrorMessage size="small">{texts.validation.birthdate}</ErrorMessage>
+      )}
+    </>
+  );
+}
+
 export default function SokPerson() {
+  const [name, setName] = useState<string>('');
   const [initials, setInitials] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
   const {
@@ -67,26 +128,15 @@ export default function SokPerson() {
   } = useSokPerson();
   const [isFormError, setIsFormError] = useState<boolean>(false);
 
-  const parseBirthdate = (birthdate: string): Date | null => {
-    const cleanedDateStr = removePunctuation(birthdate);
-
-    if (cleanedDateStr.length < 6 || !isNumeric(cleanedDateStr)) {
-      return null;
-    } else {
-      return parseDateString(cleanedDateStr);
-    }
-  };
-
-  const isValidInitials = (initials: string): boolean => {
-    return initials === '' || (initials.length <= 3 && initials.length > 1);
-  };
-
   const handleSubmit = () => {
-    const parsedBirthdate = parseBirthdate(birthdate);
-    if (isValidInitials(initials) && !!parsedBirthdate) {
+    if (isFormValid()) {
+      const parsedBirthdate = parseBirthdate(birthdate);
       const requestDTO: SokDTO = {
-        initials: initials.toLowerCase(),
-        birthdate: parsedBirthdate,
+        name: isValidName(name) ? name : undefined,
+        initials: isValidInitials(initials)
+          ? initials.toLowerCase()
+          : undefined,
+        birthdate: !!parsedBirthdate ? parsedBirthdate : undefined,
       };
       mutate(requestDTO, {
         onSuccess: (data) => logSokPersonResults(data.length, requestDTO),
@@ -97,8 +147,38 @@ export default function SokPerson() {
     }
   };
 
-  const isInvalidInitials = isFormError && !isValidInitials(initials);
-  const isInvalidBirthdate = isFormError && parseBirthdate(birthdate) === null;
+  function isFormValid() {
+    const parsedBirthdate = parseBirthdate(birthdate);
+    const isBirthdateAndInitialsSearch =
+      !!parsedBirthdate && isValidInitials(initials);
+    const isNameSearch = isValidName(name);
+    const isBirthdateSearch = !!parsedBirthdate;
+    if (isBirthdateAndInitialsSearch) {
+      return name === '';
+    } else if (isNameSearch) {
+      return (
+        initials === '' && (birthdate === '' || !isInvalidBirthdate(birthdate))
+      );
+    } else if (isBirthdateSearch) {
+      return (name === '' || isValidName(name)) && initials === '';
+    } else {
+      return false;
+    }
+  }
+
+  const isValidBirthdateSearch =
+    (name === '' || isValidName(name) || birthdate !== '') &&
+    isInvalidBirthdate(birthdate);
+  const isValidBirthdateAndInitialsSearch =
+    initials !== '' && !isValidInitials(initials) && isValidBirthdateSearch;
+
+  const isNameFieldError =
+    isFormError &&
+    ((birthdate === '' && initials === '') || name !== '') &&
+    !isValidName(name);
+  const isInitialsFieldError =
+    isFormError && initials !== '' && !isValidInitials(initials);
+  const isBirthdateFieldError = isFormError && isValidBirthdateSearch;
 
   return (
     <>
@@ -116,12 +196,20 @@ export default function SokPerson() {
             <BodyShort>{texts.info}</BodyShort>
             <HStack gap="8" align="end">
               <TextField
+                label="Navn"
+                description="Navn Etternavn"
+                htmlSize={14}
+                type="text"
+                onChange={(e) => setName(e.target.value)}
+                error={isNameFieldError}
+              />
+              <TextField
                 label="Initialer"
                 description="AB"
-                htmlSize={10}
+                htmlSize={14}
                 type="text"
                 onChange={(e) => setInitials(e.target.value)}
-                error={isFormError && !isValidInitials(initials)}
+                error={isInitialsFieldError}
               />
               <TextField
                 label="Fødselsdato"
@@ -129,7 +217,7 @@ export default function SokPerson() {
                 htmlSize={14}
                 type="text"
                 onChange={(e) => setBirthdate(e.target.value)}
-                error={isInvalidBirthdate}
+                error={isBirthdateFieldError}
               />
               <Button
                 loading={isLoading}
@@ -139,15 +227,12 @@ export default function SokPerson() {
                 Søk
               </Button>
             </HStack>
-            {isInvalidInitials && (
-              <ErrorMessage size="small">
-                {texts.validation.initials}
-              </ErrorMessage>
-            )}
-            {isInvalidBirthdate && (
-              <ErrorMessage size="small">
-                {texts.validation.birthdate}
-              </ErrorMessage>
+            {isFormError && (
+              <ErrorMessageForm
+                birthdate={birthdate}
+                name={name}
+                initials={initials}
+              />
             )}
             {isError && (
               <Alert variant="error" size="small">
