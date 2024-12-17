@@ -7,7 +7,9 @@ import {
   ErrorMessage,
   Heading,
   HStack,
+  List,
   TextField,
+  ToggleGroup,
   VStack,
 } from '@navikt/ds-react';
 import { useSokPerson } from '@/data/personoversiktHooks';
@@ -71,54 +73,77 @@ const parseBirthdate = (birthdate: string): Date | null => {
 };
 
 function isValidInitials(initials: string): boolean {
-  return initials.length <= 3 && initials.length > 1;
+  return initials !== '' && initials.length <= 3 && initials.length > 1;
 }
 
 function isValidName(name: string): boolean {
   const names = name.split(' ');
-  return names.length > 1 && names.every((a) => a.length >= 2);
+  return name !== '' && names.length > 1 && names.every((a) => a.length >= 2);
 }
 
-function isInvalidBirthdate(birthdate: string): boolean {
-  const parsedBirthdate = parseBirthdate(birthdate) === null;
-  return parsedBirthdate;
+function isValidBirthdate(birthdate: string): boolean {
+  return birthdate !== '' && parseBirthdate(birthdate) !== null;
 }
 
 interface ErrorMessageProps {
   name: string;
   initials: string;
   birthdate: string;
+  searchtype: SearchType;
 }
 
-function ErrorMessageForm({ name, initials, birthdate }: ErrorMessageProps) {
-  const isInvalidName = !isValidName(name);
-  const isInvalidInitials = !isValidInitials(initials);
-  const isFormBlank = name === '' && initials === '' && birthdate === '';
+function ErrorMessageForm({
+  name,
+  initials,
+  birthdate,
+  searchtype,
+}: ErrorMessageProps) {
+  switch (searchtype) {
+    case SearchType.NAME_AND_DATE: {
+      return (
+        <>
+          {name === '' && birthdate === '' && (
+            <ErrorMessage size="small">
+              {texts.validation.birthdateOrName}
+            </ErrorMessage>
+          )}
+          {name !== '' && !isValidName(name) && (
+            <ErrorMessage size="small">{texts.validation.name}</ErrorMessage>
+          )}
+          {birthdate !== '' && !isValidBirthdate(birthdate) && (
+            <ErrorMessage size="small">
+              {texts.validation.birthdate}
+            </ErrorMessage>
+          )}
+        </>
+      );
+    }
+    case SearchType.INITIALS_AND_DATE: {
+      return (
+        <>
+          {initials !== '' && !isValidInitials(initials) && (
+            <ErrorMessage size="small">
+              {texts.validation.initials}
+            </ErrorMessage>
+          )}
+        </>
+      );
+    }
+  }
+}
 
-  return (
-    <>
-      {isFormBlank && (
-        <ErrorMessage size="small">
-          {texts.validation.birthdateOrName}
-        </ErrorMessage>
-      )}
-      {name !== '' && isInvalidName && (
-        <ErrorMessage size="small">{texts.validation.name}</ErrorMessage>
-      )}
-      {initials !== '' && isInvalidInitials && (
-        <ErrorMessage size="small">{texts.validation.initials}</ErrorMessage>
-      )}
-      {birthdate !== '' && isInvalidBirthdate(birthdate) && (
-        <ErrorMessage size="small">{texts.validation.birthdate}</ErrorMessage>
-      )}
-    </>
-  );
+enum SearchType {
+  NAME_AND_DATE = 'NAME_AND_DATE',
+  INITIALS_AND_DATE = 'INITIALS_AND_DATE',
 }
 
 export default function SokPerson() {
   const [name, setName] = useState<string>('');
   const [initials, setInitials] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
+  const [searchtype, setSearchtype] = useState<SearchType>(
+    SearchType.NAME_AND_DATE
+  );
   const {
     mutate,
     data: searchResults,
@@ -148,37 +173,32 @@ export default function SokPerson() {
   };
 
   function isFormValid() {
-    const parsedBirthdate = parseBirthdate(birthdate);
-    const isBirthdateAndInitialsSearch =
-      !!parsedBirthdate && isValidInitials(initials);
-    const isNameSearch = isValidName(name);
-    const isBirthdateSearch = !!parsedBirthdate;
-    if (isBirthdateAndInitialsSearch) {
-      return name === '';
-    } else if (isNameSearch) {
-      return (
-        initials === '' && (birthdate === '' || !isInvalidBirthdate(birthdate))
-      );
-    } else if (isBirthdateSearch) {
-      return (name === '' || isValidName(name)) && initials === '';
-    } else {
-      return false;
+    switch (searchtype) {
+      case SearchType.NAME_AND_DATE:
+        return isValidName(name) || isValidBirthdate(birthdate);
+      case SearchType.INITIALS_AND_DATE:
+        return (
+          (isValidInitials(initials) && isValidBirthdate(birthdate)) ||
+          isValidBirthdate(birthdate)
+        );
     }
   }
 
-  const isValidBirthdateSearch =
-    (name === '' || isValidName(name) || birthdate !== '') &&
-    isInvalidBirthdate(birthdate);
-  const isValidBirthdateAndInitialsSearch =
-    initials !== '' && !isValidInitials(initials) && isValidBirthdateSearch;
-
   const isNameFieldError =
-    isFormError &&
-    ((birthdate === '' && initials === '') || name !== '') &&
-    !isValidName(name);
+    isFormError && (birthdate === '' || name !== '') && !isValidName(name);
   const isInitialsFieldError =
     isFormError && initials !== '' && !isValidInitials(initials);
-  const isBirthdateFieldError = isFormError && isValidBirthdateSearch;
+  const isBirthdateFieldError =
+    (isFormError && name === '' && birthdate === '') ||
+    (birthdate !== '' && !isValidBirthdate(birthdate));
+
+  const handleSearchtypeChange = (val: string) =>
+    setSearchtype(val as SearchType);
+
+  const birthdateLabel =
+    searchtype === SearchType.INITIALS_AND_DATE
+      ? 'Fødselsdato (obligatorisk)'
+      : 'Fødselsdato (valgfritt)';
 
   return (
     <>
@@ -194,31 +214,70 @@ export default function SokPerson() {
           </Heading>
           <VStack gap="4">
             <BodyShort>{texts.info}</BodyShort>
-            <HStack gap="8" align="end">
-              <TextField
-                label="Navn"
-                description="Navn Etternavn"
-                htmlSize={14}
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                error={isNameFieldError}
+            <List
+              as="ul"
+              size="small"
+              title="Det kan også være aktuelt hvis du:"
+            >
+              <List.Item>
+                står i fare for å miste jobben etter å ha vært sykmeldt helt
+                eller delvis i 12 måneder,
+              </List.Item>
+              <List.Item>
+                har full eller gradert uføretrygd, men ønsker å jobbe. NAV må ha
+                vurdert om andre arbeidsmarkedstiltak og virkemidler er
+                aktuelle, eller
+              </List.Item>
+              <List.Item>
+                er en arbeidssøker med varig og vesentlig nedsatt arbeidsevne
+                som kan bli ansatt i en vanlig jobb.
+              </List.Item>
+            </List>
+            <ToggleGroup
+              defaultValue="NAME_AND_DATE"
+              onChange={handleSearchtypeChange}
+              label="Velg søkealternativ"
+              size="small"
+            >
+              <ToggleGroup.Item
+                value="NAME_AND_DATE"
+                label="Navn og fødselsdato"
               />
-              <TextField
-                label="Initialer"
-                description="AB"
-                htmlSize={14}
-                type="text"
-                onChange={(e) => setInitials(e.target.value)}
-                error={isInitialsFieldError}
+              <ToggleGroup.Item
+                value="INITIALS_AND_DATE"
+                label="Initialer og fødselsdato"
               />
-              <TextField
-                label="Fødselsdato"
-                description="ddmmåå"
-                htmlSize={14}
-                type="text"
-                onChange={(e) => setBirthdate(e.target.value)}
-                error={isBirthdateFieldError}
-              />
+            </ToggleGroup>
+            <HStack align="end">
+              <div className="flex gap-8 min-w-[25rem]">
+                {searchtype === SearchType.NAME_AND_DATE && (
+                  <TextField
+                    label="Navn (valgfritt)"
+                    description="Navn Etternavn"
+                    type="text"
+                    onChange={(e) => setName(e.target.value)}
+                    error={isNameFieldError}
+                  />
+                )}
+                {searchtype === SearchType.INITIALS_AND_DATE && (
+                  <TextField
+                    label="Initialer (valgfritt)"
+                    description="AB"
+                    htmlSize={14}
+                    type="text"
+                    onChange={(e) => setInitials(e.target.value)}
+                    error={isInitialsFieldError}
+                  />
+                )}
+                <TextField
+                  label={birthdateLabel}
+                  description="ddmmåå"
+                  htmlSize={14}
+                  type="text"
+                  onChange={(e) => setBirthdate(e.target.value)}
+                  error={isBirthdateFieldError}
+                />
+              </div>
               <Button
                 loading={isLoading}
                 icon={<MagnifyingGlassIcon />}
@@ -232,6 +291,7 @@ export default function SokPerson() {
                 birthdate={birthdate}
                 name={name}
                 initials={initials}
+                searchtype={searchtype}
               />
             )}
             {isError && (
