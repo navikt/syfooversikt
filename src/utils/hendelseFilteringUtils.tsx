@@ -183,53 +183,42 @@ function isAgeInFilters(
   });
 }
 
-type HendelseTypeFilterKey = keyof HendelseTypeFilter;
-
-const matchesFilter = (
-  key: HendelseTypeFilterKey,
+function isPersonVisible(
   filters: HendelseTypeFilter,
   personData: PersonData
-): boolean => {
-  switch (key) {
-    case 'onskerMote':
-      return !filters[key] || personData.harMotebehovUbehandlet;
-    case 'arbeidsgiverOnskerMote':
-      return !filters[key] || personData.harOppfolgingsplanLPSBistandUbehandlet;
-    case 'dialogmotekandidat':
-      return !filters[key] || personData.dialogmotekandidat === true;
-    case 'dialogmotesvar':
-      return !filters[key] || personData.harDialogmotesvar;
-    case 'behandlerdialog':
-      return !filters[key] || personData.harBehandlerdialogUbehandlet;
-    case 'oppfolgingsoppgave':
-      return !filters[key] || personData.oppfolgingsoppgave !== null;
-    case 'behandlerBerOmBistand':
-      return !filters[key] || personData.behandlerBerOmBistandUbehandlet;
-    case 'isAktivArbeidsuforhetvurdering':
-      return !filters[key] || !!personData.arbeidsuforhetvurdering;
-    case 'harFriskmeldingTilArbeidsformidling':
-      return !filters[key] || !!personData.friskmeldingTilArbeidsformidlingFom;
-    case 'isSenOppfolgingChecked':
-      return !filters[key] || !!personData.senOppfolgingKandidat;
-    case 'isManglendeMedvirkningChecked':
-      return !filters[key] || !!personData.manglendeMedvirkning;
-    case 'isAktivitetskravChecked':
-      return !filters[key] || personData.aktivitetskravvurdering !== null;
-    case 'isAktivitetskravVurderStansChecked':
-      const isExpiredVarsel =
-        !!personData?.aktivitetskravvurdering?.vurderinger[0]?.varsel
-          ?.svarfrist &&
-        isPast(
-          personData?.aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist
-        );
-      return !filters[key] || isExpiredVarsel;
-  }
-};
+): boolean {
+  const isExpiredVarsel =
+    !!personData?.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist &&
+    isPast(
+      personData?.aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist
+    );
+  return (
+    (filters.onskerMote && personData.harDialogmotesvar) ||
+    (filters.arbeidsgiverOnskerMote &&
+      personData.harOppfolgingsplanLPSBistandUbehandlet) ||
+    (filters.dialogmotekandidat && personData.dialogmotekandidat === true) ||
+    (filters.dialogmotesvar && personData.harDialogmotesvar) ||
+    (filters.behandlerdialog && personData.harBehandlerdialogUbehandlet) ||
+    (filters.oppfolgingsoppgave && personData.oppfolgingsoppgave !== null) ||
+    (filters.behandlerBerOmBistand &&
+      personData.behandlerBerOmBistandUbehandlet) ||
+    (filters.isAktivArbeidsuforhetvurdering &&
+      !!personData.arbeidsuforhetvurdering) ||
+    (filters.harFriskmeldingTilArbeidsformidling &&
+      !!personData.friskmeldingTilArbeidsformidlingFom) ||
+    (filters.isSenOppfolgingChecked && !!personData.senOppfolgingKandidat) ||
+    (filters.isManglendeMedvirkningChecked &&
+      !!personData.manglendeMedvirkning) ||
+    (filters.isAktivitetskravChecked &&
+      personData.aktivitetskravvurdering !== null) ||
+    (filters.isAktivitetskravVurderStansChecked && isExpiredVarsel)
+  );
+}
 
-export const filterOnPersonregister = (
+export function filterHendelser(
   personregister: PersonregisterState,
   filter?: HendelseTypeFilter
-): PersonregisterState => {
+): PersonregisterState {
   if (!filter) return personregister;
 
   const erTomtFilter = Object.entries(filter).every(
@@ -241,13 +230,11 @@ export const filterOnPersonregister = (
   }
 
   const filtered = Object.entries(personregister).filter(([, personData]) => {
-    return Object.keys(filter).every((key) =>
-      matchesFilter(key as HendelseTypeFilterKey, filter, personData)
-    );
+    return isPersonVisible(filter, personData);
   });
 
   return Object.fromEntries(filtered);
-};
+}
 
 export const filterEventsOnVeileder = (
   personregister: PersonregisterState,
