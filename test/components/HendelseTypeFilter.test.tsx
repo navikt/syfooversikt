@@ -56,12 +56,6 @@ describe('HendelseTypeFilter', () => {
     });
     expect(onskerMoteCheckbox).to.exist;
 
-    const ufordelteCheckbox = screen.getByRole('checkbox', {
-      name: /Ufordelte brukere/,
-      checked: false,
-    });
-    expect(ufordelteCheckbox).to.exist;
-
     const arbeidsgiverCheckbox = screen.getByRole('checkbox', {
       name: /Arbeidsgiver ber om bistand/,
       checked: false,

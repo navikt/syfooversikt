@@ -6,7 +6,6 @@ import {
 export interface HendelseTypeFilter {
   arbeidsgiverOnskerMote: boolean;
   onskerMote: boolean;
-  ufordeltBruker: boolean;
   dialogmotekandidat: boolean;
   dialogmotesvar: boolean;
   behandlerdialog: boolean;
@@ -29,6 +28,7 @@ export interface FilterState {
   selectedFristFilters: FristFilterOption[];
   selectedAgeFilters: AgeFilterOption[];
   selectedHendelseType: HendelseTypeFilter;
+  isUfordelteBrukereFilter: boolean;
 }
 
 export const filterInitialState: FilterState = {
@@ -42,7 +42,6 @@ export const filterInitialState: FilterState = {
   selectedHendelseType: {
     arbeidsgiverOnskerMote: false,
     onskerMote: false,
-    ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
     behandlerdialog: false,
@@ -55,4 +54,5 @@ export const filterInitialState: FilterState = {
     isAktivitetskravVurderStansChecked: false,
     isManglendeMedvirkningChecked: false,
   },
+  isUfordelteBrukereFilter: false,
 };

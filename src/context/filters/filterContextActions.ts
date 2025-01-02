@@ -13,12 +13,18 @@ export enum ActionType {
   SetSelectedFristFilter,
   SetSelectedAgeFilter,
   SetSelectedHendelseType,
+  SetFilterUfordelteBrukere,
   ResetFilters,
 }
 
 export interface SetTekstFilter {
   type: ActionType.SetTekstFilter;
   tekstFilter: string;
+}
+
+export interface SetUfordelteBrukereFilter {
+  type: ActionType.SetFilterUfordelteBrukere;
+  isUfordelteBrukereFilter: boolean;
 }
 
 export interface SetSelectedVeilederIdents {
@@ -62,6 +68,7 @@ export interface ResetFilters {
 
 export type FilterActions =
   | SetTekstFilter
+  | SetUfordelteBrukereFilter
   | SetSelectedVeilederIdents
   | SetSelectedOptions
   | SetSelectedCompanies

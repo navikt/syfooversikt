@@ -19,6 +19,7 @@ import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
 import { HendelseFilter } from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
+import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 
 const SokeresultatFiltre = styled.div`
   margin-right: 1rem;
@@ -81,6 +82,9 @@ export default function Oversikt({
           className="mb-4 flex flex-col gap-4"
         >
           <TekstFilter />
+          {selectedTab === TabType.ENHETENS_OVERSIKT && (
+            <UfordelteBrukereFilter persondata={personData} />
+          )}
           <HendelseFilter personRegister={allEvents.value} />
 
           <PersonFilter personregister={personData} />

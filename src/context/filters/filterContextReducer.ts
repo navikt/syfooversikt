@@ -18,6 +18,12 @@ export const filterReducer = (
         tekstFilter: action.tekstFilter,
       };
     }
+    case ActionType.SetFilterUfordelteBrukere: {
+      return {
+        ...state,
+        isUfordelteBrukereFilter: action.isUfordelteBrukereFilter,
+      };
+    }
     case ActionType.SetSelectedBirthDates: {
       return {
         ...state,

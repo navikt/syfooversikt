@@ -197,8 +197,6 @@ const matchesFilter = (
       return !filters[key] || personData.harOppfolgingsplanLPSBistandUbehandlet;
     case 'dialogmotekandidat':
       return !filters[key] || personData.dialogmotekandidat === true;
-    case 'ufordeltBruker':
-      return !filters[key] || !personData.tildeltVeilederIdent;
     case 'dialogmotesvar':
       return !filters[key] || personData.harDialogmotesvar;
     case 'behandlerdialog':
@@ -261,7 +259,6 @@ export const filterEventsOnVeileder = (
   ).filter(([, { tildeltVeilederIdent }]) =>
     veilederIdenter.some((ident) => ident === tildeltVeilederIdent)
   );
-
   return Object.fromEntries(filtered);
 };
 

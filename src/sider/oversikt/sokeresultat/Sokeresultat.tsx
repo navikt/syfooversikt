@@ -14,7 +14,8 @@ import {
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
-import { TabType, useTabType } from '@/hooks/useTabType';
+import { useTabType } from '@/hooks/useTabType';
+import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
@@ -43,20 +44,17 @@ export default function Sokeresultat({ allEvents }: Props) {
     setMarkertePersoner([]);
   }, [selectedTab]);
 
-  const selectedHendelsetypeFilter =
-    selectedTab === TabType.MIN_OVERSIKT
-      ? {
-          ...filterState.selectedHendelseType,
-          ufordeltBruker: false,
-        }
-      : filterState.selectedHendelseType;
-
   const filteredEvents = allEvents
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
     .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
     .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
-    .applyFilter((v) => filterOnPersonregister(v, selectedHendelsetypeFilter))
+    .applyFilter((v) =>
+      filterOnPersonregister(v, filterState.selectedHendelseType)
+    )
+    .applyFilter((v) =>
+      filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter)
+    )
     .applyFilter((v) =>
       filterOnFodselsnummerOrName(v, filterState.tekstFilter)
     );
