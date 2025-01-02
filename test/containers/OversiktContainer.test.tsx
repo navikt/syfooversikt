@@ -118,4 +118,13 @@ describe('OversiktContainer', () => {
         .to.not.exist;
     });
   });
+
+  describe('Ufordelte brukere filter', () => {
+    it('shows ufordelte brukere filter', () => {
+      renderOversikten();
+
+      expect(screen.getByRole('checkbox', { name: /Ufordelte brukere/ })).to
+        .exist;
+    });
+  });
 });

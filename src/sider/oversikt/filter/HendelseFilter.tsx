@@ -10,10 +10,8 @@ import {
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
-import { TabType, useTabType } from '@/hooks/useTabType';
 
 export const HendelseTekster = {
-  UFORDELTE_BRUKERE: 'Ufordelte brukere', // Ikke tildelt veileder
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ber om bistand',
   MOTEBEHOV: 'Ber om dialogmøte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
@@ -40,7 +38,6 @@ function initFilter(hendelse: Hendelse): HendelseTypeFilter {
   const filter: HendelseTypeFilter = {
     arbeidsgiverOnskerMote: false,
     onskerMote: false,
-    ufordeltBruker: false,
     dialogmotekandidat: false,
     dialogmotesvar: false,
     isAktivitetskravChecked: false,
@@ -67,10 +64,6 @@ function updateFilterState(
     }
     case 'MOTEBEHOV': {
       filter.onskerMote = !filter.onskerMote;
-      return filter;
-    }
-    case 'UFORDELTE_BRUKERE': {
-      filter.ufordeltBruker = !filter.ufordeltBruker;
       return filter;
     }
     case 'DIALOGMOTEKANDIDAT': {
@@ -126,8 +119,6 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
       return state.arbeidsgiverOnskerMote;
     case 'MOTEBEHOV':
       return state.onskerMote;
-    case 'UFORDELTE_BRUKERE':
-      return state.ufordeltBruker;
     case 'DIALOGMOTEKANDIDAT':
       return state.dialogmotekandidat;
     case 'DIALOGMOTESVAR':
@@ -153,39 +144,16 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
   }
 }
 
-function showCheckbox(hendelse: Hendelse, tabType: TabType): boolean {
-  switch (hendelse) {
-    case 'AKTIVITETSKRAV':
-    case 'AKTIVITETSKRAV_VURDER_STANS':
-    case 'BEHANDLERDIALOG':
-    case 'DIALOGMOTEKANDIDAT':
-    case 'DIALOGMOTESVAR':
-    case 'MOTEBEHOV':
-    case 'ARBEIDSGIVER_BISTAND':
-    case 'BEHANDLER_BER_OM_BISTAND':
-    case 'MANGLENDE_MEDVIRKNING':
-    case 'OPPFOLGINGSOPPGAVE':
-    case 'ARBEIDSUFORHET':
-    case 'FRISKMELDING_TIL_ARBEIDSFORMIDLING':
-    case 'SNART_SLUTT_PA_SYKEPENGENE':
-      return true;
-    case 'UFORDELTE_BRUKERE':
-      return tabType === TabType.ENHETENS_OVERSIKT;
-  }
-}
-
 interface CheckboxElement {
   hendelse: Hendelse;
   tekst: HendelseTeksterValues;
   antallHendelser: number;
   isChecked: boolean;
-  isVisible: boolean;
 }
 
 function hendelseCheckboxes(
   personRegister: PersonregisterState | undefined,
-  filterState: FilterState,
-  tabType: TabType
+  filterState: FilterState
 ): CheckboxElement[] {
   return Object.entries(HendelseTekster).map(([hendelse, tekst]) => {
     const filter = initFilter(hendelse as Hendelse);
@@ -196,39 +164,18 @@ function hendelseCheckboxes(
       filterState.selectedHendelseType,
       hendelse as Hendelse
     );
-    const isVisible = showCheckbox(hendelse as Hendelse, tabType);
     return {
       hendelse: hendelse,
       tekst,
       antallHendelser: antall,
       isChecked: checked,
-      isVisible: isVisible,
     } as CheckboxElement;
   });
 }
 
-interface CheckboxLabelProps {
-  labelText: string;
-  antallHendelser: number;
-}
-
-function CheckboxLabel({ labelText, antallHendelser }: CheckboxLabelProps) {
-  return (
-    <div>
-      {labelText} <strong>({antallHendelser})</strong>
-    </div>
-  );
-}
-
 export function HendelseFilter({ personRegister }: Props) {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
-  const { selectedTab } = useTabType();
-
-  const checkboxElements = hendelseCheckboxes(
-    personRegister,
-    filterState,
-    selectedTab
-  ).filter((checkboksElement) => checkboksElement.isVisible);
+  const checkboxElements = hendelseCheckboxes(personRegister, filterState);
 
   const onChange = (value: string) => {
     const newFilterState = updateFilterState(
@@ -264,10 +211,7 @@ export function HendelseFilter({ personRegister }: Props) {
             value={checkbox.hendelse}
             onChange={(e) => onChange(e.target.value)}
           >
-            <CheckboxLabel
-              labelText={checkbox.tekst}
-              antallHendelser={checkbox.antallHendelser}
-            />
+            {checkbox.tekst} <strong>({checkbox.antallHendelser})</strong>
           </Checkbox>
         );
       })}

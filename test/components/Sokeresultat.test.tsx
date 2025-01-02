@@ -63,7 +63,6 @@ describe('Sokeresultat', () => {
       selectedHendelseType: {
         arbeidsgiverOnskerMote: false,
         onskerMote: false,
-        ufordeltBruker: false,
         dialogmotekandidat: false,
         dialogmotesvar: true,
         behandlerdialog: false,
@@ -76,6 +75,7 @@ describe('Sokeresultat', () => {
         isAktivitetskravVurderStansChecked: false,
         isManglendeMedvirkningChecked: false,
       },
+      isUfordelteBrukereFilter: false,
     };
 
     renderWithRouter(

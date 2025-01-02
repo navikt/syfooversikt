@@ -42,7 +42,6 @@ export const createPersonDataWithName = (name: string): PersonData => {
 const defaulthendelseFilter: HendelseTypeFilter = {
   arbeidsgiverOnskerMote: false,
   onskerMote: false,
-  ufordeltBruker: false,
   dialogmotekandidat: false,
   dialogmotesvar: false,
   behandlerdialog: false,

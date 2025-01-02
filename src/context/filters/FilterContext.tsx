@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import {
   filterInitialState,
   FilterState,
 } from '@/context/filters/filterContextState';
 import { filterReducer } from '@/context/filters/filterContextReducer';
 import { FilterActions } from '@/context/filters/filterContextActions';
-import { useEffect } from 'react';
 
 type FilterProviderProps = { children: React.ReactNode };
 
@@ -18,7 +18,7 @@ const FilterContext = React.createContext<{
 });
 
 const FilterProvider = ({ children }: FilterProviderProps) => {
-  const storeKey = 'filters';
+  const storeKey = 'filters-v2';
   const storedFilters = sessionStorage.getItem(storeKey);
   const initialState =
     storedFilters === null ? filterInitialState : JSON.parse(storedFilters);
