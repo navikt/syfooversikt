@@ -193,7 +193,7 @@ function isPersonVisible(
       personData?.aktivitetskravvurdering.vurderinger[0]?.varsel?.svarfrist
     );
   return (
-    (filters.onskerMote && personData.harDialogmotesvar) ||
+    (filters.onskerMote && personData.harMotebehovUbehandlet) ||
     (filters.arbeidsgiverOnskerMote &&
       personData.harOppfolgingsplanLPSBistandUbehandlet) ||
     (filters.dialogmotekandidat && personData.dialogmotekandidat === true) ||
