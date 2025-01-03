@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  filterHendelser,
   filterOnFrist,
-  filterOnPersonregister,
   FristFilterOption,
   getSortedEventsFromSortingType,
 } from '@/utils/hendelseFilteringUtils';
@@ -610,7 +610,7 @@ describe('hendelseFilteringUtils', () => {
       const personregister: PersonregisterState = {
         '16614407794': createPersonDataWithName('Bjarne Bjarne'),
       };
-      const filteredPersonregister = filterOnPersonregister(
+      const filteredPersonregister = filterHendelser(
         personregister,
         defaulthendelseFilter
       );
@@ -635,7 +635,7 @@ describe('hendelseFilteringUtils', () => {
         dialogmotesvar: true,
       };
 
-      const filteredPersonregister = filterOnPersonregister(
+      const filteredPersonregister = filterHendelser(
         personregister,
         filterWithDialogmotesvar
       );
@@ -643,7 +643,7 @@ describe('hendelseFilteringUtils', () => {
       expect(Object.keys(filteredPersonregister).length).to.equal(0);
     });
 
-    it('Return only elements matching all active filters', () => {
+    it('Return elements matching active filters', () => {
       const personDataWithAktivitetskrav: PersonData = {
         ...createPersonDataWithName('Fox Mulder'),
         aktivitetskravvurdering: {
@@ -669,13 +669,12 @@ describe('hendelseFilteringUtils', () => {
         isAktivitetskravChecked: true,
       };
 
-      const filteredPersonregister = filterOnPersonregister(
+      const filteredPersonregister = filterHendelser(
         personregister,
         filterWithMotebehovAndAktivitetskrav
       );
 
-      expect(Object.keys(filteredPersonregister).length).to.equal(1);
-      expect(Object.keys(filteredPersonregister)[0]).to.equal('09128034883');
+      expect(Object.keys(filteredPersonregister).length).to.equal(2);
     });
 
     describe('Frist filter', () => {

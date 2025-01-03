@@ -5,12 +5,12 @@ import { useTildelVeileder } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,
+  filterHendelser,
   filterOnAge,
   filterOnBirthDates,
   filterOnCompany,
   filterOnFodselsnummerOrName,
   filterOnFrist,
-  filterOnPersonregister,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
@@ -49,9 +49,7 @@ export default function Sokeresultat({ allEvents }: Props) {
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
     .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
     .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
-    .applyFilter((v) =>
-      filterOnPersonregister(v, filterState.selectedHendelseType)
-    )
+    .applyFilter((v) => filterHendelser(v, filterState.selectedHendelseType))
     .applyFilter((v) =>
       filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter)
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
-import { filterOnPersonregister } from '@/utils/hendelseFilteringUtils';
+import { filterHendelser } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import {
@@ -157,9 +157,8 @@ function hendelseCheckboxes(
 ): CheckboxElement[] {
   return Object.entries(HendelseTekster).map(([hendelse, tekst]) => {
     const filter = initFilter(hendelse as Hendelse);
-    const antall = Object.keys(
-      filterOnPersonregister(personRegister || {}, filter)
-    ).length;
+    const antall = Object.keys(filterHendelser(personRegister || {}, filter))
+      .length;
     const checked = isChecked(
       filterState.selectedHendelseType,
       hendelse as Hendelse
