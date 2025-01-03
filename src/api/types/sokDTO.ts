@@ -1,4 +1,5 @@
 export interface SokDTO {
-  initials: string;
-  birthdate: Date;
+  name?: string;
+  initials?: string;
+  birthdate?: Date;
 }
