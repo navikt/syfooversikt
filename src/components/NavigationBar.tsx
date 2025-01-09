@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MoteoversiktLink } from '@/components/MoteoversiktLink';
 import { Box, Heading, HStack, Tabs } from '@navikt/ds-react';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 import { routes } from '@/routers/routes';
 
@@ -13,7 +12,6 @@ const texts = {
 };
 
 export const NavigationBar = (): ReactElement => {
-  const { toggles } = useFeatureToggles();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -30,13 +28,11 @@ export const NavigationBar = (): ReactElement => {
               value={routes.ENHET_OVERSIKT}
               label={<Heading size="small">{texts.enhetensOversikt}</Heading>}
             />
-            {toggles.isSokEnabled && (
-              <Tabs.Tab
-                value={routes.SOK_SYKMELDT}
-                icon={<MagnifyingGlassIcon />}
-                label={<Heading size="small">{texts.sokSykmeldt}</Heading>}
-              />
-            )}
+            <Tabs.Tab
+              value={routes.SOK_SYKMELDT}
+              icon={<MagnifyingGlassIcon />}
+              label={<Heading size="small">{texts.sokSykmeldt}</Heading>}
+            />
           </Tabs.List>
         </Tabs>
         <div className="ml-auto self-center">
