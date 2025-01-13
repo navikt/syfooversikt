@@ -44,7 +44,9 @@ export default function OppfolgingsoppgaveModal({
         <BodyShort className="mb-4">
           {oppfolgingsgrunnToString[oppfolgingsoppgave.oppfolgingsgrunn]}
         </BodyShort>
-        <BodyLong className="mb-4">{oppfolgingsoppgave.tekst}</BodyLong>
+        <BodyLong className="mb-4 whitespace-pre-wrap">
+          {oppfolgingsoppgave.tekst}
+        </BodyLong>
         <Label size="small" as="p">
           {texts.frist}
         </Label>

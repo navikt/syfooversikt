@@ -697,7 +697,7 @@ export function getOppfolgingsoppgave(frist?: Date): OppfolgingsoppgaveDTO {
     createdBy: veilederMock.ident,
     updatedAt: new Date(),
     createdAt: new Date(),
-    tekst: 'En tekst',
+    tekst: 'En tekst\n med\n linjeskift',
     oppfolgingsgrunn: getRandomOppfolgingsgrunn(),
     frist: frist ?? null,
   };
