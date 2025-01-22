@@ -14,7 +14,7 @@ import {
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
 import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
-import { useTabType } from '@/hooks/useTabType';
+import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 
 interface Props {
@@ -44,18 +44,21 @@ export default function Sokeresultat({ allEvents }: Props) {
     setMarkertePersoner([]);
   }, [selectedTab]);
 
-  const filteredEvents = allEvents
+  let filteredEvents = allEvents
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
     .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
     .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
     .applyFilter((v) => filterHendelser(v, filterState.selectedHendelseType))
     .applyFilter((v) =>
-      filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter)
-    )
-    .applyFilter((v) =>
       filterOnFodselsnummerOrName(v, filterState.tekstFilter)
     );
+
+  if (selectedTab === TabType.ENHETENS_OVERSIKT) {
+    filteredEvents = filteredEvents.applyFilter((v) =>
+      filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter)
+    );
+  }
 
   const allFnr = Object.keys(filteredEvents.value);
 
