@@ -13,7 +13,7 @@ $ npm install --legacy-peer-deps # installerer avhengigheter
 
 #### For å kjøre koden lokalt:
 
-Du må ha Node v18 og npm v9 installert.
+Du må ha Node v22 og npm v10 installert.
 
 - `$ npm install --legacy-peer-deps`
 - `$ npm start`
