@@ -177,10 +177,8 @@ export function HendelseFilter({ personRegister }: Props) {
   const checkboxElements = hendelseCheckboxes(personRegister, filterState);
 
   const onChange = (value: string) => {
-    const newFilterState = updateFilterState(
-      filterState.selectedHendelseType,
-      value as Hendelse
-    );
+    const newFilterState = { ...filterState.selectedHendelseType };
+    updateFilterState(newFilterState, value as Hendelse);
     dispatchFilterAction({
       type: ActionType.SetSelectedHendelseType,
       selectedHendelseType: newFilterState,
