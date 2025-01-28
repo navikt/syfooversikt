@@ -106,21 +106,61 @@ export enum Oppfolgingsgrunn {
   FRISKMELDING_TIL_ARBEIDSFORMIDLING = 'FRISKMELDING_TIL_ARBEIDSFORMIDLING',
   VURDER_14A = 'VURDER_14A',
   VURDER_ANNEN_YTELSE = 'VURDER_ANNEN_YTELSE',
+  SAMTALE_MED_BRUKER = 'SAMTALE_MED_BRUKER',
   ANNET = 'ANNET',
 }
 
-export const oppfolgingsgrunnToString = {
-  [Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT]: 'Ta kontakt med den sykmeldte',
-  [Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER]: 'Ta kontakt med arbeidsgiver',
-  [Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER]: 'Ta kontakt med behandler',
-  [Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE]: 'Vurder behov for dialogmøte',
-  [Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING]:
-    'Følg opp etter neste sykmelding',
-  [Oppfolgingsgrunn.VURDER_TILTAK_BEHOV]: 'Vurder behov for tiltak',
-  [Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET]: 'Vurder §8-4 - Arbeidsuførhet',
-  [Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING]:
-    'Vurder §8-5 - Friskmelding til arbeidsformidling',
-  [Oppfolgingsgrunn.VURDER_14A]: 'Vurder §14a',
-  [Oppfolgingsgrunn.VURDER_ANNEN_YTELSE]: 'Vurder annen ytelse',
-  [Oppfolgingsgrunn.ANNET]: 'Annet',
+type OppfolgingsgrunnText = { long: string; short: string };
+export const oppfolgingsgrunnToString: Record<
+  Oppfolgingsgrunn,
+  OppfolgingsgrunnText
+> = {
+  [Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT]: {
+    long: 'Ta kontakt med den sykmeldte',
+    short: 'Kontakt sykmeldt',
+  },
+  [Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER]: {
+    long: 'Ta kontakt med arbeidsgiver',
+    short: 'Kontakt arbeidsgiver',
+  },
+  [Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER]: {
+    long: 'Ta kontakt med behandler',
+    short: 'Kontakt behandler',
+  },
+  [Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE]: {
+    long: 'Vurder behov for dialogmøte',
+    short: 'Vurder dialogmøte',
+  },
+  [Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING]: {
+    long: 'Følg opp etter neste sykmelding',
+    short: 'Følg opp etter sykmelding',
+  },
+  [Oppfolgingsgrunn.VURDER_TILTAK_BEHOV]: {
+    long: 'Vurder behov for tiltak',
+    short: 'Vurder tiltak',
+  },
+  [Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET]: {
+    long: 'Vurder §8-4 - Arbeidsuførhet',
+    short: 'Vurder §8-4',
+  },
+  [Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING]: {
+    long: 'Vurder §8-5 - Friskmelding til arbeidsformidling',
+    short: 'Vurder §8-5',
+  },
+  [Oppfolgingsgrunn.VURDER_14A]: {
+    long: 'Vurder §14a',
+    short: 'Vurder §14a',
+  },
+  [Oppfolgingsgrunn.VURDER_ANNEN_YTELSE]: {
+    long: 'Vurder annen ytelse',
+    short: 'Vurder annen ytelse',
+  },
+  [Oppfolgingsgrunn.SAMTALE_MED_BRUKER]: {
+    long: 'Samtale med bruker',
+    short: 'Samtale med bruker',
+  },
+  [Oppfolgingsgrunn.ANNET]: {
+    long: 'Annet',
+    short: 'Annet',
+  },
 };

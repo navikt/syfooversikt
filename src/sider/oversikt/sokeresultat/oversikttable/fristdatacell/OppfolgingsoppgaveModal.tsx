@@ -42,7 +42,7 @@ export default function OppfolgingsoppgaveModal({
           {texts.oppfolgingsgrunn}
         </Label>
         <BodyShort className="mb-4">
-          {oppfolgingsgrunnToString[oppfolgingsoppgave.oppfolgingsgrunn]}
+          {oppfolgingsgrunnToString[oppfolgingsoppgave.oppfolgingsgrunn]?.long}
         </BodyShort>
         <BodyLong className="mb-4 whitespace-pre-wrap">
           {oppfolgingsoppgave.tekst}
