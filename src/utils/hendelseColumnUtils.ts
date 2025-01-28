@@ -1,41 +1,12 @@
 import {
   AktivitetskravStatus,
   OnskerOppfolging,
-  Oppfolgingsgrunn,
+  oppfolgingsgrunnToString,
   SenOppfolgingKandidatDTO,
 } from '@/api/types/personoversiktTypes';
 import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { isPast } from '@/utils/dateUtils';
-
-function mapOppfolgingsgrunn(oppfolgingsgrunn: Oppfolgingsgrunn) {
-  switch (oppfolgingsgrunn) {
-    case Oppfolgingsgrunn.ANNET:
-      return 'Annet';
-    case Oppfolgingsgrunn.FOLG_OPP_ETTER_NESTE_SYKMELDING:
-      return 'Følg opp etter sykmelding';
-    case Oppfolgingsgrunn.FRISKMELDING_TIL_ARBEIDSFORMIDLING:
-      return 'Vurder § 8-5';
-    case Oppfolgingsgrunn.TA_KONTAKT_ARBEIDSGIVER:
-      return 'Kontakt arbeidsgiver';
-    case Oppfolgingsgrunn.TA_KONTAKT_BEHANDLER:
-      return 'Kontakt behandler';
-    case Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT:
-      return 'Kontakt sykmeldt';
-    case Oppfolgingsgrunn.VURDER_14A:
-      return 'Vurder § 14a';
-    case Oppfolgingsgrunn.VURDER_ANNEN_YTELSE:
-      return 'Vurder annen ytelse';
-    case Oppfolgingsgrunn.VURDER_ARBEIDSUFORHET:
-      return 'Vurder § 8-4';
-    case Oppfolgingsgrunn.VURDER_DIALOGMOTE_SENERE:
-      return 'Vurder dialogmøte';
-    case Oppfolgingsgrunn.VURDER_TILTAK_BEHOV:
-      return 'Vurder tiltak';
-    default:
-      return '';
-  }
-}
 
 function mapAktivitetskravStatus(personData: PersonData): string {
   const status = personData?.aktivitetskravvurdering?.status;
@@ -130,11 +101,10 @@ export function getHendelser(personData: PersonData): string[] {
     hendelser.push('Friskmelding til arbeidsformidling');
   }
   if (personData.oppfolgingsoppgave) {
-    hendelser.push(
-      `Oppf.oppgave - ${mapOppfolgingsgrunn(
-        personData.oppfolgingsoppgave.oppfolgingsgrunn
-      )}`
-    );
+    const oppfolgingsgrunn =
+      oppfolgingsgrunnToString[personData.oppfolgingsoppgave.oppfolgingsgrunn]
+        ?.short;
+    hendelser.push(`Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`);
   }
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
     hendelser.push('Oppfølgingsplan'); //TODO: Hva skal denne egt gjøre?
