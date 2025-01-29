@@ -59,6 +59,16 @@ const texts = {
   error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
 };
 
+function logHelpTextClick(text: string) {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ButtonClick,
+    data: {
+      url: window.location.href,
+      tekst: text,
+    },
+  });
+}
+
 function logSokPersonEvent() {
   Amplitude.logEvent({
     type: Amplitude.EventType.ButtonClick,
@@ -89,7 +99,10 @@ function InitialerLabel() {
   return (
     <div className="flex gap-2">
       {texts.label.initials}
-      <HelpText title={texts.helpText.initials.title}>
+      <HelpText
+        title={texts.helpText.initials.title}
+        onClick={() => logHelpTextClick(texts.helpText.initials.title)}
+      >
         <Label>{texts.helpText.initials.title}</Label>
         <BodyLong>{texts.helpText.initials.text}</BodyLong>
       </HelpText>
@@ -101,7 +114,10 @@ function FodselsdatoLabel() {
   return (
     <div className="flex gap-2">
       {texts.label.birthdate}
-      <HelpText title={texts.helpText.birthdate.title}>
+      <HelpText
+        title={texts.helpText.birthdate.title}
+        onClick={() => logHelpTextClick(texts.helpText.birthdate.title)}
+      >
         <Label>{texts.helpText.birthdate.title}</Label>
         <BodyLong>{texts.helpText.birthdate.text}</BodyLong>
       </HelpText>
@@ -168,7 +184,10 @@ export default function SokPerson() {
             <Heading level="2" size="medium">
               {texts.header}
             </Heading>
-            <HelpText title={texts.helpText.info.title}>
+            <HelpText
+              title={texts.helpText.info.title}
+              onClick={() => logHelpTextClick(texts.helpText.info.title)}
+            >
               <Label>{texts.helpText.info.title}</Label>
               <BodyLong>{texts.helpText.info.p1}</BodyLong>
               <BodyLong className="pt-2">{texts.helpText.info.p2}</BodyLong>
