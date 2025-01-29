@@ -72,7 +72,6 @@ export default function Oversikt({
   return (
     <OversiktContainerInnhold>
       <SokeresultatFiltre>
-        <ClearFiltersButton />
         <Box
           borderRadius="medium"
           background="surface-default"
@@ -88,6 +87,7 @@ export default function Oversikt({
           <HendelseFilter personRegister={allEvents.value} />
 
           <PersonFilter personregister={personData} />
+          <ClearFiltersButton />
         </Box>
       </SokeresultatFiltre>
 
