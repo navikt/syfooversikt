@@ -38,11 +38,21 @@ describe('SokPerson', () => {
       .exist;
     expect(
       screen.getByText(
-        'Her kan du søke opp sykmeldte personer basert på initialer og fødselsdato.'
+        'Her kan du søke for å finne brukere med aktivt sykefravær.'
       )
     ).to.exist;
-    expect(screen.getByRole('textbox', { name: 'Initialer' })).to.exist;
-    expect(screen.getByRole('textbox', { name: 'Fødselsdato' })).to.exist;
+    expect(
+      screen.getByRole('textbox', {
+        name:
+          'Initialer (valgfri) Hvordan fyller jeg inn initialer? Hvordan fyller jeg inn initialer?',
+      })
+    ).to.exist;
+    expect(
+      screen.getByRole('textbox', {
+        name:
+          'Fødselsdato (obligatorisk) Hvordan fyller jeg inn fødselsdato? Hvordan fyller jeg inn fødselsdato?',
+      })
+    ).to.exist;
     expect(screen.getByRole('button', { name: 'Søk' })).to.exist;
   });
 
@@ -52,23 +62,26 @@ describe('SokPerson', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
     expect(screen.getByText('Vennligst angi en gyldig fødselsdato')).to.exist;
-    expect(screen.queryByText('Vennligst angi gyldige initialer')).to.not.exist;
+    expect(screen.queryByText('Vennligst angi to til fire initialer')).to.not
+      .exist;
   });
   it('should render validation error for initialer when blank and too many characters', async () => {
     renderSokPerson();
 
-    const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
+    const initialsInput = screen.getByRole('textbox', { name: /^Initialer/ });
     fireEvent.change(initialsInput, { target: { value: ' ' } });
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
-    expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
-    fireEvent.change(initialsInput, { target: { value: 'ABCD' } });
-    expect(screen.getByText('Vennligst angi gyldige initialer')).to.exist;
+    expect(screen.getByText('Vennligst angi to til fire initialer')).to.exist;
+    fireEvent.change(initialsInput, { target: { value: 'ABCDE' } });
+    expect(screen.getByText('Vennligst angi to til fire initialer')).to.exist;
   });
   it('should send correct parameters', async () => {
     renderSokPerson();
 
-    const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
-    const birthdateInput = screen.getByRole('textbox', { name: 'Fødselsdato' });
+    const initialsInput = screen.getByRole('textbox', { name: /^Initialer/ });
+    const birthdateInput = screen.getByRole('textbox', {
+      name: /^Fødselsdato/,
+    });
 
     const initialsValue = 'kk';
     const birthdateValue = '101010';
@@ -104,8 +117,10 @@ describe('SokPerson', () => {
   it('should show correct results', async () => {
     renderSokPerson();
 
-    const initialsInput = screen.getByRole('textbox', { name: 'Initialer' });
-    const birthdateInput = screen.getByRole('textbox', { name: 'Fødselsdato' });
+    const initialsInput = screen.getByRole('textbox', { name: /^Initialer/ });
+    const birthdateInput = screen.getByRole('textbox', {
+      name: /^Fødselsdato/,
+    });
 
     const initialsValue = 'kh';
     const birthdateValue = '101010';

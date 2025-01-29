@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
   Alert,
-  BodyShort,
+  BodyLong,
   Box,
   Button,
   ErrorMessage,
   Heading,
-  HStack,
+  HelpText,
+  Label,
   TextField,
   VStack,
 } from '@navikt/ds-react';
@@ -20,10 +21,39 @@ import * as Amplitude from '@/utils/amplitude';
 
 const texts = {
   header: 'Søk etter sykmeldt',
-  info:
-    'Her kan du søke opp sykmeldte personer basert på initialer og fødselsdato.',
+  info: 'Her kan du søke for å finne brukere med aktivt sykefravær.',
+  label: {
+    initials: 'Initialer (valgfri)',
+    birthdate: 'Fødselsdato (obligatorisk)',
+  },
+  helpText: {
+    info: {
+      title: 'Hvordan søke etter sykmeldt?',
+      p1:
+        'Fyll inn fødselsdato for å finne en sykmeldt du har tilgang til, vedkommende må ha et aktivt sykefravær. ',
+      p2:
+        'Ønsker man et mer nøyaktig søk kan man legge til initialer til den sykmeldte, men dette er valgfritt. Det er ikke mulig å søke på initialer uten å skrive inn fødselsdato. Dette er for å minimere risiko for feil søkeresultat, og at du finner akkurat den personen du er på leting etter.',
+    },
+    initials: {
+      title: 'Hvordan fyller jeg inn initialer?',
+      text:
+        'Her kan du fylle inn initialene til den du vil søke opp. Feltet krever forbokstaven for fornavn og etternavn. Det er mulig å legge til forbokstavene for mellomnavn for mer nøyaktig søkeresultat. ',
+    },
+    birthdate: {
+      title: 'Hvordan fyller jeg inn fødselsdato?',
+      text: (
+        <>
+          Her kan du fylle inn fødselsdato til den du vil søke opp. For å kunne
+          søke må sifrene fylles inn på formatet:
+          <strong> dag måned år</strong>, i den rekkefølgen. Ønsker man et mer
+          nøyaktig søk kan man legge til initialer til den sykmeldte i initial
+          feltet.
+        </>
+      ),
+    },
+  },
   validation: {
-    initials: 'Vennligst angi gyldige initialer',
+    initials: 'Vennligst angi to til fire initialer',
     birthdate: 'Vennligst angi en gyldig fødselsdato',
   },
   error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
@@ -55,6 +85,30 @@ function logSokPersonResults(amount: number, requestDTO: SokDTO) {
   });
 }
 
+function InitialerLabel() {
+  return (
+    <div className="flex gap-2">
+      {texts.label.initials}
+      <HelpText title={texts.helpText.initials.title}>
+        <Label>{texts.helpText.initials.title}</Label>
+        <BodyLong>{texts.helpText.initials.text}</BodyLong>
+      </HelpText>
+    </div>
+  );
+}
+
+function FodselsdatoLabel() {
+  return (
+    <div className="flex gap-2">
+      {texts.label.birthdate}
+      <HelpText title={texts.helpText.birthdate.title}>
+        <Label>{texts.helpText.birthdate.title}</Label>
+        <BodyLong>{texts.helpText.birthdate.text}</BodyLong>
+      </HelpText>
+    </div>
+  );
+}
+
 export default function SokPerson() {
   const [initials, setInitials] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
@@ -78,14 +132,15 @@ export default function SokPerson() {
   };
 
   const isValidInitials = (initials: string): boolean => {
-    return initials === '' || (initials.length <= 3 && initials.length > 1);
+    return initials === '' || (initials.length <= 4 && initials.length > 1);
   };
 
   const handleSubmit = () => {
     const parsedBirthdate = parseBirthdate(birthdate);
+    const parsedInitials = removePunctuation(initials);
     if (isValidInitials(initials) && !!parsedBirthdate) {
       const requestDTO: SokDTO = {
-        initials: initials.toLowerCase(),
+        initials: parsedInitials.toLowerCase(),
         birthdate: parsedBirthdate,
       };
       mutate(requestDTO, {
@@ -109,46 +164,54 @@ export default function SokPerson() {
             handleSubmit();
           }}
         >
-          <Heading level="2" size="medium">
-            {texts.header}
-          </Heading>
+          <div className="flex gap-2 items-center">
+            <Heading level="2" size="medium">
+              {texts.header}
+            </Heading>
+            <HelpText title={texts.helpText.info.title}>
+              <Label>{texts.helpText.info.title}</Label>
+              <BodyLong>{texts.helpText.info.p1}</BodyLong>
+              <BodyLong className="pt-2">{texts.helpText.info.p2}</BodyLong>
+            </HelpText>
+          </div>
           <VStack gap="4">
-            <BodyShort>{texts.info}</BodyShort>
-            <HStack gap="8" align="end">
+            <BodyLong>{texts.info}</BodyLong>
+            <div className="grid grid-cols-[auto,auto,auto] gap-x-8 gap-y-2 align-end max-w-max">
               <TextField
-                label="Initialer"
-                description="AB"
-                htmlSize={10}
-                type="text"
-                onChange={(e) => setInitials(e.target.value)}
-                error={isFormError && !isValidInitials(initials)}
-              />
-              <TextField
-                label="Fødselsdato"
+                label={<FodselsdatoLabel />}
                 description="ddmmåå"
-                htmlSize={14}
+                htmlSize={10}
                 type="text"
                 onChange={(e) => setBirthdate(e.target.value)}
                 error={isInvalidBirthdate}
+              />
+              <TextField
+                label={<InitialerLabel />}
+                description="Eks: Oline Nordmann blir ON"
+                htmlSize={6}
+                type="text"
+                onChange={(e) => setInitials(e.target.value)}
+                error={isFormError && !isValidInitials(initials)}
               />
               <Button
                 loading={isLoading}
                 icon={<MagnifyingGlassIcon />}
                 type="submit"
+                className="self-end max-w-max"
               >
                 Søk
               </Button>
-            </HStack>
-            {isInvalidInitials && (
-              <ErrorMessage size="small">
-                {texts.validation.initials}
-              </ErrorMessage>
-            )}
-            {isInvalidBirthdate && (
-              <ErrorMessage size="small">
-                {texts.validation.birthdate}
-              </ErrorMessage>
-            )}
+              {isInvalidBirthdate && (
+                <ErrorMessage size="small">
+                  {texts.validation.birthdate}
+                </ErrorMessage>
+              )}
+              {isInvalidInitials && (
+                <ErrorMessage size="small" className="col-start-2 col-end-4">
+                  {texts.validation.initials}
+                </ErrorMessage>
+              )}
+            </div>
             {isError && (
               <Alert variant="error" size="small">
                 {texts.error}
