@@ -12,6 +12,7 @@ export enum EventType {
   ButtonClick = 'knapp trykket',
   SortingColumn = 'kolonne sortert på',
   AmountDisplayed = 'antall vist',
+  ErrorMessageShowed = 'feilmelding vist',
 }
 
 type EventPageView = {
@@ -66,13 +67,23 @@ type EventAmountDisplayed = {
   };
 };
 
+type ErrorMessageShowed = {
+  type: EventType.ErrorMessageShowed;
+  data: {
+    url: string;
+    handling: string;
+    feilmelding: string;
+  };
+};
+
 type Event =
   | EventPageView
   | Navigation
   | OptionSelected
   | EventButtonClick
   | EventSortingColumn
-  | EventAmountDisplayed;
+  | EventAmountDisplayed
+  | ErrorMessageShowed;
 
 export const logEvent = (event: Event) =>
   amplitude.track(event.type, { ...event.data });

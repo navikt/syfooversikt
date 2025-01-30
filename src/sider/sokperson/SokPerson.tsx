@@ -95,6 +95,71 @@ function logSokPersonResults(amount: number, requestDTO: SokDTO) {
   });
 }
 
+interface LogSokPersonErrorProps {
+  birthdate: string;
+  isValidBirthdate: boolean;
+  isInvalidBirthdate: boolean;
+  initials: string;
+  isValidInitials: boolean;
+  isInvalidInitials: boolean;
+  isError: boolean;
+}
+
+function logSokPersonError({
+  birthdate,
+  isValidBirthdate,
+  isInvalidBirthdate,
+  initials,
+  isValidInitials,
+  isInvalidInitials,
+  isError,
+}: LogSokPersonErrorProps) {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ErrorMessageShowed,
+    data: {
+      url: window.location.href,
+      handling: 'Søk etter sykmeldt - feilmeldinger',
+      feilmelding:
+        'Fødselsdato: ' +
+        getValidationMessage({
+          value: birthdate,
+          isValid: isValidBirthdate,
+          isInvalid: isInvalidBirthdate,
+        }) +
+        ' - Initialer: ' +
+        getValidationMessage({
+          value: initials,
+          isValid: isValidInitials,
+          isInvalid: isInvalidInitials,
+        }) +
+        (isError ? ' - Feil ved søk' : ''),
+    },
+  });
+}
+
+interface ValidationArgs {
+  value: string;
+  isValid: boolean;
+  isInvalid: boolean;
+}
+
+function getValidationMessage({
+  value,
+  isValid,
+  isInvalid,
+}: ValidationArgs): string {
+  if (value === '') {
+    return 'ingen innhold';
+  }
+  if (isValid) {
+    return 'gyldig innhold';
+  }
+  if (isInvalid) {
+    return 'ugyldig innhold';
+  }
+  return '';
+}
+
 function InitialerLabel() {
   return (
     <div className="flex gap-2">
@@ -165,6 +230,15 @@ export default function SokPerson() {
       });
     } else {
       setIsFormError(true);
+      logSokPersonError({
+        birthdate: birthdate,
+        isValidBirthdate: !!parsedBirthdate,
+        isInvalidBirthdate: isInvalidBirthdate,
+        initials: initials,
+        isValidInitials: isValidInitials(initials),
+        isInvalidInitials: isInvalidInitials,
+        isError: isError,
+      });
     }
   };
 
