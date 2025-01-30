@@ -32,7 +32,7 @@ const CompanyFilter = ({
       size="small"
       label={texts.title}
       placeholder={selectedCompanies.length > 0 ? undefined : texts.placeholder}
-      options={options}
+      options={options.sort()}
       selectedOptions={selectedCompanies}
       onToggleSelected={onOptionSelected}
     />
