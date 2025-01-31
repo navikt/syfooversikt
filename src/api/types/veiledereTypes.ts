@@ -3,5 +3,6 @@ export interface VeilederDTO {
   fornavn: string;
   etternavn: string;
   epost: string;
+  enabled: boolean | null;
   telefonnummer?: string;
 }

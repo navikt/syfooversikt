@@ -6,4 +6,5 @@ export const veilederMock: VeilederDTO = {
   etternavn: 'E_Z101010',
   epost: 'F_Z101010.E_Z101010@nav.no',
   telefonnummer: '90909090',
+  enabled: true,
 };

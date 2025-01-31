@@ -3,8 +3,8 @@ import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
 import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
-import { Dropdown } from '../../../../components/toolbar/Dropdown/Dropdown';
-import { DropdownButtonTexts } from '../../../../components/toolbar/Dropdown/DropdownButtons';
+import { Dropdown } from '@/components/toolbar/Dropdown/Dropdown';
+import { DropdownButtonTexts } from '@/components/toolbar/Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
@@ -101,8 +101,9 @@ const TildelVeileder = ({
 
   const lowerCaseInput = input.toLowerCase();
 
+  const veiledere = veiledereQuery.data?.filter((value) => value.enabled) || [];
   const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
-    veiledereQuery?.data || [],
+    veiledere,
     aktivVeilederQuery.data?.ident || ''
   );
   const filteredVeiledere = filterVeiledereOnInput(
@@ -133,7 +134,7 @@ const TildelVeileder = ({
           veilederIsChosen={veilederIsChosen}
           buttonType={'radio'}
           placeholder={'Tildel veileder'}
-          selectedVeileders={veiledereQuery.data || []}
+          selectedVeileders={veiledere}
           showNoChosenVeilederError={showError}
         />
       )}
