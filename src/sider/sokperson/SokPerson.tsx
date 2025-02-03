@@ -233,10 +233,10 @@ export default function SokPerson() {
       logSokPersonError({
         birthdate: birthdate,
         isValidBirthdate: !!parsedBirthdate,
-        isInvalidBirthdate: isInvalidBirthdate,
+        isInvalidBirthdate: parsedBirthdate === null,
         initials: initials,
         isValidInitials: isValidInitials(initials),
-        isInvalidInitials: isInvalidInitials,
+        isInvalidInitials: !isValidInitials(initials),
         isError: isError,
       });
     }
