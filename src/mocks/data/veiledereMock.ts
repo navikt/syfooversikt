@@ -7,6 +7,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'Eder',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: 'Z000000',
@@ -14,6 +15,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: '',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: '-----',
@@ -21,6 +23,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'Børson',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: 'Wienerbrød',
@@ -28,6 +31,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'Bakeri',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: 'Z101010',
@@ -35,6 +39,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'E_Z101010',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: 'S123456',
@@ -42,6 +47,7 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'Scully',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
   },
   {
     ident: 'M987654',
@@ -49,5 +55,22 @@ export const veiledereMock: VeilederDTO[] = [
     etternavn: 'Mulder',
     epost: 'veileder@veileder.com',
     telefonnummer: undefined,
+    enabled: true,
+  },
+  {
+    ident: 'Z101013',
+    fornavn: 'Inaktiv',
+    etternavn: 'Veileder',
+    epost: 'inaktiv@veileder.com',
+    telefonnummer: undefined,
+    enabled: false,
+  },
+  {
+    ident: 'Z101019',
+    fornavn: '',
+    etternavn: '',
+    epost: '',
+    telefonnummer: undefined,
+    enabled: null,
   },
 ];

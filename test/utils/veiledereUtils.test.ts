@@ -13,6 +13,7 @@ describe('veiledere utils', () => {
           etternavn: 'Leder',
           epost: 'vei.leder@veileder.no',
           telefonnummer: undefined,
+          enabled: true,
         },
       ];
       const personOversiktStatus = [] as PersonOversiktStatusDTO[];
@@ -34,6 +35,7 @@ describe('veiledere utils', () => {
           etternavn: 'Leder',
           epost: 'vei.leder@veileder.no',
           telefonnummer: undefined,
+          enabled: true,
         },
         {
           ident: 'X000000',
@@ -41,6 +43,7 @@ describe('veiledere utils', () => {
           etternavn: 'Oppgaver',
           epost: 'ingen.oppgaver@veileder.no',
           telefonnummer: undefined,
+          enabled: true,
         },
       ];
       const personOversiktStatus = [
