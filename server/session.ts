@@ -45,7 +45,7 @@ export const setupSession = (app: express.Application) => {
       resave: true,
       saveUninitialized: false,
       unset: 'destroy',
-      store: getRedisStore(),
+      store: getValkeyStore(),
       rolling: true,
     })
   );
