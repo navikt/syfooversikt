@@ -25,6 +25,6 @@ Du må ha Node v22 og npm v10 installert.
 
 Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).
 
-## Redis Cache
+## Valkey Cache
 
-Bruker teamsykefravr sin felles Redis-cache på Aiven for å cache bruker-sessions.
+Bruker teamsykefravr sin felles Valkey-cache på Aiven for å cache bruker-sessions.
