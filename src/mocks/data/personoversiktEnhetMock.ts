@@ -1,5 +1,6 @@
 import {
   AktivitetskravStatus,
+  AvventVurderingArsak,
   MoteStatusType,
   OnskerOppfolging,
   Oppfolgingsgrunn,
@@ -57,6 +58,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: dayjs(new Date()).add(-2, 'day').toDate(),
+          arsaker: [],
         },
       ],
     },
@@ -82,6 +84,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
           varsel: {
             svarfrist: new Date('2024-12-01'),
           },
+          arsaker: [],
         },
       ],
     },
@@ -130,6 +133,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-08'),
+          arsaker: [],
         },
       ],
     },
@@ -162,6 +166,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
+          arsaker: [AvventVurderingArsak.ANNET],
         },
       ],
     },
@@ -205,6 +210,10 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
+          arsaker: [
+            AvventVurderingArsak.INFORMASJON_BEHANDLER,
+            AvventVurderingArsak.ANNET,
+          ],
         },
       ],
     },
@@ -245,6 +254,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2023-04-01'),
+          arsaker: [],
         },
       ],
     },
@@ -279,6 +289,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2023-12-10'),
+          arsaker: [],
         },
       ],
     },
@@ -359,6 +370,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
+          arsaker: [],
         },
       ],
     },
@@ -535,6 +547,10 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
+          arsaker: [
+            AvventVurderingArsak.OPPFOLGINGSPLAN_ARBEIDSGIVER,
+            AvventVurderingArsak.INFORMASJON_BEHANDLER,
+          ],
         },
       ],
     },
@@ -566,6 +582,10 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-20'),
+          arsaker: [
+            AvventVurderingArsak.ANNET,
+            AvventVurderingArsak.INFORMASJON_SYKMELDT,
+          ],
         },
       ],
     },

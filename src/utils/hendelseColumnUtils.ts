@@ -1,5 +1,6 @@
 import {
   AktivitetskravStatus,
+  avventVurderingArsakTexts,
   OnskerOppfolging,
   oppfolgingsgrunnToString,
   SenOppfolgingKandidatDTO,
@@ -7,6 +8,20 @@ import {
 import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { isPast } from '@/utils/dateUtils';
+
+function getAvventarsaker(personData: PersonData): string {
+  const arsaker = personData.aktivitetskravvurdering?.vurderinger[0]?.arsaker;
+
+  if (arsaker === undefined || arsaker.length == 0) {
+    return '';
+  }
+
+  return ` (${arsaker
+    .sort()
+    .reverse()
+    .map((arsak) => avventVurderingArsakTexts[arsak])
+    .join(', ')})`;
+}
 
 function mapAktivitetskravStatus(personData: PersonData): string {
   const status = personData?.aktivitetskravvurdering?.status;
@@ -16,7 +31,7 @@ function mapAktivitetskravStatus(personData: PersonData): string {
     case AktivitetskravStatus.NY_VURDERING:
       return '- Ny vurdering';
     case AktivitetskravStatus.AVVENT:
-      return '- Avventer';
+      return '- Avventer' + getAvventarsaker(personData);
     case AktivitetskravStatus.FORHANDSVARSEL:
       const svarfrist =
         personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
@@ -73,7 +88,7 @@ function mapSenOppfolgingStatus(
 export function getHendelser(personData: PersonData): string[] {
   const hendelser: string[] = [];
   if (personData.aktivitetskravvurdering) {
-    hendelser.push(`Akt.krav ${mapAktivitetskravStatus(personData)}`);
+    hendelser.push(`Aktivitetskrav ${mapAktivitetskravStatus(personData)}`);
   }
   if (personData.arbeidsuforhetvurdering) {
     hendelser.push(

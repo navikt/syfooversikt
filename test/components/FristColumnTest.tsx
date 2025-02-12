@@ -57,6 +57,7 @@ describe('FristColumn', () => {
           {
             status: AktivitetskravStatus.AVVENT,
             frist: aktivitetskravVurderingFrist,
+            arsaker: [],
           },
         ],
       },
@@ -119,6 +120,7 @@ describe('FristColumn', () => {
           {
             status: AktivitetskravStatus.AVVENT,
             frist: aktivitetskravVurderingFrist,
+            arsaker: [],
           },
         ],
       },
@@ -152,6 +154,7 @@ describe('FristColumn', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: aktivitetskravVurderingFrist,
+              arsaker: [],
             },
           ],
         },
@@ -174,6 +177,7 @@ describe('FristColumn', () => {
               varsel: {
                 svarfrist: aktivitetskravSvarfristForhandsvarsel,
               },
+              arsaker: [],
             },
           ],
         },
@@ -198,6 +202,7 @@ describe('FristColumn', () => {
               varsel: {
                 svarfrist: svarfristForhandsvarselVis,
               },
+              arsaker: [],
             },
           ],
         },
@@ -223,6 +228,7 @@ describe('FristColumn', () => {
               varsel: {
                 svarfrist: aktivitetskravAvventFristVis,
               },
+              arsaker: [],
             },
           ],
         },
