@@ -203,6 +203,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -215,6 +216,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-10'),
+              arsaker: [],
             },
           ],
         },
@@ -251,6 +253,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -263,6 +266,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-10'),
+              arsaker: [],
             },
           ],
         },
@@ -443,6 +447,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -483,6 +488,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -523,6 +529,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -536,6 +543,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-08'),
+              arsaker: [],
             },
           ],
         },
@@ -568,6 +576,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-05'),
+              arsaker: [],
             },
           ],
         },
@@ -581,6 +590,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: new Date('2023-12-08'),
+              arsaker: [],
             },
           ],
         },
@@ -694,6 +704,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: oneWeekAgo,
+              arsaker: [],
             },
           ],
         },
@@ -710,6 +721,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: today,
+              arsaker: [],
             },
           ],
         },
@@ -726,6 +738,7 @@ describe('hendelseFilteringUtils', () => {
             {
               status: AktivitetskravStatus.AVVENT,
               frist: oneWeekFromToday,
+              arsaker: [],
             },
           ],
         },

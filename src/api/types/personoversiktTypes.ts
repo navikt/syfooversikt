@@ -23,6 +23,31 @@ export enum AktivitetskravStatus {
   NY_VURDERING = 'NY_VURDERING',
 }
 
+export type VurderingArsakTexts = {
+  [key in AvventVurderingArsak]?: string;
+};
+
+export enum AvventVurderingArsak {
+  OPPFOLGINGSPLAN_ARBEIDSGIVER = 'OPPFOLGINGSPLAN_ARBEIDSGIVER',
+  INFORMASJON_BEHANDLER = 'INFORMASJON_BEHANDLER',
+  INFORMASJON_SYKMELDT = 'INFORMASJON_SYKMELDT',
+  DROFTES_MED_ROL = 'DROFTES_MED_ROL',
+  DROFTES_INTERNT = 'DROFTES_INTERNT',
+  ANNET = 'ANNET',
+}
+
+export const avventVurderingArsakTexts: VurderingArsakTexts = {
+  [AvventVurderingArsak.OPPFOLGINGSPLAN_ARBEIDSGIVER]:
+    'Har bedt om oppfølgingsplan fra arbeidsgiver',
+  [AvventVurderingArsak.INFORMASJON_BEHANDLER]:
+    'Har bedt om mer informasjon fra behandler',
+  [AvventVurderingArsak.INFORMASJON_SYKMELDT]:
+    'Har bedt om informasjon fra den sykemeldte',
+  [AvventVurderingArsak.DROFTES_MED_ROL]: 'Drøftes med ROL',
+  [AvventVurderingArsak.DROFTES_INTERNT]: 'Drøftes internt',
+  [AvventVurderingArsak.ANNET]: 'Annet',
+};
+
 export interface PersonOversiktUbehandletStatusDTO {
   motebehovUbehandlet: boolean | null;
   dialogmotesvarUbehandlet: boolean;
