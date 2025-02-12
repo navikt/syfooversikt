@@ -23,10 +23,6 @@ export enum AktivitetskravStatus {
   NY_VURDERING = 'NY_VURDERING',
 }
 
-export type VurderingArsakTexts = {
-  [key in AvventVurderingArsak]?: string;
-};
-
 export enum AvventVurderingArsak {
   OPPFOLGINGSPLAN_ARBEIDSGIVER = 'OPPFOLGINGSPLAN_ARBEIDSGIVER',
   INFORMASJON_BEHANDLER = 'INFORMASJON_BEHANDLER',
@@ -36,7 +32,7 @@ export enum AvventVurderingArsak {
   ANNET = 'ANNET',
 }
 
-export const avventVurderingArsakTexts: VurderingArsakTexts = {
+export const avventVurderingArsakTexts: Record<AvventVurderingArsak, string> = {
   [AvventVurderingArsak.OPPFOLGINGSPLAN_ARBEIDSGIVER]:
     'Har bedt om oppfølgingsplan fra arbeidsgiver',
   [AvventVurderingArsak.INFORMASJON_BEHANDLER]:
