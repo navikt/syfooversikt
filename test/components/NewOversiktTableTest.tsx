@@ -17,6 +17,7 @@ import {
 } from '@/api/types/personregisterTypes';
 import {
   AktivitetskravStatus,
+  AvventVurderingArsak,
   OnskerOppfolging,
   Oppfolgingsgrunn,
 } from '@/api/types/personoversiktTypes';
@@ -53,6 +54,7 @@ const personDataAktivitetskravAvventUtenFrist: PersonData = {
     vurderinger: [
       {
         status: AktivitetskravStatus.AVVENT,
+        arsaker: [],
       },
     ],
   },
@@ -65,6 +67,7 @@ const personDataAktivitetskravAvventMedFrist: PersonData = {
       {
         status: AktivitetskravStatus.AVVENT,
         frist: new Date('2023-04-01'),
+        arsaker: [],
       },
     ],
   },
@@ -194,6 +197,7 @@ describe('NewOversiktTable', () => {
               varsel: {
                 svarfrist: dayjs().add(-1, 'day').toDate(),
               },
+              arsaker: [],
             },
           ],
         },
@@ -232,7 +236,7 @@ describe('NewOversiktTable', () => {
     expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
     expect(screen.getByText('Dialogmøte - Kandidat')).to.exist;
     expect(screen.getByText('Dialogmøte - Møtebehov')).to.exist;
-    expect(screen.getByText('Akt.krav - Forhåndsvarsel utløpt')).to.exist;
+    expect(screen.getByText('Aktivitetskrav - Forhåndsvarsel utløpt')).to.exist;
     expect(screen.getByText('Arbeidsuførhet - Forhåndsvarsel sendt')).to.exist;
     expect(screen.getByText('Friskmelding til arbeidsformidling')).to.exist;
     expect(screen.getByText('Oppf.oppgave - Kontakt sykmeldt')).to.exist;
@@ -243,5 +247,61 @@ describe('NewOversiktTable', () => {
       .to.exist;
     expect(screen.getByText('Manglende medvirkning - Forhåndsvarsel utløpt')).to
       .exist;
+  });
+
+  it('Viser årsaker for aktivitetskravvurdering ved status AVVENT for flere personer', () => {
+    renderOversikt({
+      [testdata.fnr1]: {
+        ...defaultPersonData,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              arsaker: [AvventVurderingArsak.INFORMASJON_BEHANDLER],
+            },
+          ],
+        },
+      },
+      [testdata.fnr2]: {
+        ...defaultPersonData,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              arsaker: [
+                AvventVurderingArsak.INFORMASJON_SYKMELDT,
+                AvventVurderingArsak.ANNET,
+              ],
+            },
+          ],
+        },
+      },
+      [testdata.fnr3]: {
+        ...defaultPersonData,
+        aktivitetskravvurdering: {
+          status: AktivitetskravStatus.AVVENT,
+          vurderinger: [
+            {
+              status: AktivitetskravStatus.AVVENT,
+              arsaker: [],
+            },
+          ],
+        },
+      },
+    });
+
+    expect(
+      screen.getByText(
+        'Aktivitetskrav - Avventer (Har bedt om informasjon fra den sykemeldte, Annet)'
+      )
+    ).to.exist;
+    expect(
+      screen.getByText(
+        'Aktivitetskrav - Avventer (Har bedt om mer informasjon fra behandler)'
+      )
+    ).to.exist;
+    expect(screen.getByText('Aktivitetskrav - Avventer')).to.exist;
   });
 });
