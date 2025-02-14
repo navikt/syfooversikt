@@ -43,6 +43,21 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         svarfrist: new Date('2026-12-01T10:12:05.913826'),
       },
     },
+    latestOppfolgingstilfelle: {
+      oppfolgingstilfelleStart: new Date('2022-10-25'),
+      oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
+      virksomhetList: [
+        {
+          virksomhetsnummer: '987654321',
+          virksomhetsnavn: 'NAV Security',
+        },
+        {
+          virksomhetsnummer: '987654320',
+          virksomhetsnavn: 'Annen Virksomhet AS',
+        },
+      ],
+    },
   },
   {
     ...behandletPerson,
@@ -65,6 +80,17 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     motestatus: undefined,
     behandlerdialogUbehandlet: true,
     oppfolgingsoppgave: null,
+    latestOppfolgingstilfelle: {
+      oppfolgingstilfelleStart: new Date('2022-10-25'),
+      oppfolgingstilfelleEnd: new Date('2022-12-31'),
+      varighetUker: 2,
+      virksomhetList: [
+        {
+          virksomhetsnummer: '987654328',
+          virksomhetsnavn: 'Bolle Og Brus',
+        },
+      ],
+    },
   },
   {
     ...behandletPerson,

@@ -11,6 +11,7 @@ import { SokDTO } from '@/api/types/sokDTO';
 import { parseDateString } from '@/utils/dateUtils';
 import { mockServer } from '../setup';
 import { mockSokPerson } from '@/mocks/personoversikt/mockPersonoversikt';
+import { mockEreg } from '@/mocks/ereg/mockEreg';
 
 let queryClient: QueryClient;
 
@@ -29,6 +30,7 @@ describe('SokPerson', () => {
   beforeEach(() => {
     queryClient = testQueryClient();
     mockServer.use(mockSokPerson());
+    mockServer.use(mockEreg);
   });
 
   it('should render SokPerson with fields', () => {
@@ -135,11 +137,17 @@ describe('SokPerson', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
-    expect(await screen.findByText('Navn')).to.exist;
-    expect(await screen.findByText('Fødselsnummer')).to.exist;
-    expect(await screen.findByText('Heis, Korrupt')).to.exist;
-    expect(await screen.findByText('Bordsen, Korrupt')).to.exist;
-    expect(await screen.findByText('01999911111')).to.exist;
-    expect(await screen.findByText('99999922222')).to.exist;
+    expect(await screen.findByRole('columnheader', { name: 'Navn' })).to.exist;
+    expect(await screen.findByRole('columnheader', { name: 'Fødselsnummer' }))
+      .to.exist;
+    expect(await screen.findByRole('columnheader', { name: 'Virksomhet' })).to
+      .exist;
+    expect(await screen.findByRole('link', { name: 'Heis, Korrupt' })).to.exist;
+    expect(await screen.findByRole('link', { name: 'Bordsen, Korrupt' })).to
+      .exist;
+    expect(await screen.findByRole('cell', { name: '01999911111' })).to.exist;
+    expect(await screen.findByRole('cell', { name: '99999922222' })).to.exist;
+    expect(await screen.findByRole('cell', { name: 'NAV Security' })).to.exist;
+    expect(await screen.findByRole('cell', { name: 'Bolle Og Brus' })).to.exist;
   });
 });

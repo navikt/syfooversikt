@@ -32,6 +32,7 @@ export const PersonRadVirksomhetColumn = ({
         open={showVirksomheter}
         onClose={() => setShowVirksomheter(false)}
         anchorEl={virksomehtRef.current}
+        placement="top-start"
       >
         <Popover.Content>{companyNames.join(', ')}</Popover.Content>
       </Popover>
