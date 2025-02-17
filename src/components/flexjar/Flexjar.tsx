@@ -246,7 +246,7 @@ export const Flexjar = ({ side }: FlexjarProps) => {
                     variant="primary"
                     className="w-max"
                     onClick={handleSubmit}
-                    loading={sendFeedback.isLoading}
+                    loading={sendFeedback.isPending}
                   >
                     {texts.send}
                   </Button>

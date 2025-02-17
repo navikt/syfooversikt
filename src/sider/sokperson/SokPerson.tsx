@@ -196,7 +196,7 @@ export default function SokPerson() {
   const {
     mutate,
     data: searchResults,
-    isLoading,
+    isPending,
     isError,
     isSuccess,
   } = useSokPerson();
@@ -287,7 +287,7 @@ export default function SokPerson() {
                 error={isFormError && !isValidInitials(initials)}
               />
               <Button
-                loading={isLoading}
+                loading={isPending}
                 icon={<MagnifyingGlassIcon />}
                 type="submit"
                 className="self-end max-w-max"

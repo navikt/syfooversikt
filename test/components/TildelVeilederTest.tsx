@@ -46,7 +46,7 @@ describe('TildelVeileder', () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
     queryClient.setQueriesData(
-      veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
+      { queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet) },
       () => veiledereMock
     );
   });
