@@ -34,15 +34,15 @@ export const usePersonregisterQuery = () => {
     queryKey: personregisterQueryKeys.personregister(aktivEnhet),
     queryFn: fetchPersonregister,
     enabled: !!aktivEnhet && fnrForPersonerListe.length > 0,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
-      } else {
-        displayNotification(FetchPersonregisterFailed);
-      }
-    },
-    onSuccess: () => {
-      clearNotification('fetchPersonregisterFailed');
+    meta: {
+      handleError: (error: Error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchPersonregisterFailed);
+        }
+      },
+      handleSuccess: () => clearNotification('fetchPersonregisterFailed'),
     },
   });
 };

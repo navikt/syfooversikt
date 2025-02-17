@@ -8,13 +8,6 @@ import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 export const testQueryClient = () =>
   new QueryClient({
     defaultOptions: { queries: { retry: false } },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {
-        /*empty*/
-      },
-    },
   });
 
 export const getQueryClientWithMockdata = (): QueryClient => {

@@ -36,15 +36,15 @@ export const useVeiledereQuery = () => {
     queryKey: veiledereQueryKeys.veiledereForEnhet(aktivEnhet),
     queryFn: fetchVeiledere,
     enabled: !!aktivEnhet,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
-      } else {
-        displayNotification(FetchVeiledereFailed);
-      }
-    },
-    onSuccess: () => {
-      clearNotification('fetchVeiledereFailed');
+    meta: {
+      handleError: (error: Error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchVeiledereFailed);
+        }
+      },
+      handleSuccess: () => clearNotification('fetchVeiledereFailed'),
     },
   });
 };
@@ -59,15 +59,15 @@ export const useAktivVeilederQuery = () => {
   return useQuery({
     queryKey: veiledereQueryKeys.veiledereInfo,
     queryFn: fetchVeilederInfo,
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
-      } else {
-        displayNotification(FetchAktivVeilederFailed);
-      }
-    },
-    onSuccess: () => {
-      clearNotification('fetchAktivVeilederFailed');
+    meta: {
+      handleError: (error: Error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchAktivVeilederFailed);
+        }
+      },
+      handleSuccess: () => clearNotification('fetchAktivVeilederFailed'),
     },
   });
 };
@@ -124,9 +124,9 @@ export const useTildelVeileder = () => {
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(
-        personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
-      );
+      queryClient.invalidateQueries({
+        queryKey: personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
+      });
     },
   });
 };
