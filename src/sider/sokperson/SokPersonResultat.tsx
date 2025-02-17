@@ -5,6 +5,7 @@ import { BodyShort, Box, Table } from '@navikt/ds-react';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 import { toPersonData } from '@/utils/toPersondata';
+import { PersonRadVirksomhetColumn } from '@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn';
 
 const texts = {
   noResults: {
@@ -23,7 +24,10 @@ export default function SokPersonResultat({
 }: Props): ReactElement {
   const { columns: allColumns } = useSorting();
   const columns = allColumns.filter(
-    (column) => column.sortKey === 'NAME' || column.sortKey === 'FNR'
+    (column) =>
+      column.sortKey === 'NAME' ||
+      column.sortKey === 'FNR' ||
+      column.sortKey === 'COMPANY'
   );
 
   const personer = Object.entries(toPersonData(sokeresultater, []));
@@ -66,6 +70,9 @@ export default function SokPersonResultat({
                   linkText={fnr}
                 />
               )}
+            </Table.DataCell>
+            <Table.DataCell textSize="small">
+              <PersonRadVirksomhetColumn personData={persondata} />
             </Table.DataCell>
           </Table.Row>
         ))}
