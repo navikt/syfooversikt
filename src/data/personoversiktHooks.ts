@@ -69,15 +69,15 @@ export const usePersonoversiktQuery = () => {
     queryFn: fetchPersonoversikt,
     enabled: !!aktivEnhet,
     staleTime: minutesToMillis(5),
-    onError: (error) => {
-      if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
-      } else {
-        displayNotification(FetchPersonoversiktFailed);
-      }
-    },
-    onSuccess: () => {
-      clearNotification('fetchPersonoversiktFailed');
+    meta: {
+      handleError: (error: Error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          throwError(error);
+        } else {
+          displayNotification(FetchPersonoversiktFailed);
+        }
+      },
+      handleSuccess: () => clearNotification('fetchPersonoversiktFailed'),
     },
   });
 
