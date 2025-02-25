@@ -24,23 +24,23 @@ export const NavigationBar = (): ReactElement => {
           <Tabs.List>
             <Tabs.Tab
               value={routes.MIN_OVERSIKT}
-              label={<Heading size="small">{texts.minOversikt}</Heading>}
+              label={<Heading size="xsmall">{texts.minOversikt}</Heading>}
             />
             <Tabs.Tab
               value={routes.ENHET_OVERSIKT}
-              label={<Heading size="small">{texts.enhetensOversikt}</Heading>}
+              label={<Heading size="xsmall">{texts.enhetensOversikt}</Heading>}
             />
             <LinkAsTab
               href={linkToNewHostAndPath(
                 Subdomain.SYFOMOTEOVERSIKT,
                 '/syfomoteoversikt/minemoter'
               )}
-              label={<Heading size="small">{texts.moteoversikt}</Heading>}
+              label={<Heading size="xsmall">{texts.moteoversikt}</Heading>}
             />
             <Tabs.Tab
               value={routes.SOK_SYKMELDT}
               icon={<MagnifyingGlassIcon />}
-              label={<Heading size="small">{texts.sokSykmeldt}</Heading>}
+              label={<Heading size="xsmall">{texts.sokSykmeldt}</Heading>}
             />
           </Tabs.List>
         </Tabs>
