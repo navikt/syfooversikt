@@ -71,6 +71,10 @@ export function parseDateString(dateString: string): Date | null {
   let year = dateString.slice(4);
   const today = new Date();
 
+  if (!(year.length === 2 || year.length === 4)) {
+    return null;
+  }
+
   if (year.length === 2) {
     const todayYear = today.getFullYear().toString().substring(2, 4);
     year =

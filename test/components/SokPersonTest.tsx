@@ -77,6 +77,24 @@ describe('SokPerson', () => {
     fireEvent.change(initialsInput, { target: { value: 'ABCDE' } });
     expect(screen.getByText('Vennligst angi to til fire initialer')).to.exist;
   });
+  it('should render validation error for fodselsdato when not correct amount of digits', async () => {
+    renderSokPerson();
+
+    const fodselsdatoInput = screen.getByRole('textbox', {
+      name: /^Fødselsdato/,
+    });
+    const fodselsdatoErrorMessage = 'Vennligst angi en gyldig fødselsdato';
+
+    fireEvent.change(fodselsdatoInput, { target: { value: ' ' } });
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+    expect(screen.getByText(fodselsdatoErrorMessage)).to.exist;
+    fireEvent.change(fodselsdatoInput, { target: { value: '1909199900' } });
+    expect(screen.getByText(fodselsdatoErrorMessage)).to.exist;
+    fireEvent.change(fodselsdatoInput, { target: { value: '19-09-199900' } });
+    expect(screen.getByText(fodselsdatoErrorMessage)).to.exist;
+    fireEvent.change(fodselsdatoInput, { target: { value: '19-09-199' } });
+    expect(screen.getByText(fodselsdatoErrorMessage)).to.exist;
+  });
   it('should send correct parameters', async () => {
     renderSokPerson();
 
