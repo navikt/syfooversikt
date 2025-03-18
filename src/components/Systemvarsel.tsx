@@ -9,7 +9,12 @@ const texts = {
 //TODO: Kan fjernes etter at ny frist har utgått: 09.04.25
 export default function Systemvarsel() {
   return (
-    <Alert variant={'error'} size={'medium'} className={'mb-4'}>
+    <Alert
+      variant={'error'}
+      size={'medium'}
+      className={'mb-4'}
+      contentMaxWidth={false}
+    >
       <BodyShort>{texts.forhandsvarselSystemfeil}</BodyShort>
     </Alert>
   );
