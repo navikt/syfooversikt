@@ -1,6 +1,8 @@
 import { Alert, BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { EksternLenke } from '@/components/EksternLenke';
+import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
+import dayjs from 'dayjs';
 
 const texts = {
   header: 'Teknisk feil påvirket forhåndsvarsler mellom 27. februar - 12. mars',
@@ -12,16 +14,28 @@ const texts = {
 };
 
 export default function Systemvarsel() {
+  const [hideAlertDate, setHideAlertDate] = useLocalStorageState<Date | null>(
+    StoreKey.HIDE_ALERT_DATE,
+    null
+  );
+
+  const showAlert =
+    !hideAlertDate || dayjs(hideAlertDate).add(1, 'day') < dayjs(new Date());
+
   return (
-    <Alert
-      variant={'error'}
-      size={'medium'}
-      className={'mb-4'}
-      contentMaxWidth={false}
-    >
-      <Label>{texts.header}</Label>
-      <BodyShort>{texts.info}</BodyShort>
-      <EksternLenke href={texts.url}>{texts.linkText}</EksternLenke>
-    </Alert>
+    showAlert && (
+      <Alert
+        variant={'error'}
+        size={'medium'}
+        className={'mb-4'}
+        contentMaxWidth={false}
+        onClose={() => setHideAlertDate(new Date())}
+        closeButton
+      >
+        <Label>{texts.header}</Label>
+        <BodyShort>{texts.info}</BodyShort>
+        <EksternLenke href={texts.url}>{texts.linkText}</EksternLenke>
+      </Alert>
+    )
   );
 }
