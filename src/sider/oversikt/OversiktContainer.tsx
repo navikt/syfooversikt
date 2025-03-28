@@ -12,7 +12,6 @@ import { getWeeksBetween } from '@/utils/dateUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
-import Systemvarsel from '@/components/Systemvarsel';
 import NotificationBar from '@/components/error/NotificationBar';
 
 function logPageView(tab: TabType) {
@@ -55,7 +54,6 @@ export default function OversiktContainer(): ReactElement {
       <div className="flex flex-col mx-8">
         <NavigationBar />
         <NotificationBar />
-        <Systemvarsel />
         {personoversiktQuery.isInitialLoading ? (
           <AppSpinner />
         ) : (
