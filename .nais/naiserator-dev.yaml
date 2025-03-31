@@ -59,6 +59,7 @@ spec:
         - application: syfooversiktsrv
         - application: syfoperson
         - application: syfoveileder
+        - application: syfobehandlendeenhet
         - application: flexjar-backend
           namespace: flex
         - application: modiacontextholder
@@ -81,6 +82,10 @@ spec:
       value: "dev-gcp.teamsykefravr.syfoperson"
     - name: SYFOVEILEDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.teamsykefravr.syfoveileder"
+    - name: SYFOBEHANDLENDEENHET_AAD_APP_CLIENT_ID
+      value: "dev-gcp.teamsykefravr.syfobehandlendeenhet"
+    - name: SYFOBEHANDLENDEENHET_HOST
+      value: "http://syfobehandlendeenhet"
     - name: MODIACONTEXTHOLDER_AAD_APP_CLIENT_ID
       value: "dev-gcp.personoversikt.modiacontextholder"
     - name: MODIACONTEXTHOLDER_HOST

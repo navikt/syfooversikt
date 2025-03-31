@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 import ToolbarWrapper from './toolbar/ToolbarWrapper';
-import { useTildelVeileder } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,
@@ -16,32 +14,23 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
+import { Alert } from '@navikt/ds-react';
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
 }
 
-const lagListe = (
-  markertePersoner: string[],
-  veilederIdent: string
-): VeilederArbeidstaker[] => {
-  return markertePersoner.map((fnr: string) => ({
-    veilederIdent,
-    fnr,
-  }));
-};
-
 export default function Sokeresultat({ allEvents }: Props) {
-  const tildelVeileder = useTildelVeileder();
   const { filterState } = useFilters();
   const { selectedTab } = useTabType();
 
-  const [markertePersoner, setMarkertePersoner] = useState<string[]>([]);
+  const [selectedPersoner, setSelectedPersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(0);
+  const [tableActionError, setTableActionError] = useState('');
 
   useEffect(() => {
-    setMarkertePersoner([]);
+    setSelectedPersoner([]);
   }, [selectedTab]);
 
   let filteredEvents = allEvents
@@ -63,13 +52,7 @@ export default function Sokeresultat({ allEvents }: Props) {
   const allFnr = Object.keys(filteredEvents.value);
 
   const checkAllHandler = (checked: boolean): void => {
-    setMarkertePersoner(checked ? allFnr : []);
-  };
-
-  const buttonHandler = (veilederIdent: string): void => {
-    const veilederArbeidstakerListe = lagListe(markertePersoner, veilederIdent);
-
-    tildelVeileder.mutate(veilederArbeidstakerListe);
+    setSelectedPersoner(checked ? allFnr : []);
   };
 
   const onPageChange = (startItem: number, endItem: number): void => {
@@ -82,17 +65,23 @@ export default function Sokeresultat({ allEvents }: Props) {
       <ToolbarWrapper
         numberOfItemsTotal={allFnr.length}
         onPageChange={onPageChange}
-        alleMarkert={allFnr.length === markertePersoner.length}
-        buttonHandler={buttonHandler}
+        isAllSelected={allFnr.length === selectedPersoner.length}
         checkAllHandler={checkAllHandler}
-        markertePersoner={markertePersoner}
+        selectedPersoner={selectedPersoner}
+        setSelectedPersoner={setSelectedPersoner}
+        setTableActionError={setTableActionError}
       />
+      {!!tableActionError && (
+        <Alert variant="error" size="small" className="mb-2 mt-2">
+          {tableActionError}
+        </Alert>
+      )}
       <OversiktTableContainer
         personregister={filteredEvents.value}
         startItem={startItem}
         endItem={endItem}
-        selectedRows={markertePersoner}
-        setSelectedRows={setMarkertePersoner}
+        selectedRows={selectedPersoner}
+        setSelectedRows={setSelectedPersoner}
       />
     </div>
   );

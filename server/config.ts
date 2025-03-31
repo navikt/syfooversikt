@@ -151,6 +151,16 @@ export const auth = {
       name: 'SYFOVEILEDER_HOST',
     }),
   },
+  syfobehandlendeenhet: {
+    applicationName: 'syfobehandlendeenhet',
+    clientId: envVar({
+      name: 'SYFOBEHANDLENDEENHET_AAD_APP_CLIENT_ID',
+    }),
+    host: envVar({
+      name: 'SYFOBEHANDLENDEENHET_HOST',
+    }),
+    removePathPrefix: true,
+  },
   flexjar: {
     applicationName: 'flexjar-backend',
     clientId: envVar({

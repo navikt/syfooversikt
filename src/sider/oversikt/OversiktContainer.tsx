@@ -3,7 +3,6 @@ import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
 import { NavigationBar } from '@/components/NavigationBar';
-import { NotificationBar } from '@/components/error/NotificationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
@@ -14,6 +13,7 @@ import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
 import Systemvarsel from '@/components/Systemvarsel';
+import NotificationBar from '@/components/error/NotificationBar';
 
 function logPageView(tab: TabType) {
   Amplitude.logEvent({
@@ -50,26 +50,20 @@ export default function OversiktContainer(): ReactElement {
     logPageView(selectedTab);
   }, [selectedTab]);
 
-  const ContainerContent = (): ReactElement => {
-    if (personoversiktQuery.isInitialLoading) {
-      return <AppSpinner />;
-    }
-
-    return (
-      <Oversikt
-        personregisterData={personregisterQuery.data || []}
-        personoversiktData={personoversiktQuery.data || []}
-      />
-    );
-  };
-
   return (
     <ErrorBoundary>
       <div className="flex flex-col mx-8">
-        <NotificationBar />
         <NavigationBar />
+        <NotificationBar />
         <Systemvarsel />
-        <ContainerContent />
+        {personoversiktQuery.isInitialLoading ? (
+          <AppSpinner />
+        ) : (
+          <Oversikt
+            personregisterData={personregisterQuery.data || []}
+            personoversiktData={personoversiktQuery.data || []}
+          />
+        )}
         {showFlexjar && personoversiktQuery.isSuccess && (
           <Flexjar side={toReadableString(selectedTab)} />
         )}

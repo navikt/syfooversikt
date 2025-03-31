@@ -231,6 +231,24 @@ export const setupProxy = (
   );
 
   router.use(
+    '/syfobehandlendeenhet/*',
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      proxyOnBehalfOf(
+        req,
+        res,
+        next,
+        authClient,
+        issuer,
+        Config.auth.syfobehandlendeenhet
+      );
+    }
+  );
+
+  router.use(
     '/flexjar-backend/*',
     (
       req: express.Request,
