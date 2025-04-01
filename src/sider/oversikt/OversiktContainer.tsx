@@ -13,7 +13,6 @@ import { getWeeksBetween } from '@/utils/dateUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
-import Systemvarsel from '@/components/Systemvarsel';
 
 function logPageView(tab: TabType) {
   Amplitude.logEvent({
@@ -68,7 +67,6 @@ export default function OversiktContainer(): ReactElement {
       <div className="flex flex-col mx-8">
         <NotificationBar />
         <NavigationBar />
-        <Systemvarsel />
         <ContainerContent />
         {showFlexjar && personoversiktQuery.isSuccess && (
           <Flexjar side={toReadableString(selectedTab)} />
