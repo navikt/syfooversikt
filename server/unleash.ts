@@ -39,5 +39,9 @@ export function getToggles(veilederId: any, enhetId: any) {
   };
   return {
     isFlexjarArenaEnabled: unleash.isEnabled('isFlexjarArenaEnabled', context),
+    isTildelOppfolgingsenhetEnabled: unleash.isEnabled(
+      'isTildelOppfolgingsenhetEnabled',
+      context
+    ),
   };
 }
