@@ -5,10 +5,13 @@ export type NotificationType =
   | 'fetchPersonregisterFailed'
   | 'fetchVeiledereFailed'
   | 'fetchAktivVeilederFailed'
-  | 'tildelVeilederFailed';
+  | 'tildelVeilederFailed'
+  | 'tildelOppfolgingsenhetFailed'
+  | 'tildelOppfolgingsenhetSuccess';
 
 export interface Notification extends Pick<AlertProps, 'variant'> {
   type: NotificationType;
+  header?: string;
   message: string;
 }
 
