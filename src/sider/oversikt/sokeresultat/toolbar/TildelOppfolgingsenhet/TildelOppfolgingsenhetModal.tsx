@@ -71,6 +71,10 @@ export default function TildelOppfolgingsenhetModal({
   const [isFormError, setIsFormError] = useState<boolean>(false);
   const { displayNotification } = useNotifications();
 
+  function closeModal() {
+    ref.current?.close();
+  }
+
   function onOppfolgingsenhetChange(option: string, isSelected: boolean) {
     if (isSelected) {
       setIsFormError(false);
@@ -109,9 +113,9 @@ export default function TildelOppfolgingsenhetModal({
             setSelectedPersoner([]);
           },
           onError: () => displayNotification(tildelOppfolgingsenhetFailed),
+          onSettled: closeModal,
         }
       );
-      ref.current?.close();
     }
   }
 
@@ -152,13 +156,11 @@ export default function TildelOppfolgingsenhetModal({
       </Modal.Body>
       <Modal.Footer>
         {getMuligeOppfolgingsenheter.isSuccess && (
-          <Button form="form">{text.endreEnhet}</Button>
+          <Button form="form" loading={postTildelOppfolgingsenhet.isPending}>
+            {text.endreEnhet}
+          </Button>
         )}
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() => ref.current?.close()}
-        >
+        <Button type="button" variant="secondary" onClick={closeModal}>
           {text.avbryt}
         </Button>
       </Modal.Footer>
