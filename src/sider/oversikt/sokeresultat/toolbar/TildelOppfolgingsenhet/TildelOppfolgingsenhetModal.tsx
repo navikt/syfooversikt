@@ -46,7 +46,7 @@ const tildelOppfolgingsenhetSuccess = (
   enhet: string
 ): Notification => {
   const message = () => {
-    if (antallTildelt > 1) {
+    if (antallMaybeTildelt > 1) {
       return `${antallTildelt} av ${antallMaybeTildelt} personer tildelt ${enhet}.`;
     } else {
       return `En person tildelt ${enhet}.`;
