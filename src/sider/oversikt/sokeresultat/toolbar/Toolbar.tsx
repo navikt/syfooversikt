@@ -1,22 +1,16 @@
 import TildelVeileder from './TildelVeileder';
 import SearchVeileder from './SearchVeileder';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../../../styles/themes';
-import { ToolbarWrapperProps } from './ToolbarWrapper';
-import PaginationContainer from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
+import PaginationContainer, {
+  PAGINATED_NUMBER_OF_ITEMS,
+} from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import TildelOppfolgingsenhetModal from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal';
 import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-
-const Innhold = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0.5em;
-  border-bottom: 1px solid ${themes.color.navGra40};
-`;
+import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -30,49 +24,67 @@ const ToolbarStyled = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 `;
 
-interface ToolbarProps extends ToolbarWrapperProps {
-  setPageInfo: (indices: {
-    firstVisibleIndex: number;
-    lastVisibleIndex: number;
-  }) => void;
+export interface Props {
+  isAllSelected: boolean;
+  numberOfItemsTotal: number;
+  checkAllHandler: (checked: boolean) => void;
+  onPageChange: (startItem: number, endItem: number) => void;
+  selectedPersoner: string[];
+  setSelectedPersoner: (personer: string[]) => void;
+  setTableActionError: (error: string) => void;
 }
 
-export default function Toolbar(props: ToolbarProps) {
+export interface PageInfoType {
+  firstVisibleIndex: number;
+  lastVisibleIndex: number;
+}
+
+export default function Toolbar(props: Props) {
   const { selectedTab } = useTabType();
   const { toggles } = useFeatureToggles();
-
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
+    firstVisibleIndex: 0,
+    lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,
+  });
   const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <ToolbarStyled>
-      <Innhold>
-        <div className="flex items-center p-2 gap-2">
-          <TildelVeileder
-            selectedPersoner={props.selectedPersoner}
-            handleSelectAll={props.checkAllHandler}
+    <>
+      <PaginationLabel
+        pageInfo={pageInfo}
+        numberOfItemsTotal={props.numberOfItemsTotal}
+        selectedPersoner={props.selectedPersoner}
+      />
+      <ToolbarStyled>
+        <section className="flex flex-row items-center justify-between">
+          <div className="flex items-center p-2 gap-2">
+            <TildelVeileder
+              selectedPersoner={props.selectedPersoner}
+              handleSelectAll={props.checkAllHandler}
+            />
+            {selectedTab === TabType.ENHETENS_OVERSIKT && <SearchVeileder />}
+            {toggles.isTildelOppfolgingsenhetEnabled && (
+              <TildelOppfolgingsenhetButton
+                modalRef={modalRef}
+                selectedPersoner={props.selectedPersoner}
+                setTableActionError={props.setTableActionError}
+              />
+            )}
+            {toggles.isTildelOppfolgingsenhetEnabled && (
+              <TildelOppfolgingsenhetModal
+                ref={modalRef}
+                selectedPersoner={props.selectedPersoner}
+                setSelectedPersoner={props.setSelectedPersoner}
+              />
+            )}
+          </div>
+          <PaginationContainer
+            numberOfItemsTotal={props.numberOfItemsTotal}
+            onPageChange={props.onPageChange}
+            setPageInfo={setPageInfo}
           />
-          {selectedTab === TabType.ENHETENS_OVERSIKT && <SearchVeileder />}
-          {toggles.isTildelOppfolgingsenhetEnabled && (
-            <TildelOppfolgingsenhetButton
-              modalRef={modalRef}
-              selectedPersoner={props.selectedPersoner}
-              setTableActionError={props.setTableActionError}
-            />
-          )}
-          {toggles.isTildelOppfolgingsenhetEnabled && (
-            <TildelOppfolgingsenhetModal
-              ref={modalRef}
-              selectedPersoner={props.selectedPersoner}
-              setSelectedPersoner={props.setSelectedPersoner}
-            />
-          )}
-        </div>
-        <PaginationContainer
-          numberOfItemsTotal={props.numberOfItemsTotal}
-          onPageChange={props.onPageChange}
-          setPageInfo={props.setPageInfo}
-        />
-      </Innhold>
-    </ToolbarStyled>
+        </section>
+      </ToolbarStyled>
+    </>
   );
 }
