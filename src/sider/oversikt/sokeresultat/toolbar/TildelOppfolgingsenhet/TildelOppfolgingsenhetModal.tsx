@@ -7,13 +7,17 @@ import {
   UNSAFE_Combobox,
 } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { useGetMuligeOppfolgingsenheter } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter';
+import {
+  Enhet,
+  useGetMuligeOppfolgingsenheter,
+} from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { Notification } from '@/context/notification/Notifications';
 import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
+import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
 const text = {
   heading: 'Endre oppfølgingsenhet',
@@ -65,11 +69,27 @@ export default function TildelOppfolgingsenhetModal({
   selectedPersoner,
   setSelectedPersoner,
 }: Props) {
+  const { aktivEnhet } = useAktivEnhet();
   const getMuligeOppfolgingsenheter = useGetMuligeOppfolgingsenheter();
   const postTildelOppfolgingsenhet = usePostTildelOppfolgingsenhet();
   const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string>('');
   const [isFormError, setIsFormError] = useState<boolean>(false);
   const { displayNotification } = useNotifications();
+
+  function muligeOppfolgingsenheterOptions(
+    enheter: Enhet[]
+  ): { label: string; value: string }[] {
+    return sortAlphabetically(enheter)
+      .filter((enhet) => enhet.enhetId !== aktivEnhet)
+      .map((enhet) => ({
+        label: `${enhet.navn} - ${enhet.enhetId}`,
+        value: enhet.enhetId,
+      }));
+  }
+
+  function sortAlphabetically(enhet: Enhet[]) {
+    return enhet.sort((enhetA, enhetB) => (enhetA.navn > enhetB.navn ? 1 : -1));
+  }
 
   function onOppfolgingsenhetChange(option: string, isSelected: boolean) {
     if (isSelected) {
@@ -131,10 +151,9 @@ export default function TildelOppfolgingsenhetModal({
               <UNSAFE_Combobox
                 label={text.velgOppfolgingsenhet}
                 size="small"
-                options={getMuligeOppfolgingsenheter.data.map((enhet) => ({
-                  label: `${enhet.navn} - ${enhet.enhetId}`,
-                  value: enhet.enhetId,
-                }))}
+                options={muligeOppfolgingsenheterOptions(
+                  getMuligeOppfolgingsenheter.data
+                )}
                 onToggleSelected={onOppfolgingsenhetChange}
                 className="flex flex-col fixed min-w-[20rem]"
                 error={isFormError && text.formErrorMessage}
