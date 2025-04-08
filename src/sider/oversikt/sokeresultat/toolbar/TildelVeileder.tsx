@@ -7,9 +7,11 @@ import { Dropdown } from '@/components/toolbar/Dropdown/Dropdown';
 import { DropdownButtonTexts } from '@/components/toolbar/Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,
+  useTildelVeileder,
   useVeiledereQuery,
 } from '@/data/veiledereQueryHooks';
 import { useTabType } from '@/hooks/useTabType';
+import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
 
 const dropdownButtonTexts: DropdownButtonTexts = {
   assign: 'Tildel veileder',
@@ -19,16 +21,25 @@ const dropdownButtonTexts: DropdownButtonTexts = {
 interface Props {
   selectedPersoner: string[];
   handleSelectAll: (checked: boolean) => void;
-  handleTildelVeileder: (veilederIdent: string) => void;
 }
 
-const TildelVeileder = ({
+const lagListe = (
+  markertePersoner: string[],
+  veilederIdent: string
+): VeilederArbeidstaker[] => {
+  return markertePersoner.map((fnr: string) => ({
+    veilederIdent,
+    fnr,
+  }));
+};
+
+export default function TildelVeileder({
   selectedPersoner,
-  handleTildelVeileder,
   handleSelectAll,
-}: Props): ReactElement => {
+}: Props): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
+  const tildelVeileder = useTildelVeileder();
 
   const [chosenVeilederIdent, setChosenVeilederIdent] = useState('');
   const [input, setInput] = useState('');
@@ -36,6 +47,12 @@ const TildelVeileder = ({
   const [veilederIsChosen, setVeilederIsChosen] = useState(false);
   const [showError, setShowError] = useState(false);
   const { selectedTab } = useTabType();
+
+  const handleTildelVeileder = (veilederIdent: string): void => {
+    const veilederArbeidstakerListe = lagListe(selectedPersoner, veilederIdent);
+
+    tildelVeileder.mutate(veilederArbeidstakerListe);
+  };
 
   useEffect(() => {
     setShowList(false);
@@ -140,6 +157,4 @@ const TildelVeileder = ({
       )}
     </div>
   );
-};
-
-export default TildelVeileder;
+}

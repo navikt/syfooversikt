@@ -11,6 +11,10 @@ import {
 import { mockModiacontextholder } from '@/mocks/modiacontextholder/mockModiacontextholder';
 import { mockFlexjar } from '@/mocks/flexjar/mockFlexjar';
 import { mockEreg } from '@/mocks/ereg/mockEreg';
+import {
+  mockGetMuligeTildelinger,
+  mockPostTildelOppfolgingsenhet,
+} from '@/mocks/mockSyfobehandlendeenhet';
 
 const generatedPersons = generatePersons(50);
 
@@ -26,6 +30,8 @@ const handlers: HttpHandler[] = [
   mockPersontildeling,
   mockPersonoversikt(generatedPersons),
   mockSokPerson(),
+  mockGetMuligeTildelinger(),
+  mockPostTildelOppfolgingsenhet(),
   ...mockModiacontextholder,
 ];
 
