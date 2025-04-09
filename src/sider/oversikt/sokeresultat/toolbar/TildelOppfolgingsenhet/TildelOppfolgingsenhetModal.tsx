@@ -14,6 +14,8 @@ import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
+import * as Amplitude from '@/utils/amplitude';
+import { EventType } from '@/utils/amplitude';
 
 const text = {
   heading: 'Endre oppfølgingsenhet',
@@ -59,6 +61,28 @@ const tildelOppfolgingsenhetSuccess = (
     message: message(),
   };
 };
+
+function logNumberOfPersonsWithChangedEnhet(antall: number) {
+  Amplitude.logEvent({
+    type: EventType.AmountChanged,
+    data: {
+      url: window.location.href,
+      antall: antall,
+      handling: 'Tildel oppfølgingsenhet',
+    },
+  });
+}
+
+function logNumberOfErrorneousTildelinger(feilmelding: string) {
+  Amplitude.logEvent({
+    type: EventType.ErrorMessageShowed,
+    data: {
+      url: window.location.href,
+      feilmelding: feilmelding,
+      handling: 'Tildel oppfølgingsenhet',
+    },
+  });
+}
 
 export default function TildelOppfolgingsenhetModal({
   ref,
@@ -110,9 +134,20 @@ export default function TildelOppfolgingsenhetModal({
                 `${tildeltOppfolgingsenhet?.navn} - ${tildeltOppfolgingsenhet?.enhetId}`
               )
             );
+            logNumberOfPersonsWithChangedEnhet(antallMaybeTildelt);
+            if (antallTildelt < antallMaybeTildelt) {
+              logNumberOfErrorneousTildelinger(
+                'Ikke alle personer ble tildelt oppfølgingsenhet.'
+              );
+            }
             setSelectedPersoner([]);
           },
-          onError: () => displayNotification(tildelOppfolgingsenhetFailed),
+          onError: () => {
+            logNumberOfErrorneousTildelinger(
+              tildelOppfolgingsenhetFailed.message
+            );
+            displayNotification(tildelOppfolgingsenhetFailed);
+          },
           onSettled: closeModal,
         }
       );
