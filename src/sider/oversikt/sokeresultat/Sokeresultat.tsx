@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ToolbarWrapper from './toolbar/ToolbarWrapper';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import {
   Filterable,
@@ -15,6 +14,7 @@ import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversiktta
 import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 import { Alert } from '@navikt/ds-react';
+import Toolbar from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
@@ -62,7 +62,7 @@ export default function Sokeresultat({ allEvents }: Props) {
 
   return (
     <div className="flex-[3]">
-      <ToolbarWrapper
+      <Toolbar
         numberOfItemsTotal={allFnr.length}
         onPageChange={onPageChange}
         isAllSelected={allFnr.length === selectedPersoner.length}
