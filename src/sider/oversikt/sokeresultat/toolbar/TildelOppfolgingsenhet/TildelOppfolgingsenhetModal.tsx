@@ -1,7 +1,9 @@
 import {
   Alert,
   BodyLong,
+  BodyShort,
   Button,
+  List,
   Modal,
   Skeleton,
   UNSAFE_Combobox,
@@ -16,6 +18,7 @@ import {
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 
 const text = {
   heading: 'Endre oppfølgingsenhet',
@@ -28,18 +31,6 @@ const text = {
   buttonLabel: 'Tildel oppfølgingsenhet',
   endreEnhet: 'Endre oppfølgingsenhet',
   avbryt: 'Avbryt',
-};
-
-interface Props {
-  ref: React.RefObject<HTMLDialogElement | null>;
-  selectedPersoner: string[];
-  setSelectedPersoner: (personer: string[]) => void;
-}
-
-const tildelOppfolgingsenhetFailed: Notification = {
-  type: 'tildelOppfolgingsenhetFailed',
-  variant: 'error',
-  message: 'Tildeling av oppfølgingsenhet feilet.',
 };
 
 const tildelOppfolgingsenhetSuccess = (
@@ -84,6 +75,18 @@ function logNumberOfErrorneousTildelinger(feilmelding: string) {
   });
 }
 
+const tildelOppfolgingsenhetFailed: Notification = {
+  type: 'tildelOppfolgingsenhetFailed',
+  variant: 'error',
+  message: 'Tildeling av oppfølgingsenhet feilet.',
+};
+
+interface Props {
+  ref: React.RefObject<HTMLDialogElement | null>;
+  selectedPersoner: string[];
+  setSelectedPersoner: (personer: string[]) => void;
+}
+
 export default function TildelOppfolgingsenhetModal({
   ref,
   selectedPersoner,
@@ -94,6 +97,14 @@ export default function TildelOppfolgingsenhetModal({
   const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string>('');
   const [isFormError, setIsFormError] = useState<boolean>(false);
   const { displayNotification } = useNotifications();
+  const showTildelingerInfo = !!oppfolgingsenhet;
+  const chosenOppfolgingsenhet = getMuligeOppfolgingsenheter?.data?.find(
+    (enhet) => enhet.enhetId === oppfolgingsenhet
+  );
+  const { data: personoversikt } = usePersonoversiktQuery();
+  const selectedPersonerInfo = personoversikt.filter((person) =>
+    selectedPersoner.includes(person.fnr)
+  );
 
   function closeModal() {
     ref.current?.close();
@@ -182,6 +193,31 @@ export default function TildelOppfolgingsenhetModal({
               <div className="h-[3.75rem]"></div>
             </form>
           </>
+        )}
+        {showTildelingerInfo && (
+          <div>
+            <BodyShort>{`Du tildeler nå følgende personer til ${chosenOppfolgingsenhet?.navn} (${chosenOppfolgingsenhet?.enhetId}):`}</BodyShort>
+            <List as="ul">
+              {selectedPersonerInfo.map((person, index) => {
+                const virksomhetList =
+                  person.latestOppfolgingstilfelle?.virksomhetList;
+                const virksomhetText = virksomhetList
+                  ?.map((v) => v.virksomhetsnavn)
+                  .join(', ');
+                return (
+                  <List.Item key={index}>
+                    <span>
+                      {`${person.navn} (${person.fnr}). `}
+                      {!!virksomhetList?.length
+                        ? `Virksomhet: `
+                        : 'Uten virksomhet'}
+                      <b>{virksomhetText}</b>
+                    </span>
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
         )}
         {getMuligeOppfolgingsenheter.isError && (
           <Alert size="small" variant="error">
