@@ -6,7 +6,6 @@ import {
 import { toPersonData } from '@/utils/toPersondata';
 import { PersonFilter } from '@/sider/oversikt/filter/PersonFilter';
 import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
-import styled from 'styled-components';
 import { TekstFilter } from '@/sider/oversikt/filter/TekstFilter';
 import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
 import {
@@ -20,25 +19,6 @@ import { HendelseFilter } from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';
-
-const SokeresultatFiltre = styled.div`
-  margin-right: 1rem;
-  width: 18em;
-`;
-
-const OversiktContainerInnhold = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  @media (max-width: 960px) {
-    ${SokeresultatFiltre} {
-      flex: 1;
-      width: auto;
-      margin-right: 0;
-      margin-bottom: 4em;
-    }
-  }
-`;
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
@@ -70,28 +50,26 @@ export default function Oversikt({
   );
 
   return (
-    <OversiktContainerInnhold>
-      <SokeresultatFiltre>
-        <Box
-          borderRadius="medium"
-          background="surface-default"
-          borderColor="border-strong"
-          padding="4"
-          borderWidth="1"
-          className="mb-4 flex flex-col gap-4"
-        >
-          <TekstFilter />
-          {selectedTab === TabType.ENHETENS_OVERSIKT && (
-            <UfordelteBrukereFilter persondata={personData} />
-          )}
-          <HendelseFilter personRegister={allEvents.value} />
+    <div className="flex flex-row">
+      <Box
+        borderRadius="medium"
+        background="surface-default"
+        borderColor="border-strong"
+        padding="4"
+        borderWidth="1"
+        className="mb-4 flex flex-col gap-4 mr-4 w-[18rem] h-fit"
+      >
+        <TekstFilter />
+        {selectedTab === TabType.ENHETENS_OVERSIKT && (
+          <UfordelteBrukereFilter persondata={personData} />
+        )}
+        <HendelseFilter personRegister={allEvents.value} />
 
-          <PersonFilter personregister={personData} />
-          <ClearFiltersButton />
-        </Box>
-      </SokeresultatFiltre>
+        <PersonFilter personregister={personData} />
+        <ClearFiltersButton />
+      </Box>
 
       <Sokeresultat allEvents={allEvents} />
-    </OversiktContainerInnhold>
+    </div>
   );
 }
