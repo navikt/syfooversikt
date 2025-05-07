@@ -7,6 +7,7 @@ import {
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
 
 const muligeoppfolgingsenheter: Enhet[] = [
+  { enhetId: '0393', navn: 'Nav Utland' },
   { enhetId: '0106', navn: 'Nav Fredrikstad' },
   { enhetId: '0101', navn: 'Nav Halden' },
   { enhetId: '0105', navn: 'Nav Sarpsborg' },
