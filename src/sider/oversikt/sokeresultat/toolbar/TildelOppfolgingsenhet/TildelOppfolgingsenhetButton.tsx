@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button } from '@navikt/ds-react';
+import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
 const text = {
   buttonLabelTildelOppfolgingsenhet: 'Tildel oppfølgingenhet',
@@ -10,26 +11,29 @@ const text = {
 interface Props {
   modalRef: React.RefObject<HTMLDialogElement | null>;
   selectedPersoner: string[];
-  setTableActionError: (error: string) => void;
+  setTableFeedbackNotification: (
+    feedbackNotification: FeedbackNotification | undefined
+  ) => void;
 }
 
 export default function TildelOppfolgingsenhetButton({
   modalRef,
   selectedPersoner,
-  setTableActionError,
+  setTableFeedbackNotification,
 }: Props) {
-  const [isClicked, setIsClicked] = React.useState(false);
   useEffect(() => {
-    if (isClicked && selectedPersoner.length > 0) {
-      setTableActionError('');
+    if (selectedPersoner.length > 0) {
+      setTableFeedbackNotification(undefined);
     }
-  }, [isClicked, selectedPersoner, setTableActionError]);
+  }, [selectedPersoner, setTableFeedbackNotification]);
 
   function onClick() {
-    setIsClicked(true);
     const isNoPersonsSelected = selectedPersoner.length === 0;
     if (isNoPersonsSelected) {
-      setTableActionError(text.noPeopleSelectedErrorMessage);
+      setTableFeedbackNotification({
+        type: 'error',
+        text: text.noPeopleSelectedErrorMessage,
+      });
     } else {
       modalRef.current?.showModal();
     }

@@ -13,7 +13,6 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
-import { Alert } from '@navikt/ds-react';
 import Toolbar from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
 interface Props {
@@ -27,7 +26,6 @@ export default function Sokeresultat({ allEvents }: Props) {
   const [selectedPersoner, setSelectedPersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(0);
-  const [tableActionError, setTableActionError] = useState('');
 
   useEffect(() => {
     setSelectedPersoner([]);
@@ -69,13 +67,8 @@ export default function Sokeresultat({ allEvents }: Props) {
         checkAllHandler={checkAllHandler}
         selectedPersoner={selectedPersoner}
         setSelectedPersoner={setSelectedPersoner}
-        setTableActionError={setTableActionError}
       />
-      {!!tableActionError && (
-        <Alert variant="error" size="small" className="mb-2 mt-2">
-          {tableActionError}
-        </Alert>
-      )}
+
       <OversiktTableContainer
         personregister={filteredEvents.value}
         startItem={startItem}
