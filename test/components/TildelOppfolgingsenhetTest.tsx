@@ -37,6 +37,7 @@ const renderTildelOppfolgingsenhetModal = () =>
             ref={modalRef}
             selectedPersoner={[selectedFnr]}
             setSelectedPersoner={() => void 0}
+            setTableFeedbackNotification={() => void 0}
           />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
