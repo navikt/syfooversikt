@@ -11,6 +11,7 @@ import TildelOppfolgingsenhetModal from '@/sider/oversikt/sokeresultat/toolbar/T
 import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
+import { Alert } from '@navikt/ds-react';
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -24,6 +25,11 @@ const ToolbarStyled = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 `;
 
+export interface FeedbackNotification {
+  type: 'success' | 'warning' | 'error';
+  text: string;
+}
+
 export interface Props {
   isAllSelected: boolean;
   numberOfItemsTotal: number;
@@ -31,7 +37,6 @@ export interface Props {
   onPageChange: (startItem: number, endItem: number) => void;
   selectedPersoner: string[];
   setSelectedPersoner: (personer: string[]) => void;
-  setTableActionError: (error: string) => void;
 }
 
 export interface PageInfoType {
@@ -46,6 +51,9 @@ export default function Toolbar(props: Props) {
     firstVisibleIndex: 0,
     lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,
   });
+  const [tableFeedbackNotification, setTableFeedbackNotification] = useState<
+    FeedbackNotification | undefined
+  >();
   const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
@@ -67,7 +75,7 @@ export default function Toolbar(props: Props) {
               <TildelOppfolgingsenhetButton
                 modalRef={modalRef}
                 selectedPersoner={props.selectedPersoner}
-                setTableActionError={props.setTableActionError}
+                setTableFeedbackNotification={setTableFeedbackNotification}
               />
             )}
             {toggles.isTildelOppfolgingsenhetEnabled && (
@@ -75,6 +83,7 @@ export default function Toolbar(props: Props) {
                 ref={modalRef}
                 selectedPersoner={props.selectedPersoner}
                 setSelectedPersoner={props.setSelectedPersoner}
+                setTableFeedbackNotification={setTableFeedbackNotification}
               />
             )}
           </div>
@@ -84,6 +93,15 @@ export default function Toolbar(props: Props) {
             setPageInfo={setPageInfo}
           />
         </section>
+        {!!tableFeedbackNotification && (
+          <Alert
+            variant={tableFeedbackNotification.type}
+            size="small"
+            className="m-1"
+          >
+            {tableFeedbackNotification.text}
+          </Alert>
+        )}
       </ToolbarStyled>
     </>
   );

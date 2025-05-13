@@ -10,8 +10,6 @@ import {
 } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useGetMuligeOppfolgingsenheter } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter';
-import { useNotifications } from '@/context/notification/NotificationContext';
-import { Notification } from '@/context/notification/Notifications';
 import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
@@ -19,6 +17,7 @@ import {
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
 const text = {
   heading: 'Endre oppfølgingsenhet',
@@ -31,26 +30,19 @@ const text = {
   buttonLabel: 'Tildel oppfølgingsenhet',
   endreEnhet: 'Endre oppfølgingsenhet',
   avbryt: 'Avbryt',
+  errorMessage: 'Tildeling av oppfølgingsenhet feilet.',
 };
 
-const tildelOppfolgingsenhetSuccess = (
+const tildelOppfolgingsenhetSuccessText = (
   antallTildelt: number,
   antallMaybeTildelt: number,
   enhet: string
-): Notification => {
-  const message = () => {
-    if (antallMaybeTildelt > 1) {
-      return `${antallTildelt} av ${antallMaybeTildelt} personer tildelt ${enhet}.`;
-    } else {
-      return `En person tildelt ${enhet}.`;
-    }
-  };
-  return {
-    type: 'tildelOppfolgingsenhetSuccess',
-    variant: 'success',
-    header: 'Brukere flyttet',
-    message: message(),
-  };
+): string => {
+  if (antallMaybeTildelt > 1) {
+    return `${antallTildelt} av ${antallMaybeTildelt} personer tildelt ${enhet}.`;
+  } else {
+    return `En person tildelt ${enhet}.`;
+  }
 };
 
 function logNumberOfPersonsWithChangedEnhet(antall: number) {
@@ -75,28 +67,25 @@ function logNumberOfErrorneousTildelinger(feilmelding: string) {
   });
 }
 
-const tildelOppfolgingsenhetFailed: Notification = {
-  type: 'tildelOppfolgingsenhetFailed',
-  variant: 'error',
-  message: 'Tildeling av oppfølgingsenhet feilet.',
-};
-
 interface Props {
   ref: React.RefObject<HTMLDialogElement | null>;
   selectedPersoner: string[];
   setSelectedPersoner: (personer: string[]) => void;
+  setTableFeedbackNotification: (
+    feedbackNotification: FeedbackNotification | undefined
+  ) => void;
 }
 
 export default function TildelOppfolgingsenhetModal({
   ref,
   selectedPersoner,
   setSelectedPersoner,
+  setTableFeedbackNotification,
 }: Props) {
   const getMuligeOppfolgingsenheter = useGetMuligeOppfolgingsenheter();
   const postTildelOppfolgingsenhet = usePostTildelOppfolgingsenhet();
   const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string>('');
   const [isFormError, setIsFormError] = useState<boolean>(false);
-  const { displayNotification } = useNotifications();
   const showTildelingerInfo = !!oppfolgingsenhet;
   const chosenOppfolgingsenhet = getMuligeOppfolgingsenheter?.data?.find(
     (enhet) => enhet.enhetId === oppfolgingsenhet
@@ -138,13 +127,14 @@ export default function TildelOppfolgingsenhetModal({
             );
             const antallTildelt = response.tildelinger.length;
             const antallMaybeTildelt = selectedPersoner.length;
-            displayNotification(
-              tildelOppfolgingsenhetSuccess(
+            setTableFeedbackNotification({
+              type: 'success',
+              text: tildelOppfolgingsenhetSuccessText(
                 antallTildelt,
                 antallMaybeTildelt,
-                `${tildeltOppfolgingsenhet?.navn} - ${tildeltOppfolgingsenhet?.enhetId}`
-              )
-            );
+                `${tildeltOppfolgingsenhet?.navn} (${tildeltOppfolgingsenhet?.enhetId})`
+              ),
+            });
             logNumberOfPersonsWithChangedEnhet(antallMaybeTildelt);
             if (antallTildelt < antallMaybeTildelt) {
               logNumberOfErrorneousTildelinger(
@@ -154,10 +144,11 @@ export default function TildelOppfolgingsenhetModal({
             setSelectedPersoner([]);
           },
           onError: () => {
-            logNumberOfErrorneousTildelinger(
-              tildelOppfolgingsenhetFailed.message
-            );
-            displayNotification(tildelOppfolgingsenhetFailed);
+            logNumberOfErrorneousTildelinger(text.errorMessage);
+            setTableFeedbackNotification({
+              type: 'error',
+              text: text.errorMessage,
+            });
           },
           onSettled: closeModal,
         }
