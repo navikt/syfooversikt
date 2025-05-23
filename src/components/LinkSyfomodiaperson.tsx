@@ -7,6 +7,12 @@ import { Link } from '@navikt/ds-react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 
+const SYFOMODIA_ROOT = `/sykefravaer`;
+
+export enum SyfomodiaRoute {
+  NOKKELINFORMASJON = `${SYFOMODIA_ROOT}/nokkelinformasjon`,
+}
+
 export function lenkeTilModia(personData: PersonData): string {
   let path = `/sykefravaer`;
   const isGoingToMoteoversikt =
@@ -91,6 +97,46 @@ export function LinkSyfomodiaperson({
         {linkText}
       </Link>
       <Labels personData={personData} />
+    </div>
+  );
+}
+
+interface LinkSyfomodiapersonSideProps {
+  personident: string;
+  linkText: string;
+  route?: SyfomodiaRoute;
+}
+
+export function LinkSyfomodiapersonSide({
+  personident,
+  linkText,
+  route,
+}: LinkSyfomodiapersonSideProps): ReactElement {
+  const aktivBruker = useAktivBruker();
+  const destinasjon = linkToNewHostAndPath(
+    Subdomain.SYFOMODIAPERSON,
+    route ?? SYFOMODIA_ROOT
+  );
+  const onPersonClick = () => {
+    aktivBruker.mutate(personident, {
+      onSuccess: () => {
+        logNavigation(destinasjon);
+        window.open(destinasjon);
+      },
+    });
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      <Link
+        onClick={(event) => {
+          event.preventDefault();
+          onPersonClick();
+        }}
+        href={destinasjon}
+      >
+        {linkText}
+      </Link>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import TildelVeileder from './TildelVeileder';
 import SearchVeileder from './SearchVeileder';
-import React, { useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../../../styles/themes';
 import PaginationContainer, {
@@ -28,6 +28,7 @@ const ToolbarStyled = styled.div`
 export interface FeedbackNotification {
   type: 'success' | 'warning' | 'error';
   text: string;
+  element?: ReactNode;
 }
 
 export interface Props {
@@ -55,6 +56,14 @@ export default function Toolbar(props: Props) {
     FeedbackNotification | undefined
   >();
   const modalRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const sekunder = 60;
+    const timer = setTimeout(() => {
+      setTableFeedbackNotification(undefined);
+    }, sekunder * 1000);
+    return () => clearTimeout(timer);
+  }, [tableFeedbackNotification]);
 
   return (
     <>
@@ -100,6 +109,7 @@ export default function Toolbar(props: Props) {
             className="m-1"
           >
             {tableFeedbackNotification.text}
+            {tableFeedbackNotification.element}
           </Alert>
         )}
       </ToolbarStyled>
