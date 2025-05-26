@@ -150,7 +150,7 @@ export default function TildelOppfolgingsenhetModal({
                         <LinkSyfomodiapersonSide
                           personident={tildeling.personident}
                           linkText={toLastnameFirstnameFormat(
-                            person?.navn ?? ''
+                            person?.navn ?? 'navn mangler'
                           )}
                           route={SyfomodiaRoute.NOKKELINFORMASJON}
                         />
