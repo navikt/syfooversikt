@@ -18,6 +18,11 @@ import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
+import {
+  LinkSyfomodiapersonSide,
+  SyfomodiaRoute,
+} from '@/components/LinkSyfomodiaperson';
+import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
 
 const text = {
   heading: 'Endre oppfølgingsenhet',
@@ -63,6 +68,17 @@ function logNumberOfErrorneousTildelinger(feilmelding: string) {
       url: window.location.href,
       feilmelding: feilmelding,
       handling: 'Tildel oppfølgingsenhet',
+    },
+  });
+}
+
+function logKlikkPaNavnINotificationVedTildeling(destinasjon: string) {
+  Amplitude.logEvent({
+    type: EventType.Navigation,
+    data: {
+      fromUrl: window.location.href,
+      lenketekst: 'personnavn i notification ved tildeling',
+      destinasjon: destinasjon,
     },
   });
 }
@@ -133,6 +149,27 @@ export default function TildelOppfolgingsenhetModal({
                 antallTildelt,
                 antallMaybeTildelt,
                 `${tildeltOppfolgingsenhet?.navn} (${tildeltOppfolgingsenhet?.enhetId})`
+              ),
+              element: (
+                <List as={'ul'}>
+                  {response.tildelinger.map((tildeling, index) => {
+                    const person = selectedPersonerInfo.find(
+                      (person) => person.fnr === tildeling.personident
+                    );
+                    return (
+                      <List.Item key={index}>
+                        <LinkSyfomodiapersonSide
+                          personident={tildeling.personident}
+                          linkText={toLastnameFirstnameFormat(
+                            person?.navn ?? 'navn mangler'
+                          )}
+                          route={SyfomodiaRoute.NOKKELINFORMASJON}
+                          onClick={logKlikkPaNavnINotificationVedTildeling}
+                        />
+                      </List.Item>
+                    );
+                  })}
+                </List>
               ),
             });
             logNumberOfPersonsWithChangedEnhet(antallMaybeTildelt);

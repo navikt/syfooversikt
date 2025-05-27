@@ -1,6 +1,6 @@
 import TildelVeileder from './TildelVeileder';
 import SearchVeileder from './SearchVeileder';
-import React, { useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../../../styles/themes';
 import PaginationContainer, {
@@ -12,6 +12,7 @@ import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
 import { Alert } from '@navikt/ds-react';
+import * as Amplitude from '@/utils/amplitude';
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -25,9 +26,20 @@ const ToolbarStyled = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 `;
 
+function logLukkingAvNotificationVedTildeling() {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ButtonClick,
+    data: {
+      url: window.location.href,
+      tekst: 'Lukket notification om tildeling',
+    },
+  });
+}
+
 export interface FeedbackNotification {
   type: 'success' | 'warning' | 'error';
   text: string;
+  element?: ReactNode;
 }
 
 export interface Props {
@@ -55,6 +67,14 @@ export default function Toolbar(props: Props) {
     FeedbackNotification | undefined
   >();
   const modalRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const sekunder = 60;
+    const timer = setTimeout(() => {
+      setTableFeedbackNotification(undefined);
+    }, sekunder * 1000);
+    return () => clearTimeout(timer);
+  }, [tableFeedbackNotification]);
 
   return (
     <>
@@ -98,8 +118,14 @@ export default function Toolbar(props: Props) {
             variant={tableFeedbackNotification.type}
             size="small"
             className="m-1"
+            closeButton={true}
+            onClose={() => {
+              logLukkingAvNotificationVedTildeling();
+              setTableFeedbackNotification(undefined);
+            }}
           >
             {tableFeedbackNotification.text}
+            {tableFeedbackNotification.element}
           </Alert>
         )}
       </ToolbarStyled>
