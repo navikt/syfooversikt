@@ -12,6 +12,7 @@ import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
 import { Alert } from '@navikt/ds-react';
+import * as Amplitude from '@/utils/amplitude';
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -24,6 +25,16 @@ const ToolbarStyled = styled.div`
   border: 1px solid ${themes.color.navGra20};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 `;
+
+function logLukkingAvNotificationVedTildeling() {
+  Amplitude.logEvent({
+    type: Amplitude.EventType.ButtonClick,
+    data: {
+      url: window.location.href,
+      tekst: 'Lukket notification om tildeling',
+    },
+  });
+}
 
 export interface FeedbackNotification {
   type: 'success' | 'warning' | 'error';
@@ -107,6 +118,11 @@ export default function Toolbar(props: Props) {
             variant={tableFeedbackNotification.type}
             size="small"
             className="m-1"
+            closeButton={true}
+            onClose={() => {
+              logLukkingAvNotificationVedTildeling();
+              setTableFeedbackNotification(undefined);
+            }}
           >
             {tableFeedbackNotification.text}
             {tableFeedbackNotification.element}

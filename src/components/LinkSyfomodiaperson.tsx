@@ -105,12 +105,14 @@ interface LinkSyfomodiapersonSideProps {
   personident: string;
   linkText: string;
   route?: SyfomodiaRoute;
+  onClick?: (destinasjon: string) => void;
 }
 
 export function LinkSyfomodiapersonSide({
   personident,
   linkText,
   route,
+  onClick,
 }: LinkSyfomodiapersonSideProps): ReactElement {
   const aktivBruker = useAktivBruker();
   const destinasjon = linkToNewHostAndPath(
@@ -121,6 +123,7 @@ export function LinkSyfomodiapersonSide({
     aktivBruker.mutate(personident, {
       onSuccess: () => {
         logNavigation(destinasjon);
+        onClick?.(destinasjon);
         window.open(destinasjon);
       },
     });

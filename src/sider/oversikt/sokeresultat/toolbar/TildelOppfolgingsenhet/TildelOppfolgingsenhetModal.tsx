@@ -72,6 +72,17 @@ function logNumberOfErrorneousTildelinger(feilmelding: string) {
   });
 }
 
+function logKlikkPaNavnINotificationVedTildeling(destinasjon: string) {
+  Amplitude.logEvent({
+    type: EventType.Navigation,
+    data: {
+      fromUrl: window.location.href,
+      lenketekst: 'personnavn i notification ved tildeling',
+      destinasjon: destinasjon,
+    },
+  });
+}
+
 interface Props {
   ref: React.RefObject<HTMLDialogElement | null>;
   selectedPersoner: string[];
@@ -153,6 +164,7 @@ export default function TildelOppfolgingsenhetModal({
                             person?.navn ?? 'navn mangler'
                           )}
                           route={SyfomodiaRoute.NOKKELINFORMASJON}
+                          onClick={logKlikkPaNavnINotificationVedTildeling}
                         />
                       </List.Item>
                     );
