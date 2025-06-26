@@ -15,7 +15,7 @@ import {
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { useFilters } from '@/context/filters/FilterContext';
 import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import { HendelseFilter } from '@/sider/oversikt/filter/HendelseFilter';
+import HendelseFilter from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';

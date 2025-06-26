@@ -1,5 +1,5 @@
 import React from 'react';
-import { HendelseFilter } from '@/sider/oversikt/filter/HendelseFilter';
+import HendelseFilter from '@/sider/oversikt/filter/HendelseFilter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
