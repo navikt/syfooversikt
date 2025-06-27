@@ -11,28 +11,25 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 
-export const HendelseTekster = {
+const HendelseTekster = {
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ber om bistand',
   MOTEBEHOV: 'Ber om dialogmøte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
-  AKTIVITETSKRAV: 'Aktivitetskrav',
+  AKTIVITETSKRAV: '§ 8-8 Aktivitetskrav',
   AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
   BEHANDLERDIALOG: 'Dialog med behandler',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
   BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
-  ARBEIDSUFORHET: '§8-4 Arbeidsuførhet',
-  FRISKMELDING_TIL_ARBEIDSFORMIDLING: '§8-5 Friskmelding til arbeidsformidling',
+  ARBEIDSUFORHET: '§ 8-4 Arbeidsuførhet',
+  FRISKMELDING_TIL_ARBEIDSFORMIDLING:
+    '§ 8-5 Friskmelding til arbeidsformidling',
   SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
-  MANGLENDE_MEDVIRKNING: '§8-8 Manglende medvirkning',
+  MANGLENDE_MEDVIRKNING: '§ 8-8 Manglende medvirkning',
 } as const;
 
 type Hendelse = keyof typeof HendelseTekster;
 type HendelseTeksterValues = typeof HendelseTekster[Hendelse];
-
-interface Props {
-  personRegister?: PersonregisterState;
-}
 
 function initFilter(hendelse: Hendelse): HendelseTypeFilter {
   const filter: HendelseTypeFilter = {
@@ -172,7 +169,11 @@ function hendelseCheckboxes(
   });
 }
 
-export function HendelseFilter({ personRegister }: Props) {
+interface Props {
+  personRegister?: PersonregisterState;
+}
+
+export default function HendelseFilter({ personRegister }: Props) {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const checkboxElements = hendelseCheckboxes(personRegister, filterState);
 

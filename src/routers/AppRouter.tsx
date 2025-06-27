@@ -7,7 +7,7 @@ import ErrorBoundary from '@/components/error/ErrorBoundary';
 import SokContainer from '@/sider/sokperson/SokContainer';
 import { routes } from '@/routers/routes';
 
-const AppRouter = (): ReactElement => {
+export default function AppRouter(): ReactElement {
   return (
     <BrowserRouter basename="/">
       <>
@@ -34,6 +34,4 @@ const AppRouter = (): ReactElement => {
       </>
     </BrowserRouter>
   );
-};
-
-export default AppRouter;
+}
