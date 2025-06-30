@@ -37,7 +37,6 @@ describe('Sokeresultat', () => {
   it('Skal inneholde knapperad', () => {
     renderSokeresultat();
     expect(screen.getByRole('button', { name: 'Tildel veileder' })).to.exist;
-    expect(screen.getByRole('button', { name: 'Søk veileder (0)' })).to.exist;
     const velgAlleCheckbox = screen.getByRole('checkbox', {
       name: 'Velg alle',
       checked: false,

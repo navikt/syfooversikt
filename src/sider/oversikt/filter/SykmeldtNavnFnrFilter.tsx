@@ -7,7 +7,7 @@ const texts = {
   undertittel: 'Navn / Fødselsnummer',
 };
 
-export const TekstFilter = (): ReactElement => {
+export default function SykmeldtNavnFnrFilter(): ReactElement {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
   return (
@@ -23,4 +23,4 @@ export const TekstFilter = (): ReactElement => {
       }}
     />
   );
-};
+}

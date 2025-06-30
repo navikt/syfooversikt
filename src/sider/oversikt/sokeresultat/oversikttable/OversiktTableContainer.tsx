@@ -14,13 +14,13 @@ interface Props {
   setSelectedRows: (rows: string[]) => void;
 }
 
-export const OversiktTableContainer = ({
+export default function OversiktTableContainer({
   personregister,
   startItem,
   endItem,
   selectedRows,
   setSelectedRows,
-}: Props) => {
+}: Props) {
   const { sorting, setSorting } = useSorting();
   const veiledereQuery = useVeiledereQuery();
   const sortedPersonregister = getSortedEventsFromSortingType(
@@ -46,4 +46,4 @@ export const OversiktTableContainer = ({
       setSelectedRows={setSelectedRows}
     />
   );
-};
+}

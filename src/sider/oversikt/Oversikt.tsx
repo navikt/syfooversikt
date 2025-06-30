@@ -6,7 +6,7 @@ import {
 import { toPersonData } from '@/utils/toPersondata';
 import { PersonFilter } from '@/sider/oversikt/filter/PersonFilter';
 import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
-import { TekstFilter } from '@/sider/oversikt/filter/TekstFilter';
+import SykmeldtNavnFnrFilter from '@/sider/oversikt/filter/SykmeldtNavnFnrFilter';
 import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
 import {
   Filterable,
@@ -19,6 +19,7 @@ import HendelseFilter from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';
+import SearchVeileder from '@/sider/oversikt/filter/SearchVeileder';
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
@@ -59,7 +60,8 @@ export default function Oversikt({
         borderWidth="1"
         className="mb-4 flex flex-col gap-4 mr-4 w-[18rem] h-fit"
       >
-        <TekstFilter />
+        <SykmeldtNavnFnrFilter />
+        {selectedTab === TabType.ENHETENS_OVERSIKT && <SearchVeileder />}
         {selectedTab === TabType.ENHETENS_OVERSIKT && (
           <UfordelteBrukereFilter persondata={personData} />
         )}

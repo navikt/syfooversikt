@@ -10,7 +10,7 @@ import {
   filterOnFrist,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
-import { OversiktTableContainer } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
+import OversiktTableContainer from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 import Toolbar from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
