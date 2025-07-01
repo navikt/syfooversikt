@@ -6,7 +6,7 @@ import { http, HttpResponse } from 'msw';
 export const stubPersonregister = () => {
   mockServer.use(
     http.post(`*${SYFOPERSON_ROOT}/person/info`, () =>
-      HttpResponse.json([...personInfoMock])
+      HttpResponse.json(personInfoMock)
     )
   );
 };

@@ -3,7 +3,7 @@ import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { EmptyDrawer } from '@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer';
-import { OversiktTable } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
+import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
 import { useSorting } from '@/hooks/useSorting';
 
 interface Props {

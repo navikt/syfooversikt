@@ -1,28 +1,34 @@
 import React, { ReactElement } from 'react';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
+import { ActionType } from '@/context/filters/filterContextActions';
+import { useFilters } from '@/context/filters/FilterContext';
+import { PersonregisterState } from '@/api/types/personregisterTypes';
+import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
 
 const texts = {
   title: 'Virksomheter',
   placeholder: 'Velg virksomheter',
 };
 
-interface CompantyFilterProps {
-  options: string[];
-  selectedCompanies: string[];
-
-  onSelect(arrayOfCompanies: string[]): void;
+interface Props {
+  persondata: PersonregisterState;
 }
 
-const CompanyFilter = ({
-  options,
-  selectedCompanies,
-  onSelect,
-}: CompantyFilterProps): ReactElement => {
+export default function CompanyFilter({ persondata }: Props): ReactElement {
+  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const onCompanyChange = (companies: string[]) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedCompanies,
+      selectedCompanies: companies,
+    });
+  };
+  const selectedCompanies = filterState.selectedCompanies;
+  const options = mapPersonregisterToCompanyList(persondata);
   const onOptionSelected = (option: string, isSelected: boolean) => {
     if (isSelected) {
-      onSelect([...selectedCompanies, option]);
+      onCompanyChange([...selectedCompanies, option]);
     } else {
-      onSelect(selectedCompanies.filter((o) => o !== option));
+      onCompanyChange(selectedCompanies.filter((o) => o !== option));
     }
   };
 
@@ -37,6 +43,4 @@ const CompanyFilter = ({
       onToggleSelected={onOptionSelected}
     />
   );
-};
-
-export default CompanyFilter;
+}

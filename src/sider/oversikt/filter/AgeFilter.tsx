@@ -3,6 +3,8 @@ import React from 'react';
 import { AgeFilterOption } from '@/utils/hendelseFilteringUtils';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { ActionType } from '@/context/filters/filterContextActions';
+import { useFilters } from '@/context/filters/FilterContext';
 
 const text = {
   legend: 'Alder',
@@ -11,12 +13,6 @@ const text = {
     overThirty: 'Over 30 år',
   },
 };
-
-interface Props {
-  onChange(value: AgeFilterOption[]): void;
-
-  selectedAgeFilters: AgeFilterOption[];
-}
 
 function logOptionSelectedEvent(option: AgeFilterOption[]) {
   Amplitude.logEvent({
@@ -29,15 +25,22 @@ function logOptionSelectedEvent(option: AgeFilterOption[]) {
   });
 }
 
-export function AgeFilter({ onChange, selectedAgeFilters }: Props) {
+export default function AgeFilter() {
+  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const onAgeFilterChange = (ageFilters: AgeFilterOption[]) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedAgeFilter,
+      selectedAgeFilters: ageFilters,
+    });
+  };
   return (
     <CheckboxGroup
       legend={text.legend}
       onChange={(val: AgeFilterOption[]) => {
-        onChange(val);
+        onAgeFilterChange(val);
         logOptionSelectedEvent(val);
       }}
-      value={selectedAgeFilters}
+      value={filterState.selectedAgeFilters}
       size="small"
     >
       <Checkbox value={AgeFilterOption.ThirtyAndUnder}>

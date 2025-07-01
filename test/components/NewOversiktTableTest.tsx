@@ -9,7 +9,7 @@ import {
   getQueryClientWithMockdata,
   testQueryClient,
 } from '../testQueryClient';
-import { OversiktTable } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
+import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
 import {
   PersonData,
   PersonregisterState,

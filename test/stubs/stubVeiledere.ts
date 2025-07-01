@@ -8,7 +8,7 @@ export const stubVeiledere = () => {
   mockServer.use(
     http.get(
       `*${SYFOVEILEDER_ROOT}/veiledere?enhetNr=${aktivEnhetMock.aktivEnhet}`,
-      () => HttpResponse.json([...veiledereMock])
+      () => HttpResponse.json(veiledereMock)
     )
   );
 };

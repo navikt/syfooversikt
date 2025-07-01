@@ -29,7 +29,7 @@ interface Props {
   setSorting: (sorting: Sorting) => void;
 }
 
-export function OversiktTable({
+export default function OversiktTable({
   personListe,
   selectedRows,
   setSelectedRows,

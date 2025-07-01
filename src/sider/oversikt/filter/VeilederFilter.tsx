@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import {
   filterVeiledereWithActiveOppgave,
-  sortVeiledereAlphabeticallyWithGivenVeilederFirst,
+  sortVeiledereBySurnameAsc,
 } from '@/utils/veiledereUtils';
 import {
   useAktivVeilederQuery,
@@ -14,10 +14,11 @@ import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
 
 const text = {
-  searchVeileder: 'Søk veileder',
+  searchVeileder: 'Veiledere',
+  searchVeilederPlaceholder: 'Velg veiledere',
 };
 
-export default function SearchVeileder(): ReactElement {
+export default function VeilederFilter(): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
   const personoversiktQuery = usePersonoversiktQuery();
@@ -31,7 +32,7 @@ export default function SearchVeileder(): ReactElement {
     });
   }
 
-  const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
+  const veiledereSorted = sortVeiledereBySurnameAsc(
     filterVeiledereWithActiveOppgave(
       veiledereQuery.data || [],
       personoversiktQuery.data
@@ -57,12 +58,13 @@ export default function SearchVeileder(): ReactElement {
   return (
     <UNSAFE_Combobox
       label={text.searchVeileder}
-      options={veiledereSortedAlphabetically.map((veileder) => ({
+      options={veiledereSorted.map((veileder) => ({
         label: veilederLabel(veileder),
         value: veileder.ident,
       }))}
       size="small"
       isMultiSelect
+      placeholder={text.searchVeilederPlaceholder}
       onToggleSelected={onToggleSelected}
     />
   );
