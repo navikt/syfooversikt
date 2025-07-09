@@ -4,17 +4,19 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { TextField } from '@navikt/ds-react';
 
 const texts = {
-  undertittel: 'Navn / Fødselsnummer',
+  label: 'Sykmeldt',
+  placeholder: 'Filtrer på navn eller fødselsnummer',
 };
 
-export const TekstFilter = (): ReactElement => {
+export default function SykmeldtFilter(): ReactElement {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
 
   return (
     <TextField
       size="small"
-      label={texts.undertittel}
+      label={texts.label}
       value={filterState.tekstFilter}
+      placeholder={texts.placeholder}
       onChange={(e) => {
         dispatchFilterAction({
           type: ActionType.SetTekstFilter,
@@ -23,4 +25,4 @@ export const TekstFilter = (): ReactElement => {
       }}
     />
   );
-};
+}

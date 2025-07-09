@@ -13,7 +13,7 @@ const texts = {
   moteoversikt: 'Mine møter',
 };
 
-export const NavigationBar = (): ReactElement => {
+export default function NavigationBar(): ReactElement {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -47,4 +47,4 @@ export const NavigationBar = (): ReactElement => {
       </HStack>
     </Box>
   );
-};
+}

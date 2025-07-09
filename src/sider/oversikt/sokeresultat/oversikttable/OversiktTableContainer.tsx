@@ -3,7 +3,7 @@ import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
 import { PersonregisterState } from '@/api/types/personregisterTypes';
 import { getSortedEventsFromSortingType } from '@/utils/hendelseFilteringUtils';
 import { EmptyDrawer } from '@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer';
-import { OversiktTable } from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
+import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
 import { useSorting } from '@/hooks/useSorting';
 
 interface Props {
@@ -14,13 +14,13 @@ interface Props {
   setSelectedRows: (rows: string[]) => void;
 }
 
-export const OversiktTableContainer = ({
+export default function OversiktTableContainer({
   personregister,
   startItem,
   endItem,
   selectedRows,
   setSelectedRows,
-}: Props) => {
+}: Props) {
   const { sorting, setSorting } = useSorting();
   const veiledereQuery = useVeiledereQuery();
   const sortedPersonregister = getSortedEventsFromSortingType(
@@ -46,4 +46,4 @@ export const OversiktTableContainer = ({
       setSelectedRows={setSelectedRows}
     />
   );
-};
+}

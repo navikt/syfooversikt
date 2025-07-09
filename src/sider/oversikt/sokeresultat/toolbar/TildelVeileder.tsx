@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
-import { sortVeiledereAlphabeticallyWithGivenVeilederFirst } from '@/utils/veiledereUtils';
+import { sortVeiledereBySurnameAsc } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '@/components/toolbar/Dropdown/Dropdown';
@@ -119,7 +119,7 @@ export default function TildelVeileder({
   const lowerCaseInput = input.toLowerCase();
 
   const veiledere = veiledereQuery.data?.filter((value) => value.enabled) || [];
-  const veiledereSortedAlphabetically = sortVeiledereAlphabeticallyWithGivenVeilederFirst(
+  const veiledereSortedAlphabetically = sortVeiledereBySurnameAsc(
     veiledere,
     aktivVeilederQuery.data?.ident || ''
   );

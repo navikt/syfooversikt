@@ -4,9 +4,8 @@ import {
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
 import { toPersonData } from '@/utils/toPersondata';
-import { PersonFilter } from '@/sider/oversikt/filter/PersonFilter';
 import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
-import { TekstFilter } from '@/sider/oversikt/filter/TekstFilter';
+import SykmeldtFilter from '@/sider/oversikt/filter/SykmeldtFilter';
 import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
 import {
   Filterable,
@@ -19,6 +18,11 @@ import HendelseFilter from '@/sider/oversikt/filter/HendelseFilter';
 import { Box } from '@navikt/ds-react';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';
+import VeilederFilter from '@/sider/oversikt/filter/VeilederFilter';
+import CompanyFilter from '@/sider/oversikt/filter/CompanyFilter';
+import BirthDateFilter from '@/sider/oversikt/filter/BirthDateFilter';
+import AgeFilter from '@/sider/oversikt/filter/AgeFilter';
+import FristFilter from '@/sider/oversikt/filter/FristFilter';
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
@@ -59,13 +63,16 @@ export default function Oversikt({
         borderWidth="1"
         className="mb-4 flex flex-col gap-4 mr-4 w-[18rem] h-fit"
       >
-        <TekstFilter />
+        <SykmeldtFilter />
+        {selectedTab === TabType.ENHETENS_OVERSIKT && <VeilederFilter />}
         {selectedTab === TabType.ENHETENS_OVERSIKT && (
           <UfordelteBrukereFilter persondata={personData} />
         )}
         <HendelseFilter personRegister={allEvents.value} />
-
-        <PersonFilter personregister={personData} />
+        <CompanyFilter persondata={personData} />
+        <BirthDateFilter />
+        <AgeFilter />
+        <FristFilter />
         <ClearFiltersButton />
       </Box>
 

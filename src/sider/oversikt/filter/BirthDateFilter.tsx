@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
+import { useFilters } from '@/context/filters/FilterContext';
+import { ActionType } from '@/context/filters/filterContextActions';
 
 const allDates = new Array(71)
   .fill(1)
@@ -14,21 +16,20 @@ const texts = {
   placeholder: 'Velg datoer',
 };
 
-interface BirthDateFilterProps {
-  selectedDates: string[];
-
-  onSelect(value: string[]): void;
-}
-
-const BirthDateFilter = ({
-  onSelect,
-  selectedDates,
-}: BirthDateFilterProps): ReactElement => {
+export default function BirthDateFilter(): ReactElement {
+  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const onBirthDateChange = (birthDates: string[]) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedBirthDates,
+      selectedBirthDates: birthDates,
+    });
+  };
+  const selectedDates = filterState.selectedBirthDates;
   const onOptionSelected = (option: string, isSelected: boolean) => {
     if (isSelected) {
-      onSelect([...selectedDates, option]);
+      onBirthDateChange([...selectedDates, option]);
     } else {
-      onSelect(selectedDates.filter((o) => o !== option));
+      onBirthDateChange(selectedDates.filter((o) => o !== option));
     }
   };
 
@@ -43,6 +44,4 @@ const BirthDateFilter = ({
       onToggleSelected={onOptionSelected}
     />
   );
-};
-
-export default BirthDateFilter;
+}

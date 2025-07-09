@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { usePersonregisterQuery } from '@/data/personregisterHooks';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
-import { NavigationBar } from '@/components/NavigationBar';
+import NavigationBar from '@/components/NavigationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';

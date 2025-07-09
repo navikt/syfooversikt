@@ -7,7 +7,7 @@ import { http, HttpResponse } from 'msw';
 export const stubPersonoversikt = () => {
   mockServer.use(
     http.get(`*${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhetMock.aktivEnhet}`, () =>
-      HttpResponse.json([...personoversiktEnhetMock])
+      HttpResponse.json(personoversiktEnhetMock)
     )
   );
 };

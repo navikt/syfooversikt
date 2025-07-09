@@ -4,6 +4,11 @@ import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { unleashMock } from '@/mocks/mockUnleash';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
 import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
+import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
+import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
+import { veiledereMock } from '@/mocks/data/veiledereMock';
+import { personregisterQueryKeys } from '@/data/personregisterHooks';
+import { personInfoMock } from '@/mocks/data/personInfoMock';
 
 export const testQueryClient = () =>
   new QueryClient({
@@ -12,15 +17,25 @@ export const testQueryClient = () =>
 
 export const getQueryClientWithMockdata = (): QueryClient => {
   const queryClient = testQueryClient();
-
   queryClient.setQueryData(
-    unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, ''),
+    veiledereQueryKeys.veiledereInfo,
+    () => veilederMock
+  );
+  queryClient.setQueryData(
+    unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, veilederMock.ident),
     () => unleashMock
   );
-
   queryClient.setQueryData(
     personoversiktQueryKeys.personoversiktEnhet(aktivEnhetMock.aktivEnhet),
-    () => personoversiktEnhetMock.slice(0, 3)
+    () => personoversiktEnhetMock
+  );
+  queryClient.setQueryData(
+    personregisterQueryKeys.personregister(aktivEnhetMock.aktivEnhet),
+    () => personInfoMock
+  );
+  queryClient.setQueryData(
+    veiledereQueryKeys.veiledereForEnhet(aktivEnhetMock.aktivEnhet),
+    () => veiledereMock
   );
   return queryClient;
 };

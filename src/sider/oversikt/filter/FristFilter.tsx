@@ -1,8 +1,10 @@
-import { CheckboxGroup, Checkbox } from '@navikt/ds-react';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
 import React from 'react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { ActionType } from '@/context/filters/filterContextActions';
+import { useFilters } from '@/context/filters/FilterContext';
 
 const texts = {
   legend: 'Dato',
@@ -12,12 +14,6 @@ const texts = {
     future: 'Fremtidige datoer',
   },
 };
-
-interface Props {
-  onChange(value: FristFilterOption[]): void;
-
-  selectedFristFilters: FristFilterOption[];
-}
 
 function logOptionSelectedEvent(option: FristFilterOption[]) {
   Amplitude.logEvent({
@@ -30,15 +26,23 @@ function logOptionSelectedEvent(option: FristFilterOption[]) {
   });
 }
 
-export const FristFilter = ({ onChange, selectedFristFilters }: Props) => {
+export default function FristFilter() {
+  const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const onFristFilterChange = (fristFilters: FristFilterOption[]) => {
+    dispatchFilterAction({
+      type: ActionType.SetSelectedFristFilter,
+      selectedFristFilters: fristFilters,
+    });
+  };
+
   return (
     <CheckboxGroup
       legend={texts.legend}
       onChange={(val: FristFilterOption[]) => {
-        onChange(val);
+        onFristFilterChange(val);
         logOptionSelectedEvent(val);
       }}
-      value={selectedFristFilters}
+      value={filterState.selectedFristFilters}
       size="small"
     >
       <Checkbox value={FristFilterOption.Past}>{texts.option.past}</Checkbox>
@@ -48,4 +52,4 @@ export const FristFilter = ({ onChange, selectedFristFilters }: Props) => {
       </Checkbox>
     </CheckboxGroup>
   );
-};
+}

@@ -1,12 +1,10 @@
 import TildelVeileder from './TildelVeileder';
-import SearchVeileder from './SearchVeileder';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import themes from '../../../../styles/themes';
 import PaginationContainer, {
   PAGINATED_NUMBER_OF_ITEMS,
 } from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
-import { TabType, useTabType } from '@/hooks/useTabType';
 import TildelOppfolgingsenhetModal from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal';
 import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
@@ -45,7 +43,6 @@ export interface PageInfoType {
 }
 
 export default function Toolbar(props: Props) {
-  const { selectedTab } = useTabType();
   const { toggles } = useFeatureToggles();
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     firstVisibleIndex: 0,
@@ -70,7 +67,6 @@ export default function Toolbar(props: Props) {
               selectedPersoner={props.selectedPersoner}
               handleSelectAll={props.checkAllHandler}
             />
-            {selectedTab === TabType.ENHETENS_OVERSIKT && <SearchVeileder />}
             {toggles.isTildelOppfolgingsenhetEnabled && (
               <TildelOppfolgingsenhetButton
                 modalRef={modalRef}
