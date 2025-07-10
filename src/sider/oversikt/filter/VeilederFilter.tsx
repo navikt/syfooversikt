@@ -12,18 +12,34 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
+import { ComboboxOption } from '@navikt/ds-react/cjs/form/combobox/types';
 
 const text = {
   searchVeileder: 'Veiledere',
   searchVeilederPlaceholder: 'Velg veiledere',
 };
 
+function veilederLabel(veileder: VeilederDTO): string {
+  return veileder.fornavn === ''
+    ? veileder.ident
+    : `${veileder.etternavn}, ${veileder.fornavn}`;
+}
+
+function toComboboxOption(veileder: VeilederDTO): ComboboxOption {
+  return {
+    label: veilederLabel(veileder),
+    value: veileder.ident,
+  };
+}
+
 export default function VeilederFilter(): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
   const personoversiktQuery = usePersonoversiktQuery();
-  const [selectedVeiledere, setSelectedVeiledere] = useState<string[]>([]);
-  const { dispatch } = useFilters();
+  const { filterState, dispatch } = useFilters();
+  const [selectedVeiledere, setSelectedVeiledere] = useState<string[]>(
+    filterState.selectedVeilederIdents
+  );
 
   function onVeilederIdentsChange(veilederIdents: string[]) {
     dispatch({
@@ -40,11 +56,9 @@ export default function VeilederFilter(): ReactElement {
     aktivVeilederQuery.data?.ident || ''
   );
 
-  function veilederLabel(veileder: VeilederDTO): string {
-    return veileder.fornavn === ''
-      ? veileder.ident
-      : `${veileder.etternavn}, ${veileder.fornavn}`;
-  }
+  const selectedVeiledereOptions = veiledereSorted
+    .filter((veileder) => selectedVeiledere.includes(veileder.ident))
+    .map(toComboboxOption);
 
   function onToggleSelected(option: string, isSelected: boolean) {
     const updatedSelectedVeiledere = isSelected
@@ -58,14 +72,12 @@ export default function VeilederFilter(): ReactElement {
   return (
     <UNSAFE_Combobox
       label={text.searchVeileder}
-      options={veiledereSorted.map((veileder) => ({
-        label: veilederLabel(veileder),
-        value: veileder.ident,
-      }))}
+      options={veiledereSorted.map(toComboboxOption)}
       size="small"
       isMultiSelect
       placeholder={text.searchVeilederPlaceholder}
       onToggleSelected={onToggleSelected}
+      selectedOptions={selectedVeiledereOptions}
     />
   );
 }
