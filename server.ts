@@ -6,7 +6,6 @@ import prometheus from 'prom-client';
 import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
 import { setupProxy } from './server/proxy';
 import { setupSession } from './server/session';
-
 import unleash = require('./server/unleash');
 
 // Prometheus metrics
@@ -26,8 +25,17 @@ const server = express();
 server.use(express.json() as any);
 server.use(
   helmet({
-    contentSecurityPolicy: false,
-  }) as any
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        'default-src': ["'self'", 'https://*.nav.no'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://*.nav.no'],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://*.nav.no'],
+        'font-src': ["'self'", 'data:', 'https://*.nav.no'],
+        'connect-src': ["'self'", 'https://*.nav.no'],
+      },
+    },
+  })
 );
 
 const nocache = (
