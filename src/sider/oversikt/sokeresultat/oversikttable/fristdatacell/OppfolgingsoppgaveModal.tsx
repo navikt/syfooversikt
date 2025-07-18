@@ -29,7 +29,6 @@ export default function OppfolgingsoppgaveModal({
     <Modal
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
-      aria-label="oppfølgingsoppgave"
       open={isOpen}
       onClose={() => setOpen(false)}
       header={{

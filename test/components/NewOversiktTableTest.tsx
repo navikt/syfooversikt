@@ -152,7 +152,8 @@ describe('NewOversiktTable', () => {
   it('Skal rendre frist-dato for aktivitetskrav AVVENT', () => {
     renderOversikt({ [testdata.fnr1]: personDataAktivitetskravAvventMedFrist });
 
-    expect(screen.getByText('01.04.2023')).to.exist;
+    const fristText = screen.getAllByText('01.04.2023');
+    expect(fristText).to.have.lengthOf(2); // 1 in the table and 1 in the modal
   });
 
   it('Rendrer ingen frist-dato for aktivitetskrav AVVENT når frist mangler', () => {

@@ -192,6 +192,8 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
+          beskrivelse:
+            'Dette er en grundig vurdering som venter på svar fra behandler. Etter dette må vi sjekke andre ting.',
           arsaker: [AvventVurderingArsak.ANNET],
         },
       ],
