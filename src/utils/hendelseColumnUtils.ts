@@ -8,30 +8,19 @@ import {
 import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { isPast } from '@/utils/dateUtils';
-
-function getAvventarsaker(personData: PersonData): string {
-  const arsaker = personData.aktivitetskravvurdering?.vurderinger[0]?.arsaker;
-
-  if (arsaker === undefined || arsaker.length == 0) {
-    return '';
-  }
-
-  return ` (${arsaker
-    .sort()
-    .reverse()
-    .map((arsak) => avventVurderingArsakTexts[arsak])
-    .join(', ')})`;
-}
+import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
 
 function mapAktivitetskravStatus(personData: PersonData): string {
   const status = personData?.aktivitetskravvurdering?.status;
+  const aktivitetskravVurdering =
+    personData.aktivitetskravvurdering?.vurderinger[0];
   switch (status) {
     case AktivitetskravStatus.NY:
       return '- Ny kandidat';
     case AktivitetskravStatus.NY_VURDERING:
       return '- Ny vurdering';
     case AktivitetskravStatus.AVVENT:
-      return '- Avventer' + getAvventarsaker(personData);
+      return '- Avventer' + getAvventArsakerText(aktivitetskravVurdering);
     case AktivitetskravStatus.FORHANDSVARSEL:
       const svarfrist =
         personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
@@ -46,6 +35,24 @@ function mapAktivitetskravStatus(personData: PersonData): string {
     default:
       return '';
   }
+}
+
+function getAvventArsakerText(
+  aktivitetskravVurdering?: AktivitetskravvurderingDTO | null
+): string {
+  if (
+    !aktivitetskravVurdering?.arsaker ||
+    aktivitetskravVurdering?.arsaker.length == 0
+  ) {
+    return '';
+  }
+  const arsaker = aktivitetskravVurdering?.arsaker;
+
+  return ` (${arsaker
+    .sort()
+    .reverse()
+    .map((arsak) => avventVurderingArsakTexts[arsak])
+    .join(', ')})`;
 }
 
 function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {

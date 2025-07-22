@@ -8,12 +8,16 @@ import {
   filterOnCompany,
   filterOnFodselsnummerOrName,
   filterOnFrist,
+  getSortedEventsFromSortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
-import OversiktTableContainer from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTableContainer';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
 import Toolbar from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
+import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
+import { useSorting } from '@/hooks/useSorting';
+import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
+import EmptyDrawer from '@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer';
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
@@ -22,6 +26,8 @@ interface Props {
 export default function Sokeresultat({ allEvents }: Props) {
   const { filterState } = useFilters();
   const { selectedTab } = useTabType();
+  const { sorting, setSorting } = useSorting();
+  const veiledereQuery = useVeiledereQuery();
 
   const [selectedPersoner, setSelectedPersoner] = useState<string[]>([]);
   const [startItem, setStartItem] = useState(0);
@@ -58,6 +64,16 @@ export default function Sokeresultat({ allEvents }: Props) {
     setEndItem(endItem);
   };
 
+  const sortedPersonregister = getSortedEventsFromSortingType(
+    filteredEvents.value,
+    veiledereQuery.data || [],
+    sorting
+  );
+  const paginatedPersonregister = Object.fromEntries(
+    Object.entries(sortedPersonregister).slice(startItem, endItem + 1)
+  );
+  const personListe = Object.entries(paginatedPersonregister);
+
   return (
     <div className="flex-[3]">
       <Toolbar
@@ -69,13 +85,17 @@ export default function Sokeresultat({ allEvents }: Props) {
         setSelectedPersoner={setSelectedPersoner}
       />
 
-      <OversiktTableContainer
-        personregister={filteredEvents.value}
-        startItem={startItem}
-        endItem={endItem}
-        selectedRows={selectedPersoner}
-        setSelectedRows={setSelectedPersoner}
-      />
+      {!personListe.length ? (
+        <EmptyDrawer />
+      ) : (
+        <OversiktTable
+          sorting={sorting}
+          setSorting={setSorting}
+          personListe={personListe}
+          selectedRows={selectedPersoner}
+          setSelectedRows={setSelectedPersoner}
+        />
+      )}
     </div>
   );
 }

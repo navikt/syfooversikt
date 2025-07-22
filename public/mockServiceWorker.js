@@ -12,15 +12,15 @@ const INTEGRITY_CHECKSUM = 'f5825c521429caf22a4dd13b66e243af';
 const IS_MOCKED_RESPONSE = Symbol('isMockedResponse');
 const activeClientIds = new Set();
 
-addEventListener('install', function () {
+addEventListener('install', function() {
   self.skipWaiting();
 });
 
-addEventListener('activate', function (event) {
+addEventListener('activate', function(event) {
   event.waitUntil(self.clients.claim());
 });
 
-addEventListener('message', async function (event) {
+addEventListener('message', async function(event) {
   const clientId = Reflect.get(event.source || {}, 'id');
 
   if (!clientId || !self.clients) {
@@ -93,7 +93,7 @@ addEventListener('message', async function (event) {
   }
 });
 
-addEventListener('fetch', function (event) {
+addEventListener('fetch', function(event) {
   // Bypass navigation requests.
   if (event.request.mode === 'navigate') {
     return;
@@ -231,7 +231,7 @@ async function getResponse(event, client, requestId) {
       }
     }
 
-    return fetch(requestClone, { headers })
+    return fetch(requestClone, { headers });
   }
 
   // Bypass mocking when the client is not active.
@@ -259,7 +259,7 @@ async function getResponse(event, client, requestId) {
       },
     },
     [serializedRequest.body],
-  )
+  );
 
   switch (clientMessage.type) {
     case 'MOCK_RESPONSE': {
@@ -340,5 +340,5 @@ async function serializeRequest(request) {
     referrerPolicy: request.referrerPolicy,
     body: await request.arrayBuffer(),
     keepalive: request.keepalive,
-  }
+  };
 }

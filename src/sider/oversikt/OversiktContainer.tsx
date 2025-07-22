@@ -54,7 +54,7 @@ export default function OversiktContainer(): ReactElement {
       <div className="flex flex-col mx-8">
         <NavigationBar />
         <NotificationBar />
-        {personoversiktQuery.isInitialLoading ? (
+        {personoversiktQuery.isLoading ? (
           <AppSpinner />
         ) : (
           <Oversikt

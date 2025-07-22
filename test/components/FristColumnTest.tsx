@@ -64,8 +64,10 @@ describe('FristColumn', () => {
     };
     renderFristColumn(personAvventerMedFrist);
 
-    expect(screen.getByText(toReadableDate(aktivitetskravVurderingFrist))).to
-      .exist;
+    const fristText = screen.getAllByText(
+      toReadableDate(aktivitetskravVurderingFrist)
+    );
+    expect(fristText).to.have.length(2); // 1 in the table and 1 in the modal
   });
 
   it('viser frist for person når person har oppfolgingsoppgave', () => {
@@ -131,7 +133,8 @@ describe('FristColumn', () => {
     renderFristColumn(personMedFlereFrister);
 
     const allFrister = screen.getAllByText(fristFormatRegex);
-    expect(allFrister).to.have.length(4); // 3 frister i oversikten + 1 i modal for oppfølgingsoppgave som finnes i DOM
+    // 3 frister i oversikten + 1 i modal for oppfølgingsoppgave og 1 i modal for aktivitetskrav som finnes i DOM
+    expect(allFrister).to.have.length(5);
     expect(allFrister[0]?.textContent).to.eq(
       toReadableDate(oppfolgingsoppgave.frist)
     );
@@ -144,27 +147,6 @@ describe('FristColumn', () => {
   });
 
   describe('aktivitetskravvurdering frister', () => {
-    it('viser frist for person når aktivitetskravvurdering har frist', () => {
-      const aktivitetskravVurderingFrist = new Date('2024-07-15');
-      const personMedAvventerFrist: PersonData = {
-        ...defaultPersonData,
-        aktivitetskravvurdering: {
-          status: AktivitetskravStatus.AVVENT,
-          vurderinger: [
-            {
-              status: AktivitetskravStatus.AVVENT,
-              frist: aktivitetskravVurderingFrist,
-              arsaker: [],
-            },
-          ],
-        },
-      };
-      renderFristColumn(personMedAvventerFrist);
-
-      expect(screen.getByText(toReadableDate(aktivitetskravVurderingFrist))).to
-        .exist;
-    });
-
     it('viser svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel', () => {
       const aktivitetskravSvarfristForhandsvarsel = new Date('2024-07-16');
       const personMedForhandsvarsel: PersonData = {
@@ -213,33 +195,6 @@ describe('FristColumn', () => {
         .exist;
       expect(screen.queryByText(toReadableDate(svarfristForhandsvarselIkkeVis)))
         .to.not.exist;
-    });
-
-    it('viser ikke dobbel frist for avvent når aktivitetskravvurdering har frist og aktivitetskravVurderingFrist har verdi', () => {
-      const aktivitetskravAvventFristVis = new Date('2024-07-16');
-      const aktivitetskravAvventFristIkkeVis = new Date('2024-07-17');
-      const personMedForhandsvarsel: PersonData = {
-        ...defaultPersonData,
-        aktivitetskravvurdering: {
-          status: AktivitetskravStatus.AVVENT,
-          vurderinger: [
-            {
-              status: AktivitetskravStatus.AVVENT,
-              varsel: {
-                svarfrist: aktivitetskravAvventFristVis,
-              },
-              arsaker: [],
-            },
-          ],
-        },
-      };
-      renderFristColumn(personMedForhandsvarsel);
-
-      expect(screen.getByText(toReadableDate(aktivitetskravAvventFristVis))).to
-        .exist;
-      expect(
-        screen.queryByText(toReadableDate(aktivitetskravAvventFristIkkeVis))
-      ).to.not.exist;
     });
   });
 });

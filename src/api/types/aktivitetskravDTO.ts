@@ -8,9 +8,10 @@ export interface AktivitetskravDTO {
   vurderinger: AktivitetskravvurderingDTO[];
 }
 
-interface AktivitetskravvurderingDTO {
+export interface AktivitetskravvurderingDTO {
   status: AktivitetskravStatus;
   frist?: Date;
+  beskrivelse?: string;
   varsel?: AktivitetskravVarselDTO;
   arsaker: AvventVurderingArsak[];
 }
