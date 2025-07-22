@@ -26,30 +26,30 @@ describe('Filters unit tests', () => {
   };
 
   it('Filters out all people over 30 years old', () => {
-    const thirtyAndUnderPersons = filterOnAge(personregister, [
-      AgeFilterOption.ThirtyAndUnder,
+    const underThirtyPersons = filterOnAge(personregister, [
+      AgeFilterOption.BelowThirty,
     ]);
-    expect(Object.values(thirtyAndUnderPersons).length).to.deep.equal(2);
-    expect(Object.values(thirtyAndUnderPersons)[0]?.navn).to.deep.equal(
+    expect(Object.values(underThirtyPersons).length).to.deep.equal(1);
+    expect(Object.values(underThirtyPersons)[0]?.navn).to.deep.equal(
       'Bjarne Bjarnson'
-    );
-    expect(Object.values(thirtyAndUnderPersons)[1]?.navn).to.deep.equal(
-      'Vetle Vetlesen'
     );
   });
 
   it('Filters out all people 30 years old and younger', () => {
-    const overThirtyPersons = filterOnAge(personregister, [
-      AgeFilterOption.OverThirty,
+    const thirtyAndOverPersons = filterOnAge(personregister, [
+      AgeFilterOption.ThirtyAndAbove,
     ]);
-    expect(Object.values(overThirtyPersons).length).to.deep.equal(3);
-    expect(Object.values(overThirtyPersons)[0]?.navn).to.deep.equal(
+    expect(Object.values(thirtyAndOverPersons).length).to.deep.equal(4);
+    expect(Object.values(thirtyAndOverPersons)[0]?.navn).to.deep.equal(
+      'Vetle Vetlesen'
+    );
+    expect(Object.values(thirtyAndOverPersons)[1]?.navn).to.deep.equal(
       'Geir Geirsson'
     );
-    expect(Object.values(overThirtyPersons)[1]?.navn).to.deep.equal(
+    expect(Object.values(thirtyAndOverPersons)[2]?.navn).to.deep.equal(
       'Eirik Eiriksson'
     );
-    expect(Object.values(overThirtyPersons)[2]?.navn).to.deep.equal(
+    expect(Object.values(thirtyAndOverPersons)[3]?.navn).to.deep.equal(
       'John Johnson'
     );
   });

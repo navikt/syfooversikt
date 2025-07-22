@@ -9,8 +9,8 @@ import { useFilters } from '@/context/filters/FilterContext';
 const text = {
   legend: 'Alder',
   option: {
-    underThirty: 't.o.m. 30 år',
-    overThirty: 'Over 30 år',
+    underThirty: 'Under 30 år',
+    overThirty: '30 år og eldre',
   },
 };
 
@@ -43,10 +43,10 @@ export default function AgeFilter() {
       value={filterState.selectedAgeFilters}
       size="small"
     >
-      <Checkbox value={AgeFilterOption.ThirtyAndUnder}>
+      <Checkbox value={AgeFilterOption.BelowThirty}>
         {text.option.underThirty}
       </Checkbox>
-      <Checkbox value={AgeFilterOption.OverThirty}>
+      <Checkbox value={AgeFilterOption.ThirtyAndAbove}>
         {text.option.overThirty}
       </Checkbox>
     </CheckboxGroup>
