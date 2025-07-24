@@ -9,8 +9,8 @@ const texts = {
 
 export default function EmptyDrawer() {
   return (
-    <div className="mt-16 text-center">
-      <img alt={texts.altText} src={EmptyDrawerImage} />
+    <div className="flex flex-col mt-16 items-center">
+      <img className="max-w-fit" alt={texts.altText} src={EmptyDrawerImage} />
       <BodyShort size="large" className="mt-8">
         {texts.ingenHendelser}
       </BodyShort>
