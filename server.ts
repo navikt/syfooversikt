@@ -32,7 +32,12 @@ server.use(
         'script-src': ["'self'", "'unsafe-inline'", 'https://*.nav.no'],
         'style-src': ["'self'", "'unsafe-inline'", 'https://*.nav.no'],
         'font-src': ["'self'", 'data:', 'https://*.nav.no'],
-        'connect-src': ["'self'", 'https://*.nav.no'],
+        'connect-src': [
+          "'self'",
+          'https://*.nav.no',
+          'wss://*.nav.no',
+          'https://sr-client-cfg.amplitude.com',
+        ],
       },
     },
   })
