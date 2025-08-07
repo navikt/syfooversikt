@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export enum StoreKey {
   SORTING = 'sorting',
   FLEXJAR_ARENABRUK_FEEDBACK_DATE = 'flexjarArenabrukFeedbackDate',
+  FLEXJAR_RUTING_FEEDBACK_DATE = 'flexjarRutingFeedbackDate',
 }
 
 export const useLocalStorageState = <T>(key: StoreKey, initialState: T) => {
