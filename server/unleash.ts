@@ -38,6 +38,10 @@ export function getToggles(veilederId: any, enhetId: any) {
     enhetId: enhetId,
   };
   return {
+    isRutingFlexjarEnabled: unleash.isEnabled(
+      'isRutingFlexjarEnabled',
+      context
+    ),
     isFlexjarArenaEnabled: unleash.isEnabled('isFlexjarArenaEnabled', context),
     isTildelOppfolgingsenhetEnabled: unleash.isEnabled(
       'isTildelOppfolgingsenhetEnabled',
