@@ -51,8 +51,9 @@ export default function OversiktContainer(): ReactElement {
     (feedbackArenaDate === null ||
       getWeeksBetween(new Date(), feedbackArenaDate) >= 8);
   const showRutingFlexjar =
-    feedbackRutingDate === null ||
-    getWeeksBetween(new Date(), feedbackRutingDate) >= 8;
+    toggles.isRutingFlexjarEnabled &&
+    (feedbackRutingDate === null ||
+      getWeeksBetween(new Date(), feedbackRutingDate) >= 8);
 
   useEffect(() => {
     logPageView(selectedTab);
