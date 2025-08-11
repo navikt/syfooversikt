@@ -6,13 +6,14 @@ import NavigationBar from '@/components/NavigationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
-import { Flexjar } from '@/components/flexjar/Flexjar';
+import { ArenaFlexjar } from '@/components/flexjar/ArenaFlexjar';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
 import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
 import NotificationBar from '@/components/error/NotificationBar';
+import RutingFlexjar from '@/components/flexjar/RutingFlexjar';
 
 function logPageView(tab: TabType) {
   Amplitude.logEvent({
@@ -37,13 +38,21 @@ export default function OversiktContainer(): ReactElement {
   const personoversiktQuery = usePersonoversiktQuery();
   const { toggles } = useFeatureToggles();
   const { selectedTab } = useTabType();
-  const [feedbackDate] = useLocalStorageState<Date | null>(
+  const [feedbackArenaDate] = useLocalStorageState<Date | null>(
     StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
     null
   );
-  const showFlexjar =
+  const [feedbackRutingDate] = useLocalStorageState<Date | null>(
+    StoreKey.FLEXJAR_RUTING_FEEDBACK_DATE,
+    null
+  );
+  const showArenaFlexjar =
     toggles.isFlexjarArenaEnabled &&
-    (feedbackDate === null || getWeeksBetween(new Date(), feedbackDate) >= 8);
+    (feedbackArenaDate === null ||
+      getWeeksBetween(new Date(), feedbackArenaDate) >= 8);
+  const showRutingFlexjar =
+    feedbackRutingDate === null ||
+    getWeeksBetween(new Date(), feedbackRutingDate) >= 8;
 
   useEffect(() => {
     logPageView(selectedTab);
@@ -62,8 +71,11 @@ export default function OversiktContainer(): ReactElement {
             personoversiktData={personoversiktQuery.data || []}
           />
         )}
-        {showFlexjar && personoversiktQuery.isSuccess && (
-          <Flexjar side={toReadableString(selectedTab)} />
+        {showArenaFlexjar && personoversiktQuery.isSuccess && (
+          <ArenaFlexjar side={toReadableString(selectedTab)} />
+        )}
+        {showRutingFlexjar && personoversiktQuery.isSuccess && (
+          <RutingFlexjar side={toReadableString(selectedTab)} />
         )}
       </div>
     </ErrorBoundary>

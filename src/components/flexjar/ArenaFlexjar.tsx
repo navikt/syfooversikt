@@ -79,7 +79,7 @@ interface FlexjarProps {
   side: string;
 }
 
-export const Flexjar = ({ side }: FlexjarProps) => {
+export const ArenaFlexjar = ({ side }: FlexjarProps) => {
   const [isApen, setIsApen] = useState<boolean>(true);
   const [isValid, setIsValid] = useState<boolean>();
   const [feedback, setFeedback] = useState<string>();
