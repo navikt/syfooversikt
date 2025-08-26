@@ -47,5 +47,9 @@ export function getToggles(veilederId: any, enhetId: any) {
       'isTildelOppfolgingsenhetEnabled',
       context
     ),
+    isKartleggingssporsmalEnabled: unleash.isEnabled(
+      'isKartleggingssporsmalEnabled',
+      context
+    ),
   };
 }
