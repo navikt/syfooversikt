@@ -12,7 +12,7 @@ import { AktivEnhetProvider } from '@/context/aktivEnhet/AktivEnhetContext';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import { initFaro } from '@/faro';
-import { isLocal } from '@/utils/miljoUtil';
+import { isLocal, isProd } from '@/utils/miljoUtil';
 import { queryClient } from '@/queryClient';
 
 initFaro();
@@ -38,7 +38,25 @@ const container =
   document.getElementById('maincontent') || new DocumentFragment();
 const root = createRoot(container);
 
+function addUmamiScript() {
+  const dataWebsiteId = isProd()
+    ? 'ef4034fe-08a4-42a6-8f3c-e24751455026'
+    : 'cf79c0cd-bba6-45dc-a1ff-8ba2d6915ad3';
+  const script = document.createElement('script');
+  script.setAttribute('data-host-url', 'https://umami.nav.no');
+  script.setAttribute('data-website-id', dataWebsiteId);
+  script.setAttribute(
+    'src',
+    'https://cdn.nav.no/team-researchops/sporing/sporing.js'
+  );
+  script.setAttribute('defer', 'defer');
+  document.head.appendChild(script);
+}
+
 function renderApp() {
+  if (!isLocal()) {
+    addUmamiScript();
+  }
   root.render(<App />);
 }
 
