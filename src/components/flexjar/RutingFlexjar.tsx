@@ -28,8 +28,10 @@ const texts = {
     'Ikke skriv inn navn eller andre personopplysninger.',
   followupQuestion:
     'Hva er årsaken til/bakgrunnen for flyttingen? (Velg en eller flere)',
-  utdypendeAnnet: 'Kan du si noe om "Annet"?',
-  utdypendeAnnenIntern: 'Kan du si noe om "Annen intern organisering"?',
+  utdypendeAnnenIntern:
+    'Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).',
+  utdypendeAnnet:
+    'Utdyp gjerne hva "Annet" er og hvorfor det medfører flytting av brukere (valgfritt).',
   send: 'Send',
   validation: 'Vennligst velg en tilbakemelding',
   success: 'Takk for din tilbakemelding!',

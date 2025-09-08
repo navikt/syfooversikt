@@ -90,8 +90,11 @@ describe('Flexjar ruting', () => {
 
     fireEvent.click(annenInternCheckbox);
 
-    expect(screen.getByText('Kan du si noe om "Annen intern organisering"?')).to
-      .exist;
+    expect(
+      screen.getByText(
+        'Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).'
+      )
+    ).to.exist;
     expect(
       screen.getByText('Ikke skriv inn navn eller andre personopplysninger.')
     ).to.exist;
@@ -105,7 +108,11 @@ describe('Flexjar ruting', () => {
 
     fireEvent.click(annetCheckbox);
 
-    expect(screen.getByText('Kan du si noe om "Annet"?')).to.exist;
+    expect(
+      screen.getByText(
+        'Utdyp gjerne hva "Annet" er og hvorfor det medfører flytting av brukere (valgfritt).'
+      )
+    ).to.exist;
     expect(
       screen.queryAllByText(
         'Ikke skriv inn navn eller andre personopplysninger.'
