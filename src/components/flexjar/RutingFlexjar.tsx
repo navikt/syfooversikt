@@ -4,6 +4,8 @@ import {
   BodyShort,
   Box,
   Button,
+  Checkbox,
+  CheckboxGroup,
   Label,
   Radio,
   RadioGroup,
@@ -24,11 +26,34 @@ const texts = {
   anonym: 'Anonym tilbakemelding',
   feedbackLabelDescription:
     'Ikke skriv inn navn eller andre personopplysninger.',
-  followupQuestion: 'Hva er årsaken til/bakgrunnen for flyttingen?',
+  followupQuestion:
+    'Hva er årsaken til/bakgrunnen for flyttingen? (Velg en eller flere)',
+  utdypendeAnnenIntern:
+    'Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).',
+  utdypendeAnnet:
+    'Utdyp gjerne hva "Annet" er og hvorfor det medfører flytting av brukere (valgfritt).',
   send: 'Send',
   validation: 'Vennligst velg en tilbakemelding',
   success: 'Takk for din tilbakemelding!',
   sporsmal: 'Bruker du Arena til å flytte sykmeldte mellom enheter?',
+};
+
+const checkboxValue = {
+  brukerFlyttet: 'brukerFlyttet',
+  navUtland: 'navUtland',
+  virksomhetsorganisering: 'virksomhetsorganisering',
+  annenIntern: 'annenIntern',
+  annet: 'annet',
+};
+
+const checkboxValueToLabel: {
+  [key: string]: string;
+} = {
+  [checkboxValue.brukerFlyttet]: 'Bruker har flyttet',
+  [checkboxValue.navUtland]: 'Tilhører Nav utland',
+  [checkboxValue.virksomhetsorganisering]: 'Virksomhetsorganisering',
+  [checkboxValue.annenIntern]: 'Annen intern organisering',
+  [checkboxValue.annet]: 'Annet',
 };
 
 function logPageView(side: string) {
@@ -49,7 +74,12 @@ interface Props {
 
 export default function RutingFlexjar({ side }: Props) {
   const [isApen, setIsApen] = useState<boolean>(true);
-  const [feedback, setFeedback] = useState<string>();
+  const [annet, setAnnet] = useState<string>();
+  const [
+    annenInternOrganisering,
+    setAnnenInternOrganisering,
+  ] = useState<string>();
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
   const [radioValue, setRadioValue] = useState<RadioOption | null>(null);
   const sendFeedback = useFlexjarFeedback();
   const [, setFeedbackDate] = useLocalStorageState<Date | null>(
@@ -64,16 +94,41 @@ export default function RutingFlexjar({ side }: Props) {
   const toggleApen = () => {
     if (isApen) {
       setRadioValue(null);
-      setFeedback('');
+      setAnnet('');
+      setAnnenInternOrganisering('');
+      setSelectedCheckboxes([]);
     }
     setIsApen(!isApen);
   };
 
+  const utdypendeSvar = (): string => {
+    const annen = annenInternOrganisering
+      ? `${
+          checkboxValueToLabel[checkboxValue.annenIntern]
+        }: ${annenInternOrganisering}`
+      : '';
+    const annetSvar = annet
+      ? `${checkboxValueToLabel[checkboxValue.annet]}: ${annet}`
+      : '';
+    const utdypendeSvar = [annen, annetSvar]
+      .filter((value) => value)
+      .map((value) => `{${value}}`)
+      .join(', ');
+    return utdypendeSvar !== '' ? ` - [${utdypendeSvar}]` : '';
+  };
+
   const handleSubmit = () => {
+    const selectedValues = selectedCheckboxes
+      .map((valg) => checkboxValueToLabel[valg])
+      .join(', ');
+    const feedbackString =
+      radioValue === RadioOption.JA
+        ? `[${selectedValues}]${utdypendeSvar()}`
+        : undefined;
     if (radioValue) {
       const body: FlexjarFeedbackDTO = {
         feedbackId: side + ' - Ruting',
-        feedback: feedback,
+        feedback: feedbackString,
         svar: radioValue,
         app: 'syfooversikt',
       };
@@ -122,23 +177,73 @@ export default function RutingFlexjar({ side }: Props) {
                 <Radio value={RadioOption.JA}>Ja</Radio>
                 <Radio value={RadioOption.NEI}>Nei</Radio>
               </RadioGroup>
+
               {radioValue === RadioOption.JA && (
+                <CheckboxGroup
+                  legend={texts.followupQuestion}
+                  onChange={(vals) => setSelectedCheckboxes(vals)}
+                >
+                  <Checkbox size="small" value={checkboxValue.brukerFlyttet}>
+                    {checkboxValueToLabel[checkboxValue.brukerFlyttet]}
+                  </Checkbox>
+                  <Checkbox size="small" value={checkboxValue.navUtland}>
+                    {checkboxValueToLabel[checkboxValue.navUtland]}
+                  </Checkbox>
+                  <Checkbox
+                    size="small"
+                    value={checkboxValue.virksomhetsorganisering}
+                  >
+                    {
+                      checkboxValueToLabel[
+                        checkboxValue.virksomhetsorganisering
+                      ]
+                    }
+                  </Checkbox>
+                  <Checkbox size="small" value={checkboxValue.annenIntern}>
+                    {checkboxValueToLabel[checkboxValue.annenIntern]}
+                  </Checkbox>
+                  <Checkbox size="small" value={checkboxValue.annet}>
+                    {checkboxValueToLabel[checkboxValue.annet]}
+                  </Checkbox>
+                </CheckboxGroup>
+              )}
+
+              {selectedCheckboxes.includes(checkboxValue.annenIntern) && (
                 <Textarea
                   maxLength={500}
                   minRows={3}
                   size="small"
                   label={
                     <div>
-                      <Label>{texts.followupQuestion}</Label>
+                      <Label>{texts.utdypendeAnnenIntern}</Label>
                       <BodyShort textColor="subtle" size="small">
                         {texts.feedbackLabelDescription}
                       </BodyShort>
                     </div>
                   }
-                  value={feedback ?? ''}
-                  onChange={(e) => setFeedback(e.target.value)}
+                  value={annenInternOrganisering ?? ''}
+                  onChange={(e) => setAnnenInternOrganisering(e.target.value)}
                 />
               )}
+
+              {selectedCheckboxes.includes(checkboxValue.annet) && (
+                <Textarea
+                  maxLength={500}
+                  minRows={3}
+                  size="small"
+                  label={
+                    <div>
+                      <Label>{texts.utdypendeAnnet}</Label>
+                      <BodyShort textColor="subtle" size="small">
+                        {texts.feedbackLabelDescription}
+                      </BodyShort>
+                    </div>
+                  }
+                  value={annet ?? ''}
+                  onChange={(e) => setAnnet(e.target.value)}
+                />
+              )}
+
               {!!radioValue && (
                 <>
                   {sendFeedback.isError && (

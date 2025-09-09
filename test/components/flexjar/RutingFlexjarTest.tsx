@@ -53,17 +53,72 @@ describe('Flexjar ruting', () => {
     ).to.exist;
   });
 
-  it('renders feedback form content after radiobutton click Ja', () => {
+  it('renders checkboxes and additional feedback form content after radiobutton click Ja', () => {
     renderFlexjar();
     const radio = screen.getByRole('radio', { name: 'Ja' });
     fireEvent.click(radio);
 
-    expect(screen.getByText('Hva er årsaken til/bakgrunnen for flyttingen?')).to
-      .exist;
+    expect(
+      screen.getByText(
+        'Hva er årsaken til/bakgrunnen for flyttingen? (Velg en eller flere)'
+      )
+    ).to.exist;
+
+    const brukerFlyttetCheckbox = screen.getByRole('checkbox', {
+      name: /Bruker har flyttet/,
+      checked: false,
+    });
+    expect(brukerFlyttetCheckbox).to.exist;
+
+    const navUtlandCheckbox = screen.getByRole('checkbox', {
+      name: /Tilhører Nav utland/,
+      checked: false,
+    });
+    expect(navUtlandCheckbox).to.exist;
+
+    const virksomhetsorganiseringCheckbox = screen.getByRole('checkbox', {
+      name: /Virksomhetsorganisering/,
+      checked: false,
+    });
+    expect(virksomhetsorganiseringCheckbox).to.exist;
+
+    const annenInternCheckbox = screen.getByRole('checkbox', {
+      name: /Annen intern organisering/,
+      checked: false,
+    });
+    expect(annenInternCheckbox).to.exist;
+
+    fireEvent.click(annenInternCheckbox);
+
+    expect(
+      screen.getByText(
+        'Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).'
+      )
+    ).to.exist;
     expect(
       screen.getByText('Ikke skriv inn navn eller andre personopplysninger.')
     ).to.exist;
     expect(screen.getByRole('textbox')).to.exist;
+
+    const annetCheckbox = screen.getByRole('checkbox', {
+      name: /Annet/,
+      checked: false,
+    });
+    expect(annetCheckbox).to.exist;
+
+    fireEvent.click(annetCheckbox);
+
+    expect(
+      screen.getByText(
+        'Utdyp gjerne hva "Annet" er og hvorfor det medfører flytting av brukere (valgfritt).'
+      )
+    ).to.exist;
+    expect(
+      screen.queryAllByText(
+        'Ikke skriv inn navn eller andre personopplysninger.'
+      ).length
+    ).to.equal(2);
+    expect(screen.queryAllByRole('textbox').length).to.equal(2);
     expect(screen.getByRole('button', { name: 'Send' })).to.exist;
   });
 
@@ -114,6 +169,59 @@ describe('Flexjar ruting', () => {
     const radio = screen.getByRole('radio', { name: 'Ja' });
     fireEvent.click(radio);
 
+    const brukerFlyttetCheckbox = screen.getByRole('checkbox', {
+      name: /Bruker har flyttet/,
+      checked: false,
+    });
+    fireEvent.click(brukerFlyttetCheckbox);
+
+    const navUtlandCheckbox = screen.getByRole('checkbox', {
+      name: /Tilhører Nav utland/,
+      checked: false,
+    });
+    fireEvent.click(navUtlandCheckbox);
+
+    const sendButton = screen.getByRole('button', {
+      name: 'Send',
+    });
+    fireEvent.click(sendButton);
+
+    const expectedFlexjarDTO: FlexjarFeedbackDTO = {
+      feedbackId: 'Test - Ruting',
+      app: 'syfooversikt',
+      svar: 'Ja',
+      feedback: '[Bruker har flyttet, Tilhører Nav utland]',
+    };
+    const sendFeedbackMutation = queryClient.getMutationCache().getAll()[0];
+    expect(sendFeedbackMutation?.state.variables).to.deep.equal(
+      expectedFlexjarDTO
+    );
+  });
+
+  it('sends feedback to flexjar when radio Ja with options with additional information', async () => {
+    renderFlexjar();
+
+    const radio = screen.getByRole('radio', { name: 'Ja' });
+    fireEvent.click(radio);
+
+    const brukerFlyttetCheckbox = screen.getByRole('checkbox', {
+      name: /Bruker har flyttet/,
+      checked: false,
+    });
+    fireEvent.click(brukerFlyttetCheckbox);
+
+    const navUtlandCheckbox = screen.getByRole('checkbox', {
+      name: /Tilhører Nav utland/,
+      checked: false,
+    });
+    fireEvent.click(navUtlandCheckbox);
+
+    const annetCheckbox = screen.getByRole('checkbox', {
+      name: /Annet/,
+      checked: false,
+    });
+    fireEvent.click(annetCheckbox);
+
     const inputField = screen.getByRole('textbox');
     fireEvent.change(inputField, {
       target: { value: 'Tester innsending Ja' },
@@ -128,7 +236,8 @@ describe('Flexjar ruting', () => {
       feedbackId: 'Test - Ruting',
       app: 'syfooversikt',
       svar: 'Ja',
-      feedback: 'Tester innsending Ja',
+      feedback:
+        '[Bruker har flyttet, Tilhører Nav utland, Annet] - [{Annet: Tester innsending Ja}]',
     };
     const sendFeedbackMutation = queryClient.getMutationCache().getAll()[0];
     expect(sendFeedbackMutation?.state.variables).to.deep.equal(
