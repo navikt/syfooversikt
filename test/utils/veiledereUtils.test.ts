@@ -11,8 +11,6 @@ describe('veiledere utils', () => {
           ident: 'Z999999',
           fornavn: 'Vei',
           etternavn: 'Leder',
-          epost: 'vei.leder@veileder.no',
-          telefonnummer: undefined,
           enabled: true,
         },
       ];
@@ -28,21 +26,17 @@ describe('veiledere utils', () => {
 
     it('Returns list of veiledere with tildelte personer', () => {
       const tildeltVeileder = 'Z999999';
-      const veiledere = [
+      const veiledere: VeilederDTO[] = [
         {
           ident: tildeltVeileder,
           fornavn: 'Vei',
           etternavn: 'Leder',
-          epost: 'vei.leder@veileder.no',
-          telefonnummer: undefined,
           enabled: true,
         },
         {
           ident: 'X000000',
           fornavn: 'Ingen',
           etternavn: 'Oppgaver',
-          epost: 'ingen.oppgaver@veileder.no',
-          telefonnummer: undefined,
           enabled: true,
         },
       ];
