@@ -80,7 +80,7 @@ function fristerInfo(
             selectedTab === TabType.MIN_OVERSIKT ? (
               <Button
                 size="xsmall"
-                icon={<FileTextIcon aria-hidden fontSize="1.5rem" />}
+                icon={<HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />}
                 className="mr-1"
                 onClick={() => {
                   logAktivitetskravvurderingModalOpenEvent();
@@ -88,7 +88,7 @@ function fristerInfo(
                 }}
               />
             ) : (
-              <FileTextIcon aria-hidden fontSize="1.5rem" />
+              <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />
             ),
           date: currentVurdering?.frist,
           tooltip: `${
