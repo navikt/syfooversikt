@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import {
   filterVeiledereWithActiveOppgave,
@@ -13,6 +13,7 @@ import { ActionType } from '@/context/filters/filterContextActions';
 import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
 import { ComboboxOption } from '@navikt/ds-react/cjs/form/combobox/types';
+import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
 const text = {
   searchVeileder: 'Veiledere',
@@ -32,21 +33,14 @@ function toComboboxOption(veileder: VeilederDTO): ComboboxOption {
   };
 }
 
+let lastAktivEnhet: string | undefined;
+
 export default function VeilederFilter(): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
   const personoversiktQuery = usePersonoversiktQuery();
   const { filterState, dispatch } = useFilters();
-  const [selectedVeiledere, setSelectedVeiledere] = useState<string[]>(
-    filterState.selectedVeilederIdents
-  );
-
-  function onVeilederIdentsChange(veilederIdents: string[]) {
-    dispatch({
-      type: ActionType.SetSelectedVeilederIdents,
-      selectedVeilederIdents: veilederIdents,
-    });
-  }
+  const { aktivEnhet } = useAktivEnhet();
 
   const veiledereSorted = sortVeiledereBySurnameAsc(
     filterVeiledereWithActiveOppgave(
@@ -56,18 +50,56 @@ export default function VeilederFilter(): ReactElement {
     aktivVeilederQuery.data?.ident || ''
   );
 
-  const selectedVeiledereOptions = veiledereSorted
-    .filter((veileder) => selectedVeiledere.includes(veileder.ident))
-    .map(toComboboxOption);
+  useEffect(() => {
+    const enhetChanged = lastAktivEnhet && lastAktivEnhet !== aktivEnhet;
+    lastAktivEnhet = aktivEnhet;
+
+    if (enhetChanged) {
+      if (filterState.selectedVeilederIdents.length > 0) {
+        dispatch({
+          type: ActionType.SetSelectedVeilederIdents,
+          selectedVeilederIdents: [],
+        });
+      }
+      return;
+    }
+
+    if (filterState.selectedVeilederIdents.length > 0) {
+      const availableIdents = new Set(veiledereSorted.map((v) => v.ident));
+      const anyStillAvailable = filterState.selectedVeilederIdents.some((id) =>
+        availableIdents.has(id)
+      );
+      if (!anyStillAvailable) {
+        dispatch({
+          type: ActionType.SetSelectedVeilederIdents,
+          selectedVeilederIdents: [],
+        });
+      }
+    }
+  }, [
+    aktivEnhet,
+    veiledereSorted,
+    filterState.selectedVeilederIdents,
+    dispatch,
+  ]);
 
   function onToggleSelected(option: string, isSelected: boolean) {
+    const current = filterState.selectedVeilederIdents;
     const updatedSelectedVeiledere = isSelected
-      ? [...selectedVeiledere, option]
-      : selectedVeiledere.filter((veileder) => veileder !== option);
+      ? [...current, option]
+      : current.filter((veileder) => veileder !== option);
 
-    setSelectedVeiledere(updatedSelectedVeiledere);
-    onVeilederIdentsChange(updatedSelectedVeiledere);
+    dispatch({
+      type: ActionType.SetSelectedVeilederIdents,
+      selectedVeilederIdents: updatedSelectedVeiledere,
+    });
   }
+
+  const selectedVeiledereOptions = veiledereSorted
+    .filter((veileder) =>
+      filterState.selectedVeilederIdents.includes(veileder.ident)
+    )
+    .map(toComboboxOption);
 
   return (
     <UNSAFE_Combobox
