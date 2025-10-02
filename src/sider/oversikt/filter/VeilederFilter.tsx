@@ -48,13 +48,30 @@ export default function VeilederFilter(): ReactElement {
     });
   }
 
-  const veiledereSorted = sortVeiledereBySurnameAsc(
-    filterVeiledereWithActiveOppgave(
+  function getVeiledereSorted(): VeilederDTO[] {
+    const selectedVeiledereInFilter = veiledereQuery.data?.filter((veileder) =>
+      filterState.selectedVeilederIdents.includes(veileder.ident)
+    );
+    const veiledereWithActiveOppgave = filterVeiledereWithActiveOppgave(
       veiledereQuery.data || [],
       personoversiktQuery.data
-    ),
-    aktivVeilederQuery.data?.ident || ''
-  );
+    );
+    const allVeiledere = selectedVeiledereInFilter
+      ? [
+          ...new Set([
+            ...selectedVeiledereInFilter,
+            ...veiledereWithActiveOppgave,
+          ]),
+        ]
+      : veiledereWithActiveOppgave;
+
+    return sortVeiledereBySurnameAsc(
+      allVeiledere,
+      aktivVeilederQuery.data?.ident || ''
+    );
+  }
+
+  const veiledereSorted = getVeiledereSorted();
 
   const selectedVeiledereOptions = veiledereSorted
     .filter((veileder) => selectedVeiledere.includes(veileder.ident))
