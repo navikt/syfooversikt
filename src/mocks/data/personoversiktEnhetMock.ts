@@ -6,12 +6,11 @@ import {
   Oppfolgingsgrunn,
   OppfolgingsoppgaveDTO,
   PersonOversiktStatusDTO,
-  PersonOversiktUbehandletStatusDTO,
 } from '../../api/types/personoversiktTypes';
 import { veilederMock } from './veilederMock';
 import dayjs from 'dayjs';
 
-const behandletPerson: PersonOversiktUbehandletStatusDTO = {
+const behandletPerson = {
   oppfolgingsplanLPSBistandUbehandlet: null,
   motebehovUbehandlet: null,
   dialogmotekandidat: undefined,

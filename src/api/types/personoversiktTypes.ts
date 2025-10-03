@@ -44,7 +44,14 @@ export const avventVurderingArsakTexts: Record<AvventVurderingArsak, string> = {
   [AvventVurderingArsak.ANNET]: 'Annet',
 };
 
-export interface PersonOversiktUbehandletStatusDTO {
+export interface PersonOversiktStatusDTO {
+  fnr: string;
+  navn: string;
+  fodselsdato: Date;
+  enhet: string;
+  veilederIdent: string | null;
+  motestatus: MoteStatusType | undefined;
+  latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   motebehovUbehandlet: boolean | null;
   dialogmotesvarUbehandlet: boolean;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
@@ -59,15 +66,21 @@ export interface PersonOversiktUbehandletStatusDTO {
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
 }
 
-export interface PersonOversiktStatusDTO
-  extends PersonOversiktUbehandletStatusDTO {
-  fnr: string;
-  navn: string;
-  fodselsdato: Date;
-  enhet: string;
-  veilederIdent: string | null;
-  motestatus: MoteStatusType | undefined;
-  latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
+export function isUbehandlet(personStatus: PersonOversiktStatusDTO): boolean {
+  return (
+    !!personStatus.motebehovUbehandlet ||
+    personStatus.dialogmotesvarUbehandlet ||
+    !!personStatus.oppfolgingsplanLPSBistandUbehandlet ||
+    !!personStatus.dialogmotekandidat ||
+    personStatus.behandlerdialogUbehandlet ||
+    personStatus.behandlerBerOmBistandUbehandlet ||
+    !!personStatus.arbeidsuforhetvurdering ||
+    !!personStatus.friskmeldingTilArbeidsformidlingFom ||
+    !!personStatus.senOppfolgingKandidat ||
+    !!personStatus.oppfolgingsoppgave ||
+    !!personStatus.aktivitetskravvurdering ||
+    !!personStatus.manglendeMedvirkning
+  );
 }
 
 export interface OppfolgingstilfelleDTO {

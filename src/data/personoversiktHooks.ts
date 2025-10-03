@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  isUbehandlet,
   PersonOversiktStatusDTO,
-  PersonOversiktUbehandletStatusDTO,
 } from '@/api/types/personoversiktTypes';
 import { get, post } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
@@ -14,35 +14,13 @@ import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
 import { SokDTO } from '@/api/types/sokDTO';
 
-const isUbehandlet = (ubehandletStatus: PersonOversiktUbehandletStatusDTO) => {
-  return Object.values(ubehandletStatus).some((value) => value);
-};
-
-const filteredPersonOversiktStatusList = (
+function filterIsUbehandlet(
   personOversiktStatusList: PersonOversiktStatusDTO[]
-): PersonOversiktStatusDTO[] => {
-  return personOversiktStatusList.filter((personOversiktStatus) => {
-    const ubehandletStatus: PersonOversiktUbehandletStatusDTO = {
-      behandlerdialogUbehandlet: personOversiktStatus.behandlerdialogUbehandlet,
-      dialogmotekandidat: personOversiktStatus.dialogmotekandidat,
-      dialogmotesvarUbehandlet: personOversiktStatus.dialogmotesvarUbehandlet,
-      motebehovUbehandlet: personOversiktStatus.motebehovUbehandlet,
-      oppfolgingsplanLPSBistandUbehandlet:
-        personOversiktStatus.oppfolgingsplanLPSBistandUbehandlet,
-      behandlerBerOmBistandUbehandlet:
-        personOversiktStatus.behandlerBerOmBistandUbehandlet,
-      arbeidsuforhetvurdering: personOversiktStatus.arbeidsuforhetvurdering,
-      friskmeldingTilArbeidsformidlingFom:
-        personOversiktStatus.friskmeldingTilArbeidsformidlingFom,
-      senOppfolgingKandidat: personOversiktStatus.senOppfolgingKandidat,
-      oppfolgingsoppgave: personOversiktStatus.oppfolgingsoppgave,
-      aktivitetskravvurdering: personOversiktStatus.aktivitetskravvurdering,
-      manglendeMedvirkning: personOversiktStatus.manglendeMedvirkning,
-    };
-
-    return isUbehandlet(ubehandletStatus);
-  });
-};
+): PersonOversiktStatusDTO[] {
+  return personOversiktStatusList.filter((personStatus) =>
+    isUbehandlet(personStatus)
+  );
+}
 
 export const personoversiktQueryKeys = {
   personoversikt: ['personoversikt'],
@@ -83,10 +61,9 @@ export const usePersonoversiktQuery = () => {
 
   return {
     ...query,
-    data: useMemo(
-      () => (query.data ? filteredPersonOversiktStatusList(query.data) : []),
-      [query.data]
-    ),
+    data: useMemo(() => (query.data ? filterIsUbehandlet(query.data) : []), [
+      query.data,
+    ]),
   };
 };
 
