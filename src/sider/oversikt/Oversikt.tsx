@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  PersonregisterData,
   PersonregisterState,
+  PersonSkjermingskode,
+  toPersonData,
 } from '@/api/types/personregisterTypes';
-import { toPersonData } from '@/utils/toPersondata';
 import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
 import SykmeldtFilter from '@/sider/oversikt/filter/SykmeldtFilter';
 import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
@@ -26,12 +26,12 @@ import FristFilter from '@/sider/oversikt/filter/FristFilter';
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
-  personregisterData: PersonregisterData[];
+  personSkjermingskode: PersonSkjermingskode[];
 }
 
 export default function Oversikt({
   personoversiktData,
-  personregisterData,
+  personSkjermingskode,
 }: Props) {
   const aktivVeilederQuery = useAktivVeilederQuery();
   const { filterState } = useFilters();
@@ -39,7 +39,7 @@ export default function Oversikt({
 
   const personData: PersonregisterState = toPersonData(
     personoversiktData,
-    personregisterData
+    personSkjermingskode
   );
 
   const eventFilterValue =

@@ -1,38 +1,41 @@
 import { SYFOPERSON_ROOT } from '@/apiConstants';
 import { useQuery } from '@tanstack/react-query';
 import { post } from '@/api/axios';
-import { PersonregisterData } from '@/api/types/personregisterTypes';
-import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { PersonSkjermingskode } from '@/api/types/personregisterTypes';
+import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { ApiErrorException } from '@/api/errors';
 import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { useAsyncError } from '@/data/useAsyncError';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 
-export const personregisterQueryKeys = {
-  personregister: (enhetId: string | undefined) => ['personregister', enhetId],
+export const personSkjermingskodeQueryKeys = {
+  personSkjermingskode: (enhetId: string | undefined) => [
+    'personSkjermingskode',
+    enhetId,
+  ],
 };
 
-export const usePersonregisterQuery = () => {
+export const useGetPersonSkjermingskodeQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
-  const { data } = usePersonoversiktQuery();
+  const { data } = useGetPersonstatusQuery();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
   const fnrForPersonerListe = data.map((person) => ({ fnr: person.fnr }));
 
-  const fetchPersonregister = () => {
-    const personregisterData = post<PersonregisterData[]>(
+  const fetchPersonSkjermingskode = () => {
+    const personSkjermingskode = post<PersonSkjermingskode[]>(
       `${SYFOPERSON_ROOT}/person/info`,
       fnrForPersonerListe
     );
 
-    return personregisterData || [];
+    return personSkjermingskode || [];
   };
 
   return useQuery({
-    queryKey: personregisterQueryKeys.personregister(aktivEnhet),
-    queryFn: fetchPersonregister,
+    queryKey: personSkjermingskodeQueryKeys.personSkjermingskode(aktivEnhet),
+    queryFn: fetchPersonSkjermingskode,
     enabled: !!aktivEnhet && fnrForPersonerListe.length > 0,
     meta: {
       handleError: (error: Error) => {

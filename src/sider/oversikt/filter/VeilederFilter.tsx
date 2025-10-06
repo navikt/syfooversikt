@@ -10,7 +10,7 @@ import {
 } from '@/data/veiledereQueryHooks';
 import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
-import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
 import { ComboboxOption } from '@navikt/ds-react/cjs/form/combobox/types';
 
@@ -35,7 +35,7 @@ function toComboboxOption(veileder: VeilederDTO): ComboboxOption {
 export default function VeilederFilter(): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const aktivVeilederQuery = useAktivVeilederQuery();
-  const personoversiktQuery = usePersonoversiktQuery();
+  const getPersonstatusQuery = useGetPersonstatusQuery();
   const { filterState, dispatch } = useFilters();
   const [selectedVeiledere, setSelectedVeiledere] = useState<string[]>(
     filterState.selectedVeilederIdents
@@ -54,7 +54,7 @@ export default function VeilederFilter(): ReactElement {
     );
     const veiledereWithActiveOppgave = filterVeiledereWithActiveOppgave(
       veiledereQuery.data || [],
-      personoversiktQuery.data
+      getPersonstatusQuery.data
     );
     const allVeiledere = selectedVeiledereInFilter
       ? [

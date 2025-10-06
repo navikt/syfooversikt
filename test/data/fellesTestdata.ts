@@ -30,7 +30,6 @@ export const personregister: PersonregisterState = {
     harMotebehovUbehandlet: true,
     harDialogmotesvar: true,
     skjermingskode: testdata.skjermingskode.ingen,
-    markert: false,
     tildeltVeilederIdent: 'Z999999',
   } as PersonData,
   [testdata.fnr2]: {
@@ -38,7 +37,6 @@ export const personregister: PersonregisterState = {
     harMotebehovUbehandlet: false,
     harDialogmotesvar: false,
     skjermingskode: testdata.skjermingskode.egenAnsatt,
-    markert: false,
     tildeltVeilederIdent: 'Z999999',
   } as PersonData,
 };

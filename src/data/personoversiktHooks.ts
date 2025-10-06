@@ -30,7 +30,7 @@ export const personoversiktQueryKeys = {
   ],
 };
 
-export const usePersonoversiktQuery = () => {
+export const useGetPersonstatusQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();

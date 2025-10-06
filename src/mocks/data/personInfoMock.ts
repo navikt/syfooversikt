@@ -1,6 +1,6 @@
-import { PersonregisterData } from '@/api/types/personregisterTypes';
+import { PersonSkjermingskode } from '@/api/types/personregisterTypes';
 
-export const personInfoMock: PersonregisterData[] = [
+export const personInfoMock: PersonSkjermingskode[] = [
   {
     fnr: '01999911111',
     skjermingskode: 'INGEN',

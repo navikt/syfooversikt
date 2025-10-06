@@ -7,7 +7,7 @@ import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
 import { veiledereQueryKeys } from '@/data/veiledereQueryHooks';
 import { veiledereMock } from '@/mocks/data/veiledereMock';
-import { personregisterQueryKeys } from '@/data/personregisterHooks';
+import { personSkjermingskodeQueryKeys } from '@/data/personregisterHooks';
 import { personInfoMock } from '@/mocks/data/personInfoMock';
 
 export const testQueryClient = () =>
@@ -30,7 +30,9 @@ export const getQueryClientWithMockdata = (): QueryClient => {
     () => personoversiktEnhetMock
   );
   queryClient.setQueryData(
-    personregisterQueryKeys.personregister(aktivEnhetMock.aktivEnhet),
+    personSkjermingskodeQueryKeys.personSkjermingskode(
+      aktivEnhetMock.aktivEnhet
+    ),
     () => personInfoMock
   );
   queryClient.setQueryData(

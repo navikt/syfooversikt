@@ -4,8 +4,8 @@ import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { toPersonData } from '@/utils/toPersondata';
 import { PersonRadVirksomhetColumn } from '@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn';
+import { toPersonData } from '@/api/types/personregisterTypes';
 
 const texts = {
   noResults: {
