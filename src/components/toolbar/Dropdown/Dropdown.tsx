@@ -5,7 +5,7 @@ import { VeilederInputButtons } from './VeilederInputButtons';
 import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 
-interface DropdownProps {
+interface Props {
   buttonTexts: DropdownButtonTexts;
   cancelButtonHandler: () => void;
   chooseButtonHandler: (chosenVeilederIdent: string) => void;
@@ -49,7 +49,7 @@ const NoVeilederChosenErrorMessage = styled.p`
   font-weight: bold;
 `;
 
-export const Dropdown = (props: DropdownProps): ReactElement => {
+export default function Dropdown(props: Props): ReactElement {
   const {
     buttonTexts,
     cancelButtonHandler,
@@ -65,7 +65,6 @@ export const Dropdown = (props: DropdownProps): ReactElement => {
     placeholder,
     buttonType,
   } = props;
-  const isInputGiven = input.length > 0;
 
   return (
     <DropdownPanel className="tildelVeileder__dropdownPanel">
@@ -83,7 +82,7 @@ export const Dropdown = (props: DropdownProps): ReactElement => {
           onChangeHandler={buttonChangeHandler}
           filteredVeiledere={filteredVeiledere}
           selectedVeileders={selectedVeileders}
-          isInputGiven={isInputGiven}
+          isInputGiven={input.length > 0}
           buttonType={buttonType}
         />
       </ButtonPanelGroup>
@@ -103,4 +102,4 @@ export const Dropdown = (props: DropdownProps): ReactElement => {
       )}
     </DropdownPanel>
   );
-};
+}

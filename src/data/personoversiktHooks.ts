@@ -13,12 +13,14 @@ import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
 import { SokDTO } from '@/api/types/sokDTO';
+import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 function filterIsUbehandlet(
-  personOversiktStatusList: PersonOversiktStatusDTO[]
+  personOversiktStatusList: PersonOversiktStatusDTO[],
+  isKartleggingssporsmalEnabled: boolean
 ): PersonOversiktStatusDTO[] {
   return personOversiktStatusList.filter((personStatus) =>
-    isUbehandlet(personStatus)
+    isUbehandlet(personStatus, isKartleggingssporsmalEnabled)
   );
 }
 
@@ -32,6 +34,7 @@ export const personoversiktQueryKeys = {
 
 export const useGetPersonstatusQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
+  const { toggles } = useGetFeatureToggles();
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
@@ -61,9 +64,16 @@ export const useGetPersonstatusQuery = () => {
 
   return {
     ...query,
-    data: useMemo(() => (query.data ? filterIsUbehandlet(query.data) : []), [
-      query.data,
-    ]),
+    data: useMemo(
+      () =>
+        query.data
+          ? filterIsUbehandlet(
+              query.data,
+              toggles.isKartleggingssporsmalEnabled
+            )
+          : [],
+      [query.data, toggles.isKartleggingssporsmalEnabled]
+    ),
   };
 };
 
