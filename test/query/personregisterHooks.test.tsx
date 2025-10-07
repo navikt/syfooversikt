@@ -4,8 +4,8 @@ import { stubModiaContext } from '../stubs/stubModiaContext';
 import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
 import { stubPersonregister } from '../stubs/stubPersonregister';
-import { usePersonregisterQuery } from '@/data/personregisterHooks';
-import { PersonregisterData } from '@/api/types/personregisterTypes';
+import { useGetPersonSkjermingskodeQuery } from '@/data/personregisterHooks';
+import { PersonSkjermingskode } from '@/api/types/personregisterTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
 import { NotificationProvider } from '@/context/notification/NotificationContext';
@@ -35,13 +35,13 @@ describe('personregisterHooks tests', () => {
       </NotificationProvider>
     );
 
-    const { result } = renderHook(() => usePersonregisterQuery(), {
+    const { result } = renderHook(() => useGetPersonSkjermingskodeQuery(), {
       wrapper,
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    const actual: PersonregisterData[] | undefined = result.current.data;
+    const actual: PersonSkjermingskode[] | undefined = result.current.data;
 
     expect(actual).to.not.be.undefined;
     if (actual) {

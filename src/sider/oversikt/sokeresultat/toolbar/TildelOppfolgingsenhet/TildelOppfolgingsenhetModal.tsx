@@ -16,7 +16,7 @@ import {
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
-import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
 const text = {
@@ -90,7 +90,7 @@ export default function TildelOppfolgingsenhetModal({
   const chosenOppfolgingsenhet = getMuligeOppfolgingsenheter?.data?.find(
     (enhet) => enhet.enhetId === oppfolgingsenhet
   );
-  const { data: personoversikt } = usePersonoversiktQuery();
+  const { data: personoversikt } = useGetPersonstatusQuery();
   const selectedPersonerInfo = personoversikt.filter((person) =>
     selectedPersoner.includes(person.fnr)
   );

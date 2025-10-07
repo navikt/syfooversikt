@@ -2,6 +2,7 @@ import {
   ArbeidsuforhetvurderingDTO,
   OppfolgingsoppgaveDTO,
   OppfolgingstilfelleDTO,
+  PersonOversiktStatusDTO,
   SenOppfolgingKandidatDTO,
 } from './personoversiktTypes';
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
@@ -15,8 +16,6 @@ export interface PersonData {
   harDialogmotesvar: boolean;
   harOppfolgingsplanLPSBistandUbehandlet: boolean;
   skjermingskode: Skjermingskode;
-  markert: boolean;
-  tildeltEnhetId: string;
   tildeltVeilederIdent: string;
   dialogmotekandidat?: boolean;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
@@ -34,12 +33,42 @@ export interface PersonregisterState {
   [fnr: string]: PersonData;
 }
 
-export interface PersonHendelseData {
+export interface PersonSkjermingskode {
   fnr: string;
   skjermingskode: Skjermingskode;
 }
 
-export interface PersonregisterData {
-  fnr: string;
-  skjermingskode: Skjermingskode;
+export function toPersonData(
+  personoversiktData: PersonOversiktStatusDTO[],
+  personSkjermingskode: PersonSkjermingskode[]
+): PersonregisterState {
+  const personDataList: Record<string, PersonData> = {};
+
+  personoversiktData.forEach((person) => {
+    const matchingPersonRegister = personSkjermingskode?.find(
+      (reg) => reg.fnr === person.fnr
+    );
+    personDataList[person.fnr] = {
+      navn: person.navn || '',
+      harMotebehovUbehandlet: person.motebehovUbehandlet || false,
+      harDialogmotesvar: person.dialogmotesvarUbehandlet,
+      harOppfolgingsplanLPSBistandUbehandlet:
+        person.oppfolgingsplanLPSBistandUbehandlet || false,
+      skjermingskode: matchingPersonRegister?.skjermingskode || 'INGEN',
+      tildeltVeilederIdent: person.veilederIdent || '',
+      dialogmotekandidat: person?.dialogmotekandidat,
+      latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
+      harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
+      behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,
+      arbeidsuforhetvurdering: person.arbeidsuforhetvurdering,
+      friskmeldingTilArbeidsformidlingFom:
+        person.friskmeldingTilArbeidsformidlingFom,
+      senOppfolgingKandidat: person.senOppfolgingKandidat,
+      oppfolgingsoppgave: person.oppfolgingsoppgave,
+      aktivitetskravvurdering: person.aktivitetskravvurdering,
+      manglendeMedvirkning: person.manglendeMedvirkning,
+    };
+  });
+
+  return personDataList;
 }

@@ -13,7 +13,6 @@ describe('personDataUtils', () => {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
         skjermingskode: testdata.skjermingskode.egenAnsatt,
-        markert: false,
       } as PersonData;
 
       const returnertString = getReadableSkjermingskode(person.skjermingskode);
@@ -25,7 +24,6 @@ describe('personDataUtils', () => {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,
         skjermingskode: testdata.skjermingskode.ingen,
-        markert: false,
       } as PersonData;
 
       const returnertString = getReadableSkjermingskode(person.skjermingskode);

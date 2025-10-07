@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { stubModiaContext } from '../stubs/stubModiaContext';
 import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
 import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
-import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
 import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
@@ -34,7 +34,7 @@ describe('personoversiktHooks tests', () => {
 
     stubPersonoversikt();
 
-    const { result } = renderHook(() => usePersonoversiktQuery(), {
+    const { result } = renderHook(() => useGetPersonstatusQuery(), {
       wrapper,
     });
 
@@ -50,7 +50,7 @@ describe('personoversiktHooks tests', () => {
     stubModiaContext();
     stubPersonoversikt();
 
-    const { result } = renderHook(() => usePersonoversiktQuery(), {
+    const { result } = renderHook(() => useGetPersonstatusQuery(), {
       wrapper,
     });
 

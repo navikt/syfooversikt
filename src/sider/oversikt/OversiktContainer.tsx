@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
-import { usePersonregisterQuery } from '@/data/personregisterHooks';
-import { usePersonoversiktQuery } from '@/data/personoversiktHooks';
+import { useGetPersonSkjermingskodeQuery } from '@/data/personregisterHooks';
+import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
 import NavigationBar from '@/components/NavigationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
@@ -34,8 +34,8 @@ function toReadableString(overviewTabType: TabType): string {
 }
 
 export default function OversiktContainer(): ReactElement {
-  const personregisterQuery = usePersonregisterQuery();
-  const personoversiktQuery = usePersonoversiktQuery();
+  const personregisterQuery = useGetPersonSkjermingskodeQuery();
+  const getPersonstatusQuery = useGetPersonstatusQuery();
   const { toggles } = useFeatureToggles();
   const { selectedTab } = useTabType();
   const [feedbackArenaDate] = useLocalStorageState<Date | null>(
@@ -64,18 +64,18 @@ export default function OversiktContainer(): ReactElement {
       <div className="flex flex-col mx-8">
         <NavigationBar />
         <NotificationBar />
-        {personoversiktQuery.isLoading ? (
+        {getPersonstatusQuery.isLoading ? (
           <AppSpinner />
         ) : (
           <Oversikt
-            personregisterData={personregisterQuery.data || []}
-            personoversiktData={personoversiktQuery.data || []}
+            personSkjermingskode={personregisterQuery.data || []}
+            personoversiktData={getPersonstatusQuery.data || []}
           />
         )}
-        {showArenaFlexjar && personoversiktQuery.isSuccess && (
+        {showArenaFlexjar && getPersonstatusQuery.isSuccess && (
           <ArenaFlexjar side={toReadableString(selectedTab)} />
         )}
-        {showRutingFlexjar && personoversiktQuery.isSuccess && (
+        {showRutingFlexjar && getPersonstatusQuery.isSuccess && (
           <RutingFlexjar side={toReadableString(selectedTab)} />
         )}
       </div>

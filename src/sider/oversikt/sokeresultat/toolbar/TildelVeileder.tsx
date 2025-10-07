@@ -1,6 +1,8 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
-import { filterVeiledereOnInput } from '@/utils/assignVeilederUtils';
-import { sortVeiledereBySurnameAsc } from '@/utils/veiledereUtils';
+import {
+  sortVeiledereAlphabetically,
+  sortVeiledereBySurnameAsc,
+} from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
 import { Dropdown } from '@/components/toolbar/Dropdown/Dropdown';
@@ -32,6 +34,25 @@ const lagListe = (
     fnr,
   }));
 };
+
+function filterVeiledereOnInput(
+  veiledere: VeilederDTO[],
+  lowerCaseInput: string
+): VeilederDTO[] {
+  const filteredVeiledere = veiledere.filter(
+    (veileder: VeilederDTO) =>
+      lowerCaseInput === '' ||
+      veileder.ident.toLowerCase().includes(lowerCaseInput) ||
+      veileder.fornavn.toLowerCase().includes(lowerCaseInput) ||
+      veileder.etternavn.toLowerCase().includes(lowerCaseInput)
+  );
+
+  const isInputGiven = lowerCaseInput.length > 0;
+  if (isInputGiven) {
+    return sortVeiledereAlphabetically(filteredVeiledere);
+  }
+  return filteredVeiledere;
+}
 
 export default function TildelVeileder({
   selectedPersoner,

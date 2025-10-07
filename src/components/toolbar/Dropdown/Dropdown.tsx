@@ -2,7 +2,6 @@ import React, { ChangeEvent, ReactElement } from 'react';
 import styled from 'styled-components';
 import InputWithSearchIcon from '../../InputWithSearchIcon';
 import { VeilederInputButtons } from './VeilederInputButtons';
-import { isInputGiven } from '@/utils/assignVeilederUtils';
 import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 
@@ -66,6 +65,7 @@ export const Dropdown = (props: DropdownProps): ReactElement => {
     placeholder,
     buttonType,
   } = props;
+  const isInputGiven = input.length > 0;
 
   return (
     <DropdownPanel className="tildelVeileder__dropdownPanel">
@@ -83,7 +83,7 @@ export const Dropdown = (props: DropdownProps): ReactElement => {
           onChangeHandler={buttonChangeHandler}
           filteredVeiledere={filteredVeiledere}
           selectedVeileders={selectedVeileders}
-          isInputGiven={isInputGiven(input)}
+          isInputGiven={isInputGiven}
           buttonType={buttonType}
         />
       </ButtonPanelGroup>
