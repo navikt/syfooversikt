@@ -1,6 +1,3 @@
-import { Table } from '@navikt/ds-react';
-import React from 'react';
-import { PersonData } from '@/api/types/personregisterTypes';
 import {
   AktivitetskravStatus,
   avventVurderingArsakTexts,
@@ -8,13 +5,10 @@ import {
   oppfolgingsgrunnToString,
   SenOppfolgingKandidatDTO,
 } from '@/api/types/personoversiktTypes';
-import { isPast } from '@/utils/dateUtils';
+import { PersonData } from '@/api/types/personregisterTypes';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
+import { isPast } from '@/utils/dateUtils';
 import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
-
-interface Props {
-  personData: PersonData;
-}
 
 function mapAktivitetskravStatus(personData: PersonData): string {
   const status = personData?.aktivitetskravvurdering?.status;
@@ -135,7 +129,7 @@ export function getHendelser(personData: PersonData): string[] {
     hendelser.push(`Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`);
   }
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
-    hendelser.push('Oppfølgingsplan');
+    hendelser.push('Oppfølgingsplan'); //TODO: Hva skal denne egt gjøre?
   }
   if (personData.senOppfolgingKandidat) {
     hendelser.push(
@@ -151,20 +145,6 @@ export function getHendelser(personData: PersonData): string[] {
       )}`
     );
   }
-  if (personData.isAktivKartleggingssporsmalVurdering) {
-    hendelser.push('Svart på kartleggingsspørsmål');
-  }
-  return hendelser;
-}
 
-export default function HendelseColumn({ personData }: Props) {
-  return (
-    <Table.DataCell textSize="small" className="[&>*:not(:last-child)]:mb-1.5">
-      {getHendelser(personData).map((status, index) => (
-        <p key={index} className="m-0">
-          {status}
-        </p>
-      ))}
-    </Table.DataCell>
-  );
+  return hendelser;
 }

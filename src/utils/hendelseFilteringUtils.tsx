@@ -11,7 +11,7 @@ import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { isFuture, isPast, isToday } from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
-import { getHendelser } from '@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn';
+import { getHendelser } from './hendelseColumnUtils';
 
 export class Filterable<T> {
   value: T;
@@ -198,9 +198,6 @@ function isPersonVisible(
       personData.harOppfolgingsplanLPSBistandUbehandlet) ||
     (filters.dialogmotekandidat && personData.dialogmotekandidat === true) ||
     (filters.dialogmotesvar && personData.harDialogmotesvar) ||
-    (filters.isAktivitetskravChecked &&
-      personData.aktivitetskravvurdering !== null) ||
-    (filters.isAktivitetskravVurderStansChecked && isExpiredVarsel) ||
     (filters.behandlerdialog && personData.harBehandlerdialogUbehandlet) ||
     (filters.oppfolgingsoppgave && personData.oppfolgingsoppgave !== null) ||
     (filters.behandlerBerOmBistand &&
@@ -212,18 +209,22 @@ function isPersonVisible(
     (filters.isSenOppfolgingChecked && !!personData.senOppfolgingKandidat) ||
     (filters.isManglendeMedvirkningChecked &&
       !!personData.manglendeMedvirkning) ||
-    (filters.isKartleggingssporsmalChecked &&
-      personData.isAktivKartleggingssporsmalVurdering)
+    (filters.isAktivitetskravChecked &&
+      personData.aktivitetskravvurdering !== null) ||
+    (filters.isAktivitetskravVurderStansChecked && isExpiredVarsel)
   );
 }
 
 export function filterHendelser(
   personregister: PersonregisterState,
-  filter: HendelseTypeFilter
+  filter?: HendelseTypeFilter
 ): PersonregisterState {
+  if (!filter) return personregister;
+
   const erTomtFilter = Object.entries(filter).every(
     ([, filterValue]) => filterValue === false
   );
+
   if (erTomtFilter) {
     return personregister;
   }

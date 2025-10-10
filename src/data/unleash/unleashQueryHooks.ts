@@ -13,7 +13,7 @@ export const unleashQueryKeys = {
   ],
 };
 
-export function useGetFeatureToggles() {
+export const useFeatureToggles = () => {
   const { data: veilederInfo } = useAktivVeilederQuery();
   const { aktivEnhet } = useAktivEnhet();
   const veilederIdent = veilederInfo?.ident || '';
@@ -40,4 +40,4 @@ export function useGetFeatureToggles() {
     isLoading,
     isSuccess,
   };
-}
+};

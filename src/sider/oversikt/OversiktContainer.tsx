@@ -9,7 +9,7 @@ import { EventType } from '@/utils/amplitude';
 import { ArenaFlexjar } from '@/components/flexjar/ArenaFlexjar';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
-import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
 import NotificationBar from '@/components/error/NotificationBar';
@@ -36,7 +36,7 @@ function toReadableString(overviewTabType: TabType): string {
 export default function OversiktContainer(): ReactElement {
   const personregisterQuery = useGetPersonSkjermingskodeQuery();
   const getPersonstatusQuery = useGetPersonstatusQuery();
-  const { toggles } = useGetFeatureToggles();
+  const { toggles } = useFeatureToggles();
   const { selectedTab } = useTabType();
   const [feedbackArenaDate] = useLocalStorageState<Date | null>(
     StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,

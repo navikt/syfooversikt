@@ -121,12 +121,6 @@ describe('HendelseTypeFilter', () => {
       checked: false,
     });
     expect(manglendeMedvirkningCheckbox).to.exist;
-
-    const kartleggingssporsmalCheckbox = screen.getByRole('checkbox', {
-      name: /Kartleggingsspørsmål/,
-      checked: false,
-    });
-    expect(kartleggingssporsmalCheckbox).to.exist;
   });
   it('Viser ikke ufordelte brukere-checkboks i min oversikt', () => {
     renderHendelseFilter(routes.MIN_OVERSIKT);
