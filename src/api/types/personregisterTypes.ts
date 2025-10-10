@@ -27,6 +27,7 @@ export interface PersonData {
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
+  isAktivKartleggingssporsmalVurdering: boolean;
 }
 
 export interface PersonregisterState {
@@ -67,6 +68,8 @@ export function toPersonData(
       oppfolgingsoppgave: person.oppfolgingsoppgave,
       aktivitetskravvurdering: person.aktivitetskravvurdering,
       manglendeMedvirkning: person.manglendeMedvirkning,
+      isAktivKartleggingssporsmalVurdering:
+        person.isAktivKartleggingssporsmalVurdering,
     };
   });
 

@@ -34,6 +34,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     oppfolgingsoppgave: null,
     aktivitetskravvurdering: null,
     manglendeMedvirkning: null,
+    isAktivKartleggingssporsmalVurdering: false,
   };
 };
 
@@ -51,6 +52,7 @@ const defaulthendelseFilter: HendelseTypeFilter = {
   isAktivitetskravChecked: false,
   isAktivitetskravVurderStansChecked: false,
   isManglendeMedvirkningChecked: false,
+  isKartleggingssporsmalChecked: false,
 };
 
 describe('hendelseFilteringUtils', () => {

@@ -7,7 +7,7 @@ import PaginationContainer, {
 } from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
 import TildelOppfolgingsenhetModal from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal';
 import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton';
-import { useFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
 import { Alert } from '@navikt/ds-react';
 
@@ -43,7 +43,7 @@ export interface PageInfoType {
 }
 
 export default function Toolbar(props: Props) {
-  const { toggles } = useFeatureToggles();
+  const { toggles } = useGetFeatureToggles();
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     firstVisibleIndex: 0,
     lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,
