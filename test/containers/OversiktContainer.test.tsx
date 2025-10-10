@@ -62,6 +62,7 @@ describe('OversiktContainer', () => {
 
   afterEach(() => {
     localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
+    sessionStorage.clear();
   });
 
   it('Skal vise notifikasjon ved feilende apikall', async () => {
@@ -161,7 +162,6 @@ describe('OversiktContainer', () => {
         name: 'Mulder, Fox',
       });
       await userEvent.click(formOption);
-      await screen.findByRole('button', { name: 'Mulder, Fox slett' });
 
       const table = await screen.findByRole('table');
       expect(table).to.exist;
@@ -172,6 +172,33 @@ describe('OversiktContainer', () => {
       expect(within(table).getByText('Heisen, Gulv')).to.exist;
       expect(within(table).getByText('Sengestad, Stol')).to.exist;
       expect(within(table).getByText('Plantesen, Bord')).to.exist;
+    });
+  });
+
+  describe('HendelseFilter', () => {
+    it('should display the correct options', async () => {
+      renderOversikten();
+
+      const table = await screen.findByRole('table');
+      expect(table).to.exist;
+
+      const kartleggingssporsmalCheckbox = screen.getByRole('checkbox', {
+        name: /Kartleggingsspørsmål/,
+        checked: false,
+      });
+
+      const allRowsBeforeFilter = within(table).getAllByRole('row');
+      const dataRowsCountBeforeFilter = allRowsBeforeFilter.length - 1; // Exclude header row
+
+      await userEvent.click(kartleggingssporsmalCheckbox);
+
+      const allRows = within(table).getAllByRole('row');
+      const dataRowsCount = allRows.length - 1; // Exclude header row
+
+      expect(kartleggingssporsmalCheckbox).to.exist;
+      expect(dataRowsCountBeforeFilter).to.equal(24);
+      expect(dataRowsCount).to.equal(1);
+      expect(within(table).getByText('Leggingsen, Kart')).to.exist;
     });
   });
 });

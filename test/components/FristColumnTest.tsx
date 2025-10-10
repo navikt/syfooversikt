@@ -26,6 +26,7 @@ const defaultPersonData: PersonData = {
   oppfolgingsoppgave: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
+  isAktivKartleggingssporsmalVurdering: false,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;

@@ -7,11 +7,11 @@ import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/frist
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { getHendelser } from '@/utils/hendelseColumnUtils';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { TabType, useTabType } from '@/hooks/useTabType';
+import HendelseColumn from '@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn';
 
 function getVarighetOppfolgingstilfelle(
   oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
@@ -165,16 +165,7 @@ export default function OversiktTable({
               )}
             </Table.DataCell>
             <FristDataCell personData={persondata} />
-            <Table.DataCell
-              textSize="small"
-              className="[&>*:not(:last-child)]:mb-1.5"
-            >
-              {getHendelser(persondata).map((status, index) => (
-                <p key={index} className="m-0">
-                  {status}
-                </p>
-              ))}
-            </Table.DataCell>
+            <HendelseColumn personData={persondata} />
           </Table.Row>
         ))}
       </Table.Body>
