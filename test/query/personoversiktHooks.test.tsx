@@ -73,8 +73,7 @@ describe('personoversiktHooks tests', () => {
         person.arbeidsuforhetvurdering !== null ||
         person.friskmeldingTilArbeidsformidlingFom ||
         person.senOppfolgingKandidat ||
-        person.manglendeMedvirkning !== null ||
-        person.isAktivKartleggingssporsmalVurdering
+        person.manglendeMedvirkning !== null
       );
     });
     expect(allPersonsUbehandlet).to.be.true;

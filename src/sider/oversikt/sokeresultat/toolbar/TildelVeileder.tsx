@@ -5,7 +5,7 @@ import {
 } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
-import Dropdown from '@/components/toolbar/Dropdown/Dropdown';
+import { Dropdown } from '@/components/toolbar/Dropdown/Dropdown';
 import { DropdownButtonTexts } from '@/components/toolbar/Dropdown/DropdownButtons';
 import {
   useAktivVeilederQuery,

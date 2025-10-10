@@ -73,7 +73,6 @@ describe('Sokeresultat', () => {
         isAktivitetskravChecked: false,
         isAktivitetskravVurderStansChecked: false,
         isManglendeMedvirkningChecked: false,
-        isKartleggingssporsmalChecked: false,
       },
       isUfordelteBrukereFilter: false,
     };
