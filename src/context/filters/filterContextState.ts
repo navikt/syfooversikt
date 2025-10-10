@@ -17,6 +17,7 @@ export interface HendelseTypeFilter {
   isAktivitetskravChecked: boolean;
   isAktivitetskravVurderStansChecked: boolean;
   isManglendeMedvirkningChecked: boolean;
+  isKartleggingssporsmalChecked: boolean;
 }
 
 export interface FilterState {
@@ -53,6 +54,7 @@ export const filterInitialState: FilterState = {
     isAktivitetskravChecked: false,
     isAktivitetskravVurderStansChecked: false,
     isManglendeMedvirkningChecked: false,
+    isKartleggingssporsmalChecked: false,
   },
   isUfordelteBrukereFilter: false,
 };

@@ -10,6 +10,7 @@ import {
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import * as Amplitude from '@/utils/amplitude';
 import { EventType } from '@/utils/amplitude';
+import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 const HendelseTekster = {
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ber om bistand',
@@ -26,6 +27,7 @@ const HendelseTekster = {
     '§ 8-5 Friskmelding til arbeidsformidling',
   SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
   MANGLENDE_MEDVIRKNING: '§ 8-8 Manglende medvirkning',
+  KARTLEGGINGSSPORSMAL: 'Kartleggingsspørsmål',
 } as const;
 
 type Hendelse = keyof typeof HendelseTekster;
@@ -46,6 +48,7 @@ function initFilter(hendelse: Hendelse): HendelseTypeFilter {
     harFriskmeldingTilArbeidsformidling: false,
     isSenOppfolgingChecked: false,
     isManglendeMedvirkningChecked: false,
+    isKartleggingssporsmalChecked: false,
   };
   return updateFilterState(filter, hendelse);
 }
@@ -107,6 +110,10 @@ function updateFilterState(
       filter.isManglendeMedvirkningChecked = !filter.isManglendeMedvirkningChecked;
       return filter;
     }
+    case 'KARTLEGGINGSSPORSMAL': {
+      filter.isKartleggingssporsmalChecked = !filter.isKartleggingssporsmalChecked;
+      return filter;
+    }
   }
 }
 
@@ -138,6 +145,8 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
       return state.isSenOppfolgingChecked;
     case 'MANGLENDE_MEDVIRKNING':
       return state.isManglendeMedvirkningChecked;
+    case 'KARTLEGGINGSSPORSMAL':
+      return state.isKartleggingssporsmalChecked;
   }
 }
 
@@ -175,6 +184,7 @@ interface Props {
 
 export default function HendelseFilter({ personRegister }: Props) {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
+  const { toggles } = useGetFeatureToggles();
   const checkboxElements = hendelseCheckboxes(personRegister, filterState);
 
   const onChange = (value: string) => {
@@ -202,6 +212,12 @@ export default function HendelseFilter({ personRegister }: Props) {
   return (
     <CheckboxGroup legend="Hendelse" size="small">
       {checkboxElements.map((checkbox) => {
+        if (
+          checkbox.hendelse === 'KARTLEGGINGSSPORSMAL' &&
+          !toggles.isKartleggingssporsmalEnabled
+        ) {
+          return null;
+        }
         return (
           <Checkbox
             key={checkbox.hendelse}
