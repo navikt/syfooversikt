@@ -64,9 +64,13 @@ export interface PersonOversiktStatusDTO {
   oppfolgingsoppgave: OppfolgingsoppgaveDTO | null;
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
+  isAktivKartleggingssporsmalVurdering: boolean;
 }
 
-export function isUbehandlet(personStatus: PersonOversiktStatusDTO): boolean {
+export function isUbehandlet(
+  personStatus: PersonOversiktStatusDTO,
+  isKartleggingssporsmalEnabled: boolean
+): boolean {
   return (
     !!personStatus.motebehovUbehandlet ||
     personStatus.dialogmotesvarUbehandlet ||
@@ -79,7 +83,9 @@ export function isUbehandlet(personStatus: PersonOversiktStatusDTO): boolean {
     !!personStatus.senOppfolgingKandidat ||
     !!personStatus.oppfolgingsoppgave ||
     !!personStatus.aktivitetskravvurdering ||
-    !!personStatus.manglendeMedvirkning
+    !!personStatus.manglendeMedvirkning ||
+    (isKartleggingssporsmalEnabled &&
+      personStatus.isAktivKartleggingssporsmalVurdering)
   );
 }
 

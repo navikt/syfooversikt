@@ -44,6 +44,7 @@ const defaultPersonData: PersonData = {
   oppfolgingsoppgave: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
+  isAktivKartleggingssporsmalVurdering: false,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,

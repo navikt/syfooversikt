@@ -23,6 +23,7 @@ const behandletPerson = {
   senOppfolgingKandidat: null,
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
+  isAktivKartleggingssporsmalVurdering: false,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -735,6 +736,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       varselAt: new Date(),
       svar: null,
     },
+  },
+  {
+    ...behandletPerson,
+    fnr: '99318965679',
+    navn: 'Kart Leggingsen',
+    fodselsdato: new Date('2001-01-01'),
+    enhet: '0316',
+    veilederIdent: 'Z101010',
+    motestatus: undefined,
+    isAktivKartleggingssporsmalVurdering: true,
   },
 ];
 
