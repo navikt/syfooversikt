@@ -22,6 +22,8 @@ export function lenkeTilModia(personData: PersonData): string {
   const isGoingToSenOppfolging = !!personData.senOppfolgingKandidat;
   const isGoingToManglendeMedvirkning = !!personData.manglendeMedvirkning;
   const isGoingToFrisktilarbeid = !!personData.friskmeldingTilArbeidsformidlingFom;
+  const isGoingToKartleggingssporsmal =
+    personData.isAktivKartleggingssporsmalVurdering;
 
   if (isGoingToOppfolgingsplanOversikt) {
     path = `${path}/oppfoelgingsplaner`;
@@ -41,6 +43,8 @@ export function lenkeTilModia(personData: PersonData): string {
     path = `${path}/manglendemedvirkning`;
   } else if (isGoingToFrisktilarbeid) {
     path = `${path}/frisktilarbeid`;
+  } else if (isGoingToKartleggingssporsmal) {
+    path = `${path}/kartleggingssporsmal`;
   }
 
   return linkToNewHostAndPath(Subdomain.SYFOMODIAPERSON, path);
