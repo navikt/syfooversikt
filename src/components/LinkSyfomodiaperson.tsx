@@ -4,8 +4,6 @@ import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
 import { Labels } from '@/components/Labels';
 import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
 import { Link } from '@navikt/ds-react';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 
 export function lenkeTilModia(personData: PersonData): string {
   let path = `/sykefravaer`;
@@ -50,17 +48,6 @@ export function lenkeTilModia(personData: PersonData): string {
   return linkToNewHostAndPath(Subdomain.SYFOMODIAPERSON, path);
 }
 
-function logNavigation(destinasjon: string) {
-  Amplitude.logEvent({
-    type: EventType.Navigation,
-    data: {
-      fromUrl: window.location.href,
-      lenketekst: 'personnavn',
-      destinasjon: destinasjon,
-    },
-  });
-}
-
 interface Props {
   personData: PersonData;
   personident: string;
@@ -77,7 +64,6 @@ export function LinkSyfomodiaperson({
     aktivBruker.mutate(personident, {
       onSuccess: () => {
         const destinasjon = lenkeTilModia(personData);
-        logNavigation(destinasjon);
         window.location.href = destinasjon;
       },
     });

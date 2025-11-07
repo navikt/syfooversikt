@@ -10,7 +10,7 @@ export interface DecoratorProps {
   onFnrChanged: (fnr?: string | null) => void; // Kalles når fnr enheten endres
   fnrSyncMode: 'sync' | 'writeOnly'; // Modus til fnr state management. "sync" er default. "writeOnly" gjør at endringer aldri hentes men vil settes dersom det oppdateres lokalt i appen
   enhetSyncMode?: 'sync' | 'writeOnly'; // Samme som fnrSyncMode, men for enhet state.
-  onLinkClick?: (link: { text: string; url: string }) => void; // Kan brukes for å legge til callbacks ved klikk på lenker i menyen. Merk at callbacken ikke kan awaites og man må selv håndtere at siden lukkes. Nyttig for å f.eks tracke navigasjon events i amplitude
+  onLinkClick?: (link: { text: string; url: string }) => void; // Kan brukes for å legge til callbacks ved klikk på lenker i menyen. Merk at callbacken ikke kan awaites og man må selv håndtere at siden lukkes. Nyttig for å f.eks tracke navigasjon events i umami
   appName: string; // Navn på applikasjonen
   hotkeys?: Hotkey[]; // Konfigurasjon av hurtigtaster
   markup?: Markup; // Egen HTML

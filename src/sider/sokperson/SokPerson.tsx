@@ -17,7 +17,6 @@ import SokPersonResultat from '@/sider/sokperson/SokPersonResultat';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 import { isNumeric, removePunctuation } from '@/utils/stringUtil';
 import { parseDateString } from '@/utils/dateUtils';
-import * as Amplitude from '@/utils/amplitude';
 
 const texts = {
   header: 'Søk etter sykmeldt',
@@ -59,115 +58,11 @@ const texts = {
   error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
 };
 
-function logHelpTextClick(text: string) {
-  Amplitude.logEvent({
-    type: Amplitude.EventType.ButtonClick,
-    data: {
-      url: window.location.href,
-      tekst: text,
-    },
-  });
-}
-
-function logSokPersonEvent() {
-  Amplitude.logEvent({
-    type: Amplitude.EventType.ButtonClick,
-    data: {
-      url: window.location.href,
-      tekst: 'Søk etter sykmeldt',
-    },
-  });
-}
-
-function logSokPersonResults(amount: number, requestDTO: SokDTO) {
-  const hasInitials = !!requestDTO.initials;
-  const hasBirthdate = !!requestDTO.birthdate;
-  Amplitude.logEvent({
-    type: Amplitude.EventType.AmountDisplayed,
-    data: {
-      url: window.location.href,
-      antall: amount,
-      handling:
-        'Søk etter sykmeldt - resultater' +
-        (hasBirthdate ? '- fødselsdato' : '') +
-        (hasInitials ? '- initialer' : ''),
-    },
-  });
-}
-
-interface LogSokPersonErrorProps {
-  birthdate: string;
-  isValidBirthdate: boolean;
-  isInvalidBirthdate: boolean;
-  initials: string;
-  isValidInitials: boolean;
-  isInvalidInitials: boolean;
-  isError: boolean;
-}
-
-function logSokPersonError({
-  birthdate,
-  isValidBirthdate,
-  isInvalidBirthdate,
-  initials,
-  isValidInitials,
-  isInvalidInitials,
-  isError,
-}: LogSokPersonErrorProps) {
-  Amplitude.logEvent({
-    type: Amplitude.EventType.ErrorMessageShowed,
-    data: {
-      url: window.location.href,
-      handling: 'Søk etter sykmeldt - feilmeldinger',
-      feilmelding:
-        'Fødselsdato: ' +
-        getValidationMessage({
-          value: birthdate,
-          isValid: isValidBirthdate,
-          isInvalid: isInvalidBirthdate,
-        }) +
-        ' - Initialer: ' +
-        getValidationMessage({
-          value: initials,
-          isValid: isValidInitials,
-          isInvalid: isInvalidInitials,
-        }) +
-        (isError ? ' - Feil ved søk' : ''),
-    },
-  });
-}
-
-interface ValidationArgs {
-  value: string;
-  isValid: boolean;
-  isInvalid: boolean;
-}
-
-function getValidationMessage({
-  value,
-  isValid,
-  isInvalid,
-}: ValidationArgs): string {
-  if (value === '') {
-    return 'ingen innhold';
-  }
-  if (isValid) {
-    return 'gyldig innhold';
-  }
-  if (isInvalid) {
-    return 'ugyldig innhold';
-  }
-  return '';
-}
-
 function InitialerLabel() {
   return (
     <div className="flex gap-2">
       {texts.label.initials}
-      <HelpText
-        title={texts.helpText.initials.title}
-        onClick={() => logHelpTextClick(texts.helpText.initials.title)}
-      >
+      <HelpText title={texts.helpText.initials.title}>
         <Label>{texts.helpText.initials.title}</Label>
         <BodyLong>{texts.helpText.initials.text}</BodyLong>
       </HelpText>
@@ -179,10 +74,7 @@ function FodselsdatoLabel() {
   return (
     <div className="flex gap-2">
       {texts.label.birthdate}
-      <HelpText
-        title={texts.helpText.birthdate.title}
-        onClick={() => logHelpTextClick(texts.helpText.birthdate.title)}
-      >
+      <HelpText title={texts.helpText.birthdate.title}>
         <Label>{texts.helpText.birthdate.title}</Label>
         <BodyLong>{texts.helpText.birthdate.text}</BodyLong>
       </HelpText>
@@ -224,21 +116,9 @@ export default function SokPerson() {
         initials: parsedInitials.toLowerCase(),
         birthdate: parsedBirthdate,
       };
-      mutate(requestDTO, {
-        onSuccess: (data) => logSokPersonResults(data.length, requestDTO),
-        onSettled: () => logSokPersonEvent(),
-      });
+      mutate(requestDTO);
     } else {
       setIsFormError(true);
-      logSokPersonError({
-        birthdate: birthdate,
-        isValidBirthdate: !!parsedBirthdate,
-        isInvalidBirthdate: parsedBirthdate === null,
-        initials: initials,
-        isValidInitials: isValidInitials(initials),
-        isInvalidInitials: !isValidInitials(initials),
-        isError: isError,
-      });
     }
   };
 
@@ -258,10 +138,7 @@ export default function SokPerson() {
             <Heading level="2" size="medium">
               {texts.header}
             </Heading>
-            <HelpText
-              title={texts.helpText.info.title}
-              onClick={() => logHelpTextClick(texts.helpText.info.title)}
-            >
+            <HelpText title={texts.helpText.info.title}>
               <Label>{texts.helpText.info.title}</Label>
               <BodyLong>{texts.helpText.info.p1}</BodyLong>
               <BodyLong className="pt-2">{texts.helpText.info.p2}</BodyLong>

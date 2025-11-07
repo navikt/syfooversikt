@@ -14,8 +14,6 @@ import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
 } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
 
@@ -44,28 +42,6 @@ const tildelOppfolgingsenhetSuccessText = (
     return `En person tildelt ${enhet}.`;
   }
 };
-
-function logNumberOfPersonsWithChangedEnhet(antall: number) {
-  Amplitude.logEvent({
-    type: EventType.AmountChanged,
-    data: {
-      url: window.location.href,
-      antall: antall,
-      handling: 'Tildel oppfølgingsenhet',
-    },
-  });
-}
-
-function logNumberOfErrorneousTildelinger(feilmelding: string) {
-  Amplitude.logEvent({
-    type: EventType.ErrorMessageShowed,
-    data: {
-      url: window.location.href,
-      feilmelding: feilmelding,
-      handling: 'Tildel oppfølgingsenhet',
-    },
-  });
-}
 
 interface Props {
   ref: React.RefObject<HTMLDialogElement | null>;
@@ -135,16 +111,9 @@ export default function TildelOppfolgingsenhetModal({
                 `${tildeltOppfolgingsenhet?.navn} (${tildeltOppfolgingsenhet?.enhetId})`
               ),
             });
-            logNumberOfPersonsWithChangedEnhet(antallMaybeTildelt);
-            if (antallTildelt < antallMaybeTildelt) {
-              logNumberOfErrorneousTildelinger(
-                'Ikke alle personer ble tildelt oppfølgingsenhet.'
-              );
-            }
             setSelectedPersoner([]);
           },
           onError: () => {
-            logNumberOfErrorneousTildelinger(text.errorMessage);
             setTableFeedbackNotification({
               type: 'error',
               text: text.errorMessage,

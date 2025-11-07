@@ -1,4 +1,4 @@
-import { http, HttpHandler, HttpResponse } from 'msw';
+import { HttpHandler } from 'msw';
 import { generatePersons } from './mockUtils';
 import { mockUnleash } from '@/mocks/mockUnleash';
 import { mockSyfoveileder } from '@/mocks/syfoveileder/mockSyfoveileder';
@@ -19,9 +19,6 @@ import {
 const generatedPersons = generatePersons(50);
 
 const handlers: HttpHandler[] = [
-  http.post('https://amplitude.nav.no/collect', () =>
-    HttpResponse.text('mocked amplitude')
-  ),
   mockFlexjar,
   mockUnleash,
   mockEreg,

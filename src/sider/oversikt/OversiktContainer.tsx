@@ -1,11 +1,9 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { useGetPersonSkjermingskodeQuery } from '@/data/personregisterHooks';
 import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
 import NavigationBar from '@/components/NavigationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 import { ArenaFlexjar } from '@/components/flexjar/ArenaFlexjar';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
@@ -14,13 +12,6 @@ import { TabType, useTabType } from '@/hooks/useTabType';
 import Oversikt from '@/sider/oversikt/Oversikt';
 import NotificationBar from '@/components/error/NotificationBar';
 import RutingFlexjar from '@/components/flexjar/RutingFlexjar';
-
-function logPageView(tab: TabType) {
-  Amplitude.logEvent({
-    type: EventType.PageView,
-    data: { url: window.location.href, sidetittel: toReadableString(tab) },
-  });
-}
 
 function toReadableString(overviewTabType: TabType): string {
   switch (overviewTabType) {
@@ -54,10 +45,6 @@ export default function OversiktContainer(): ReactElement {
     toggles.isRutingFlexjarEnabled &&
     (feedbackRutingDate === null ||
       getWeeksBetween(new Date(), feedbackRutingDate) >= 8);
-
-  useEffect(() => {
-    logPageView(selectedTab);
-  }, [selectedTab]);
 
   return (
     <ErrorBoundary>
