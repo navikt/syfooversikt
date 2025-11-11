@@ -9,7 +9,6 @@ import React, { ReactElement, useState } from 'react';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { Button, Table, Tooltip } from '@navikt/ds-react';
 import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/OppfolgingsoppgaveModal';
-import * as Amplitude from '@/utils/amplitude';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
 
@@ -21,26 +20,6 @@ const texts = {
   manglendeMedvirkningVarselFrist: '§8-8: Svarfrist forhåndsvarsel',
   aktivitetskravvarselFrist: 'Aktivitetskrav: Svarfrist forhåndsvarsel',
 };
-
-function logOppfolgingsOppgaveModalOpenEvent() {
-  Amplitude.logEvent({
-    type: Amplitude.EventType.ButtonClick,
-    data: {
-      url: window.location.href,
-      tekst: 'Åpnet oppfølgingsoppgave modal',
-    },
-  });
-}
-
-function logAktivitetskravvurderingModalOpenEvent() {
-  Amplitude.logEvent({
-    type: Amplitude.EventType.ButtonClick,
-    data: {
-      url: window.location.href,
-      tekst: 'Åpnet aktivitetskravvurdering modal',
-    },
-  });
-}
 
 type Frist = {
   icon: () => ReactElement;
@@ -82,10 +61,7 @@ function fristerInfo(
                 size="xsmall"
                 icon={<HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />}
                 className="mr-1"
-                onClick={() => {
-                  logAktivitetskravvurderingModalOpenEvent();
-                  setIsAktivitetskravModalOpen(true);
-                }}
+                onClick={() => setIsAktivitetskravModalOpen(true)}
               />
             ) : (
               <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />
@@ -115,10 +91,7 @@ function fristerInfo(
             size="xsmall"
             icon={<FileTextIcon aria-hidden fontSize="1.5rem" />}
             className="mr-1"
-            onClick={() => {
-              logOppfolgingsOppgaveModalOpenEvent();
-              setIsOppfolgingsoppgaveModalOpen(true);
-            }}
+            onClick={() => setIsOppfolgingsoppgaveModalOpen(true)}
           />
         ) : (
           <FileTextIcon aria-hidden fontSize="1.5rem" />

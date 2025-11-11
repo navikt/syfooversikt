@@ -1,12 +1,7 @@
-import { afterAll, afterEach, beforeAll, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll } from 'vitest';
 import { setupServer } from 'msw/node';
 import { mockUnleash } from '@/mocks/mockUnleash';
 import { mockSyfoveileder } from '@/mocks/syfoveileder/mockSyfoveileder';
-
-vi.mock('@amplitude/analytics-browser', () => ({
-  track: vi.fn(),
-  init: vi.fn(),
-}));
 
 export const mockServer = setupServer(mockUnleash, ...mockSyfoveileder);
 

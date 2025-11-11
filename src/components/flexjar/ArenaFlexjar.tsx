@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   BodyShort,
@@ -18,8 +18,6 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { defaultErrorTexts } from '@/api/errors';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 import styled from 'styled-components';
 
 const texts = {
@@ -63,13 +61,6 @@ const StyledCombobox = styled(UNSAFE_Combobox)`
   }
 `;
 
-function logPageView(side: string) {
-  Amplitude.logEvent({
-    type: EventType.PageView,
-    data: { url: window.location.href, sidetittel: side + ' - med Flexjar' },
-  });
-}
-
 enum RadioOption {
   JA = 'Ja',
   NEI = 'Nei',
@@ -91,10 +82,6 @@ export const ArenaFlexjar = ({ side }: FlexjarProps) => {
     null
   );
 
-  useEffect(() => {
-    logPageView(side);
-  }, [side]);
-
   const toggleApen = () => {
     if (isApen) {
       setRadioValue(null);
@@ -112,19 +99,7 @@ export const ArenaFlexjar = ({ side }: FlexjarProps) => {
     }
   };
 
-  const updateRadioValue = (value: RadioOption) => {
-    if (radioValue === null) {
-      Amplitude.logEvent({
-        type: EventType.OptionSelected,
-        data: {
-          option: value,
-          tekst: 'Radioknapp Flexjar Arena',
-          url: window.location.href,
-        },
-      });
-    }
-    setRadioValue(value);
-  };
+  const updateRadioValue = (value: RadioOption) => setRadioValue(value);
 
   const buildFeedbackString = (): string | undefined => {
     if (radioValue === null) {
@@ -150,17 +125,7 @@ export const ArenaFlexjar = ({ side }: FlexjarProps) => {
         app: 'syfooversikt',
       };
       sendFeedback.mutate(body, {
-        onSuccess: () => {
-          setFeedbackDate(new Date());
-          Amplitude.logEvent({
-            type: EventType.OptionSelected,
-            data: {
-              option: radioValue,
-              tekst: 'Score Flexjar',
-              url: window.location.href,
-            },
-          });
-        },
+        onSuccess: () => setFeedbackDate(new Date()),
       });
     } else {
       setIsValid(false);

@@ -7,8 +7,6 @@ import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/frist
 import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
 import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
 import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import HendelseColumn from '@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn';
@@ -55,14 +53,6 @@ export default function OversiktTable({
         direction: direction,
       });
     }
-    Amplitude.logEvent({
-      type: EventType.SortingColumn,
-      data: {
-        url: window.location.href,
-        kolonne: sortKey ?? '',
-        retning: direction,
-      },
-    });
   }
 
   const allRowsSelected = personListe.length === selectedRows.length;

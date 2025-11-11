@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   BodyShort,
@@ -18,8 +18,6 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { defaultErrorTexts } from '@/api/errors';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 
 const texts = {
   apneKnapp: 'Flytter du sykmeldte mellom enheter?',
@@ -56,13 +54,6 @@ const checkboxValueToLabel: {
   [checkboxValue.annet]: 'Annet',
 };
 
-function logPageView(side: string) {
-  Amplitude.logEvent({
-    type: EventType.PageView,
-    data: { url: window.location.href, sidetittel: side + ' - med Flexjar' },
-  });
-}
-
 enum RadioOption {
   JA = 'Ja',
   NEI = 'Nei',
@@ -86,10 +77,6 @@ export default function RutingFlexjar({ side }: Props) {
     StoreKey.FLEXJAR_RUTING_FEEDBACK_DATE,
     null
   );
-
-  useEffect(() => {
-    logPageView(side);
-  }, [side]);
 
   const toggleApen = () => {
     if (isApen) {

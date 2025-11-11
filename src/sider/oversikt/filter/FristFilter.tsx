@@ -1,8 +1,6 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { FristFilterOption } from '@/utils/hendelseFilteringUtils';
 import React from 'react';
-import * as Amplitude from '@/utils/amplitude';
-import { EventType } from '@/utils/amplitude';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { useFilters } from '@/context/filters/FilterContext';
 
@@ -14,17 +12,6 @@ const texts = {
     future: 'Fremtidige datoer',
   },
 };
-
-function logOptionSelectedEvent(option: FristFilterOption[]) {
-  Amplitude.logEvent({
-    type: EventType.OptionSelected,
-    data: {
-      url: window.location.href,
-      tekst: 'Fristfilter endret',
-      option: option.toString(),
-    },
-  });
-}
 
 export default function FristFilter() {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
@@ -38,10 +25,7 @@ export default function FristFilter() {
   return (
     <CheckboxGroup
       legend={texts.legend}
-      onChange={(val: FristFilterOption[]) => {
-        onFristFilterChange(val);
-        logOptionSelectedEvent(val);
-      }}
+      onChange={(val: FristFilterOption[]) => onFristFilterChange(val)}
       value={filterState.selectedFristFilters}
       size="small"
     >
