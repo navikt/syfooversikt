@@ -10,7 +10,8 @@ const texts = {
   enhetensOversikt: 'Enhetens oversikt',
   minOversikt: 'Min oversikt',
   sokSykmeldt: 'Søk etter sykmeldt',
-  moteoversikt: 'Mine møter',
+  mineMoter: 'Mine møter',
+  enhetensMoter: 'Enhetens møter',
 };
 
 export default function NavigationBar(): ReactElement {
@@ -35,7 +36,14 @@ export default function NavigationBar(): ReactElement {
                 Subdomain.SYFOMOTEOVERSIKT,
                 '/syfomoteoversikt/minemoter'
               )}
-              label={<Heading size="xsmall">{texts.moteoversikt}</Heading>}
+              label={<Heading size="xsmall">{texts.mineMoter}</Heading>}
+            />
+            <LinkAsTab
+              href={linkToNewHostAndPath(
+                Subdomain.SYFOMOTEOVERSIKT,
+                '/syfomoteoversikt/enhetensmoter'
+              )}
+              label={<Heading size="xsmall">{texts.enhetensMoter}</Heading>}
             />
             <Tabs.Tab
               value={routes.SOK_SYKMELDT}
