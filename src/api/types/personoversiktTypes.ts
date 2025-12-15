@@ -147,6 +147,7 @@ export enum Oppfolgingsgrunn {
   VURDER_14A = 'VURDER_14A',
   VURDER_ANNEN_YTELSE = 'VURDER_ANNEN_YTELSE',
   SAMTALE_MED_BRUKER = 'SAMTALE_MED_BRUKER',
+  DELTAR_FORSOK_FORSTERKET_OPPFOLGING = 'DELTAR_FORSOK_FORSTERKET_OPPFOLGING',
   ANNET = 'ANNET',
 }
 
@@ -198,6 +199,10 @@ export const oppfolgingsgrunnToString: Record<
   [Oppfolgingsgrunn.SAMTALE_MED_BRUKER]: {
     long: 'Samtale med bruker',
     short: 'Samtale med bruker',
+  },
+  [Oppfolgingsgrunn.DELTAR_FORSOK_FORSTERKET_OPPFOLGING]: {
+    long: 'Deltar i forsøk med forsterket oppfølging',
+    short: 'Deltar i forsøk',
   },
   [Oppfolgingsgrunn.ANNET]: {
     long: 'Annet',

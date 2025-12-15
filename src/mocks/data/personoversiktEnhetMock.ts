@@ -470,7 +470,10 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: 'Z999991',
     oppfolgingsplanLPSBistandUbehandlet: true,
     motestatus: undefined,
-    oppfolgingsoppgave: getOppfolgingsoppgave(new Date('2024-01-01')),
+    oppfolgingsoppgave: {
+      ...getOppfolgingsoppgave(new Date('2024-01-01')),
+      oppfolgingsgrunn: Oppfolgingsgrunn.DELTAR_FORSOK_FORSTERKET_OPPFOLGING,
+    },
     aktivitetskravvurdering: {
       status: AktivitetskravStatus.NY,
       vurderinger: [],
