@@ -145,7 +145,7 @@
     "vitest": "4.0.15",
     "webpack": "5.100.1",
     "webpack-cli": "5.1.4",
-    "webpack-dev-server": "4.13.3"
+    "webpack-dev-server": "5.2.2"
   },
   "eslintConfig": {
     "extends": "react-app"
