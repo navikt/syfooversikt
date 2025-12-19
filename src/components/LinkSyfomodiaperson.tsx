@@ -10,7 +10,7 @@ export function lenkeTilModia(personData: PersonData): string {
   const isGoingToMoteoversikt =
     personData.harMotebehovUbehandlet ||
     personData.harDialogmotesvar ||
-    personData.dialogmotekandidat;
+    personData.dialogmotekandidatStatus?.isKandidat;
   const isGoingToOppfolgingsplanOversikt =
     personData.harOppfolgingsplanLPSBistandUbehandlet;
   const isGoingToAktivitetskrav = !!personData.aktivitetskravvurdering;

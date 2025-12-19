@@ -25,6 +25,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     harOppfolgingsplanLPSBistandUbehandlet: false,
     tildeltVeilederIdent: '234',
     dialogmotekandidat: undefined,
+    dialogmotekandidatStatus: null,
     latestOppfolgingstilfelle: undefined,
     harBehandlerdialogUbehandlet: false,
     behandlerBerOmBistandUbehandlet: false,

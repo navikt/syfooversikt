@@ -7,6 +7,7 @@ import {
 } from './personoversiktTypes';
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
+import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 
@@ -18,6 +19,7 @@ export interface PersonData {
   skjermingskode: Skjermingskode;
   tildeltVeilederIdent: string;
   dialogmotekandidat?: boolean;
+  dialogmotekandidatStatus: DialogmotekandidatDTO | null;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   harBehandlerdialogUbehandlet: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
@@ -58,6 +60,7 @@ export function toPersonData(
       skjermingskode: matchingPersonRegister?.skjermingskode || 'INGEN',
       tildeltVeilederIdent: person.veilederIdent || '',
       dialogmotekandidat: person?.dialogmotekandidat,
+      dialogmotekandidatStatus: person.dialogmotekandidatStatus,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,
       behandlerBerOmBistandUbehandlet: person.behandlerBerOmBistandUbehandlet,

@@ -45,6 +45,7 @@ const defaultPersonData: PersonData = {
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
+  dialogmotekandidatStatus: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
@@ -186,6 +187,20 @@ describe('NewOversiktTable', () => {
         ...defaultPersonData,
         harDialogmotesvar: true,
         dialogmotekandidat: true,
+        dialogmotekandidatStatus: {
+          uuid: '111',
+          createdAt: new Date('2022-01-01'),
+          personident: '99999966667',
+          isKandidat: true,
+          avvent: {
+            uuid: 'abc-111',
+            createdAt: new Date('2022-01-15'),
+            frist: new Date(),
+            createdBy: 'M987654',
+            personident: '99999966668',
+            beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+          },
+        },
         harMotebehovUbehandlet: true,
         harOppfolgingsplanLPSBistandUbehandlet: true,
         harBehandlerdialogUbehandlet: true,
@@ -234,7 +249,7 @@ describe('NewOversiktTable', () => {
     });
 
     expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
-    expect(screen.getByText('Dialogmøte - Kandidat')).to.exist;
+    expect(screen.getByText('Dialogmøte - Avventer')).to.exist;
     expect(screen.getByText('Dialogmøte - Møtebehov')).to.exist;
     expect(screen.getByText('Aktivitetskrav - Forhåndsvarsel utløpt')).to.exist;
     expect(screen.getByText('Arbeidsuførhet - Forhåndsvarsel sendt')).to.exist;
@@ -294,7 +309,7 @@ describe('NewOversiktTable', () => {
 
     expect(
       screen.getByText(
-        'Aktivitetskrav - Avventer (Har bedt om informasjon fra den sykemeldte, Annet)'
+        'Aktivitetskrav - Avventer (Har bedt om informasjon fra den sykmeldte, Annet)'
       )
     ).to.exist;
     expect(
