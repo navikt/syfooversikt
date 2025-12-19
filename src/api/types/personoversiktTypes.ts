@@ -1,5 +1,6 @@
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
+import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
 
 export enum MoteStatusType {
   INNKALT = 'INNKALT',
@@ -38,7 +39,7 @@ export const avventVurderingArsakTexts: Record<AvventVurderingArsak, string> = {
   [AvventVurderingArsak.INFORMASJON_BEHANDLER]:
     'Har bedt om mer informasjon fra behandler',
   [AvventVurderingArsak.INFORMASJON_SYKMELDT]:
-    'Har bedt om informasjon fra den sykemeldte',
+    'Har bedt om informasjon fra den sykmeldte',
   [AvventVurderingArsak.DROFTES_MED_ROL]: 'Drøftes med ROL',
   [AvventVurderingArsak.DROFTES_INTERNT]: 'Drøftes internt',
   [AvventVurderingArsak.ANNET]: 'Annet',
@@ -56,6 +57,7 @@ export interface PersonOversiktStatusDTO {
   dialogmotesvarUbehandlet: boolean;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
   dialogmotekandidat: boolean | undefined;
+  dialogmotekandidatStatus: DialogmotekandidatDTO | null;
   behandlerdialogUbehandlet: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
   arbeidsuforhetvurdering: ArbeidsuforhetvurderingDTO | null;
@@ -76,6 +78,7 @@ export function isUbehandlet(
     personStatus.dialogmotesvarUbehandlet ||
     !!personStatus.oppfolgingsplanLPSBistandUbehandlet ||
     !!personStatus.dialogmotekandidat ||
+    personStatus.dialogmotekandidatStatus?.isKandidat ||
     personStatus.behandlerdialogUbehandlet ||
     personStatus.behandlerBerOmBistandUbehandlet ||
     !!personStatus.arbeidsuforhetvurdering ||

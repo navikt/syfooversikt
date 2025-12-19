@@ -10,6 +10,7 @@ import { addWeeks } from 'date-fns';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { renderWithRouter } from '../testRenderUtils';
 import { routes } from '@/routers/routes';
+import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -27,6 +28,7 @@ const defaultPersonData: PersonData = {
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
+  dialogmotekandidatStatus: null,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
@@ -107,6 +109,31 @@ describe('FristColumn', () => {
     renderFristColumn(personManglendeMedvirkning);
 
     expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
+  });
+
+  it('viser frist for person når avvent dialogmøtekandidat', () => {
+    const frist = addWeeks(new Date(), 1);
+    const kandidatMedAvvent: DialogmotekandidatDTO = {
+      uuid: '111',
+      createdAt: new Date('2022-01-01'),
+      personident: '99999966667',
+      isKandidat: true,
+      avvent: {
+        uuid: 'abc-111',
+        createdAt: new Date('2022-01-15'),
+        frist: frist,
+        createdBy: 'M987654',
+        personident: '99999966668',
+        beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+      },
+    };
+    const personDialogmotekandidat: PersonData = {
+      ...defaultPersonData,
+      dialogmotekandidatStatus: kandidatMedAvvent,
+    };
+    renderFristColumn(personDialogmotekandidat);
+
+    expect(screen.getByText(toReadableDate(frist))).to.exist;
   });
 
   it('viser tidligste frist først når person har flere frister', () => {
