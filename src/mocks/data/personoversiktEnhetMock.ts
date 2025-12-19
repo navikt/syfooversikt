@@ -9,11 +9,13 @@ import {
 } from '../../api/types/personoversiktTypes';
 import { veilederMock } from './veilederMock';
 import dayjs from 'dayjs';
+import { addWeeks } from '@/utils/dateUtils';
 
 const behandletPerson = {
   oppfolgingsplanLPSBistandUbehandlet: null,
   motebehovUbehandlet: null,
   dialogmotekandidat: undefined,
+  dialogmotekandidatStatus: null,
   dialogmotesvarUbehandlet: false,
   behandlerdialogUbehandlet: false,
   oppfolgingsoppgave: null,
@@ -368,6 +370,13 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'M987654',
     dialogmotekandidat: true,
+    dialogmotekandidatStatus: {
+      uuid: '111',
+      createdAt: new Date('2022-01-01'),
+      personident: '99999966667',
+      isKandidat: true,
+      avvent: null,
+    },
     motestatus: MoteStatusType.AVLYST,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
@@ -390,6 +399,20 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'M987654',
     dialogmotekandidat: true,
+    dialogmotekandidatStatus: {
+      uuid: '111',
+      createdAt: new Date('2022-01-01'),
+      personident: '99999966667',
+      isKandidat: true,
+      avvent: {
+        uuid: 'abc-111',
+        createdAt: new Date('2022-01-15'),
+        frist: new Date(),
+        createdBy: 'M987654',
+        personident: '99999966668',
+        beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+      },
+    },
     motestatus: undefined,
     oppfolgingsoppgave: null,
     aktivitetskravvurdering: {
@@ -398,7 +421,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
         {
           status: AktivitetskravStatus.AVVENT,
           frist: new Date('2022-12-10'),
-          arsaker: [],
+          arsaker: [AvventVurderingArsak.INFORMASJON_SYKMELDT],
         },
       ],
     },
@@ -571,6 +594,20 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     enhet: '0316',
     veilederIdent: 'Z101010',
     dialogmotekandidat: true,
+    dialogmotekandidatStatus: {
+      uuid: '123',
+      createdAt: new Date(),
+      personident: '99999966667',
+      isKandidat: true,
+      avvent: {
+        uuid: 'abc-222',
+        createdAt: new Date('2022-01-15'),
+        frist: addWeeks(new Date(), 1),
+        createdBy: 'Z101010',
+        personident: '99999966675',
+        beskrivelse: 'Avklar tidspunkt med lege før innkalling',
+      },
+    },
     motestatus: MoteStatusType.AVLYST,
     aktivitetskravvurdering: {
       status: AktivitetskravStatus.AVVENT,

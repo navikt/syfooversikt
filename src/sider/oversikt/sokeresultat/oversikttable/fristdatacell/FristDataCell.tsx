@@ -13,12 +13,14 @@ import { TabType, useTabType } from '@/hooks/useTabType';
 import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
 
 const texts = {
-  tooltipAvventer: 'Avventer til',
+  tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
+  tooltipAvventerDialogmotekandidat: 'Dialogmøtekandidat avventer til',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
-  tooltipFriskmeldingTilArbeidsformidling: '§8-5 f.o.m.',
-  arbeidsuforhetvarselFrist: '§8-4: Svarfrist forhåndsvarsel',
-  manglendeMedvirkningVarselFrist: '§8-8: Svarfrist forhåndsvarsel',
-  aktivitetskravvarselFrist: 'Aktivitetskrav: Svarfrist forhåndsvarsel',
+  tooltipFriskmeldingTilArbeidsformidling: '§ 8-5 f.o.m.',
+  arbeidsuforhetvarselFrist: '§ 8-4: Svarfrist forhåndsvarsel',
+  manglendeMedvirkningVarselFrist:
+    '§ 8-8: Svarfrist forhåndsvarsel manglende medvirkning',
+  aktivitetskravvarselFrist: '§ 8-8: Aktivitetskrav: Svarfrist forhåndsvarsel',
 };
 
 type Frist = {
@@ -38,6 +40,7 @@ function fristerInfo(
     arbeidsuforhetvurdering,
     aktivitetskravvurdering,
     manglendeMedvirkning,
+    dialogmotekandidatStatus,
   }: PersonData,
   setIsOppfolgingsoppgaveModalOpen: (open: boolean) => void,
   setIsAktivitetskravModalOpen: (open: boolean) => void,
@@ -70,7 +73,7 @@ function fristerInfo(
           tooltip: `${
             selectedTab === TabType.MIN_OVERSIKT
               ? 'Åpne aktivitetskravvurdering'
-              : 'Aktivitetskravvurdering frist'
+              : texts.tooltipAvventerAktivitetskrav
           }`,
         });
     }
@@ -128,6 +131,15 @@ function fristerInfo(
       tooltip: texts.manglendeMedvirkningVarselFrist,
     });
   }
+
+  if (dialogmotekandidatStatus?.isKandidat && dialogmotekandidatStatus.avvent) {
+    frister.push({
+      icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+      date: dialogmotekandidatStatus.avvent.frist,
+      tooltip: texts.tooltipAvventerDialogmotekandidat,
+    });
+  }
+
   return frister;
 }
 

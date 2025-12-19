@@ -196,7 +196,8 @@ function isPersonVisible(
     (filters.onskerMote && personData.harMotebehovUbehandlet) ||
     (filters.arbeidsgiverOnskerMote &&
       personData.harOppfolgingsplanLPSBistandUbehandlet) ||
-    (filters.dialogmotekandidat && personData.dialogmotekandidat === true) ||
+    (filters.dialogmotekandidat &&
+      personData.dialogmotekandidatStatus?.isKandidat) ||
     (filters.dialogmotesvar && personData.harDialogmotesvar) ||
     (filters.isAktivitetskravChecked &&
       personData.aktivitetskravvurdering !== null) ||
