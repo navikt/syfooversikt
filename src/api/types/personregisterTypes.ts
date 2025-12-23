@@ -18,7 +18,6 @@ export interface PersonData {
   harOppfolgingsplanLPSBistandUbehandlet: boolean;
   skjermingskode: Skjermingskode;
   tildeltVeilederIdent: string;
-  dialogmotekandidat?: boolean;
   dialogmotekandidatStatus: DialogmotekandidatDTO | null;
   latestOppfolgingstilfelle?: OppfolgingstilfelleDTO;
   harBehandlerdialogUbehandlet: boolean;
@@ -59,7 +58,6 @@ export function toPersonData(
         person.oppfolgingsplanLPSBistandUbehandlet || false,
       skjermingskode: matchingPersonRegister?.skjermingskode || 'INGEN',
       tildeltVeilederIdent: person.veilederIdent || '',
-      dialogmotekandidat: person?.dialogmotekandidat,
       dialogmotekandidatStatus: person.dialogmotekandidatStatus,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,

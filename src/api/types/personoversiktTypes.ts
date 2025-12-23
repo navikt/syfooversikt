@@ -56,7 +56,6 @@ export interface PersonOversiktStatusDTO {
   motebehovUbehandlet: boolean | null;
   dialogmotesvarUbehandlet: boolean;
   oppfolgingsplanLPSBistandUbehandlet: boolean | null;
-  dialogmotekandidat: boolean | undefined;
   dialogmotekandidatStatus: DialogmotekandidatDTO | null;
   behandlerdialogUbehandlet: boolean;
   behandlerBerOmBistandUbehandlet: boolean;
@@ -77,7 +76,6 @@ export function isUbehandlet(
     !!personStatus.motebehovUbehandlet ||
     personStatus.dialogmotesvarUbehandlet ||
     !!personStatus.oppfolgingsplanLPSBistandUbehandlet ||
-    !!personStatus.dialogmotekandidat ||
     personStatus.dialogmotekandidatStatus?.isKandidat ||
     personStatus.behandlerdialogUbehandlet ||
     personStatus.behandlerBerOmBistandUbehandlet ||
