@@ -14,7 +14,6 @@ import { addWeeks } from '@/utils/dateUtils';
 const behandletPerson = {
   oppfolgingsplanLPSBistandUbehandlet: null,
   motebehovUbehandlet: null,
-  dialogmotekandidat: undefined,
   dialogmotekandidatStatus: null,
   dialogmotesvarUbehandlet: false,
   behandlerdialogUbehandlet: false,
@@ -369,7 +368,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fodselsdato: new Date('1990-01-01'),
     enhet: '0316',
     veilederIdent: 'M987654',
-    dialogmotekandidat: true,
     dialogmotekandidatStatus: {
       uuid: '111',
       createdAt: new Date('2022-01-01'),
@@ -398,7 +396,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fodselsdato: new Date('1990-01-01'),
     enhet: '0316',
     veilederIdent: 'M987654',
-    dialogmotekandidat: true,
     dialogmotekandidatStatus: {
       uuid: '111',
       createdAt: new Date('2022-01-01'),
@@ -593,7 +590,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fodselsdato: new Date('1990-01-01'),
     enhet: '0316',
     veilederIdent: 'Z101010',
-    dialogmotekandidat: true,
     dialogmotekandidatStatus: {
       uuid: '123',
       createdAt: new Date(),
@@ -642,7 +638,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fodselsdato: new Date('2000-01-01'),
     enhet: '0316',
     veilederIdent: 'Z101010',
-    dialogmotekandidat: true,
     motestatus: undefined,
     aktivitetskravvurdering: {
       status: AktivitetskravStatus.AVVENT,

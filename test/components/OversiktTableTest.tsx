@@ -186,7 +186,6 @@ describe('NewOversiktTable', () => {
       [testdata.fnr1]: {
         ...defaultPersonData,
         harDialogmotesvar: true,
-        dialogmotekandidat: true,
         dialogmotekandidatStatus: {
           uuid: '111',
           createdAt: new Date('2022-01-01'),
