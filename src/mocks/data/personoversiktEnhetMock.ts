@@ -14,7 +14,6 @@ import { addWeeks } from '@/utils/dateUtils';
 const behandletPerson = {
   oppfolgingsplanLPSBistandUbehandlet: null,
   motebehovUbehandlet: null,
-  dialogmotekandidat: undefined,
   dialogmotekandidatStatus: null,
   dialogmotesvarUbehandlet: false,
   behandlerdialogUbehandlet: false,
