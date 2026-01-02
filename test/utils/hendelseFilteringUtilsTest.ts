@@ -24,7 +24,6 @@ export const createPersonDataWithName = (name: string): PersonData => {
     skjermingskode: testdata.skjermingskode.ingen as Skjermingskode,
     harOppfolgingsplanLPSBistandUbehandlet: false,
     tildeltVeilederIdent: '234',
-    dialogmotekandidat: undefined,
     dialogmotekandidatStatus: null,
     latestOppfolgingstilfelle: undefined,
     harBehandlerdialogUbehandlet: false,
