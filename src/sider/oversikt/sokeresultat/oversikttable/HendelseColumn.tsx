@@ -116,8 +116,12 @@ export function getHendelser(personData: PersonData): string[] {
   if (personData.harBehandlerdialogUbehandlet) {
     hendelser.push('Dialogmelding');
   }
-  if (personData.dialogmotekandidat) {
-    hendelser.push('Dialogmøte - Kandidat');
+  if (personData.dialogmotekandidatStatus?.isKandidat) {
+    if (personData.dialogmotekandidatStatus.avvent) {
+      hendelser.push('Dialogmøte - Avventer');
+    } else {
+      hendelser.push('Dialogmøte - Kandidat');
+    }
   }
   if (personData.harMotebehovUbehandlet) {
     hendelser.push('Dialogmøte - Møtebehov');
