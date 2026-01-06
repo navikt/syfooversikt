@@ -70,7 +70,6 @@ export const generatePersonoversiktEnhetFromPersons = (
       veilederIdent: 'Z202020',
       motebehovUbehandlet: null,
       oppfolgingsplanLPSBistandUbehandlet: null,
-      dialogmotekandidat: undefined,
       motestatus: undefined,
       dialogmotesvarUbehandlet: false,
       behandlerdialogUbehandlet: false,

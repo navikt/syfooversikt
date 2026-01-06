@@ -65,7 +65,7 @@ describe('personoversiktHooks tests', () => {
         !!person.aktivitetskravvurdering ||
         person.oppfolgingsoppgave ||
         person.behandlerdialogUbehandlet ||
-        person.dialogmotekandidat ||
+        person.dialogmotekandidatStatus?.isKandidat ||
         person.oppfolgingsplanLPSBistandUbehandlet ||
         person.motebehovUbehandlet ||
         person.dialogmotesvarUbehandlet ||
