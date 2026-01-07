@@ -1,6 +1,6 @@
 import {
   AgeFilterOption,
-  FristFilterOption,
+  DatoFilterOption,
 } from '@/utils/hendelseFilteringUtils';
 
 export interface HendelseTypeFilter {
@@ -26,7 +26,7 @@ export interface FilterState {
   selectedOptions: string[];
   selectedCompanies: string[];
   selectedBirthDates: string[];
-  selectedFristFilters: FristFilterOption[];
+  selectedFristFilters: DatoFilterOption[];
   selectedAgeFilters: AgeFilterOption[];
   selectedHendelseType: HendelseTypeFilter;
   isUfordelteBrukereFilter: boolean;

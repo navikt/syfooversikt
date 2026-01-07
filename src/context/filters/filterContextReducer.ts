@@ -48,10 +48,10 @@ export const filterReducer = (
         selectedCompanies: action.selectedCompanies,
       };
     }
-    case ActionType.SetSelectedFristFilter: {
+    case ActionType.SetSelectedDatoFilter: {
       return {
         ...state,
-        selectedFristFilters: action.selectedFristFilters,
+        selectedFristFilters: action.selectedDatoFilters,
       };
     }
     case ActionType.SetSelectedAgeFilter: {

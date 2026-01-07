@@ -6,8 +6,8 @@ import {
   filterOnAge,
   filterOnBirthDates,
   filterOnCompany,
+  filterOnDato,
   filterOnFodselsnummerOrName,
-  filterOnFrist,
   getSortedEventsFromSortingType,
 } from '@/utils/hendelseFilteringUtils';
 import { useFilters } from '@/context/filters/FilterContext';
@@ -40,7 +40,7 @@ export default function Sokeresultat({ allEvents }: Props) {
   let filteredEvents = allEvents
     .applyFilter((v) => filterOnCompany(v, filterState.selectedCompanies))
     .applyFilter((v) => filterOnBirthDates(v, filterState.selectedBirthDates))
-    .applyFilter((v) => filterOnFrist(v, filterState.selectedFristFilters))
+    .applyFilter((v) => filterOnDato(v, filterState.selectedFristFilters))
     .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
     .applyFilter((v) => filterHendelser(v, filterState.selectedHendelseType))
     .applyFilter((v) =>

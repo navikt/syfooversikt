@@ -84,54 +84,55 @@ export function filterOnBirthDates(
   return Object.fromEntries(filtered);
 }
 
-export enum FristFilterOption {
+export enum DatoFilterOption {
   Past = 'Past',
   Today = 'Today',
   Future = 'Future',
 }
 
-export function filterOnFrist(
+export function filterOnDato(
   personregister: PersonregisterState,
-  selectedFristFilters: FristFilterOption[]
+  selectedDatoFilters: DatoFilterOption[]
 ): PersonregisterState {
-  const isNoFilter = selectedFristFilters.length === 0;
+  const isNoFilter = selectedDatoFilters.length === 0;
   if (isNoFilter) {
     return personregister;
   }
   const filtered = Object.entries(personregister).filter(([, persondata]) => {
-    const frister = [
+    const datoer = [
       persondata.arbeidsuforhetvurdering?.varsel?.svarfrist,
       persondata.manglendeMedvirkning?.varsel?.svarfrist,
       persondata.aktivitetskravvurdering?.vurderinger[0]?.frist,
       persondata.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
       persondata.oppfolgingsoppgave?.frist,
       persondata.friskmeldingTilArbeidsformidlingFom,
+      persondata.dialogmotekandidatStatus?.avvent?.frist,
     ];
 
-    if (frister.every((frist) => frist === null)) {
+    if (datoer.every((dato) => dato === null)) {
       return true;
     }
 
-    return frister.some(
-      (frist) => frist && isInFristFilter(selectedFristFilters, frist)
+    return datoer.some(
+      (dato) => dato && isInDatoFilter(selectedDatoFilters, dato)
     );
   });
 
   return Object.fromEntries(filtered);
 }
 
-function isInFristFilter(
-  selectedFilters: FristFilterOption[],
-  fristDate: Date
+function isInDatoFilter(
+  selectedFilters: DatoFilterOption[],
+  dato: Date
 ): boolean {
-  return selectedFilters.some((fristFilter) => {
-    switch (fristFilter) {
-      case FristFilterOption.Past:
-        return isPast(fristDate);
-      case FristFilterOption.Today:
-        return isToday(fristDate);
-      case FristFilterOption.Future:
-        return isFuture(fristDate);
+  return selectedFilters.some((datoFilter) => {
+    switch (datoFilter) {
+      case DatoFilterOption.Past:
+        return isPast(dato);
+      case DatoFilterOption.Today:
+        return isToday(dato);
+      case DatoFilterOption.Future:
+        return isFuture(dato);
     }
   });
 }

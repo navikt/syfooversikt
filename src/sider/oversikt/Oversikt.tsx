@@ -22,7 +22,7 @@ import VeilederFilter from '@/sider/oversikt/filter/VeilederFilter';
 import CompanyFilter from '@/sider/oversikt/filter/CompanyFilter';
 import BirthDateFilter from '@/sider/oversikt/filter/BirthDateFilter';
 import AgeFilter from '@/sider/oversikt/filter/AgeFilter';
-import FristFilter from '@/sider/oversikt/filter/FristFilter';
+import DatoFilter from '@/sider/oversikt/filter/DatoFilter';
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
@@ -72,7 +72,7 @@ export default function Oversikt({
         <CompanyFilter persondata={personData} />
         <BirthDateFilter />
         <AgeFilter />
-        <FristFilter />
+        <DatoFilter />
         <ClearFiltersButton />
       </Box>
 
