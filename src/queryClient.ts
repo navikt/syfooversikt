@@ -1,6 +1,5 @@
 import { QueryCache, QueryClient } from '@tanstack/react-query';
 import { minutesToMillis } from '@/utils/timeUtils';
-import { isClientError } from '@/api/errors';
 import '@tanstack/react-query';
 
 interface Meta extends Record<string, unknown> {
@@ -36,13 +35,7 @@ export const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       gcTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),
-      retry: (failureCount, error) => {
-        if (isClientError(error)) {
-          return false;
-        }
-
-        return failureCount < 3;
-      },
+      retry: false,
     },
   },
 });
