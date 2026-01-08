@@ -1,7 +1,7 @@
 import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import {
   AgeFilterOption,
-  FristFilterOption,
+  DatoFilterOption,
 } from '@/utils/hendelseFilteringUtils';
 
 export enum ActionType {
@@ -10,7 +10,7 @@ export enum ActionType {
   SetSelectedOptions,
   SetSelectedCompanies,
   SetSelectedBirthDates,
-  SetSelectedFristFilter,
+  SetSelectedDatoFilter,
   SetSelectedAgeFilter,
   SetSelectedHendelseType,
   SetFilterUfordelteBrukere,
@@ -42,9 +42,9 @@ export interface SetSelectedCompanies {
   selectedCompanies: string[];
 }
 
-export interface SetSelectedFristFilter {
-  type: ActionType.SetSelectedFristFilter;
-  selectedFristFilters: FristFilterOption[];
+export interface SetSelectedDatoFilter {
+  type: ActionType.SetSelectedDatoFilter;
+  selectedDatoFilters: DatoFilterOption[];
 }
 
 export interface SetSelectedAgeFilter {
@@ -72,7 +72,7 @@ export type FilterActions =
   | SetSelectedVeilederIdents
   | SetSelectedOptions
   | SetSelectedCompanies
-  | SetSelectedFristFilter
+  | SetSelectedDatoFilter
   | SetSelectedAgeFilter
   | SetSelectedBirthDates
   | SetSelectedHendelseType

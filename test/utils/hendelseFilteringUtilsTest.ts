@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+  DatoFilterOption,
   filterHendelser,
-  filterOnFrist,
-  FristFilterOption,
+  filterOnDato,
   getSortedEventsFromSortingType,
 } from '@/utils/hendelseFilteringUtils';
 import {
@@ -759,8 +759,8 @@ describe('hendelseFilteringUtils', () => {
       };
 
       it('Only returns elements with frist dato before today', () => {
-        const filteredPersonregister = filterOnFrist(personregister, [
-          FristFilterOption.Past,
+        const filteredPersonregister = filterOnDato(personregister, [
+          DatoFilterOption.Past,
         ]);
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
@@ -769,8 +769,8 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato today', () => {
-        const filteredPersonregister = filterOnFrist(personregister, [
-          FristFilterOption.Today,
+        const filteredPersonregister = filterOnDato(personregister, [
+          DatoFilterOption.Today,
         ]);
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
@@ -779,8 +779,8 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato in the future', () => {
-        const filteredPersonregister = filterOnFrist(personregister, [
-          FristFilterOption.Future,
+        const filteredPersonregister = filterOnDato(personregister, [
+          DatoFilterOption.Future,
         ]);
 
         expect(Object.keys(filteredPersonregister).length).to.equal(3);
