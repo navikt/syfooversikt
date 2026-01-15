@@ -49,7 +49,7 @@ export const useVeiledereQuery = () => {
   });
 };
 
-export const useAktivVeilederQuery = () => {
+export function useAktivVeilederQuery() {
   const { displayNotification, clearNotification } = useNotifications();
   const throwError = useAsyncError();
 
@@ -70,7 +70,7 @@ export const useAktivVeilederQuery = () => {
       handleSuccess: () => clearNotification('fetchAktivVeilederFailed'),
     },
   });
-};
+}
 
 export const useTildelVeileder = () => {
   const queryClient = useQueryClient();

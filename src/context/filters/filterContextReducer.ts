@@ -60,10 +60,10 @@ export const filterReducer = (
         selectedAgeFilters: action.selectedAgeFilters,
       };
     }
-    case ActionType.SetSelectedVeilederIdents: {
+    case ActionType.SetSelectedVeilederidents: {
       return {
         ...state,
-        selectedVeilederIdents: action.selectedVeilederIdents,
+        selectedVeilederIdents: action.selectedVeilederidents,
       };
     }
     case ActionType.ResetFilters: {
