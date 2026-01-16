@@ -239,13 +239,13 @@ export function filterHendelser(
 
 export function filterEventsOnVeileder(
   personregister: PersonregisterState,
-  veilederIdenter: string[]
+  veilederidenter: string[]
 ): PersonregisterState {
-  if (!veilederIdenter.length) return personregister;
+  if (!veilederidenter.length) return personregister;
   const filtered = Object.entries(
     personregister
   ).filter(([, { tildeltVeilederIdent }]) =>
-    veilederIdenter.some((ident) => ident === tildeltVeilederIdent)
+    veilederidenter.some((ident) => ident === tildeltVeilederIdent)
   );
   return Object.fromEntries(filtered);
 }

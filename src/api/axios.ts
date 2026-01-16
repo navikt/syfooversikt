@@ -13,20 +13,20 @@ export const NAV_CONSUMER_ID_HEADER = 'Nav-Consumer-Id';
 export const NAV_CONSUMER_ID = 'syfooversikt';
 export const NAV_PERSONIDENT_HEADER = 'nav-personident';
 
-export const defaultRequestHeaders = (
-  personIdent?: string
-): Record<string, string> => {
+export function defaultRequestHeaders(
+  personident?: string
+): Record<string, string> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
     [NAV_CALL_ID_HEADER]: `${NAV_CONSUMER_ID}-${generateUUID()}`,
   };
 
-  if (personIdent) {
-    headers[NAV_PERSONIDENT_HEADER] = personIdent;
+  if (personident) {
+    headers[NAV_PERSONIDENT_HEADER] = personident;
   }
   return headers;
-};
+}
 
 function handleAxiosError(error: AxiosError) {
   if (error.response) {
@@ -56,11 +56,11 @@ function handleAxiosError(error: AxiosError) {
 
 export const get = <ResponseData>(
   url: string,
-  personIdent?: string
+  personident?: string
 ): Promise<ResponseData> => {
   return axios
     .get(url, {
-      headers: defaultRequestHeaders(personIdent),
+      headers: defaultRequestHeaders(personident),
     })
     .then((response) => response.data)
     .catch(function (error) {
@@ -76,11 +76,11 @@ export const post = <ResponseData>(
   url: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any> | Record<string, any>[],
-  personIdent?: string
+  personident?: string
 ): Promise<ResponseData> => {
   return axios
     .post(url, data, {
-      headers: defaultRequestHeaders(personIdent),
+      headers: defaultRequestHeaders(personident),
     })
     .then((response) => response.data)
     .catch(function (error) {

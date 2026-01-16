@@ -6,7 +6,7 @@ import {
 
 export enum ActionType {
   SetTekstFilter,
-  SetSelectedVeilederIdents,
+  SetSelectedVeilederidents,
   SetSelectedOptions,
   SetSelectedCompanies,
   SetSelectedBirthDates,
@@ -27,9 +27,9 @@ export interface SetUfordelteBrukereFilter {
   isUfordelteBrukereFilter: boolean;
 }
 
-export interface SetSelectedVeilederIdents {
-  type: ActionType.SetSelectedVeilederIdents;
-  selectedVeilederIdents: string[];
+export interface SetSelectedVeilederidents {
+  type: ActionType.SetSelectedVeilederidents;
+  selectedVeilederidents: string[];
 }
 
 export interface SetSelectedOptions {
@@ -69,7 +69,7 @@ export interface ResetFilters {
 export type FilterActions =
   | SetTekstFilter
   | SetUfordelteBrukereFilter
-  | SetSelectedVeilederIdents
+  | SetSelectedVeilederidents
   | SetSelectedOptions
   | SetSelectedCompanies
   | SetSelectedDatoFilter

@@ -41,10 +41,10 @@ export default function VeilederFilter(): ReactElement {
     filterState.selectedVeilederIdents
   );
 
-  function onVeilederIdentsChange(veilederIdents: string[]) {
+  function onVeilederidentsChange(veilederidents: string[]) {
     dispatch({
-      type: ActionType.SetSelectedVeilederIdents,
-      selectedVeilederIdents: veilederIdents,
+      type: ActionType.SetSelectedVeilederidents,
+      selectedVeilederidents: veilederidents,
     });
   }
 
@@ -83,7 +83,7 @@ export default function VeilederFilter(): ReactElement {
       : selectedVeiledere.filter((veileder) => veileder !== option);
 
     setSelectedVeiledere(updatedSelectedVeiledere);
-    onVeilederIdentsChange(updatedSelectedVeiledere);
+    onVeilederidentsChange(updatedSelectedVeiledere);
   }
 
   return (

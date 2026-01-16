@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { ApiErrorException } from '@/api/errors';
 
-export const useAsyncError = () => {
+export function useAsyncError() {
   const [, setError] = useState();
   return useCallback(
     (e: ApiErrorException) => {
@@ -11,4 +11,4 @@ export const useAsyncError = () => {
     },
     [setError]
   );
-};
+}
