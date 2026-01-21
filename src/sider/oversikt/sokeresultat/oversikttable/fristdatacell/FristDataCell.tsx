@@ -165,7 +165,7 @@ export function FristDataCell({ personData }: Props) {
   );
 
   const currentVurdering = personData.aktivitetskravvurdering?.vurderinger[0];
-  const isAvventVurdering =
+  const isAktivitetskravAvventVurdering =
     personData.aktivitetskravvurdering?.status == AktivitetskravStatus.AVVENT &&
     !!currentVurdering;
   return (
@@ -186,7 +186,7 @@ export function FristDataCell({ personData }: Props) {
           sykmeldtNavn={personData.navn}
         />
       )}
-      {isAvventVurdering && (
+      {isAktivitetskravAvventVurdering && (
         <AktivitetskravAvventModal
           isOpen={isAktivitetskravModalOpen}
           setOpen={setIsAktivitetskravModalOpen}

@@ -2,14 +2,16 @@ import {
   PersonData,
   PersonregisterState,
 } from '@/api/types/personregisterTypes';
-import {
-  firstCompanyNameFromPersonData,
-  getEarliestFrist,
-  getLatestFrist,
-} from './personDataUtil';
+import { firstCompanyNameFromPersonData } from './personDataUtil';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
 import { HendelseTypeFilter } from '@/context/filters/filterContextState';
-import { isFuture, isPast, isToday } from '@/utils/dateUtils';
+import {
+  earliestDate,
+  isFuture,
+  isPast,
+  isToday,
+  latestDate,
+} from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
 import { getHendelser } from '@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn';
 
@@ -428,6 +430,28 @@ function compareTilfelleStart(
   if (startDateA > startDateB) return direction === 'ascending' ? -1 : 1;
   if (startDateA < startDateB) return direction === 'ascending' ? 1 : -1;
   return 0;
+}
+
+function allFrister(personData: PersonData): Date[] {
+  return [
+    personData.oppfolgingsoppgave?.frist,
+    personData.friskmeldingTilArbeidsformidlingFom,
+    personData.arbeidsuforhetvurdering?.varsel?.svarfrist,
+    personData.manglendeMedvirkning?.varsel?.svarfrist,
+    personData.aktivitetskravvurdering?.vurderinger[0]?.frist,
+    personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
+    personData.dialogmotekandidatStatus?.avvent?.frist,
+  ].filter((frist) => frist) as Date[];
+}
+
+function getEarliestFrist(personData: PersonData): Date | null {
+  const frister = allFrister(personData);
+  return earliestDate(frister);
+}
+
+function getLatestFrist(personData: PersonData): Date | null {
+  const frister = allFrister(personData);
+  return latestDate(frister);
 }
 
 function sortEventsOnFrist(
