@@ -1,6 +1,5 @@
 import React from 'react';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { getReadableSkjermingskode } from '@/utils/personDataUtil';
+import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
 import { Tooltip } from '@navikt/ds-react';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 
@@ -8,7 +7,20 @@ interface LabelColumnProps {
   personData: PersonData;
 }
 
-export const Labels = ({ personData }: LabelColumnProps) => {
+export function getReadableSkjermingskode(
+  skjermingskode: Skjermingskode
+): string {
+  switch (skjermingskode) {
+    case 'INGEN':
+      return 'Ingen';
+    case 'DISKRESJONSMERKET':
+      return 'Diskresjonsmerket';
+    case 'EGEN_ANSATT':
+      return 'Egen ansatt';
+  }
+}
+
+export function Labels({ personData }: LabelColumnProps) {
   const { skjermingskode } = personData;
   const showSkjermingskode = skjermingskode && skjermingskode !== 'INGEN';
 
@@ -22,4 +34,4 @@ export const Labels = ({ personData }: LabelColumnProps) => {
       </Tooltip>
     )
   );
-};
+}

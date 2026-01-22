@@ -54,7 +54,7 @@ const columns: SortColumn[] = [
   },
 ];
 
-export const useSorting = () => {
+export function useSorting() {
   const [sorting, setSorting] = useLocalStorageState<Sorting>(
     StoreKey.SORTING,
     {
@@ -64,4 +64,4 @@ export const useSorting = () => {
   );
 
   return { columns, sorting, setSorting };
-};
+}

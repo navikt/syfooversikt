@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { PersonData } from '@/api/types/personregisterTypes';
-import { getReadableSkjermingskode } from '@/utils/personDataUtil';
 import { testdata } from '../data/fellesTestdata';
+import { getReadableSkjermingskode } from '@/components/Labels';
 
 const INGEN = 'Ingen';
 const EGEN_ANSATT = 'Egen ansatt';
