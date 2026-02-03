@@ -11,6 +11,7 @@ import { Button, Table, Tooltip } from '@navikt/ds-react';
 import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/OppfolgingsoppgaveModal';
 import { TabType, useTabType } from '@/hooks/useTabType';
 import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
+import DialogmoteAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/DialogmoteAvventModal';
 
 const texts = {
   tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
@@ -44,6 +45,7 @@ function fristerInfo(
   }: PersonData,
   setIsOppfolgingsoppgaveModalOpen: (open: boolean) => void,
   setIsAktivitetskravModalOpen: (open: boolean) => void,
+  setIsDialogmoteAvventModalOpen: (open: boolean) => void,
   selectedTab: TabType
 ): Frist[] {
   const frister: Frist[] = [];
@@ -134,7 +136,14 @@ function fristerInfo(
 
   if (dialogmotekandidatStatus?.isKandidat && dialogmotekandidatStatus.avvent) {
     frister.push({
-      icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
+      icon: () => (
+        <Button
+          size="xsmall"
+          icon={<HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />}
+          className="mr-1"
+          onClick={() => setIsDialogmoteAvventModalOpen(true)}
+        />
+      ),
       date: dialogmotekandidatStatus.avvent.frist,
       tooltip: texts.tooltipAvventerDialogmotekandidat,
     });
@@ -156,15 +165,21 @@ export function FristDataCell({ personData }: Props) {
     isAktivitetskravModalOpen,
     setIsAktivitetskravModalOpen,
   ] = useState<boolean>(false);
+  const [
+    isDialogmoteAvventModalOpen,
+    setIsDialogmoteAvventModalOpen,
+  ] = useState<boolean>(false);
   const { selectedTab } = useTabType();
   const frister: Frist[] = fristerInfo(
     personData,
     setIsOppfolgingsoppgaveModalOpen,
     setIsAktivitetskravModalOpen,
+    setIsDialogmoteAvventModalOpen,
     selectedTab
   );
 
   const currentVurdering = personData.aktivitetskravvurdering?.vurderinger[0];
+  const dialogmoteAvvent = personData.dialogmotekandidatStatus?.avvent;
   const isAktivitetskravAvventVurdering =
     personData.aktivitetskravvurdering?.status == AktivitetskravStatus.AVVENT &&
     !!currentVurdering;
@@ -191,6 +206,14 @@ export function FristDataCell({ personData }: Props) {
           isOpen={isAktivitetskravModalOpen}
           setOpen={setIsAktivitetskravModalOpen}
           vurdering={currentVurdering}
+          sykmeldtNavn={personData.navn}
+        />
+      )}
+      {dialogmoteAvvent && (
+        <DialogmoteAvventModal
+          isOpen={isDialogmoteAvventModalOpen}
+          setOpen={setIsDialogmoteAvventModalOpen}
+          avvent={dialogmoteAvvent}
           sykmeldtNavn={personData.navn}
         />
       )}

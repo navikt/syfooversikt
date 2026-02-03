@@ -6,7 +6,7 @@ export interface DialogmotekandidatDTO {
   avvent: AvventDTO | null;
 }
 
-interface AvventDTO {
+export interface AvventDTO {
   uuid: string;
   createdAt: Date;
   frist: Date;
