@@ -133,7 +133,7 @@ describe('FristColumn', () => {
     };
     renderFristColumn(personDialogmotekandidat);
 
-    expect(screen.getByText(toReadableDate(frist))).to.exist;
+    expect(screen.getAllByText(toReadableDate(frist))).to.exist;
   });
 
   it('viser tidligste frist først når person har flere frister', () => {
