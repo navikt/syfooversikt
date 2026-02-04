@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Label, Modal } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Heading, Modal } from '@navikt/ds-react';
 import { toReadableDate } from '@/utils/dateUtils';
 import React from 'react';
 import { AvventDTO } from '@/api/types/dialogmotekandidatDTO';
@@ -34,18 +34,15 @@ export default function DialogmoteAvventModal({
       }}
     >
       <Modal.Body>
-        <Label size="small" as="p" id="avvent-beskrivelse">
+        <Heading size="xsmall" level="2">
           {texts.beskrivelse}
-        </Label>
-        <BodyLong
-          className="mb-4 whitespace-pre-wrap"
-          aria-labelledby="avvent-beskrivelse"
-        >
+        </Heading>
+        <BodyLong className="mb-4 whitespace-pre-wrap">
           {avvent.beskrivelse}
         </BodyLong>
-        <Label size="small" as="p" id="avvent-frist">
+        <Heading size="xsmall" level="2">
           {texts.frist}
-        </Label>
+        </Heading>
         <BodyShort aria-labelledby="avvent-frist">
           {toReadableDate(avvent.frist)}
         </BodyShort>
