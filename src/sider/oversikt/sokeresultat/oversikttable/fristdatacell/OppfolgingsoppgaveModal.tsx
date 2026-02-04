@@ -14,14 +14,14 @@ const texts = {
 
 interface Props {
   isOpen: boolean;
-  setOpen: (open: boolean) => void;
+  setIsOpen: (open: boolean) => void;
   oppfolgingsoppgave: OppfolgingsoppgaveDTO;
   sykmeldtNavn: string;
 }
 
 export default function OppfolgingsoppgaveModal({
   isOpen,
-  setOpen,
+  setIsOpen,
   oppfolgingsoppgave,
   sykmeldtNavn,
 }: Props) {
@@ -30,7 +30,7 @@ export default function OppfolgingsoppgaveModal({
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={() => setIsOpen(false)}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,
