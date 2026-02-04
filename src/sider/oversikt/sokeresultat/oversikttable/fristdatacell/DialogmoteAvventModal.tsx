@@ -34,16 +34,21 @@ export default function DialogmoteAvventModal({
       }}
     >
       <Modal.Body>
-        <Label size="small" as="p">
+        <Label size="small" as="p" id="avvent-beskrivelse">
           {texts.beskrivelse}
         </Label>
-        <BodyLong className="mb-4 whitespace-pre-wrap">
+        <BodyLong
+          className="mb-4 whitespace-pre-wrap"
+          aria-labelledby="avvent-beskrivelse"
+        >
           {avvent.beskrivelse}
         </BodyLong>
-        <Label size="small" as="p">
+        <Label size="small" as="p" id="avvent-frist">
           {texts.frist}
         </Label>
-        <BodyShort>{toReadableDate(avvent.frist)}</BodyShort>
+        <BodyShort aria-labelledby="avvent-frist">
+          {toReadableDate(avvent.frist)}
+        </BodyShort>
       </Modal.Body>
     </Modal>
   );
