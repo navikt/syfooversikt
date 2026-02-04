@@ -196,7 +196,7 @@ export function FristDataCell({ personData }: Props) {
       {personData.oppfolgingsoppgave && (
         <OppfolgingsoppgaveModal
           isOpen={isOppfolgingsoppgaveModalOpen}
-          setOpen={setIsOppfolgingsoppgaveModalOpen}
+          setIsOpen={setIsOppfolgingsoppgaveModalOpen}
           oppfolgingsoppgave={personData.oppfolgingsoppgave}
           sykmeldtNavn={personData.navn}
         />
@@ -204,7 +204,7 @@ export function FristDataCell({ personData }: Props) {
       {isAktivitetskravAvventVurdering && (
         <AktivitetskravAvventModal
           isOpen={isAktivitetskravModalOpen}
-          setOpen={setIsAktivitetskravModalOpen}
+          setIsOpen={setIsAktivitetskravModalOpen}
           vurdering={currentVurdering}
           sykmeldtNavn={personData.navn}
         />
@@ -212,7 +212,7 @@ export function FristDataCell({ personData }: Props) {
       {dialogmoteAvvent && (
         <DialogmoteAvventModal
           isOpen={isDialogmoteAvventModalOpen}
-          setOpen={setIsDialogmoteAvventModalOpen}
+          setIsOpen={setIsDialogmoteAvventModalOpen}
           avvent={dialogmoteAvvent}
           sykmeldtNavn={personData.navn}
         />

@@ -13,14 +13,14 @@ const texts = {
 
 interface Props {
   isOpen: boolean;
-  setOpen: (open: boolean) => void;
+  setIsOpen: (open: boolean) => void;
   vurdering: AktivitetskravvurderingDTO;
   sykmeldtNavn: string;
 }
 
 export default function AktivitetskravAvventModal({
   isOpen,
-  setOpen,
+  setIsOpen,
   vurdering,
   sykmeldtNavn,
 }: Props) {
@@ -42,7 +42,7 @@ export default function AktivitetskravAvventModal({
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={() => setIsOpen(false)}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,

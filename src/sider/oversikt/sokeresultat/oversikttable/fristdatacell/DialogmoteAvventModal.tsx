@@ -5,20 +5,20 @@ import { AvventDTO } from '@/api/types/dialogmotekandidatDTO';
 
 const texts = {
   header: 'Dialogmøte avvent vurdering',
-  avventBeskrivelse: 'Beskrivelse',
+  beskrivelse: 'Beskrivelse',
   frist: 'Frist',
 };
 
 interface Props {
   isOpen: boolean;
-  setOpen: (open: boolean) => void;
+  setIsOpen: (open: boolean) => void;
   avvent: AvventDTO;
   sykmeldtNavn: string;
 }
 
 export default function DialogmoteAvventModal({
   isOpen,
-  setOpen,
+  setIsOpen,
   avvent,
   sykmeldtNavn,
 }: Props) {
@@ -27,7 +27,7 @@ export default function DialogmoteAvventModal({
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={() => setIsOpen(false)}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,
@@ -35,7 +35,7 @@ export default function DialogmoteAvventModal({
     >
       <Modal.Body>
         <Label size="small" as="p">
-          {texts.avventBeskrivelse}
+          {texts.beskrivelse}
         </Label>
         <BodyLong className="mb-4 whitespace-pre-wrap">
           {avvent.beskrivelse}
