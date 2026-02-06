@@ -5,6 +5,7 @@ import {
   OppfolgingsoppgaveDTO,
 } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
+import { trackModalApnet, trackModalLukket } from '@/utils/umami';
 
 const texts = {
   header: 'Oppfølgingsoppgave',
@@ -25,12 +26,21 @@ export default function OppfolgingsoppgaveModal({
   oppfolgingsoppgave,
   sykmeldtNavn,
 }: Props) {
+  if (isOpen) {
+    trackModalApnet(texts.header);
+  }
+
+  function handleClose() {
+    trackModalLukket(texts.header);
+    setIsOpen(false);
+  }
+
   return (
     <Modal
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={handleClose}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,

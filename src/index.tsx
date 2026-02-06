@@ -45,10 +45,10 @@ function renderApp() {
     document.getElementById('maincontent') || new DocumentFragment();
   const root = createRoot(container);
 
+  addUmamiScript();
   if (isLocal()) {
     setupMocking().then(() => root.render(<App />));
   } else {
-    addUmamiScript();
     root.render(<App />);
   }
 }

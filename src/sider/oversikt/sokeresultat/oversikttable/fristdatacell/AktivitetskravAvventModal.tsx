@@ -3,6 +3,7 @@ import { toReadableDate } from '@/utils/dateUtils';
 import React from 'react';
 import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
 import { avventVurderingArsakTexts } from '@/api/types/personoversiktTypes';
+import { trackModalApnet, trackModalLukket } from '@/utils/umami';
 
 const texts = {
   header: 'Aktivitetskrav avvent vurdering',
@@ -37,12 +38,21 @@ export default function AktivitetskravAvventModal({
     }
   }
 
+  if (isOpen) {
+    trackModalApnet(texts.header);
+  }
+
+  function handleClose() {
+    trackModalLukket(texts.header);
+    setIsOpen(false);
+  }
+
   return (
     <Modal
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={handleClose}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,

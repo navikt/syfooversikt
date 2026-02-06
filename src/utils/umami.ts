@@ -23,3 +23,46 @@ function beforeSendHandler(type: any, payload: any) {
 
 // Make the function globally accessible to make "data-before-send" in umami script work
 (window as any).beforeSendHandler = beforeSendHandler;
+
+enum EventType {
+  ModalApnet = 'modal åpnet',
+  ModalLukket = 'modal lukket',
+}
+
+type ModalApnet = {
+  type: EventType.ModalApnet;
+  data: {
+    tekst: string;
+  };
+};
+
+type ModalLukket = {
+  type: EventType.ModalLukket;
+  data: {
+    tekst: string;
+  };
+};
+
+type Event = ModalApnet | ModalLukket;
+
+function trackEvent(event: Event) {
+  umami.track(event.type, { ...event.data });
+}
+
+export function trackModalApnet(tekst: string) {
+  trackEvent({
+    type: EventType.ModalApnet,
+    data: {
+      tekst,
+    },
+  });
+}
+
+export function trackModalLukket(tekst: string) {
+  trackEvent({
+    type: EventType.ModalLukket,
+    data: {
+      tekst,
+    },
+  });
+}
