@@ -12,20 +12,20 @@ import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
 
 const HendelseTekster = {
   ARBEIDSGIVER_BISTAND: 'Arbeidsgiver ber om bistand',
+  BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
+  BEHANDLERDIALOG: 'Dialog med behandler',
   MOTEBEHOV: 'Ber om dialogmøte', // MØTEBEHOV - UBEHANDLET
   DIALOGMOTEKANDIDAT: 'Kandidat til dialogmøte',
   DIALOGMOTESVAR: 'Svar dialogmøte',
-  AKTIVITETSKRAV: '§ 8-8 Aktivitetskrav',
-  AKTIVITETSKRAV_VURDER_STANS: 'Vurder stans',
-  BEHANDLERDIALOG: 'Dialog med behandler',
-  OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
-  BEHANDLER_BER_OM_BISTAND: 'Behandler ber om bistand',
   ARBEIDSUFORHET: '§ 8-4 Arbeidsuførhet',
   FRISKMELDING_TIL_ARBEIDSFORMIDLING:
     '§ 8-5 Friskmelding til arbeidsformidling',
-  SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
   MANGLENDE_MEDVIRKNING: '§ 8-8 Manglende medvirkning',
+  AKTIVITETSKRAV: '§ 8-8 Aktivitetskrav',
+  AKTIVITETSKRAV_VURDER_STANS: '§ 8-8 Vurder stans aktivitetskrav',
+  SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
   KARTLEGGINGSSPORSMAL: 'Kartleggingsspørsmål',
+  OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
 } as const;
 
 type Hendelse = keyof typeof HendelseTekster;
