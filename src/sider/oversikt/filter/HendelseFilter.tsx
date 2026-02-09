@@ -23,8 +23,8 @@ const HendelseTekster = {
   MANGLENDE_MEDVIRKNING: '§ 8-8 Manglende medvirkning',
   AKTIVITETSKRAV: '§ 8-8 Aktivitetskrav',
   AKTIVITETSKRAV_VURDER_STANS: '§ 8-8 Vurder stans aktivitetskrav',
-  SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
   KARTLEGGINGSSPORSMAL: 'Kartleggingsspørsmål',
+  SNART_SLUTT_PA_SYKEPENGENE: 'Snart slutt på sykepengene',
   OPPFOLGINGSOPPGAVE: 'Oppfølgingsoppgave',
 } as const;
 
