@@ -15,11 +15,13 @@ import {
   mockGetMuligeTildelinger,
   mockPostTildelOppfolgingsenhet,
 } from '@/mocks/mockSyfobehandlendeenhet';
+import { mockUmami } from '@/mocks/umami/mockUmami';
 
 const generatedPersons = generatePersons(50);
 
 const handlers: HttpHandler[] = [
   mockFlexjar,
+  mockUmami,
   mockUnleash,
   mockEreg,
   ...mockSyfoveileder,

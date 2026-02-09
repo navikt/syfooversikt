@@ -2,6 +2,7 @@ import { BodyLong, BodyShort, Heading, Modal } from '@navikt/ds-react';
 import { toReadableDate } from '@/utils/dateUtils';
 import React from 'react';
 import { AvventDTO } from '@/api/types/dialogmotekandidatDTO';
+import { trackModalApnet, trackModalLukket } from '@/utils/umami';
 
 const texts = {
   header: 'Dialogmøte avvent vurdering',
@@ -22,12 +23,21 @@ export default function DialogmoteAvventModal({
   avvent,
   sykmeldtNavn,
 }: Props) {
+  if (isOpen) {
+    trackModalApnet(texts.header);
+  }
+
+  function handleClose() {
+    trackModalLukket(texts.header);
+    setIsOpen(false);
+  }
+
   return (
     <Modal
       closeOnBackdropClick
       className="w-full max-w-[50rem]"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={handleClose}
       header={{
         label: sykmeldtNavn,
         heading: texts.header,
