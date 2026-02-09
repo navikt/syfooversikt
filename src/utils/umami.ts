@@ -32,14 +32,14 @@ enum EventType {
 type ModalApnet = {
   type: EventType.ModalApnet;
   data: {
-    tekst: string;
+    tittel: string;
   };
 };
 
 type ModalLukket = {
   type: EventType.ModalLukket;
   data: {
-    tekst: string;
+    tittel: string;
   };
 };
 
@@ -49,20 +49,20 @@ function trackEvent(event: Event) {
   umami.track(event.type, { ...event.data });
 }
 
-export function trackModalApnet(tekst: string) {
+export function trackModalApnet(tittel: string) {
   trackEvent({
     type: EventType.ModalApnet,
     data: {
-      tekst,
+      tittel: tittel,
     },
   });
 }
 
-export function trackModalLukket(tekst: string) {
+export function trackModalLukket(tittel: string) {
   trackEvent({
     type: EventType.ModalLukket,
     data: {
-      tekst,
+      tittel: tittel,
     },
   });
 }
