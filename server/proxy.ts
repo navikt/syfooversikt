@@ -96,7 +96,7 @@ const proxyOnBehalfOf = (
   next: express.NextFunction,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
-  getOnBehalfOfToken(req, `api://${externalAppConfig.clientId}/.default`)
+  getOnBehalfOfToken(req, externalAppConfig.clientId)
     .then((accessToken) => {
       if (!accessToken) {
         res.status(500).send('Failed to fetch access token on behalf of user.');

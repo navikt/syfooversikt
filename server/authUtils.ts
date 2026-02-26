@@ -37,7 +37,7 @@ export async function validateToken(req: Request): Promise<boolean> {
 
 export async function getOnBehalfOfToken(
   req: Request,
-  target: string
+  clientId: string
 ): Promise<string | undefined> {
   const userToken = extractBearerToken(req);
   if (!userToken) return undefined;
@@ -47,7 +47,7 @@ export async function getOnBehalfOfToken(
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       identity_provider: 'entra_id',
-      target,
+      target: `api://${clientId}/.default`,
       user_token: userToken,
     }),
   });
