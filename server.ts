@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import path from 'path';
 import prometheus from 'prom-client';
 
-import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
+import { validateToken } from './server/authUtils';
 import { setupProxy } from './server/proxy';
 import unleash = require('./server/unleash');
 
@@ -53,7 +53,7 @@ const redirectIfUnauthorized = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  if (req.headers['authorization']) {
+  if (await validateToken(req)) {
     next();
   } else {
     res.redirect(`/oauth2/login?redirect=${req.originalUrl}`);
@@ -61,9 +61,6 @@ const redirectIfUnauthorized = async (
 };
 
 const setupServer = async () => {
-  const issuer = await getOpenIdIssuer();
-  const authClient = await getOpenIdClient(issuer);
-
   const DIST_DIR = path.join(__dirname, 'dist');
   const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
@@ -81,7 +78,7 @@ const setupServer = async () => {
     }
   );
 
-  server.use(setupProxy(authClient, issuer));
+  server.use(setupProxy());
 
   server.get('/health/isAlive', (req, res) => {
     res.sendStatus(200);

@@ -1,134 +1,54 @@
-import OpenIdClient from 'openid-client';
 import { Request } from 'express';
-import {
-  createRemoteJWKSet,
-  FlattenedJWSInput,
-  JWSHeaderParameters,
-  jwtVerify,
-} from 'jose';
-import { GetKeyFunction, JWTPayload } from 'jose/dist/types/types';
 
-import * as Config from './config';
+const introspectionEndpoint = () =>
+  process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT ?? '';
+const tokenExchangeEndpoint = () =>
+  process.env.NAIS_TOKEN_EXCHANGE_ENDPOINT ?? '';
 
-type OboToken = {
-  accessToken: string;
-  expiresIn: number;
+const extractBearerToken = (req: Request): string | undefined =>
+  req.headers.authorization?.replace('Bearer ', '');
+
+export const validateToken = async (req: Request): Promise<boolean> => {
+  const token = extractBearerToken(req);
+  if (!token) return false;
+
+  const response = await fetch(introspectionEndpoint(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ identity_provider: 'entra_id', token }),
+  });
+
+  if (!response.ok) {
+    console.error(`Token introspection failed: ${response.status}`);
+    return false;
+  }
+
+  const data = await response.json();
+  return data.active === true;
 };
 
-let _remoteJWKSet: GetKeyFunction<JWSHeaderParameters, FlattenedJWSInput>;
-
-async function initJWKSet() {
-  _remoteJWKSet = await createRemoteJWKSet(new URL(Config.auth.jwksUri));
-}
-
-const retrieveAndValidateToken = async (
+export const getOnBehalfOfToken = async (
   req: Request,
-  azureAdIssuer: OpenIdClient.Issuer<any>
+  target: string
 ): Promise<string | undefined> => {
-  const token = req.headers.authorization?.replace('Bearer ', '');
-  if (token && (await validateToken(token, azureAdIssuer))) {
-    return token;
-  }
-  return undefined;
-};
+  const userToken = extractBearerToken(req);
+  if (!userToken) return undefined;
 
-const validateToken = async (
-  token: string,
-  azureAdIssuer: OpenIdClient.Issuer<any>
-) => {
-  try {
-    if (!_remoteJWKSet) {
-      await initJWKSet();
-    }
-    const verification = await jwtVerify(token, _remoteJWKSet, {
-      audience: Config.auth.clientId,
-      issuer: azureAdIssuer.metadata.issuer,
-    });
-    return checkVerificationPayload(verification.payload);
-  } catch (e) {
-    console.error('Token validation failed:', e);
-  }
-  return false;
-};
+  const response = await fetch(tokenExchangeEndpoint(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      identity_provider: 'entra_id',
+      target,
+      user_token: userToken,
+    }),
+  });
 
-const checkVerificationPayload = (payload: JWTPayload) => {
-  if (
-    payload &&
-    payload.aud == Config.auth.clientId &&
-    payload.exp &&
-    payload.exp * 1000 > Date.now()
-  ) {
-    return true;
-  } else {
-    console.error(
-      'Token audience or expiry check failed: aud ' +
-        payload.aud +
-        ' exp ' +
-        payload.exp
-    );
-  }
-  return false;
-};
-
-export const getOrRefreshOnBehalfOfToken = async (
-  authClient: OpenIdClient.Client,
-  issuer: OpenIdClient.Issuer<any>,
-  req: Request,
-  clientId: string
-): Promise<OboToken | undefined> => {
-  const token = await retrieveAndValidateToken(req, issuer);
-  if (!token) {
-    throw Error(
-      'Could not get on-behalf-of token because the token was undefined'
-    );
-  }
-
-  return requestOnBehalfOfToken(authClient, token, clientId);
-};
-
-const requestOnBehalfOfToken = async (
-  authClient: OpenIdClient.Client,
-  accessToken: string,
-  clientId: string
-): Promise<OboToken | undefined> => {
-  const grantBody = {
-    assertion: accessToken,
-    client_assertion_type:
-      'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-    grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-    requested_token_use: 'on_behalf_of',
-    scope: `api://${clientId}/.default`,
-  };
-  const tokenSet = await authClient.grant(grantBody);
-  if (!tokenSet) {
+  if (!response.ok) {
+    console.error(`Token exchange failed: ${response.status}`);
     return undefined;
-  } else {
-    return {
-      accessToken: tokenSet.access_token,
-      expiresIn: tokenSet.expires_in,
-    } as OboToken;
   }
-};
 
-export const getOpenIdIssuer = async (): Promise<OpenIdClient.Issuer<any>> => {
-  try {
-    return OpenIdClient.Issuer.discover(Config.auth.discoverUrl);
-  } catch (e) {
-    console.log('Could not discover issuer', Config.auth.discoverUrl);
-    throw e;
-  }
-};
-
-export const getOpenIdClient = async (
-  issuer: OpenIdClient.Issuer<any>
-): Promise<OpenIdClient.Client> => {
-  return new issuer.Client(
-    {
-      client_id: Config.auth.clientId,
-      redirect_uris: [Config.auth.redirectUri],
-      token_endpoint_auth_method: 'private_key_jwt',
-      token_endpoint_auth_signing_alg: 'RS256',
-    },
-    Config.auth.jwks
-  );
+  const data = await response.json();
+  return data.access_token;
 };

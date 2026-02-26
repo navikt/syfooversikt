@@ -5,6 +5,8 @@ metadata:
   namespace: teamsykefravr
   labels:
     team: teamsykefravr
+  annotations:
+    texas.nais.io/enabled: "true"
 spec:
   image: {{ image }}
   replicas:
