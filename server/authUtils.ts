@@ -15,19 +15,6 @@ type OboToken = {
   expiresIn: number;
 };
 
-type CachedOboToken = {
-  token: OboToken;
-  expires: number;
-};
-
-declare module 'express-session' {
-  export interface SessionData {
-    tokenCache: { [clientId: string]: CachedOboToken };
-  }
-}
-
-const OBO_TOKEN_EXPIRATION_MARGIN_SECONDS = 60;
-
 let _remoteJWKSet: GetKeyFunction<JWSHeaderParameters, FlattenedJWSInput>;
 
 async function initJWKSet() {
@@ -83,12 +70,6 @@ const checkVerificationPayload = (payload: JWTPayload) => {
   return false;
 };
 
-const isNotExpired = (token: CachedOboToken) => {
-  return (
-    token.expires >= Date.now() + OBO_TOKEN_EXPIRATION_MARGIN_SECONDS * 1000
-  );
-};
-
 export const getOrRefreshOnBehalfOfToken = async (
   authClient: OpenIdClient.Client,
   issuer: OpenIdClient.Issuer<any>,
@@ -101,29 +82,8 @@ export const getOrRefreshOnBehalfOfToken = async (
       'Could not get on-behalf-of token because the token was undefined'
     );
   }
-  if (req.session.tokenCache === undefined) {
-    req.session.tokenCache = {};
-  }
 
-  let cachedOboToken = req.session.tokenCache[clientId];
-  if (cachedOboToken && isNotExpired(cachedOboToken)) {
-    return cachedOboToken.token;
-  } else {
-    const onBehalfOfToken = await requestOnBehalfOfToken(
-      authClient,
-      token,
-      clientId
-    );
-    if (!onBehalfOfToken) {
-      return undefined;
-    }
-    cachedOboToken = {
-      token: onBehalfOfToken,
-      expires: Date.now() + onBehalfOfToken.expiresIn * 1000,
-    };
-    req.session.tokenCache[clientId] = cachedOboToken;
-  }
-  return cachedOboToken.token;
+  return requestOnBehalfOfToken(authClient, token, clientId);
 };
 
 const requestOnBehalfOfToken = async (

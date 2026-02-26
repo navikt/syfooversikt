@@ -5,7 +5,6 @@ import prometheus from 'prom-client';
 
 import { getOpenIdClient, getOpenIdIssuer } from './server/authUtils';
 import { setupProxy } from './server/proxy';
-import { setupSession } from './server/session';
 import unleash = require('./server/unleash');
 
 // Prometheus metrics
@@ -62,7 +61,6 @@ const redirectIfUnauthorized = async (
 };
 
 const setupServer = async () => {
-  setupSession(server);
   const issuer = await getOpenIdIssuer();
   const authClient = await getOpenIdClient(issuer);
 

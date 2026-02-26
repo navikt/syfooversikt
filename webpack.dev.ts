@@ -5,7 +5,6 @@ import * as Webpack from 'webpack';
 import * as WebpackDevServer from 'webpack-dev-server';
 
 import common from './webpack.common';
-import * as Session from './server/session';
 
 const devConfig: Webpack.Configuration = {
   mode: 'development',
@@ -17,34 +16,33 @@ const devConfig: Webpack.Configuration = {
       middlewares: WebpackDevServer.Middleware[],
       devServer: WebpackDevServer
     ) => {
-      setupDev(devServer);
+      const compiler = devServer.compiler;
+
+      middlewares.push({
+        name: 'spa-fallback',
+        middleware: (req: express.Request, res: express.Response) => {
+          const filename = path.join(compiler.outputPath, 'index.html');
+          compiler.outputFileSystem?.readFile(
+            filename,
+            (err: any, result: any) => {
+              if (err) {
+                res
+                  .status(404)
+                  .sendFile(path.resolve(__dirname, 'public/error.html'));
+                return;
+              }
+
+              res.set('Content-Type', 'text/html');
+              res.send(result);
+              res.end();
+            }
+          );
+        },
+      });
+
       return middlewares;
     },
   },
-};
-
-const setupDev = async (devServer: WebpackDevServer) => {
-  const app = devServer.app;
-  if (!app) {
-    throw new Error('webpack-dev-server is not defined');
-  }
-  const compiler = devServer.compiler;
-
-  await Session.setupSession(app);
-
-  app.use('*', (req: express.Request, res: express.Response) => {
-    const filename = path.join(compiler.outputPath, 'index.html');
-    compiler.outputFileSystem?.readFile(filename, (err: any, result: any) => {
-      if (err) {
-        res.status(404).sendFile(path.resolve(__dirname, 'public/error.html'));
-        return;
-      }
-
-      res.set('Content-Type', 'text/html');
-      res.send(result);
-      res.end();
-    });
-  });
 };
 
 export default merge(common, devConfig);
