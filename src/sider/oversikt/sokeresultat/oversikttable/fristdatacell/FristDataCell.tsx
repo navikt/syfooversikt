@@ -136,14 +136,17 @@ function fristerInfo(
 
   if (dialogmotekandidatStatus?.isKandidat && dialogmotekandidatStatus.avvent) {
     frister.push({
-      icon: () => (
-        <Button
-          size="xsmall"
-          icon={<HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />}
-          className="mr-1"
-          onClick={() => setIsDialogmoteAvventModalOpen(true)}
-        />
-      ),
+      icon: () =>
+        selectedTab === TabType.MIN_OVERSIKT ? (
+          <Button
+            size="xsmall"
+            icon={<HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />}
+            className="mr-1"
+            onClick={() => setIsDialogmoteAvventModalOpen(true)}
+          />
+        ) : (
+          <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />
+        ),
       date: dialogmotekandidatStatus.avvent.frist,
       tooltip: texts.tooltipAvventerDialogmotekandidat,
     });
