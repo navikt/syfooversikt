@@ -45,6 +45,14 @@ export const server = {
 
 // For auth
 export const auth = {
+  texas: {
+    introspectionEndpoint: envVar({
+      name: 'NAIS_TOKEN_INTROSPECTION_ENDPOINT',
+    }),
+    tokenExchangeEndpoint: envVar({
+      name: 'NAIS_TOKEN_EXCHANGE_ENDPOINT',
+    }),
+  },
   ereg: {
     applicationName: 'ereg',
     clientId: '',

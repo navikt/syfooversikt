@@ -1,18 +1,26 @@
 import { Request } from 'express';
+import { auth } from './config';
 
-const introspectionEndpoint = () =>
-  process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT ?? '';
-const tokenExchangeEndpoint = () =>
-  process.env.NAIS_TOKEN_EXCHANGE_ENDPOINT ?? '';
+interface TokenIntrospectionResponse {
+  active: boolean;
+  // see texas documentation for more fields: https://doc.nais.io/auth/entra-id/how-to/secure/#success-response
+}
 
-const extractBearerToken = (req: Request): string | undefined =>
-  req.headers.authorization?.replace('Bearer ', '');
+interface TokenExchangeResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
 
-export const validateToken = async (req: Request): Promise<boolean> => {
+function extractBearerToken(req: Request): string | undefined {
+  return req.headers.authorization?.replace('Bearer ', '');
+}
+
+export async function validateToken(req: Request): Promise<boolean> {
   const token = extractBearerToken(req);
   if (!token) return false;
 
-  const response = await fetch(introspectionEndpoint(), {
+  const response = await fetch(auth.texas.introspectionEndpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ identity_provider: 'entra_id', token }),
@@ -23,18 +31,18 @@ export const validateToken = async (req: Request): Promise<boolean> => {
     return false;
   }
 
-  const data = await response.json();
-  return data.active === true;
-};
+  const data = (await response.json()) as TokenIntrospectionResponse;
+  return data.active;
+}
 
-export const getOnBehalfOfToken = async (
+export async function getOnBehalfOfToken(
   req: Request,
   target: string
-): Promise<string | undefined> => {
+): Promise<string | undefined> {
   const userToken = extractBearerToken(req);
   if (!userToken) return undefined;
 
-  const response = await fetch(tokenExchangeEndpoint(), {
+  const response = await fetch(auth.texas.tokenExchangeEndpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -49,6 +57,6 @@ export const getOnBehalfOfToken = async (
     return undefined;
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as TokenExchangeResponse;
   return data.access_token;
-};
+}
