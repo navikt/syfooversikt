@@ -49,7 +49,6 @@ spec:
     - instance: cache
       access: readwrite
   envFrom:
-    - secret: syfooversikt-session-key
     - secret: syfooversikt-unleash-api-token
   accessPolicy:
     outbound:
