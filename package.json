@@ -79,7 +79,7 @@
     "react-router-dom": "7.10.1",
     "regenerator-runtime": "0.14.1",
     "styled-components": "5.3.6",
-    "unleash-client": "6.9.0",
+    "unleash-client": "6.9.6",
     "webpack-merge": "5.10.0"
   },
   "devDependencies": {
