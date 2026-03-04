@@ -24,7 +24,3 @@ Du må ha Node v22 og npm v10 installert.
 ## Logge på i Q1-miljø
 
 Se denne siden for [testdata](https://confluence.adeo.no/pages/viewpage.action?pageId=228580060) (NAV-intern lenke).
-
-## Valkey Cache
-
-Bruker teamsykefravr sin felles Valkey-cache på Aiven for å cache bruker-sessions.

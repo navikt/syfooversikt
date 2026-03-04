@@ -1,9 +1,8 @@
 import express from 'express';
 import expressHttpProxy from 'express-http-proxy';
 import url from 'url';
-import OpenIdClient from 'openid-client';
 
-import { getOrRefreshOnBehalfOfToken } from './authUtils';
+import { getOnBehalfOfToken } from './authUtils';
 import * as Config from './config';
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
@@ -35,20 +34,6 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
     },
   });
 
-const proxyDirectly = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction,
-  authClient: OpenIdClient.Client,
-  externalAppConfig: Config.ExternalAppConfig
-) => {
-  return proxyExternalHostWithoutAuthentication(externalAppConfig.host)(
-    req,
-    res,
-    next
-  );
-};
-
 const proxyExternalHost = (
   externalAppConfig: Config.ExternalAppConfig,
   accessToken: any,
@@ -57,7 +42,7 @@ const proxyExternalHost = (
   expressHttpProxy(externalAppConfig.host, {
     https: false,
     parseReqBody: parseReqBody,
-    proxyReqOptDecorator: async (options, srcReq) => {
+    proxyReqOptDecorator: async (options) => {
       if (!accessToken) {
         return options;
       }
@@ -109,42 +94,28 @@ const proxyOnBehalfOf = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  authClient: OpenIdClient.Client,
-  issuer: OpenIdClient.Issuer<any>,
   externalAppConfig: Config.ExternalAppConfig
 ) => {
-  getOrRefreshOnBehalfOfToken(
-    authClient,
-    issuer,
-    req,
-    externalAppConfig.clientId
-  )
-    .then((onBehalfOfToken) => {
-      if (!onBehalfOfToken || !onBehalfOfToken.accessToken) {
+  getOnBehalfOfToken(req, externalAppConfig.clientId)
+    .then((accessToken) => {
+      if (!accessToken) {
         res.status(500).send('Failed to fetch access token on behalf of user.');
-        console.log(
-          'proxyOnBehalfOf: on-behalf-of-token or accessToken was undefined'
-        );
+        console.log('proxyOnBehalfOf: on-behalf-of-token was undefined');
         return;
       }
       return proxyExternalHost(
         externalAppConfig,
-        onBehalfOfToken.accessToken,
+        accessToken,
         req.method === 'POST'
       )(req, res, next);
     })
     .catch((error: any) => {
-      console.log('Failed to renew token(s). Original error: %s', error);
-      res
-        .status(500)
-        .send('Failed to fetch/refresh access tokens on behalf of user');
+      console.log('Failed to get OBO token. Original error: %s', error);
+      res.status(500).send('Failed to fetch access tokens on behalf of user');
     });
 };
 
-export const setupProxy = (
-  authClient: OpenIdClient.Client,
-  issuer: OpenIdClient.Issuer<any>
-) => {
+export const setupProxy = () => {
   const router = express.Router();
 
   router.use(
@@ -154,7 +125,11 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyDirectly(req, res, next, authClient, Config.auth.ereg);
+      proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)(
+        req,
+        res,
+        next
+      );
     }
   );
 
@@ -165,14 +140,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        authClient,
-        issuer,
-        Config.auth.modiacontextholder
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.modiacontextholder);
     }
   );
 
@@ -183,14 +151,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        authClient,
-        issuer,
-        Config.auth.syfooversiktsrv
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfooversiktsrv);
     }
   );
 
@@ -201,14 +162,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        authClient,
-        issuer,
-        Config.auth.syfoperson
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfoperson);
     }
   );
 
@@ -219,14 +173,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        authClient,
-        issuer,
-        Config.auth.syfoveileder
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfoveileder);
     }
   );
 
@@ -237,14 +184,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(
-        req,
-        res,
-        next,
-        authClient,
-        issuer,
-        Config.auth.syfobehandlendeenhet
-      );
+      proxyOnBehalfOf(req, res, next, Config.auth.syfobehandlendeenhet);
     }
   );
 
@@ -255,7 +195,7 @@ export const setupProxy = (
       res: express.Response,
       next: express.NextFunction
     ) => {
-      proxyOnBehalfOf(req, res, next, authClient, issuer, Config.auth.flexjar);
+      proxyOnBehalfOf(req, res, next, Config.auth.flexjar);
     }
   );
 

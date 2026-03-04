@@ -5,6 +5,8 @@ metadata:
   namespace: teamsykefravr
   labels:
     team: teamsykefravr
+  annotations:
+    texas.nais.io/enabled: "true"
 spec:
   image: {{ image }}
   replicas:
@@ -47,7 +49,6 @@ spec:
     - instance: cache
       access: readwrite
   envFrom:
-    - secret: syfooversikt-session-key
     - secret: syfooversikt-unleash-api-token
   accessPolicy:
     outbound:
