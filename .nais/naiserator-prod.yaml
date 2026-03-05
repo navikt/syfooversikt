@@ -48,6 +48,10 @@ spec:
   valkey:
     - instance: cache
       access: readwrite
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   envFrom:
     - secret: syfooversikt-unleash-api-token
   accessPolicy:
