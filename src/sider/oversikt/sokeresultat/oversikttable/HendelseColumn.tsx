@@ -195,7 +195,7 @@ export function getHendelser(personData: PersonData): Hendelse[] {
       text: 'Svart på kartleggingsspørsmål',
     });
   }
-  return hendelser;
+  return hendelser.sort((a, b) => a.type - b.type);
 }
 
 export default function HendelseColumn({ personData }: Props) {
