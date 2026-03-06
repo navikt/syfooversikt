@@ -11,6 +11,7 @@ import {
 import { isPast } from '@/utils/dateUtils';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
+import { Hendelse, HendelseType } from '@/utils/hendelseType';
 
 interface Props {
   personData: PersonData;
@@ -98,65 +99,101 @@ function mapSenOppfolgingStatus(
   return '';
 }
 
-export function getHendelser(personData: PersonData): string[] {
-  const hendelser: string[] = [];
+export function getHendelser(personData: PersonData): Hendelse[] {
+  const hendelser: Hendelse[] = [];
   if (personData.aktivitetskravvurdering) {
-    hendelser.push(`Aktivitetskrav ${mapAktivitetskravStatus(personData)}`);
+    hendelser.push({
+      type: HendelseType.AKTIVITETSKRAV,
+      text: `Aktivitetskrav ${mapAktivitetskravStatus(personData)}`,
+    });
   }
   if (personData.arbeidsuforhetvurdering) {
-    hendelser.push(
-      `Arbeidsuførhet - ${mapArbeidsuforhetStatus(
+    hendelser.push({
+      type: HendelseType.ARBEIDSUFORHET,
+      text: `Arbeidsuførhet - ${mapArbeidsuforhetStatus(
         personData.arbeidsuforhetvurdering.varsel?.svarfrist
-      )}`
-    );
+      )}`,
+    });
   }
   if (personData.behandlerBerOmBistandUbehandlet) {
-    hendelser.push('Bistandsbehov fra behandler');
+    hendelser.push({
+      type: HendelseType.BISTANDSBEHOV_FRA_BEHANDLER,
+      text: 'Bistandsbehov fra behandler',
+    });
   }
   if (personData.harBehandlerdialogUbehandlet) {
-    hendelser.push('Dialogmelding');
+    hendelser.push({
+      type: HendelseType.DIALOGMELDING,
+      text: 'Dialogmelding',
+    });
   }
   if (personData.dialogmotekandidatStatus?.isKandidat) {
     if (personData.dialogmotekandidatStatus.avvent) {
-      hendelser.push('Dialogmøte - Avventer');
+      hendelser.push({
+        type: HendelseType.DIALOGMOTE,
+        text: 'Dialogmøte - Avventer',
+      });
     } else {
-      hendelser.push('Dialogmøte - Kandidat');
+      hendelser.push({
+        type: HendelseType.DIALOGMOTE,
+        text: 'Dialogmøte - Kandidat',
+      });
     }
   }
   if (personData.harMotebehovUbehandlet) {
-    hendelser.push('Dialogmøte - Møtebehov');
+    hendelser.push({
+      type: HendelseType.DIALOGMOTE_MOTEBEHOV,
+      text: 'Dialogmøte - Møtebehov',
+    });
   }
   if (personData.harDialogmotesvar) {
-    hendelser.push('Dialogmøte - Nytt svar');
+    hendelser.push({
+      type: HendelseType.DIALOGMOTE_NYTT_SVAR,
+      text: 'Dialogmøte - Nytt svar',
+    });
   }
   if (personData.friskmeldingTilArbeidsformidlingFom) {
-    hendelser.push('Friskmelding til arbeidsformidling');
+    hendelser.push({
+      type: HendelseType.FRISKMELDING_TIL_ARBEIDSFORMIDLING,
+      text: 'Friskmelding til arbeidsformidling',
+    });
   }
   if (personData.oppfolgingsoppgave) {
     const oppfolgingsgrunn =
       oppfolgingsgrunnToString[personData.oppfolgingsoppgave.oppfolgingsgrunn]
         ?.short;
-    hendelser.push(`Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`);
+    hendelser.push({
+      type: HendelseType.OPPFOLGINGSOPPGAVE,
+      text: `Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`,
+    });
   }
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
-    hendelser.push('Oppfølgingsplan');
+    hendelser.push({
+      type: HendelseType.OPPFOLGINGSPLAN,
+      text: 'Oppfølgingsplan',
+    });
   }
   if (personData.senOppfolgingKandidat) {
-    hendelser.push(
-      `Snart slutt på sykepengene - ${mapSenOppfolgingStatus(
+    hendelser.push({
+      type: HendelseType.SEN_OPPFOLGING,
+      text: `Snart slutt på sykepengene - ${mapSenOppfolgingStatus(
         personData.senOppfolgingKandidat
-      )}`
-    );
+      )}`,
+    });
   }
   if (personData.manglendeMedvirkning) {
-    hendelser.push(
-      `Manglende medvirkning - ${mapManglendeMedvirkningStatus(
+    hendelser.push({
+      type: HendelseType.MANGLENDE_MEDVIRKNING,
+      text: `Manglende medvirkning - ${mapManglendeMedvirkningStatus(
         personData.manglendeMedvirkning
-      )}`
-    );
+      )}`,
+    });
   }
   if (personData.isAktivKartleggingssporsmalVurdering) {
-    hendelser.push('Svart på kartleggingsspørsmål');
+    hendelser.push({
+      type: HendelseType.KARTLEGGINGSSPORSMAL,
+      text: 'Svart på kartleggingsspørsmål',
+    });
   }
   return hendelser;
 }
@@ -164,9 +201,9 @@ export function getHendelser(personData: PersonData): string[] {
 export default function HendelseColumn({ personData }: Props) {
   return (
     <Table.DataCell textSize="small" className="[&>*:not(:last-child)]:mb-1.5">
-      {getHendelser(personData).map((status, index) => (
+      {getHendelser(personData).map((hendelse, index) => (
         <p key={index} className="m-0">
-          {status}
+          {hendelse.text}
         </p>
       ))}
     </Table.DataCell>

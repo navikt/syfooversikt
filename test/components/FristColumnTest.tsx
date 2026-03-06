@@ -136,7 +136,7 @@ describe('FristColumn', () => {
     expect(screen.getAllByText(toReadableDate(frist))).to.exist;
   });
 
-  it('viser tidligste frist først når person har flere frister', () => {
+  it('viser frister i hendelse-rekkefølge når person har flere frister', () => {
     const aktivitetskravVurderingFrist = new Date('2023-12-10');
     const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-05'));
     const friskmeldingTilArbeidsformidlingFom = addWeeks(new Date(), 10);
@@ -162,13 +162,13 @@ describe('FristColumn', () => {
     // 3 frister i oversikten + 1 i modal for oppfølgingsoppgave og 1 i modal for aktivitetskrav som finnes i DOM
     expect(allFrister).to.have.length(5);
     expect(allFrister[0]?.textContent).to.eq(
-      toReadableDate(oppfolgingsoppgave.frist)
-    );
-    expect(allFrister[1]?.textContent).to.eq(
       toReadableDate(aktivitetskravVurderingFrist)
     );
-    expect(allFrister[2]?.textContent).to.eq(
+    expect(allFrister[1]?.textContent).to.eq(
       toReadableDate(friskmeldingTilArbeidsformidlingFom)
+    );
+    expect(allFrister[2]?.textContent).to.eq(
+      toReadableDate(oppfolgingsoppgave.frist)
     );
   });
 
