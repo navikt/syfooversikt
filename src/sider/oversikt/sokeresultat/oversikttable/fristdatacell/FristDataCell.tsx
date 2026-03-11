@@ -12,6 +12,7 @@ import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable
 import { TabType, useTabType } from '@/hooks/useTabType';
 import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
 import DialogmoteAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/DialogmoteAvventModal';
+import { HendelseType } from '@/sider/oversikt/sokeresultat/oversikttable/hendelseType';
 
 const texts = {
   tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
@@ -25,13 +26,14 @@ const texts = {
 };
 
 type Frist = {
+  hendelseType: HendelseType;
   icon: () => ReactElement;
   date: Date;
   tooltip: string;
 };
 
-function byFristAsc(fristA: Frist, fristB: Frist) {
-  return fristA.date > fristB.date ? 1 : -1;
+function byHendelseOrder(fristA: Frist, fristB: Frist) {
+  return fristA.hendelseType - fristB.hendelseType;
 }
 
 function fristerInfo(
@@ -60,6 +62,7 @@ function fristerInfo(
       const currentVurdering = aktivitetskravvurdering.vurderinger[0];
       currentVurdering?.frist &&
         frister.push({
+          hendelseType: HendelseType.AKTIVITETSKRAV,
           icon: () =>
             selectedTab === TabType.MIN_OVERSIKT ? (
               <Button
@@ -82,6 +85,7 @@ function fristerInfo(
     if (aktivitetskravStatus == AktivitetskravStatus.FORHANDSVARSEL) {
       aktivitetskravVarselFrist &&
         frister.push({
+          hendelseType: HendelseType.AKTIVITETSKRAV,
           icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
           date: aktivitetskravVarselFrist,
           tooltip: texts.aktivitetskravvarselFrist,
@@ -90,6 +94,7 @@ function fristerInfo(
   }
   if (oppfolgingsoppgave?.frist) {
     frister.push({
+      hendelseType: HendelseType.OPPFOLGINGSOPPGAVE,
       icon: () =>
         selectedTab === TabType.MIN_OVERSIKT ? (
           <Button
@@ -112,6 +117,7 @@ function fristerInfo(
 
   if (friskmeldingTilArbeidsformidlingFom) {
     frister.push({
+      hendelseType: HendelseType.FRISKMELDING_TIL_ARBEIDSFORMIDLING,
       icon: () => <BriefcaseIcon aria-hidden fontSize="1.5rem" />,
       date: friskmeldingTilArbeidsformidlingFom,
       tooltip: texts.tooltipFriskmeldingTilArbeidsformidling,
@@ -120,6 +126,7 @@ function fristerInfo(
 
   if (arbeidsuforhetvurdering && arbeidsuforhetvurdering.varsel) {
     frister.push({
+      hendelseType: HendelseType.ARBEIDSUFORHET,
       icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
       date: arbeidsuforhetvurdering.varsel.svarfrist,
       tooltip: texts.arbeidsuforhetvarselFrist,
@@ -128,6 +135,7 @@ function fristerInfo(
 
   if (manglendeMedvirkning && manglendeMedvirkning.varsel) {
     frister.push({
+      hendelseType: HendelseType.MANGLENDE_MEDVIRKNING,
       icon: () => <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />,
       date: manglendeMedvirkning.varsel.svarfrist,
       tooltip: texts.manglendeMedvirkningVarselFrist,
@@ -136,6 +144,7 @@ function fristerInfo(
 
   if (dialogmotekandidatStatus?.isKandidat && dialogmotekandidatStatus.avvent) {
     frister.push({
+      hendelseType: HendelseType.DIALOGMOTE,
       icon: () =>
         selectedTab === TabType.MIN_OVERSIKT ? (
           <Button
@@ -188,7 +197,7 @@ export function FristDataCell({ personData }: Props) {
     !!currentVurdering;
   return (
     <Table.DataCell textSize="small">
-      {frister.sort(byFristAsc).map(({ date, icon, tooltip }, index) => (
+      {frister.sort(byHendelseOrder).map(({ date, icon, tooltip }, index) => (
         <div key={index} className="flex flex-wrap items-center">
           <Tooltip content={tooltip} arrow={false}>
             {icon()}
