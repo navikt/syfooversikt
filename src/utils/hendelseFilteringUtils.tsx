@@ -381,8 +381,8 @@ function sortEventsOnStatus(
 ): PersonregisterState {
   const sorted = Object.entries(personregister).sort(
     ([, persondataA], [, persondataB]) => {
-      const statusA = getHendelser(persondataA)[0]?.text || '';
-      const statusB = getHendelser(persondataB)[0]?.text || '';
+      const statusA = getHendelser(persondataA)[0]?.beskrivelse ?? '';
+      const statusB = getHendelser(persondataB)[0]?.beskrivelse ?? '';
 
       return statusA.localeCompare(statusB);
     }

@@ -1,3 +1,8 @@
+/**
+ * Canonical display order for hendelse types.
+ * The enum ordinal defines the sort order used by both HendelseColumn and FristDataCell.
+ * New entries must be inserted at the position matching their desired display order.
+ */
 export enum HendelseType {
   AKTIVITETSKRAV,
   ARBEIDSUFORHET,
@@ -12,9 +17,4 @@ export enum HendelseType {
   SEN_OPPFOLGING,
   MANGLENDE_MEDVIRKNING,
   KARTLEGGINGSSPORSMAL,
-}
-
-export interface Hendelse {
-  type: HendelseType;
-  text: string;
 }
