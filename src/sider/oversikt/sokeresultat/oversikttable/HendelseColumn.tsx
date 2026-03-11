@@ -11,7 +11,7 @@ import {
 import { isPast } from '@/utils/dateUtils';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
-import { HendelseType } from '@/utils/hendelseType';
+import { HendelseType } from '@/sider/oversikt/sokeresultat/oversikttable/hendelseType';
 
 interface Props {
   personData: PersonData;

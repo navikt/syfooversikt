@@ -12,7 +12,7 @@ import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable
 import { TabType, useTabType } from '@/hooks/useTabType';
 import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
 import DialogmoteAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/DialogmoteAvventModal';
-import { HendelseType } from '@/utils/hendelseType';
+import { HendelseType } from '@/sider/oversikt/sokeresultat/oversikttable/hendelseType';
 
 const texts = {
   tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
