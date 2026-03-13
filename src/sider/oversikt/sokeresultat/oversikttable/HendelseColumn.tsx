@@ -11,7 +11,6 @@ import {
 import { isPast } from '@/utils/dateUtils';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
-import { HendelseType } from '@/sider/oversikt/sokeresultat/oversikttable/hendelseType';
 
 interface Props {
   personData: PersonData;
@@ -100,67 +99,83 @@ function mapSenOppfolgingStatus(
 }
 
 interface Hendelse {
-  type: HendelseType;
   beskrivelse: string;
+  frist?: Date;
+}
+
+function getAktivitetskravFrist(personData: PersonData): Date | undefined {
+  const vurdering = personData.aktivitetskravvurdering?.vurderinger[0];
+  const status = personData.aktivitetskravvurdering?.status;
+  if (status === AktivitetskravStatus.AVVENT) {
+    return vurdering?.frist ?? undefined;
+  }
+  if (status === AktivitetskravStatus.FORHANDSVARSEL) {
+    return vurdering?.varsel?.svarfrist ?? undefined;
+  }
+  return undefined;
+}
+
+function byFristOrBottom(a: Hendelse, b: Hendelse): number {
+  if (a.frist && b.frist) {
+    return a.frist > b.frist ? 1 : -1;
+  }
+  if (a.frist) return -1;
+  if (b.frist) return 1;
+  return 0;
 }
 
 export function getHendelser(personData: PersonData): Hendelse[] {
   const hendelser: Hendelse[] = [];
   if (personData.aktivitetskravvurdering) {
     hendelser.push({
-      type: HendelseType.AKTIVITETSKRAV,
       beskrivelse: `Aktivitetskrav ${mapAktivitetskravStatus(personData)}`,
+      frist: getAktivitetskravFrist(personData),
     });
   }
   if (personData.arbeidsuforhetvurdering) {
     hendelser.push({
-      type: HendelseType.ARBEIDSUFORHET,
       beskrivelse: `Arbeidsuførhet - ${mapArbeidsuforhetStatus(
         personData.arbeidsuforhetvurdering.varsel?.svarfrist
       )}`,
+      frist: personData.arbeidsuforhetvurdering.varsel?.svarfrist ?? undefined,
     });
   }
   if (personData.behandlerBerOmBistandUbehandlet) {
     hendelser.push({
-      type: HendelseType.BISTANDSBEHOV_FRA_BEHANDLER,
       beskrivelse: 'Bistandsbehov fra behandler',
     });
   }
   if (personData.harBehandlerdialogUbehandlet) {
     hendelser.push({
-      type: HendelseType.DIALOGMELDING,
       beskrivelse: 'Dialogmelding',
     });
   }
   if (personData.dialogmotekandidatStatus?.isKandidat) {
     if (personData.dialogmotekandidatStatus.avvent) {
       hendelser.push({
-        type: HendelseType.DIALOGMOTE,
         beskrivelse: 'Dialogmøte - Avventer',
+        frist: personData.dialogmotekandidatStatus.avvent.frist,
       });
     } else {
       hendelser.push({
-        type: HendelseType.DIALOGMOTE,
         beskrivelse: 'Dialogmøte - Kandidat',
       });
     }
   }
   if (personData.harMotebehovUbehandlet) {
     hendelser.push({
-      type: HendelseType.DIALOGMOTE_MOTEBEHOV,
       beskrivelse: 'Dialogmøte - Møtebehov',
     });
   }
   if (personData.harDialogmotesvar) {
     hendelser.push({
-      type: HendelseType.DIALOGMOTE_NYTT_SVAR,
       beskrivelse: 'Dialogmøte - Nytt svar',
     });
   }
   if (personData.friskmeldingTilArbeidsformidlingFom) {
     hendelser.push({
-      type: HendelseType.FRISKMELDING_TIL_ARBEIDSFORMIDLING,
       beskrivelse: 'Friskmelding til arbeidsformidling',
+      frist: personData.friskmeldingTilArbeidsformidlingFom,
     });
   }
   if (personData.oppfolgingsoppgave) {
@@ -168,19 +183,17 @@ export function getHendelser(personData: PersonData): Hendelse[] {
       oppfolgingsgrunnToString[personData.oppfolgingsoppgave.oppfolgingsgrunn]
         ?.short;
     hendelser.push({
-      type: HendelseType.OPPFOLGINGSOPPGAVE,
       beskrivelse: `Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`,
+      frist: personData.oppfolgingsoppgave.frist ?? undefined,
     });
   }
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
     hendelser.push({
-      type: HendelseType.OPPFOLGINGSPLAN,
       beskrivelse: 'Oppfølgingsplan',
     });
   }
   if (personData.senOppfolgingKandidat) {
     hendelser.push({
-      type: HendelseType.SEN_OPPFOLGING,
       beskrivelse: `Snart slutt på sykepengene - ${mapSenOppfolgingStatus(
         personData.senOppfolgingKandidat
       )}`,
@@ -188,24 +201,26 @@ export function getHendelser(personData: PersonData): Hendelse[] {
   }
   if (personData.manglendeMedvirkning) {
     hendelser.push({
-      type: HendelseType.MANGLENDE_MEDVIRKNING,
       beskrivelse: `Manglende medvirkning - ${mapManglendeMedvirkningStatus(
         personData.manglendeMedvirkning
       )}`,
+      frist: personData.manglendeMedvirkning.varsel?.svarfrist ?? undefined,
     });
   }
   if (personData.isAktivKartleggingssporsmalVurdering) {
     hendelser.push({
-      type: HendelseType.KARTLEGGINGSSPORSMAL,
       beskrivelse: 'Svart på kartleggingsspørsmål',
     });
   }
-  return hendelser.sort((a, b) => a.type - b.type);
+  return hendelser.sort(byFristOrBottom);
 }
 
 export default function HendelseColumn({ personData }: Props) {
   return (
-    <Table.DataCell textSize="small" className="[&>*:not(:last-child)]:mb-1.5">
+    <Table.DataCell
+      textSize="small"
+      className="align-top [&>*:not(:last-child)]:mb-1.5"
+    >
       {getHendelser(personData).map((hendelse, index) => (
         <p key={index} className="m-0">
           {hendelse.beskrivelse}
