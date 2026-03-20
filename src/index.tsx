@@ -18,16 +18,18 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 initFaro();
 
 function addUmamiScript() {
-  const dataWebsiteId = isProd()
-    ? 'ef4034fe-08a4-42a6-8f3c-e24751455026'
-    : 'cf79c0cd-bba6-45dc-a1ff-8ba2d6915ad3';
+  const [dataWebsiteId, src] = isProd()
+    ? [
+        'ef4034fe-08a4-42a6-8f3c-e24751455026',
+        'https://cdn.nav.no/team-researchops/sporing/sporing.js',
+      ]
+    : [
+        'cf79c0cd-bba6-45dc-a1ff-8ba2d6915ad3',
+        'https://cdn.nav.no/team-researchops/sporing/sporing-dev.js',
+      ];
   const script = document.createElement('script');
-  script.setAttribute('data-host-url', 'https://umami.nav.no');
   script.setAttribute('data-website-id', dataWebsiteId);
-  script.setAttribute(
-    'src',
-    'https://cdn.nav.no/team-researchops/sporing/sporing.js'
-  );
+  script.setAttribute('src', src);
   script.setAttribute('data-before-send', 'beforeSendHandler');
   script.setAttribute('defer', 'defer');
   document.head.appendChild(script);

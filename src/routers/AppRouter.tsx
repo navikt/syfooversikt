@@ -17,7 +17,7 @@ export default function AppRouter(): ReactElement {
 
   useEffect(() => {
     if (window.umami !== undefined && ident) {
-      Umami.setIdentifier(ident);
+      void Umami.setIdentifier(ident);
     }
   }, [ident]);
 
