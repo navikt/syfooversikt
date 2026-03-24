@@ -11,6 +11,7 @@
 # production
 /build
 /dist
+dist-server/
 !/dist/index.html
 
 npm-debug.log*
