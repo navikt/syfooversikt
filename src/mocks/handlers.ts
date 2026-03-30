@@ -1,4 +1,4 @@
-import { HttpHandler } from 'msw';
+import { HttpHandler, WebSocketHandler, ws } from 'msw';
 import { generatePersons } from './mockUtils';
 import { mockUnleash } from '@/mocks/mockUnleash';
 import { mockSyfoveileder } from '@/mocks/syfoveileder/mockSyfoveileder';
@@ -19,7 +19,10 @@ import { mockUmami } from '@/mocks/umami/mockUmami';
 
 const generatedPersons = generatePersons(50);
 
-const handlers: HttpHandler[] = [
+const handlers: Array<HttpHandler | WebSocketHandler> = [
+  ws.link('ws://localhost:4000/*').addEventListener('connection', () => {
+    // Silently ignore WebSocket connections to Internflatedecorator in local development
+  }),
   mockFlexjar,
   mockUmami,
   mockUnleash,
