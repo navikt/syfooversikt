@@ -8,11 +8,7 @@ jobs:
       packages: read
       contents: read
       id-token: write
-    uses: navikt/isworkflows/.github/workflows/node-build-deploy.yml@master
+    uses: navikt/isworkflows/.github/workflows/node-build-deploy-pnpm.yml@master
     with:
-      dev-cluster: dev-gcp
-      prod-cluster: prod-gcp
       node-version: 22
-      distroless: true
-      buildServer: true
     secrets: inherit
