@@ -192,7 +192,6 @@ describe('NewOversiktTable', () => {
           createdAt: new Date('2022-01-01'),
           personident: '99999966667',
           isKandidat: true,
-          avvent: null,
         },
         dialogmoteAvvent: {
           uuid: 'abc-111',

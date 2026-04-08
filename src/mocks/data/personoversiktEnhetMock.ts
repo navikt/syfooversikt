@@ -374,7 +374,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       createdAt: new Date('2022-01-01'),
       personident: '99999966667',
       isKandidat: true,
-      avvent: null,
     },
     motestatus: MoteStatusType.AVLYST,
     oppfolgingsoppgave: null,
@@ -402,7 +401,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       createdAt: new Date('2022-01-01'),
       personident: '99999966667',
       isKandidat: true,
-      avvent: null,
     },
     dialogmoteAvvent: {
       uuid: 'abc-111',
@@ -598,7 +596,6 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       createdAt: new Date(),
       personident: '99999966667',
       isKandidat: true,
-      avvent: null,
     },
     dialogmoteAvvent: {
       uuid: 'abc-222',
