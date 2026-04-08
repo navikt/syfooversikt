@@ -151,10 +151,10 @@ export function getHendelser(personData: PersonData): Hendelse[] {
     });
   }
   if (personData.dialogmotekandidatStatus?.isKandidat) {
-    if (personData.dialogmotekandidatStatus.avvent) {
+    if (personData.dialogmoteAvvent) {
       hendelser.push({
         beskrivelse: 'Dialogmøte - Avventer',
-        frist: personData.dialogmotekandidatStatus.avvent.frist,
+        frist: personData.dialogmoteAvvent.frist,
       });
     } else {
       hendelser.push({

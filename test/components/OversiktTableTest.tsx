@@ -46,6 +46,7 @@ const defaultPersonData: PersonData = {
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
   dialogmotekandidatStatus: null,
+  dialogmoteAvvent: null,
 };
 const personDataAktivitetskravAvventUtenFrist: PersonData = {
   ...defaultPersonData,
@@ -191,14 +192,16 @@ describe('NewOversiktTable', () => {
           createdAt: new Date('2022-01-01'),
           personident: '99999966667',
           isKandidat: true,
-          avvent: {
-            uuid: 'abc-111',
-            createdAt: new Date('2022-01-15'),
-            frist: new Date(),
-            createdBy: 'M987654',
-            personident: '99999966668',
-            beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
-          },
+          avvent: null,
+        },
+        dialogmoteAvvent: {
+          uuid: 'abc-111',
+          createdAt: new Date('2022-01-15'),
+          frist: new Date(),
+          createdBy: 'M987654',
+          personident: '99999966668',
+          beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+          isLukket: false,
         },
         harMotebehovUbehandlet: true,
         harOppfolgingsplanLPSBistandUbehandlet: true,

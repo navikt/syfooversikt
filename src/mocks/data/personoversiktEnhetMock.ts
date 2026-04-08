@@ -25,6 +25,7 @@ const behandletPerson = {
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
+  dialogmoteAvvent: null,
 };
 
 export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
@@ -401,14 +402,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       createdAt: new Date('2022-01-01'),
       personident: '99999966667',
       isKandidat: true,
-      avvent: {
-        uuid: 'abc-111',
-        createdAt: new Date('2022-01-15'),
-        frist: new Date(),
-        createdBy: 'M987654',
-        personident: '99999966668',
-        beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
-      },
+      avvent: null,
+    },
+    dialogmoteAvvent: {
+      uuid: 'abc-111',
+      createdAt: new Date('2022-01-15'),
+      frist: new Date(),
+      createdBy: 'M987654',
+      personident: '99999966668',
+      beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+      isLukket: false,
     },
     motestatus: undefined,
     oppfolgingsoppgave: null,
@@ -595,14 +598,16 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
       createdAt: new Date(),
       personident: '99999966667',
       isKandidat: true,
-      avvent: {
-        uuid: 'abc-222',
-        createdAt: new Date('2022-01-15'),
-        frist: addWeeks(new Date(), 1),
-        createdBy: 'Z101010',
-        personident: '99999966675',
-        beskrivelse: 'Avklar tidspunkt med lege før innkalling',
-      },
+      avvent: null,
+    },
+    dialogmoteAvvent: {
+      uuid: 'abc-222',
+      createdAt: new Date('2022-01-15'),
+      frist: addWeeks(new Date(), 1),
+      createdBy: 'Z101010',
+      personident: '99999966675',
+      beskrivelse: 'Avklar tidspunkt med lege før innkalling',
+      isLukket: false,
     },
     motestatus: MoteStatusType.AVLYST,
     aktivitetskravvurdering: {

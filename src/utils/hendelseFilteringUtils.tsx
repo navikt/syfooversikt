@@ -108,7 +108,7 @@ export function filterOnDato(
       persondata.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
       persondata.oppfolgingsoppgave?.frist,
       persondata.friskmeldingTilArbeidsformidlingFom,
-      persondata.dialogmotekandidatStatus?.avvent?.frist,
+      persondata.dialogmoteAvvent?.frist,
     ];
 
     if (datoer.every((dato) => dato === null)) {
@@ -440,7 +440,7 @@ function allFrister(personData: PersonData): Date[] {
     personData.manglendeMedvirkning?.varsel?.svarfrist,
     personData.aktivitetskravvurdering?.vurderinger[0]?.frist,
     personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist,
-    personData.dialogmotekandidatStatus?.avvent?.frist,
+    personData.dialogmoteAvvent?.frist,
   ].filter((frist) => frist) as Date[];
 }
 

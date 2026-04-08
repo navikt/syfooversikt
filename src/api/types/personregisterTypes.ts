@@ -8,6 +8,7 @@ import {
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
+import { DialogmoteAvventDTO } from '@/api/types/dialogmoteAvvent';
 
 export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 
@@ -29,6 +30,7 @@ export interface PersonData {
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
   isAktivKartleggingssporsmalVurdering: boolean;
+  dialogmoteAvvent: DialogmoteAvventDTO | null;
 }
 
 export interface PersonregisterState {
@@ -71,6 +73,7 @@ export function toPersonData(
       manglendeMedvirkning: person.manglendeMedvirkning,
       isAktivKartleggingssporsmalVurdering:
         person.isAktivKartleggingssporsmalVurdering,
+      dialogmoteAvvent: person.dialogmoteAvvent,
     };
   });
 

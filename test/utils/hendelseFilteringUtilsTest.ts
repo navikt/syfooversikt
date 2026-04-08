@@ -35,6 +35,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     aktivitetskravvurdering: null,
     manglendeMedvirkning: null,
     isAktivKartleggingssporsmalVurdering: false,
+    dialogmoteAvvent: null,
   };
 };
 

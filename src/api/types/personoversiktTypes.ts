@@ -1,6 +1,7 @@
 import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
 import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
 import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
+import { DialogmoteAvventDTO } from '@/api/types/dialogmoteAvvent';
 
 export enum MoteStatusType {
   INNKALT = 'INNKALT',
@@ -66,6 +67,7 @@ export interface PersonOversiktStatusDTO {
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
   isAktivKartleggingssporsmalVurdering: boolean;
+  dialogmoteAvvent: DialogmoteAvventDTO | null;
 }
 
 export function isUbehandlet(

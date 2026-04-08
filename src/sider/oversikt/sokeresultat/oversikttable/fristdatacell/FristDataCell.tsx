@@ -41,7 +41,7 @@ function fristerInfo(
     arbeidsuforhetvurdering,
     aktivitetskravvurdering,
     manglendeMedvirkning,
-    dialogmotekandidatStatus,
+    dialogmoteAvvent,
   }: PersonData,
   setIsOppfolgingsoppgaveModalOpen: (open: boolean) => void,
   setIsAktivitetskravModalOpen: (open: boolean) => void,
@@ -134,7 +134,7 @@ function fristerInfo(
     });
   }
 
-  if (dialogmotekandidatStatus?.isKandidat && dialogmotekandidatStatus.avvent) {
+  if (dialogmoteAvvent) {
     frister.push({
       icon: () =>
         selectedTab === TabType.MIN_OVERSIKT ? (
@@ -147,7 +147,7 @@ function fristerInfo(
         ) : (
           <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />
         ),
-      date: dialogmotekandidatStatus.avvent.frist,
+      date: dialogmoteAvvent.frist,
       tooltip: texts.tooltipAvventerDialogmotekandidat,
     });
   }
@@ -182,7 +182,6 @@ export function FristDataCell({ personData }: Props) {
   );
 
   const currentVurdering = personData.aktivitetskravvurdering?.vurderinger[0];
-  const dialogmoteAvvent = personData.dialogmotekandidatStatus?.avvent;
   const isAktivitetskravAvventVurdering =
     personData.aktivitetskravvurdering?.status == AktivitetskravStatus.AVVENT &&
     !!currentVurdering;
@@ -212,11 +211,11 @@ export function FristDataCell({ personData }: Props) {
           sykmeldtNavn={personData.navn}
         />
       )}
-      {dialogmoteAvvent && (
+      {personData.dialogmoteAvvent && (
         <DialogmoteAvventModal
           isOpen={isDialogmoteAvventModalOpen}
           setIsOpen={setIsDialogmoteAvventModalOpen}
-          avvent={dialogmoteAvvent}
+          avvent={personData.dialogmoteAvvent}
           sykmeldtNavn={personData.navn}
         />
       )}
