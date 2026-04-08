@@ -12,7 +12,7 @@ import {
 } from '@/api/types/personregisterTypes';
 import { testdata } from '../data/fellesTestdata';
 import { HendelseTypeFilter } from '@/context/filters/filterContextState';
-import { addWeeks, subWeeks } from 'date-fns';
+import { addWeeks, subWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 

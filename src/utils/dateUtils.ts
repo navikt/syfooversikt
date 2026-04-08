@@ -62,6 +62,10 @@ export function addWeeks(date: Date, numberOfWeeks: number): Date {
   return dayjs(date).add(numberOfWeeks, 'weeks').toDate();
 }
 
+export function subWeeks(date: Date, numberOfWeeks: number): Date {
+  return dayjs(date).subtract(numberOfWeeks, 'weeks').toDate();
+}
+
 export function parseDateString(dateString: string): Date | null {
   const day = dateString.slice(0, 2);
   const month = dateString.slice(2, 4);

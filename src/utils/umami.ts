@@ -14,15 +14,21 @@ async function hashId(id: string): Promise<string> {
     .slice(0, 40);
 }
 
-function beforeSendHandler(type: any, payload: any) {
+function beforeSendHandler(type: string, payload: Record<string, unknown>) {
   if (payload.id != null) {
     return payload;
   }
   return null;
 }
 
+declare global {
+  interface Window {
+    beforeSendHandler: typeof beforeSendHandler;
+  }
+}
+
 // Make the function globally accessible to make "data-before-send" in umami script work
-(window as any).beforeSendHandler = beforeSendHandler;
+window.beforeSendHandler = beforeSendHandler;
 
 enum EventType {
   ModalApnet = 'modal åpnet',
