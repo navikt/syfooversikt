@@ -115,7 +115,7 @@ const proxyOnBehalfOf = (
     });
 };
 
-export const setupProxy = () => {
+export const setupProxy = (): express.Router => {
   const router = express.Router();
 
   router.use(

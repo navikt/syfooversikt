@@ -6,7 +6,7 @@ import { testdata } from '../data/fellesTestdata';
 import { describe, expect, it } from 'vitest';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 import { toReadableDate } from '@/utils/dateUtils';
-import { addWeeks } from 'date-fns';
+import { addWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { renderWithRouter } from '../testRenderUtils';
 import { routes } from '@/routers/routes';
