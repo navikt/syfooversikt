@@ -76,7 +76,7 @@
     "react-app-polyfill": "0.2.2",
     "react-document-title": "2.0.3",
     "react-dom": "19.1.0",
-    "react-router-dom": "7.10.1",
+    "react-router-dom": "7.14.0",
     "regenerator-runtime": "0.14.1",
     "styled-components": "5.3.6",
     "unleash-client": "6.9.6",
@@ -135,7 +135,7 @@
     "typescript": "5.8.3",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "^3.2.4",
-    "webpack": "5.100.1",
+    "webpack": "5.104.1",
     "webpack-cli": "5.1.4",
     "webpack-dev-server": "4.13.3"
   },
