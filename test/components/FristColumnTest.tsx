@@ -10,7 +10,6 @@ import { addWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { renderWithRouter } from '../testRenderUtils';
 import { routes } from '@/routers/routes';
-import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -29,6 +28,7 @@ const defaultPersonData: PersonData = {
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
   dialogmotekandidatStatus: null,
+  dialogmoteAvvent: null,
 };
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
@@ -111,25 +111,19 @@ describe('FristColumn', () => {
     expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
   });
 
-  it('viser frist for person når avvent dialogmøtekandidat', () => {
+  it('viser frist for person når avvent dialogmøte', () => {
     const frist = addWeeks(new Date(), 1);
-    const kandidatMedAvvent: DialogmotekandidatDTO = {
-      uuid: '111',
-      createdAt: new Date('2022-01-01'),
-      personident: '99999966667',
-      isKandidat: true,
-      avvent: {
+    const personDialogmotekandidat: PersonData = {
+      ...defaultPersonData,
+      dialogmoteAvvent: {
         uuid: 'abc-111',
         createdAt: new Date('2022-01-15'),
         frist: frist,
         createdBy: 'M987654',
         personident: '99999966668',
         beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+        isLukket: false,
       },
-    };
-    const personDialogmotekandidat: PersonData = {
-      ...defaultPersonData,
-      dialogmotekandidatStatus: kandidatMedAvvent,
     };
     renderFristColumn(personDialogmotekandidat);
 

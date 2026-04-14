@@ -1,7 +1,7 @@
 import { BodyLong, BodyShort, Heading, Modal } from '@navikt/ds-react';
 import { toReadableDate } from '@/utils/dateUtils';
 import React from 'react';
-import { AvventDTO } from '@/api/types/dialogmotekandidatDTO';
+import { DialogmoteAvventDTO } from '@/api/types/dialogmoteAvvent';
 import { trackModalApnet, trackModalLukket } from '@/utils/umami';
 
 const texts = {
@@ -13,7 +13,7 @@ const texts = {
 interface Props {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  avvent: AvventDTO;
+  avvent: DialogmoteAvventDTO;
   sykmeldtNavn: string;
 }
 
