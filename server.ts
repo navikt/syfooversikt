@@ -3,9 +3,13 @@ import helmet from 'helmet';
 import path from 'path';
 import prometheus from 'prom-client';
 
-import { validateToken } from './server/authUtils';
-import { setupProxy } from './server/proxy';
-import unleash = require('./server/unleash');
+import { validateToken } from './server/authUtils.js';
+import { setupProxy } from './server/proxy.js';
+import { getUnleashToggles } from './server/unleash.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Prometheus metrics
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
@@ -70,7 +74,7 @@ const setupServer = async () => {
     '/unleash/toggles',
     redirectIfUnauthorized,
     (req: express.Request, res: express.Response) => {
-      const togglesResponse = unleash.getToggles(
+      const togglesResponse = getUnleashToggles(
         req.query.veilederId,
         req.query.enhetId
       );

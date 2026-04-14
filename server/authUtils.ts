@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { auth } from './config';
+import { auth } from './config.js';
 
 interface TokenIntrospectionResponse {
   active: boolean;

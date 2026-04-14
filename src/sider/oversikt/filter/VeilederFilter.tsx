@@ -12,7 +12,6 @@ import { useFilters } from '@/context/filters/FilterContext';
 import { ActionType } from '@/context/filters/filterContextActions';
 import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import { UNSAFE_Combobox } from '@navikt/ds-react';
-import { ComboboxOption } from '@navikt/ds-react/cjs/form/combobox/types';
 
 const text = {
   searchVeileder: 'Veiledere',
@@ -25,7 +24,7 @@ function veilederLabel(veileder: VeilederDTO): string {
     : `${veileder.etternavn}, ${veileder.fornavn}`;
 }
 
-function toComboboxOption(veileder: VeilederDTO): ComboboxOption {
+function toComboboxOption(veileder: VeilederDTO) {
   return {
     label: veilederLabel(veileder),
     value: veileder.ident,

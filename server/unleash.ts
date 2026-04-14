@@ -1,9 +1,5 @@
-import unleashClient = require('unleash-client');
-import Config = require('./config');
-import { Strategy } from 'unleash-client';
-import { Context } from 'unleash-client/lib/context';
-
-const { initialize } = unleashClient;
+import { initialize, Strategy, Context } from 'unleash-client';
+import { unleashConfig } from './config.js';
 
 class VeilederIds extends Strategy {
   constructor() {
@@ -26,13 +22,13 @@ class EnhetIds extends Strategy {
 }
 
 export const unleash = initialize({
-  url: Config.unleash.serverApiUrl + '/api',
+  url: unleashConfig.serverApiUrl + '/api',
   appName: 'syfooversikt',
-  customHeaders: { Authorization: Config.unleash.serverApiToken },
+  customHeaders: { Authorization: unleashConfig.serverApiToken },
   strategies: [new VeilederIds(), new EnhetIds()],
 });
 
-export function getToggles(veilederId: any, enhetId: any) {
+export function getUnleashToggles(veilederId: any, enhetId: any) {
   const context = {
     veilederId: veilederId,
     enhetId: enhetId,
