@@ -1,9 +1,8 @@
 import { merge } from 'webpack-merge';
-import common from './webpack.common';
+import common from './webpack.common.js';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { Configuration as WebpackConfiguration } from 'webpack';
 
-const productionConfig: WebpackConfiguration = {
+const productionConfig = {
   mode: 'production',
   devtool: 'source-map',
   module: {

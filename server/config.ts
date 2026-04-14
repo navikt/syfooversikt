@@ -119,7 +119,7 @@ export const auth = {
   },
 };
 
-export const unleash: { serverApiUrl: string; serverApiToken: string } = {
+export const unleashConfig: { serverApiUrl: string; serverApiToken: string } = {
   serverApiUrl: envVar({ name: 'UNLEASH_SERVER_API_URL' }),
   serverApiToken: envVar({ name: 'UNLEASH_SERVER_API_TOKEN' }),
 };

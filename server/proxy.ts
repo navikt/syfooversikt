@@ -2,8 +2,8 @@ import express from 'express';
 import expressHttpProxy from 'express-http-proxy';
 import url from 'url';
 
-import { getOnBehalfOfToken } from './authUtils';
-import * as Config from './config';
+import { getOnBehalfOfToken } from './authUtils.js';
+import * as Config from './config.js';
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
   expressHttpProxy(host, {
