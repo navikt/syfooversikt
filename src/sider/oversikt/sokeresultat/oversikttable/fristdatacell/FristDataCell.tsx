@@ -15,7 +15,7 @@ import DialogmoteAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/f
 
 const texts = {
   tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
-  tooltipAvventerDialogmotekandidat: 'Dialogmøtekandidat avventer til',
+  tooltipAvventerDialogmote: 'Avventer dialogmøte til',
   tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
   tooltipFriskmeldingTilArbeidsformidling: '§ 8-5 f.o.m.',
   arbeidsuforhetvarselFrist: '§ 8-4: Svarfrist forhåndsvarsel',
@@ -148,7 +148,7 @@ function fristerInfo(
           <HourglassTopFilledIcon aria-hidden fontSize="1.5rem" />
         ),
       date: dialogmoteAvvent.frist,
-      tooltip: texts.tooltipAvventerDialogmotekandidat,
+      tooltip: texts.tooltipAvventerDialogmote,
     });
   }
 

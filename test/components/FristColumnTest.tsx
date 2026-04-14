@@ -111,7 +111,7 @@ describe('FristColumn', () => {
     expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
   });
 
-  it('viser frist for person når avvent dialogmøtekandidat', () => {
+  it('viser frist for person når avvent dialogmøte', () => {
     const frist = addWeeks(new Date(), 1);
     const personDialogmotekandidat: PersonData = {
       ...defaultPersonData,
