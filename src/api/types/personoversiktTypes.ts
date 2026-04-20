@@ -49,7 +49,7 @@ export const avventVurderingArsakTexts: Record<AvventVurderingArsak, string> = {
 export interface PersonOversiktStatusDTO {
   fnr: string;
   navn: string;
-  fodselsdato: Date;
+  fodselsdato: string;
   enhet: string;
   veilederIdent: string | null;
   motestatus: MoteStatusType | undefined;

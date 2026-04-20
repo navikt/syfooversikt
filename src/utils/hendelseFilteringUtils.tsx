@@ -153,23 +153,24 @@ export function filterOnAge(
     return personregister;
   }
   const currentYear = new Date().getFullYear();
-  const filtered = Object.entries(personregister).filter(([fnr]) => {
-    const age = ageFromFnr(fnr, currentYear);
+  const filtered = Object.entries(personregister).filter(([, personData]) => {
+    if (!personData.fodselsdato) return false;
+    const age = ageFromDato(personData.fodselsdato, currentYear);
     return isAgeInFilters(age, selectedAgeFilters);
   });
   return Object.fromEntries(filtered);
 }
 
-function ageFromFnr(fnr: string, currentYear: number): number {
-  const currentYearLastTwoDigits = parseInt(currentYear.toString().slice(2));
-  const yearBornLastTwoDigits = parseInt(fnr.slice(4, 6));
-  let age;
-  if (currentYearLastTwoDigits > yearBornLastTwoDigits) {
-    age = currentYearLastTwoDigits - yearBornLastTwoDigits;
-  } else {
-    age = 100 - yearBornLastTwoDigits + currentYearLastTwoDigits;
-  }
-  return age;
+function ageFromDato(fodselsDato: Date, currentYear: number): number {
+  const currentDate = new Date();
+  const hasBirthdayPassedThisYear =
+    currentDate.getMonth() > fodselsDato.getMonth() ||
+    (currentDate.getMonth() === fodselsDato.getMonth() &&
+      currentDate.getDate() >= fodselsDato.getDate());
+
+  return hasBirthdayPassedThisYear
+    ? currentYear - fodselsDato.getFullYear()
+    : currentYear - fodselsDato.getFullYear() - 1;
 }
 
 function isAgeInFilters(

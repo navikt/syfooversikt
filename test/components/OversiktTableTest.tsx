@@ -31,6 +31,7 @@ let queryClient = testQueryClient();
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
+  fodselsdato: new Date(),
   harMotebehovUbehandlet: false,
   harDialogmotesvar: false,
   skjermingskode: testdata.skjermingskode.diskresjonsmerket as Skjermingskode,
