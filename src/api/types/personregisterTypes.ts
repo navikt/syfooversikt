@@ -14,6 +14,7 @@ export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
 
 export interface PersonData {
   navn: string;
+  fodselsdato: Date | null;
   harMotebehovUbehandlet: boolean;
   harDialogmotesvar: boolean;
   harOppfolgingsplanLPSBistandUbehandlet: boolean;
@@ -54,6 +55,7 @@ export function toPersonData(
     );
     personDataList[person.fnr] = {
       navn: person.navn || '',
+      fodselsdato: new Date(person.fodselsdato) || null,
       harMotebehovUbehandlet: person.motebehovUbehandlet || false,
       harDialogmotesvar: person.dialogmotesvarUbehandlet,
       harOppfolgingsplanLPSBistandUbehandlet:

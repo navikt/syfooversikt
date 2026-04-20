@@ -25,7 +25,7 @@ export function mockSokPerson() {
       (person) =>
         person.navn.toLowerCase().substring(0, 1) ===
           requestBody.initials.toLowerCase().substring(0, 1) ||
-        person.fodselsdato.getTime() ===
+        new Date(person.fodselsdato).getTime() ===
           new Date(requestBody.birthdate).getTime()
     );
     return HttpResponse.json(results);

@@ -4,34 +4,37 @@ import { createPersonDataWithName } from '../utils/hendelseFilteringUtilsTest';
 import { describe, expect, it } from 'vitest';
 
 describe('Filters unit tests', () => {
-  const currentYear = new Date().getFullYear();
-  const yearBornTwentyFive = (currentYear - 25).toString().slice(2);
-  const yearBornThirty = (currentYear - 30).toString().slice(2);
-  const yearBornThirtyFive = (currentYear - 35).toString().slice(2);
-  const yearBornFourty = (currentYear - 40).toString().slice(2);
-  const yearBornFourtyFive = (currentYear - 45).toString().slice(2);
+  function getBirthDateYearsAgo(yearOffset: number, dayOffset = 0): Date {
+    const birthDate = new Date();
+    birthDate.setFullYear(birthDate.getFullYear() - yearOffset);
+    birthDate.setDate(birthDate.getDate() - dayOffset);
 
-  const twentyFiveFnr = `0101${yearBornTwentyFive}99999`;
-  const thirtyFnr = `0101${yearBornThirty}99999`;
-  const thirtyFiveFnr = `0101${yearBornThirtyFive}99999`;
-  const fourtyFnr = `0101${yearBornFourty}99999`;
-  const fourtyFiveFnr = `0101${yearBornFourtyFive}99999`;
+    return birthDate;
+  }
 
   const personregister: PersonregisterState = {
-    [twentyFiveFnr]: createPersonDataWithName('Bjarne Bjarnson'),
-    [thirtyFnr]: createPersonDataWithName('Vetle Vetlesen'),
-    [thirtyFiveFnr]: createPersonDataWithName('Geir Geirsson'),
-    [fourtyFnr]: createPersonDataWithName('Eirik Eiriksson'),
-    [fourtyFiveFnr]: createPersonDataWithName('John Johnson'),
+    a: createPersonDataWithName('Bjarne Bjarnson', getBirthDateYearsAgo(25)),
+    b: createPersonDataWithName('Vetle Vetlesen', getBirthDateYearsAgo(30)),
+    c: createPersonDataWithName('Geir Geirsson', getBirthDateYearsAgo(35)),
+    d: createPersonDataWithName('Eirik Eiriksson', getBirthDateYearsAgo(40)),
+    e: createPersonDataWithName('John Johnson', getBirthDateYearsAgo(45)),
+    f: createPersonDataWithName('Tiril Tirilsen', getBirthDateYearsAgo(30, -1)),
+    g: createPersonDataWithName(
+      'Kåre-André Kåre-Andrésen',
+      getBirthDateYearsAgo(30, 1)
+    ),
   };
 
   it('Filters out all people over 30 years old', () => {
     const underThirtyPersons = filterOnAge(personregister, [
       AgeFilterOption.BelowThirty,
     ]);
-    expect(Object.values(underThirtyPersons).length).to.deep.equal(1);
+    expect(Object.values(underThirtyPersons).length).to.deep.equal(2);
     expect(Object.values(underThirtyPersons)[0]?.navn).to.deep.equal(
       'Bjarne Bjarnson'
+    );
+    expect(Object.values(underThirtyPersons)[1]?.navn).to.deep.equal(
+      'Tiril Tirilsen'
     );
   });
 
@@ -39,7 +42,7 @@ describe('Filters unit tests', () => {
     const thirtyAndOverPersons = filterOnAge(personregister, [
       AgeFilterOption.ThirtyAndAbove,
     ]);
-    expect(Object.values(thirtyAndOverPersons).length).to.deep.equal(4);
+    expect(Object.values(thirtyAndOverPersons).length).to.deep.equal(5);
     expect(Object.values(thirtyAndOverPersons)[0]?.navn).to.deep.equal(
       'Vetle Vetlesen'
     );
@@ -52,10 +55,13 @@ describe('Filters unit tests', () => {
     expect(Object.values(thirtyAndOverPersons)[3]?.navn).to.deep.equal(
       'John Johnson'
     );
+    expect(Object.values(thirtyAndOverPersons)[4]?.navn).to.deep.equal(
+      'Kåre-André Kåre-Andrésen'
+    );
   });
 
   it('Filters no persons when no age filter is selected', () => {
     const noPersonsFiltered = filterOnAge(personregister, []);
-    expect(Object.values(noPersonsFiltered).length).to.deep.equal(5);
+    expect(Object.values(noPersonsFiltered).length).to.deep.equal(7);
   });
 });

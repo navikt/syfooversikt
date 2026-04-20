@@ -16,9 +16,13 @@ import { addWeeks, subWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
 
-export const createPersonDataWithName = (name: string): PersonData => {
+export function createPersonDataWithName(
+  name: string,
+  fodselsdato: Date = new Date('1990-01-01')
+): PersonData {
   return {
     navn: name,
+    fodselsdato,
     harMotebehovUbehandlet: false,
     harDialogmotesvar: false,
     skjermingskode: testdata.skjermingskode.ingen as Skjermingskode,
@@ -37,7 +41,7 @@ export const createPersonDataWithName = (name: string): PersonData => {
     isAktivKartleggingssporsmalVurdering: false,
     dialogmoteAvvent: null,
   };
-};
+}
 
 const defaulthendelseFilter: HendelseTypeFilter = {
   arbeidsgiverOnskerMote: false,
