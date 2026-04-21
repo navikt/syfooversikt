@@ -19,7 +19,7 @@
     "prettier-check": "prettier --check src/**/*.ts*",
     "prettier-lint": "npm-run-all prettier lint",
     "test": "vitest run",
-    "prepare": "husky install"
+    "prepare": "husky install || true"
   },
   "author": "DigiSyfo <digisyfo@nav.no>",
   "license": "ISC",
