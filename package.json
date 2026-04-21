@@ -73,10 +73,10 @@
     "postcss-preset-env": "7.4.4",
     "postcss-safe-parser": "6.0.0",
     "prom-client": "11.5.3",
-    "react": "19.1.0",
+    "react": "19.2.1",
     "react-app-polyfill": "0.2.2",
     "react-document-title": "2.0.3",
-    "react-dom": "19.1.0",
+    "react-dom": "19.2.1",
     "react-router-dom": "7.14.0",
     "regenerator-runtime": "0.14.1",
     "styled-components": "5.3.6",
@@ -92,7 +92,7 @@
     "@babel/preset-env": "7.28.5",
     "@babel/preset-react": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
-    "@navikt/navspa": "6.0.1",
+    "@navikt/navspa": "7.4.0",
     "@styled/typescript-styled-plugin": "1.0.1",
     "@tanstack/eslint-plugin-query": "4.29.9",
     "@testing-library/dom": "10.4.0",
@@ -146,12 +146,6 @@
   "lint-staged": {
     "*.{js,ts,tsx}": "pnpm lint:fix",
     "*.{js,ts,tsx,css,less,md}": "pnpm prettier"
-  },
-  "pnpm": {
-    "overrides": {
-      "react": "19.1.0",
-      "react-dom": "19.1.0"
-    }
   },
   "msw": {
     "workerDirectory": [
