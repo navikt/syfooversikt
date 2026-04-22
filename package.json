@@ -92,7 +92,7 @@
     "@babel/preset-env": "7.28.5",
     "@babel/preset-react": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
-    "@navikt/navspa": "7.4.0",
+    "@navikt/navspa": "7.5.0",
     "@styled/typescript-styled-plugin": "1.0.1",
     "@tanstack/eslint-plugin-query": "4.29.9",
     "@testing-library/dom": "10.4.0",
