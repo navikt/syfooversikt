@@ -4,12 +4,16 @@ import {
 } from '@/api/types/personregisterTypes';
 import { firstCompanyNameFromPersonData } from './personDataUtil';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { HendelseTypeFilter } from '@/context/filters/filterContextState';
+import {
+  FristFilter,
+  HendelseTypeFilter,
+} from '@/context/filters/filterContextState';
 import {
   earliestDate,
   isFuture,
   isPast,
   isToday,
+  isWithinRange,
   latestDate,
 } from '@/utils/dateUtils';
 import { SortDirection, Sorting } from '@/hooks/useSorting';
@@ -90,13 +94,14 @@ export enum DatoFilterOption {
   Past = 'Past',
   Today = 'Today',
   Future = 'Future',
+  Custom = 'Custom',
 }
 
 export function filterOnDato(
   personregister: PersonregisterState,
-  selectedDatoFilters: DatoFilterOption[]
+  selectedDatoFilters: FristFilter
 ): PersonregisterState {
-  const isNoFilter = selectedDatoFilters.length === 0;
+  const isNoFilter = selectedDatoFilters.selectedDatoOptions.length === 0;
   if (isNoFilter) {
     return personregister;
   }
@@ -111,9 +116,7 @@ export function filterOnDato(
       persondata.dialogmoteAvvent?.frist,
     ];
 
-    if (datoer.every((dato) => dato === null)) {
-      return true;
-    }
+    if (datoer.every((dato) => dato === null)) return true;
 
     return datoer.some(
       (dato) => dato && isInDatoFilter(selectedDatoFilters, dato)
@@ -123,11 +126,8 @@ export function filterOnDato(
   return Object.fromEntries(filtered);
 }
 
-function isInDatoFilter(
-  selectedFilters: DatoFilterOption[],
-  dato: Date
-): boolean {
-  return selectedFilters.some((datoFilter) => {
+function isInDatoFilter(selectedFilters: FristFilter, dato: Date): boolean {
+  return selectedFilters.selectedDatoOptions.some((datoFilter) => {
     switch (datoFilter) {
       case DatoFilterOption.Past:
         return isPast(dato);
@@ -135,6 +135,8 @@ function isInDatoFilter(
         return isToday(dato);
       case DatoFilterOption.Future:
         return isFuture(dato);
+      case DatoFilterOption.Custom:
+        return isWithinRange(dato, selectedFilters.selectedDateRange);
     }
   });
 }

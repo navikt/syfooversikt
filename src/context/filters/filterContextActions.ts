@@ -3,6 +3,7 @@ import {
   AgeFilterOption,
   DatoFilterOption,
 } from '@/utils/hendelseFilteringUtils';
+import { DateRange } from '@/sider/oversikt/filter/types.ts';
 
 export enum ActionType {
   SetTekstFilter,
@@ -44,7 +45,10 @@ export interface SetSelectedCompanies {
 
 export interface SetSelectedDatoFilter {
   type: ActionType.SetSelectedDatoFilter;
-  selectedDatoFilters: DatoFilterOption[];
+  selectedDatoFilters: {
+    selectedDatoOptions: DatoFilterOption[];
+    selectedDateRange: DateRange;
+  };
 }
 
 export interface SetSelectedAgeFilter {
