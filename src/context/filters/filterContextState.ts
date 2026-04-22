@@ -2,6 +2,12 @@ import {
   AgeFilterOption,
   DatoFilterOption,
 } from '@/utils/hendelseFilteringUtils';
+import { DateRange } from '@/sider/oversikt/filter/types.ts';
+
+export interface FristFilter {
+  selectedDatoOptions: DatoFilterOption[];
+  selectedDateRange: DateRange;
+}
 
 export interface HendelseTypeFilter {
   arbeidsgiverOnskerMote: boolean;
@@ -26,7 +32,7 @@ export interface FilterState {
   selectedOptions: string[];
   selectedCompanies: string[];
   selectedBirthDates: string[];
-  selectedFristFilters: DatoFilterOption[];
+  selectedFristFilters: FristFilter;
   selectedAgeFilters: AgeFilterOption[];
   selectedHendelseType: HendelseTypeFilter;
   isUfordelteBrukereFilter: boolean;
@@ -38,7 +44,13 @@ export const filterInitialState: FilterState = {
   selectedOptions: [],
   selectedCompanies: [],
   selectedBirthDates: [],
-  selectedFristFilters: [],
+  selectedFristFilters: {
+    selectedDatoOptions: [],
+    selectedDateRange: {
+      from: undefined,
+      to: undefined,
+    },
+  },
   selectedAgeFilters: [],
   selectedHendelseType: {
     arbeidsgiverOnskerMote: false,

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   DatoFilterOption,
   filterHendelser,
@@ -15,6 +15,7 @@ import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import dayjs from 'dayjs';
 
 export function createPersonDataWithName(
   name: string,
@@ -764,9 +765,13 @@ describe('hendelseFilteringUtils', () => {
       };
 
       it('Only returns elements with frist dato before today', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Past,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Past],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407794');
@@ -774,9 +779,13 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato today', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Today,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Today],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
@@ -784,14 +793,83 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato in the future', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Future,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Future],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(3);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407798');
         expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407799');
         expect(Object.keys(filteredPersonregister)[2]).to.equal('16614407889');
+      });
+
+      it('Only returns elements with frist dato between range', () => {
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Custom],
+          selectedDateRange: {
+            from: dayjs().subtract(6, 'day').startOf('day').toDate(),
+            to: dayjs().add(6, 'day').startOf('day').toDate(),
+          },
+        });
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407797');
+      });
+
+      it('Only returns elements with frist dato on single calendar date in range', () => {
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Custom],
+          selectedDateRange: {
+            from: new Date(),
+            to: new Date(),
+          },
+        });
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407797');
+      });
+
+      describe('same calendar day with different times', () => {
+        beforeEach(() => {
+          vi.useFakeTimers();
+          vi.setSystemTime(new Date('2026-04-28T12:00:00.000Z'));
+        });
+
+        afterEach(() => {
+          vi.useRealTimers();
+        });
+
+        it('includes frist on the same day when custom range is a single calendar day', () => {
+          const personregisterWithSameDayFrist: PersonregisterState = {
+            '16614407794': {
+              ...createPersonDataWithName('Box Culder'),
+              oppfolgingsoppgave: getOppfolgingsoppgave(
+                new Date('2026-04-28T00:00:00.000Z')
+              ),
+            },
+          };
+
+          const filteredPersonregister = filterOnDato(
+            personregisterWithSameDayFrist,
+            {
+              selectedDatoOptions: [DatoFilterOption.Custom],
+              selectedDateRange: {
+                from: new Date('2026-04-28T18:00:00.000Z'),
+                to: new Date('2026-04-28T18:00:00.000Z'),
+              },
+            }
+          );
+
+          expect(Object.keys(filteredPersonregister)).to.deep.equal([
+            '16614407794',
+          ]);
+        });
       });
     });
   });

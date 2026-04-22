@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
+import { DateRange } from '@/sider/oversikt/filter/types.ts';
 
 dayjs.extend(minMax);
 
@@ -11,31 +12,28 @@ export function toReadableDate(dateArg: Date | null): string {
 }
 
 export function isPast(compareDate: Date): boolean {
-  const currentDate = new Date();
-  const date = new Date(compareDate);
-  const isNotToday = !(
-    date.getFullYear() === currentDate.getFullYear() &&
-    date.getMonth() === currentDate.getMonth() &&
-    date.getDate() === currentDate.getDate()
-  );
-  const isInThePast = date < currentDate;
-  return isNotToday && isInThePast;
+  return dayjs(compareDate).isBefore(dayjs(), 'day');
 }
 
 export function isToday(compareDate: Date): boolean {
-  const currentDate = new Date();
-  const date = new Date(compareDate);
-  return (
-    date.getFullYear() === currentDate.getFullYear() &&
-    date.getMonth() === currentDate.getMonth() &&
-    date.getDate() === currentDate.getDate()
-  );
+  return dayjs(compareDate).isSame(dayjs(), 'day');
 }
 
 export function isFuture(compareDate: Date): boolean {
-  const currentDate = new Date();
-  const date = new Date(compareDate);
-  return currentDate < date;
+  return dayjs(compareDate).isAfter(dayjs(), 'day');
+}
+
+export function isWithinRange(
+  compareDate: Date,
+  dateRange: DateRange
+): boolean {
+  if (!dateRange?.from || !dateRange?.to) return true;
+
+  const date = dayjs(compareDate);
+  return (
+    !date.isBefore(dayjs(dateRange.from), 'day') &&
+    !date.isAfter(dayjs(dateRange.to), 'day')
+  );
 }
 
 export function earliestDate(dateArray: Date[]): Date | null {
