@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
+import { DateRange } from '@/sider/oversikt/filter/types.ts';
 
 dayjs.extend(minMax);
 
@@ -36,6 +37,16 @@ export function isFuture(compareDate: Date): boolean {
   const currentDate = new Date();
   const date = new Date(compareDate);
   return currentDate < date;
+}
+
+export function isWithinRange(
+  compareDate: Date,
+  dateRange: DateRange
+): boolean {
+  if (!dateRange?.from || !dateRange?.to) return true;
+
+  const date = new Date(compareDate);
+  return dateRange.from < date && dateRange.to > date;
 }
 
 export function earliestDate(dateArray: Date[]): Date | null {

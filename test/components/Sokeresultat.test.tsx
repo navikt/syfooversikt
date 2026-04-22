@@ -57,7 +57,13 @@ describe('Sokeresultat', () => {
       selectedOptions: [],
       selectedCompanies: [],
       selectedBirthDates: [],
-      selectedFristFilters: [],
+      selectedFristFilters: {
+        selectedDatoOptions: [],
+        selectedDateRange: {
+          to: undefined,
+          from: undefined,
+        },
+      },
       selectedAgeFilters: [],
       selectedHendelseType: {
         arbeidsgiverOnskerMote: false,
