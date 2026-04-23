@@ -38,7 +38,6 @@ export function getUnleashToggles(veilederId: any, enhetId: any) {
       'isRutingFlexjarEnabled',
       context
     ),
-    isFlexjarArenaEnabled: unleash.isEnabled('isFlexjarArenaEnabled', context),
     isTildelOppfolgingsenhetEnabled: unleash.isEnabled(
       'isTildelOppfolgingsenhetEnabled',
       context
