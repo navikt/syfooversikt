@@ -27,8 +27,8 @@ importers:
         specifier: 7.25.1
         version: 7.25.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/ds-tailwind':
-        specifier: 7.25.1
-        version: 7.25.1
+        specifier: 8.10.1
+        version: 8.10.1
       '@navikt/fnrvalidator':
         specifier: 1.3.0
         version: 1.3.0
@@ -1356,8 +1356,8 @@ packages:
       '@types/react': '>=17.0.30'
       react: '>=17.0.0 || >19.0.0-rc'
 
-  '@navikt/ds-tailwind@7.25.1':
-    resolution: {integrity: sha512-pikrVMt2MUxfcG7Bwfl11ynwqTA1JoFINtCLzvLh7K4cykRbuR3rwrU2Xb0ZxeNCevy0X1OnBqNp7FB98oG5hg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tailwind/7.25.1/7f14a29c907d7d2dc75886bbe90f769f8acd36c0}
+  '@navikt/ds-tailwind@8.10.1':
+    resolution: {integrity: sha512-oknqe6D+Jo+1IQGhTv0UjjbqpTSjkxzhOZwcaRcgrGEKko/oLP4qMT2zL8Aqv1MxOPhlDQokDnNT9PZWSmrUhA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tailwind/8.10.1/2708f84a930579e46af0383f374d0165410255ed}
 
   '@navikt/ds-tokens@7.40.0':
     resolution: {integrity: sha512-zBaBKLS5R2OZyXI4UUPOmiB15L/u/aJPHiyoccJDtmqrv5wRkc1oM6UCjzKK0D4gLZHBoxp7YBT0sR9Mp4DXFQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/7.40.0/36f981e12d4d90f18155615b7666b737039a3ff0}
@@ -7116,7 +7116,7 @@ snapshots:
     transitivePeerDependencies:
       - react-dom
 
-  '@navikt/ds-tailwind@7.25.1': {}
+  '@navikt/ds-tailwind@8.10.1': {}
 
   '@navikt/ds-tokens@7.40.0': {}
 
