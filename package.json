@@ -71,7 +71,7 @@
     "nav-frontend-typografi-style": "2.0.2",
     "postcss": "8.5.10",
     "postcss-flexbugs-fixes": "5.0.2",
-    "postcss-preset-env": "7.4.4",
+    "postcss-preset-env": "11.2.1",
     "postcss-safe-parser": "6.0.0",
     "prom-client": "11.5.3",
     "react": "19.2.5",
