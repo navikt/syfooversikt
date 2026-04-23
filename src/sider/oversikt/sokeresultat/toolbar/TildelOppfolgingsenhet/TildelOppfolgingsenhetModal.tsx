@@ -72,7 +72,9 @@ export default function TildelOppfolgingsenhetModal({
   );
 
   function closeModal() {
-    ref.current?.close();
+    if (ref.current?.open) {
+      ref.current.close();
+    }
   }
 
   function onOppfolgingsenhetChange(option: string, isSelected: boolean) {
