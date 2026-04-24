@@ -18,11 +18,15 @@ const FilterContext = React.createContext<{
 });
 
 const FilterProvider = ({ children }: FilterProviderProps) => {
-  const storeKey = 'filters-v2';
+  const storeKey = 'filters-v3';
   const storedFilters = sessionStorage.getItem(storeKey);
   const initialState =
     storedFilters === null ? filterInitialState : JSON.parse(storedFilters);
-  const [filterState, dispatch] = React.useReducer(filterReducer, initialState);
+  const parsedFilters = parseFilters(initialState);
+  const [filterState, dispatch] = React.useReducer(
+    filterReducer,
+    parsedFilters
+  );
   useEffect(() => {
     sessionStorage.setItem(storeKey, JSON.stringify(filterState));
   }, [filterState]);
@@ -32,6 +36,22 @@ const FilterProvider = ({ children }: FilterProviderProps) => {
       {children}
     </FilterContext.Provider>
   );
+};
+
+const parseFilters = (initialState: FilterState): FilterState => {
+  const selectedDateTo = initialState.selectedFristFilters.selectedDateRange.to;
+  const selectedDateFrom =
+    initialState.selectedFristFilters.selectedDateRange.from;
+  return {
+    ...initialState,
+    selectedFristFilters: {
+      ...initialState.selectedFristFilters,
+      selectedDateRange: {
+        to: selectedDateTo ? new Date(selectedDateTo) : undefined,
+        from: selectedDateFrom ? new Date(selectedDateFrom) : undefined,
+      },
+    },
+  };
 };
 
 const useFilters = () => {

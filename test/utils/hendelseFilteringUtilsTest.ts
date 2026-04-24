@@ -15,6 +15,7 @@ import { HendelseTypeFilter } from '@/context/filters/filterContextState';
 import { addWeeks, subWeeks } from '@/utils/dateUtils';
 import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
 import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
+import dayjs from 'dayjs';
 
 export function createPersonDataWithName(
   name: string,
@@ -764,9 +765,13 @@ describe('hendelseFilteringUtils', () => {
       };
 
       it('Only returns elements with frist dato before today', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Past,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Past],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407794');
@@ -774,9 +779,13 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato today', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Today,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Today],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(2);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
@@ -784,14 +793,32 @@ describe('hendelseFilteringUtils', () => {
       });
 
       it('Only returns elements with frist dato in the future', () => {
-        const filteredPersonregister = filterOnDato(personregister, [
-          DatoFilterOption.Future,
-        ]);
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Future],
+          selectedDateRange: {
+            to: undefined,
+            from: undefined,
+          },
+        });
 
         expect(Object.keys(filteredPersonregister).length).to.equal(3);
         expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407798');
         expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407799');
         expect(Object.keys(filteredPersonregister)[2]).to.equal('16614407889');
+      });
+
+      it('Only returns elements with frist dato between range', () => {
+        const filteredPersonregister = filterOnDato(personregister, {
+          selectedDatoOptions: [DatoFilterOption.Custom],
+          selectedDateRange: {
+            from: dayjs().subtract(6, 'day').startOf('day').toDate(),
+            to: dayjs().add(6, 'day').startOf('day').toDate(),
+          },
+        });
+
+        expect(Object.keys(filteredPersonregister).length).to.equal(2);
+        expect(Object.keys(filteredPersonregister)[0]).to.equal('16614407796');
+        expect(Object.keys(filteredPersonregister)[1]).to.equal('16614407797');
       });
     });
   });
