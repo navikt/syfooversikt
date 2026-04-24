@@ -17,13 +17,8 @@ import {
 import { screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { getQueryClientWithMockdata } from '../testQueryClient';
-import { unleashQueryKeys } from '@/data/unleash/unleashQueryHooks';
-import { unleashMock } from '@/mocks/mockUnleash';
-import { StoreKey } from '@/hooks/useLocalStorageState';
-import { addWeeks } from '@/utils/dateUtils';
 import { renderWithRouter } from '../testRenderUtils';
 import { routes } from '@/routers/routes';
-import { veilederMock } from '@/mocks/syfoveileder/veilederMock';
 import userEvent from '@testing-library/user-event';
 
 let queryClient: QueryClient;
@@ -57,11 +52,9 @@ function renderOversikten(notifications: Notification[] = []) {
 describe('OversiktContainer', () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
-    localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
   });
 
   afterEach(() => {
-    localStorage.setItem(StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE, '');
     sessionStorage.clear();
   });
 
@@ -75,54 +68,6 @@ describe('OversiktContainer', () => {
     renderOversikten([FetchVeiledereFailed]);
 
     expect(screen.getByText(FetchVeiledereFailed.message)).to.exist;
-  });
-
-  describe('Flexjar', () => {
-    it('shows flexjar when toggle and no previous answer', () => {
-      renderOversikten();
-
-      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
-        .exist;
-    });
-
-    it('does not show flexjar when previous answer within 3 weeks', () => {
-      localStorage.setItem(
-        StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
-        new Date().toString()
-      );
-      renderOversikten();
-
-      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
-        .exist;
-    });
-
-    it('shows flexjar when previous answer more than 3 weeks ago', () => {
-      localStorage.setItem(
-        StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
-        addWeeks(new Date(), -4).toString()
-      );
-      renderOversikten();
-
-      expect(screen.getByRole('button', { name: 'Vi ønsker å lære av deg' })).to
-        .exist;
-    });
-
-    it('does not show flexjar when toggle off', () => {
-      queryClient.setQueryData(
-        unleashQueryKeys.toggles(aktivEnhetMock.aktivEnhet, veilederMock.ident),
-        () => [
-          {
-            ...unleashMock,
-            isFlexjarArenaEnabled: false,
-          },
-        ]
-      );
-
-      renderOversikten();
-
-      expect(screen.queryByRole('button', { name: 'Vi ønsker å lære av deg' }))
-        .to.not.exist;
-    });
   });
 
   describe('Ufordelte brukere filter', () => {

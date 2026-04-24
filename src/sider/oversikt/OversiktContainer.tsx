@@ -4,7 +4,6 @@ import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
 import AppSpinner from '@/components/AppSpinner';
 import NavigationBar from '@/components/NavigationBar';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
-import { ArenaFlexjar } from '@/components/flexjar/ArenaFlexjar';
 import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
 import { getWeeksBetween } from '@/utils/dateUtils';
 import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
@@ -29,18 +28,10 @@ export default function OversiktContainer(): ReactElement {
   const getPersonstatusQuery = useGetPersonstatusQuery();
   const { toggles } = useGetFeatureToggles();
   const { selectedTab } = useTabType();
-  const [feedbackArenaDate] = useLocalStorageState<Date | null>(
-    StoreKey.FLEXJAR_ARENABRUK_FEEDBACK_DATE,
-    null
-  );
   const [feedbackRutingDate] = useLocalStorageState<Date | null>(
     StoreKey.FLEXJAR_RUTING_FEEDBACK_DATE,
     null
   );
-  const showArenaFlexjar =
-    toggles.isFlexjarArenaEnabled &&
-    (feedbackArenaDate === null ||
-      getWeeksBetween(new Date(), feedbackArenaDate) >= 8);
   const showRutingFlexjar =
     toggles.isRutingFlexjarEnabled &&
     (feedbackRutingDate === null ||
@@ -58,9 +49,6 @@ export default function OversiktContainer(): ReactElement {
             personSkjermingskode={personregisterQuery.data || []}
             personoversiktData={getPersonstatusQuery.data || []}
           />
-        )}
-        {showArenaFlexjar && getPersonstatusQuery.isSuccess && (
-          <ArenaFlexjar side={toReadableString(selectedTab)} />
         )}
         {showRutingFlexjar && getPersonstatusQuery.isSuccess && (
           <RutingFlexjar side={toReadableString(selectedTab)} />
