@@ -4,7 +4,7 @@ import {
   sortVeiledereBySurnameAsc,
 } from '@/utils/veiledereUtils';
 import { VeilederDTO } from '@/api/types/veiledereTypes';
-import OpenDropdownButton from '../../../../components/toolbar/OpenDropdownButton/OpenDropdownButton';
+import { OpenDropdownButton } from '@/components/toolbar/OpenDropdownButton/OpenDropdownButton.tsx';
 import Dropdown from '@/components/toolbar/Dropdown/Dropdown';
 import { DropdownButtonTexts } from '@/components/toolbar/Dropdown/DropdownButtons';
 import {
