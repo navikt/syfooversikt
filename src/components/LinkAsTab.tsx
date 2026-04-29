@@ -11,7 +11,7 @@ export default function LinkAsTab({ href, label, icon }: Props) {
   return (
     <Link
       className={
-        'navds-tabs__tab text-text-default no-underline text-center focus-visible:bg-transparent active:bg-transparent active:text-text-default active:shadow-[inset_0_-3px_0_0] active:shadow-border-subtle-hover'
+        'navds-tabs__tab text-text-default no-underline! text-center focus-visible:bg-transparent active:bg-transparent active:text-text-default active:shadow-[inset_0_-3px_0_0] active:shadow-border-subtle-hover'
       }
       href={href}
     >

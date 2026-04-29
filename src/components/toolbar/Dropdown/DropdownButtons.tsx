@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import DropdownButton from './DropdownButton';
+import { DropdownButton } from './DropdownButton';
 
 export interface DropdownButtonTexts {
   assign: string;

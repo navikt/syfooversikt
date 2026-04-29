@@ -68,7 +68,7 @@ const setupServer = async () => {
   const DIST_DIR = path.join(__dirname, 'dist');
   const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
-  server.use('/static', express.static(DIST_DIR));
+  server.use(setupProxy());
 
   server.get(
     '/unleash/toggles',
@@ -81,8 +81,6 @@ const setupServer = async () => {
       res.status(200).send(togglesResponse);
     }
   );
-
-  server.use(setupProxy());
 
   server.get('/health/isAlive', (req, res) => {
     res.sendStatus(200);
@@ -97,12 +95,21 @@ const setupServer = async () => {
     res.end(prometheus.register.metrics());
   });
 
+  server.use('/', express.static(DIST_DIR));
+
   server.get(
-    ['*', '/syfooversikt/?', /^\/syfooversikt\/(?!(resources|img)).*$/],
+    ['/*'],
     [nocache, redirectIfUnauthorized],
-    (req: express.Request, res: express.Response) => {
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) => {
+      if (path.extname(req.path)) {
+        return next();
+      }
+
       res.sendFile(HTML_FILE);
-      httpRequestDurationMicroseconds.labels(req.path).observe(10);
     }
   );
 
