@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import NavFrontendChevron from 'nav-frontend-chevron';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import themes from '../../../styles/themes';
 import SearchIcon from '../../../img/icons/SearchIcon';
 import { ReactElement } from 'react';
@@ -36,6 +36,11 @@ const ButtonDiv = styled.div<ButtonDivProps>`
 `;
 
 const DropdownButtonButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+
   padding: 0.5em 1em;
   margin: 0;
   width: 100%;
@@ -43,13 +48,14 @@ const DropdownButtonButton = styled.button`
   cursor: pointer;
   border: none;
 
+  svg {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
   &::after {
     background-image: 1;
   }
-`;
-
-const DropdownButtonChevron = styled(NavFrontendChevron)`
-  transform: translateX(50%);
 `;
 
 const SearchIconWrapper = styled.span`
@@ -64,11 +70,7 @@ interface AssignToVeilederButtonProps {
   search: boolean;
 }
 
-const chevronType = (showList: boolean) => {
-  return showList ? 'opp' : 'ned';
-};
-
-const OpenDropdownButton = (
+export const OpenDropdownButton = (
   props: AssignToVeilederButtonProps
 ): ReactElement => {
   return (
@@ -83,13 +85,15 @@ const OpenDropdownButton = (
           </SearchIconWrapper>
         )}
         {props.text}
-        <DropdownButtonChevron
-          className="openDropdownButton__chevron"
-          type={chevronType(props.showList)}
-        />
+        {props.showList ? (
+          <ChevronUpIcon className="openDropdownButton__chevron" aria-hidden />
+        ) : (
+          <ChevronDownIcon
+            className="openDropdownButton__chevron"
+            aria-hidden
+          />
+        )}
       </DropdownButtonButton>
     </ButtonDiv>
   );
 };
-
-export default OpenDropdownButton;
