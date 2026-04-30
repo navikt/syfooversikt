@@ -27,6 +27,7 @@
     },
     "sourceMap": true,
     "noImplicitAny": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": ["vite/client"]
   }
 }
