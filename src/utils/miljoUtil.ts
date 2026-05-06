@@ -23,7 +23,7 @@ export function linkToNewHostAndPath(
   pathname: string
 ): string {
   if (isLocal()) {
-    return `http://localhost:8081${pathname}`;
+    return `http://localhost:3000${pathname}`;
   }
   const { hostname } = window.location;
   const newHost = hostname.replace(Subdomain.SYFOOVERSIKT, newSubdomain);

@@ -1,35 +1,5 @@
-import {
-  DecoratorProps,
-  Enhet,
-  Environment,
-  UrlFormat,
-} from './decoratorProps';
 import { isAnsattDev, isDev, isLocal, isProd } from '@/utils/miljoUtil';
-
-const decoratorConfig = (
-  setFnr: (fnr: string) => void,
-  setEnhet: (enhet: string) => void
-): DecoratorProps => {
-  return {
-    appName: 'Sykefraværsoppfølging',
-    fetchActiveEnhetOnMount: true,
-    onEnhetChanged: (enhetId?: string | null, enhet?: Enhet) => {
-      setEnhet(enhetId || enhet?.enhetId || '');
-    },
-    onFnrChanged: (fnr?: string | null) => {
-      if (fnr) {
-        setFnr(fnr);
-      }
-    },
-    fnrSyncMode: 'writeOnly',
-    showEnheter: true,
-    showSearchArea: true,
-    showHotkeys: false,
-    environment: getEnvironment(),
-    urlFormat: getUrlFormat(),
-    proxy: '/modiacontextholder',
-  };
-};
+import { DecoratorProps, Environment, UrlFormat } from '@/decorator/types.ts';
 
 const getEnvironment = (): Environment => {
   if (isProd()) {
@@ -49,4 +19,14 @@ const getUrlFormat = (): UrlFormat => {
   } else return 'NAV_NO';
 };
 
-export default decoratorConfig;
+export const decoratorConfig: DecoratorProps = {
+  appName: 'Sykefraværsoppfølging',
+  fetchActiveEnhetOnMount: true,
+  showEnheter: true,
+  showSearchArea: true,
+  showHotkeys: false,
+  environment: getEnvironment(),
+  urlFormat: getUrlFormat(),
+  proxy: '/modiacontextholder',
+  fnrSyncMode: 'writeOnly',
+};
