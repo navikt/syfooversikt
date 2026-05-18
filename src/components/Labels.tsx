@@ -29,7 +29,7 @@ export function Labels({ personData }: LabelColumnProps) {
       <Tooltip content={getReadableSkjermingskode(skjermingskode)}>
         <ExclamationmarkTriangleFillIcon
           fontSize="1.5rem"
-          color="var(--a-orange-600)"
+          color="var(--ax-warning-700)"
         />
       </Tooltip>
     )

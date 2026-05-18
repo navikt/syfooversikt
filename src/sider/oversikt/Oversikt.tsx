@@ -56,10 +56,10 @@ export default function Oversikt({
   return (
     <div className="flex flex-row">
       <Box
-        borderRadius="medium"
-        background="surface-default"
-        borderColor="border-strong"
-        padding="4"
+        borderRadius="4"
+        background="default"
+        borderColor="neutral-strong"
+        padding="space-16"
         borderWidth="1"
         className="mb-4 flex flex-col gap-4 mr-4 w-[18rem] h-fit"
       >
@@ -75,7 +75,6 @@ export default function Oversikt({
         <DatoFilter />
         <ClearFiltersButton />
       </Box>
-
       <Sokeresultat allEvents={allEvents} />
     </div>
   );

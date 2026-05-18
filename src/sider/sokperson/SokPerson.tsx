@@ -127,7 +127,7 @@ export default function SokPerson() {
 
   return (
     <>
-      <Box background="surface-default" padding="4">
+      <Box background="default" padding="space-16">
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -144,7 +144,7 @@ export default function SokPerson() {
               <BodyLong className="pt-2">{texts.helpText.info.p2}</BodyLong>
             </HelpText>
           </div>
-          <VStack gap="4">
+          <VStack gap="space-16">
             <BodyLong>{texts.info}</BodyLong>
             <div className="grid grid-cols-[auto,auto,auto] gap-x-8 gap-y-2 align-end max-w-max">
               <TextField

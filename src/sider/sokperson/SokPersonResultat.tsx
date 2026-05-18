@@ -33,12 +33,12 @@ export default function SokPersonResultat({
   const personer = Object.entries(toPersonData(sokeresultater, []));
 
   return personer.length === 0 ? (
-    <Box background="surface-default" padding="4" className="mt-2">
+    <Box background="default" padding="space-16" className="mt-2">
       <BodyShort>{texts.noResults.first}</BodyShort>
       <BodyShort>{texts.noResults.second}</BodyShort>
     </Box>
   ) : (
-    <Table size="small" zebraStripes className="bg-white mt-2">
+    <Table size="small" zebraStripes className="bg-ax-bg-default mt-2">
       <Table.Header>
         <Table.Row>
           {columns.map((col, index) => (
