@@ -7,6 +7,7 @@ import {
   Modal,
   Skeleton,
   UNSAFE_Combobox,
+  Box,
 } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useGetMuligeOppfolgingsenheter } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter';
@@ -159,26 +160,28 @@ export default function TildelOppfolgingsenhetModal({
         {showTildelingerInfo && (
           <div>
             <BodyShort>{`Du tildeler nå følgende personer til ${chosenOppfolgingsenhet?.navn} (${chosenOppfolgingsenhet?.enhetId}):`}</BodyShort>
-            <List as="ul">
-              {selectedPersonerInfo.map((person, index) => {
-                const virksomhetList =
-                  person.latestOppfolgingstilfelle?.virksomhetList;
-                const virksomhetText = virksomhetList
-                  ?.map((v) => v.virksomhetsnavn)
-                  .join(', ');
-                return (
-                  <List.Item key={index}>
-                    <span>
-                      {`${person.navn} (${person.fnr}). `}
-                      {!!virksomhetList?.length
-                        ? `Virksomhet: `
-                        : 'Uten virksomhet'}
-                      <b>{virksomhetText}</b>
-                    </span>
-                  </List.Item>
-                );
-              })}
-            </List>
+            <Box marginBlock="space-16" asChild>
+              <List data-aksel-migrated-v8 as="ul">
+                {selectedPersonerInfo.map((person, index) => {
+                  const virksomhetList =
+                    person.latestOppfolgingstilfelle?.virksomhetList;
+                  const virksomhetText = virksomhetList
+                    ?.map((v) => v.virksomhetsnavn)
+                    .join(', ');
+                  return (
+                    <List.Item key={index}>
+                      <span>
+                        {`${person.navn} (${person.fnr}). `}
+                        {!!virksomhetList?.length
+                          ? `Virksomhet: `
+                          : 'Uten virksomhet'}
+                        <b>{virksomhetText}</b>
+                      </span>
+                    </List.Item>
+                  );
+                })}
+              </List>
+            </Box>
           </div>
         )}
         {getMuligeOppfolgingsenheter.isError && (

@@ -45,14 +45,22 @@ describe('SokPerson', () => {
     ).to.exist;
     expect(
       screen.getByRole('textbox', {
-        name:
-          'Initialer (valgfri) Hvordan fyller jeg inn initialer? Hvordan fyller jeg inn initialer?',
+        name: 'Initialer (valgfri)',
       })
     ).to.exist;
     expect(
       screen.getByRole('textbox', {
-        name:
-          'Fødselsdato (obligatorisk) Hvordan fyller jeg inn fødselsdato? Hvordan fyller jeg inn fødselsdato?',
+        name: 'Fødselsdato (obligatorisk)',
+      })
+    ).to.exist;
+    expect(
+      screen.getByRole('button', {
+        name: 'Hvordan fyller jeg inn initialer?',
+      })
+    ).to.exist;
+    expect(
+      screen.getByRole('button', {
+        name: 'Hvordan fyller jeg inn fødselsdato?',
       })
     ).to.exist;
     expect(screen.getByRole('button', { name: 'Søk' })).to.exist;

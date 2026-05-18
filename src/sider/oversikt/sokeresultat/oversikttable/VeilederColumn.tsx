@@ -25,7 +25,12 @@ export const VeilederColumn = ({
   return tildeltVeilederIdent ? (
     <VeilederName veilederIdent={tildeltVeilederIdent} />
   ) : (
-    <Tag variant="info" size="small" className="p-1 rounded">
+    <Tag
+      data-color="info"
+      variant="outline"
+      size="small"
+      className="p-1 rounded"
+    >
       Ufordelt bruker
     </Tag>
   );

@@ -80,7 +80,7 @@ export default function OversiktTable({
       sort={sorting}
       size="small"
       zebraStripes
-      className="bg-white mt-2"
+      className="bg-ax-bg-default mt-2"
       onSortChange={handleSort}
     >
       <Table.Header>

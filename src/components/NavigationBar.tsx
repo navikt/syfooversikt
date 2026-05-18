@@ -19,7 +19,7 @@ export default function NavigationBar(): ReactElement {
   const { pathname } = useLocation();
 
   return (
-    <Box className="mb-4" background="surface-default">
+    <Box className="mb-4" background="default">
       <HStack className="w-11/12">
         <Tabs value={pathname} onChange={(value) => navigate(value)}>
           <Tabs.List>
