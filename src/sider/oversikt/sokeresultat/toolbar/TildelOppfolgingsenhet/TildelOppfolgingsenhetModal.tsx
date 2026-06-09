@@ -116,12 +116,6 @@ export default function TildelOppfolgingsenhetModal({
             });
             setSelectedPersoner([]);
           },
-          onError: () => {
-            setTableFeedbackNotification({
-              type: 'error',
-              text: text.errorMessage,
-            });
-          },
           onSettled: closeModal,
         }
       );

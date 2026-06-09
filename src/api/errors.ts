@@ -3,6 +3,8 @@ export const defaultErrorTexts = {
   generalError: 'Det skjedde en uventet feil. Vennligst prøv igjen senere.',
   networkError: 'Vi har problemer med nettet, prøv igjen senere.',
   loginRequired: 'Handlingen krever at du logger på.',
+  conflictError:
+    'Det skjedde en uventet feil. Det kan hende en annen veileder har oppdatert siden. Last inn siden på nytt og prøv igjen.',
 };
 
 export enum ErrorType {
@@ -10,6 +12,13 @@ export enum ErrorType {
   GENERAL_ERROR = 'GENERAL_ERROR',
   NETWORK_ERROR = 'NETWORK_ERROR',
   LOGIN_REQUIRED = 'LOGIN_REQUIRED',
+  CONFLICT_ERROR = 'CONFLICT_ERROR',
+}
+
+export function resolveErrorMessage(error: unknown) {
+  return error instanceof ApiErrorException
+    ? error.error.defaultErrorMsg
+    : defaultErrorTexts.generalError;
 }
 
 export class ApiErrorException extends Error {
@@ -41,6 +50,14 @@ export const accessDeniedError = (error: Error): ApiError => {
     type: ErrorType.ACCESS_DENIED,
     message: error.message,
     defaultErrorMsg: defaultErrorTexts.accessDenied,
+  };
+};
+
+export const conflictError = (error: Error): ApiError => {
+  return {
+    type: ErrorType.CONFLICT_ERROR,
+    message: error.message,
+    defaultErrorMsg: defaultErrorTexts.conflictError,
   };
 };
 

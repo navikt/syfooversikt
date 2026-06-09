@@ -4,10 +4,17 @@ import { post } from '@/api/axios';
 import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
 import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { useNotifications } from '@/context/notification/NotificationContext.tsx';
+import { ApiErrorException } from '@/api/errors.ts';
+import {
+  TildelOppfolgingsenhetFailed,
+  TildelOppfolgingsenhetTilgangFailed,
+} from '@/context/notification/Notifications.ts';
 
 export function usePostTildelOppfolgingsenhet() {
   const queryClient = useQueryClient();
   const { aktivEnhet } = useAktivEnhet();
+  const { displayNotification, clearNotification } = useNotifications();
 
   const path = `${SYFOBEHANDLENDEENHET_ROOT}/oppfolgingsenhet-tildelinger`;
   const postTildelOppfolgingsenhet = (
@@ -16,6 +23,10 @@ export function usePostTildelOppfolgingsenhet() {
 
   return useMutation({
     mutationFn: postTildelOppfolgingsenhet,
+    onMutate: () => {
+      clearNotification('tildelOppfolgingsenhetFailed');
+      clearNotification('tildelOppfolgingsenhetTilgangFailed');
+    },
     onSuccess: (data: OppfolgingsenhetTildelingerResponseDTO) => {
       const personer: PersonOversiktStatusDTO[] =
         queryClient.getQueryData(
@@ -35,6 +46,13 @@ export function usePostTildelOppfolgingsenhet() {
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         updatedPersoner
       );
+    },
+    onError: (error: Error) => {
+      if (error instanceof ApiErrorException && error.code === 403) {
+        displayNotification(TildelOppfolgingsenhetTilgangFailed);
+      } else {
+        displayNotification(TildelOppfolgingsenhetFailed);
+      }
     },
   });
 }
