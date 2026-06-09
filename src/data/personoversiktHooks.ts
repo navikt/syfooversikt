@@ -7,8 +7,6 @@ import { get, post } from '@/api/axios';
 import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
 import { useNotifications } from '@/context/notification/NotificationContext';
 import { FetchPersonoversiktFailed } from '@/context/notification/Notifications';
-import { ApiErrorException } from '@/api/errors';
-import { useAsyncError } from '@/data/useAsyncError';
 import { minutesToMillis } from '@/utils/timeUtils';
 import { useMemo } from 'react';
 import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
@@ -36,7 +34,6 @@ export const useGetPersonstatusQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { toggles } = useGetFeatureToggles();
   const { displayNotification, clearNotification } = useNotifications();
-  const throwError = useAsyncError();
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
@@ -51,12 +48,8 @@ export const useGetPersonstatusQuery = () => {
     enabled: !!aktivEnhet,
     staleTime: minutesToMillis(5),
     meta: {
-      handleError: (error: Error) => {
-        if (error instanceof ApiErrorException && error.code === 403) {
-          throwError(error);
-        } else {
-          displayNotification(FetchPersonoversiktFailed);
-        }
+      handleError: () => {
+        displayNotification(FetchPersonoversiktFailed);
       },
       handleSuccess: () => clearNotification('fetchPersonoversiktFailed'),
     },

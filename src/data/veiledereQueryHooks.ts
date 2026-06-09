@@ -11,8 +11,8 @@ import {
   FetchAktivVeilederFailed,
   FetchVeiledereFailed,
   TildelVeilederFailed,
+  TildelVeilederTilgangFailed,
 } from '@/context/notification/Notifications';
-import { useAsyncError } from '@/data/useAsyncError';
 import { ApiErrorException } from '@/api/errors';
 
 export const veiledereQueryKeys = {
@@ -27,7 +27,6 @@ export const veiledereQueryKeys = {
 export const useVeiledereQuery = () => {
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
-  const throwError = useAsyncError();
 
   const fetchVeiledere = () =>
     get<VeilederDTO[]>(`${SYFOVEILEDER_ROOT}/veiledere?enhetNr=${aktivEnhet}`);
@@ -37,12 +36,8 @@ export const useVeiledereQuery = () => {
     queryFn: fetchVeiledere,
     enabled: !!aktivEnhet,
     meta: {
-      handleError: (error: Error) => {
-        if (error instanceof ApiErrorException && error.code === 403) {
-          throwError(error);
-        } else {
-          displayNotification(FetchVeiledereFailed);
-        }
+      handleError: () => {
+        displayNotification(FetchVeiledereFailed);
       },
       handleSuccess: () => clearNotification('fetchVeiledereFailed'),
     },
@@ -51,7 +46,6 @@ export const useVeiledereQuery = () => {
 
 export function useAktivVeilederQuery() {
   const { displayNotification, clearNotification } = useNotifications();
-  const throwError = useAsyncError();
 
   const fetchVeilederInfo = () =>
     get<VeilederDTO>(`${SYFOVEILEDER_ROOT}/veiledere/self`);
@@ -60,12 +54,8 @@ export function useAktivVeilederQuery() {
     queryKey: veiledereQueryKeys.veiledereInfo,
     queryFn: fetchVeilederInfo,
     meta: {
-      handleError: (error: Error) => {
-        if (error instanceof ApiErrorException && error.code === 403) {
-          throwError(error);
-        } else {
-          displayNotification(FetchAktivVeilederFailed);
-        }
+      handleError: () => {
+        displayNotification(FetchAktivVeilederFailed);
       },
       handleSuccess: () => clearNotification('fetchAktivVeilederFailed'),
     },
@@ -76,7 +66,6 @@ export const useTildelVeileder = () => {
   const queryClient = useQueryClient();
   const { aktivEnhet } = useAktivEnhet();
   const { displayNotification, clearNotification } = useNotifications();
-  const throwError = useAsyncError();
 
   const path = `${PERSONTILDELING_ROOT}/registrer`;
 
@@ -87,6 +76,7 @@ export const useTildelVeileder = () => {
     mutationFn: postTildelVeileder,
     onMutate: (liste: VeilederArbeidstaker[]) => {
       clearNotification('tildelVeilederFailed');
+      clearNotification('tildelVeilederTilgangFailed');
 
       const previousPersonoversikt: PersonOversiktStatusDTO[] =
         queryClient.getQueryData(
@@ -112,12 +102,13 @@ export const useTildelVeileder = () => {
 
       return { previousPersonoversikt };
     },
-    onError: (error, newVeileder, context) => {
+    onError: (error, _, context) => {
       if (error instanceof ApiErrorException && error.code === 403) {
-        throwError(error);
+        displayNotification(TildelVeilederTilgangFailed);
       } else {
         displayNotification(TildelVeilederFailed);
       }
+
       queryClient.setQueryData(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         context?.previousPersonoversikt || []

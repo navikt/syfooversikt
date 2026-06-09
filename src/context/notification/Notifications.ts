@@ -6,7 +6,9 @@ export type NotificationType =
   | 'fetchVeiledereFailed'
   | 'fetchAktivVeilederFailed'
   | 'tildelVeilederFailed'
+  | 'tildelVeilederTilgangFailed'
   | 'tildelOppfolgingsenhetFailed'
+  | 'tildelOppfolgingsenhetTilgangFailed'
   | 'tildelOppfolgingsenhetSuccess';
 
 export interface Notification extends Pick<AlertProps, 'variant'> {
@@ -36,6 +38,12 @@ export const TildelVeilederFailed: Notification = {
     'Det skjedde en feil ved tildeling av veileder. Vennligst prøv igjen senere.',
 };
 
+export const TildelVeilederTilgangFailed: Notification = {
+  type: 'tildelVeilederTilgangFailed',
+  variant: 'error',
+  message: 'Du har ikke tilgang til å tildele veileder.',
+};
+
 export const FetchPersonoversiktFailed: Notification = {
   type: 'fetchPersonoversiktFailed',
   variant: 'error',
@@ -48,4 +56,17 @@ export const FetchPersonregisterFailed: Notification = {
   variant: 'error',
   message:
     'Vi klarte ikke laste inn personregister. Enkelte personer vises uten navn eller diskresjonskode.',
+};
+
+export const TildelOppfolgingsenhetFailed: Notification = {
+  type: 'tildelOppfolgingsenhetFailed',
+  variant: 'error',
+  message:
+    'Det skjedde en feil ved tildeling av oppfølgingsenhet. Vennligst prøv igjen senere.',
+};
+
+export const TildelOppfolgingsenhetTilgangFailed: Notification = {
+  type: 'tildelOppfolgingsenhetTilgangFailed',
+  variant: 'error',
+  message: 'Du har ikke tilgang til å tildele oppfølgingsenhet.',
 };

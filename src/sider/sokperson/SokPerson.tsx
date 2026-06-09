@@ -17,6 +17,7 @@ import SokPersonResultat from '@/sider/sokperson/SokPersonResultat';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 import { isNumeric, removePunctuation } from '@/utils/stringUtil';
 import { parseDateString } from '@/utils/dateUtils';
+import { resolveErrorMessage } from '@/api/errors.ts';
 
 const texts = {
   header: 'Søk etter sykmeldt',
@@ -88,6 +89,7 @@ export default function SokPerson() {
   const {
     mutate,
     data: searchResults,
+    error: searchError,
     isPending,
     isError,
     isSuccess,
@@ -184,7 +186,7 @@ export default function SokPerson() {
             </div>
             {isError && (
               <Alert variant="error" size="small">
-                {texts.error}
+                {resolveErrorMessage(searchError)}
               </Alert>
             )}
           </VStack>
