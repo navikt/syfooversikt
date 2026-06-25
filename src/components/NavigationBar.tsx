@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Heading, HStack, Tabs } from '@navikt/ds-react';
-import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
-import { routes } from '@/routers/routes';
-import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
-import LinkAsTab from '@/components/LinkAsTab';
+import React, { ReactElement } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Heading, HStack, Tabs } from "@navikt/ds-react";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import { routes } from "@/routers/routes";
+import { linkToNewHostAndPath, Subdomain } from "@/utils/miljoUtil";
+import LinkAsTab from "@/components/LinkAsTab";
 
 const texts = {
-  enhetensOversikt: 'Enhetens oversikt',
-  minOversikt: 'Min oversikt',
-  sokSykmeldt: 'Søk etter sykmeldt',
-  mineMoter: 'Mine møter',
-  enhetensMoter: 'Enhetens møter',
+  enhetensOversikt: "Enhetens oversikt",
+  minOversikt: "Min oversikt",
+  sokSykmeldt: "Søk etter sykmeldt",
+  mineMoter: "Mine møter",
+  enhetensMoter: "Enhetens møter",
 };
 
 export default function NavigationBar(): ReactElement {
@@ -34,14 +34,14 @@ export default function NavigationBar(): ReactElement {
             <LinkAsTab
               href={linkToNewHostAndPath(
                 Subdomain.SYFOMOTEOVERSIKT,
-                '/syfomoteoversikt/minemoter'
+                "/syfomoteoversikt/minemoter",
               )}
               label={<Heading size="xsmall">{texts.mineMoter}</Heading>}
             />
             <LinkAsTab
               href={linkToNewHostAndPath(
                 Subdomain.SYFOMOTEOVERSIKT,
-                '/syfomoteoversikt/enhetensmoter'
+                "/syfomoteoversikt/enhetensmoter",
               )}
               label={<Heading size="xsmall">{texts.enhetensMoter}</Heading>}
             />

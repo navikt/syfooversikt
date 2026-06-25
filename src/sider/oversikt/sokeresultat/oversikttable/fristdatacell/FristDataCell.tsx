@@ -1,27 +1,27 @@
-import { PersonData } from '@/api/types/personregisterTypes';
-import { toReadableDate } from '@/utils/dateUtils';
+import { PersonData } from "@/api/types/personregisterTypes";
+import { toReadableDate } from "@/utils/dateUtils";
 import {
   BriefcaseIcon,
   FileTextIcon,
   HourglassTopFilledIcon,
-} from '@navikt/aksel-icons';
-import React, { ReactElement, useState } from 'react';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import { Button, Table, Tooltip } from '@navikt/ds-react';
-import OppfolgingsoppgaveModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/OppfolgingsoppgaveModal';
-import { TabType, useTabType } from '@/hooks/useTabType';
-import AktivitetskravAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal';
-import DialogmoteAvventModal from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/DialogmoteAvventModal';
+} from "@navikt/aksel-icons";
+import React, { ReactElement, useState } from "react";
+import { AktivitetskravStatus } from "@/api/types/personoversiktTypes";
+import { Button, Table, Tooltip } from "@navikt/ds-react";
+import OppfolgingsoppgaveModal from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/OppfolgingsoppgaveModal";
+import { TabType, useTabType } from "@/hooks/useTabType";
+import AktivitetskravAvventModal from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/AktivitetskravAvventModal";
+import DialogmoteAvventModal from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/DialogmoteAvventModal";
 
 const texts = {
-  tooltipAvventerAktivitetskrav: 'Aktivitetskrav avventer til',
-  tooltipAvventerDialogmote: 'Avventer dialogmøte til',
-  tooltipOppfolgingsoppgave: 'Oppfølgingsoppgave frist',
-  tooltipFriskmeldingTilArbeidsformidling: '§ 8-5 f.o.m.',
-  arbeidsuforhetvarselFrist: '§ 8-4: Svarfrist forhåndsvarsel',
+  tooltipAvventerAktivitetskrav: "Aktivitetskrav avventer til",
+  tooltipAvventerDialogmote: "Avventer dialogmøte til",
+  tooltipOppfolgingsoppgave: "Oppfølgingsoppgave frist",
+  tooltipFriskmeldingTilArbeidsformidling: "§ 8-5 f.o.m.",
+  arbeidsuforhetvarselFrist: "§ 8-4: Svarfrist forhåndsvarsel",
   manglendeMedvirkningVarselFrist:
-    '§ 8-8: Svarfrist forhåndsvarsel manglende medvirkning',
-  aktivitetskravvarselFrist: '§ 8-8: Aktivitetskrav: Svarfrist forhåndsvarsel',
+    "§ 8-8: Svarfrist forhåndsvarsel manglende medvirkning",
+  aktivitetskravvarselFrist: "§ 8-8: Aktivitetskrav: Svarfrist forhåndsvarsel",
 };
 
 type Frist = {
@@ -46,7 +46,7 @@ function fristerInfo(
   setIsOppfolgingsoppgaveModalOpen: (open: boolean) => void,
   setIsAktivitetskravModalOpen: (open: boolean) => void,
   setIsDialogmoteAvventModalOpen: (open: boolean) => void,
-  selectedTab: TabType
+  selectedTab: TabType,
 ): Frist[] {
   const frister: Frist[] = [];
   const aktivitetskravStatus = aktivitetskravvurdering?.status;
@@ -74,7 +74,7 @@ function fristerInfo(
           date: currentVurdering?.frist,
           tooltip: `${
             selectedTab === TabType.MIN_OVERSIKT
-              ? 'Åpne aktivitetskravvurdering'
+              ? "Åpne aktivitetskravvurdering"
               : texts.tooltipAvventerAktivitetskrav
           }`,
         });
@@ -104,8 +104,8 @@ function fristerInfo(
       date: oppfolgingsoppgave.frist,
       tooltip: `${
         selectedTab === TabType.MIN_OVERSIKT
-          ? 'Åpne oppfølgingsoppgave'
-          : 'Oppfølgingsoppgave frist'
+          ? "Åpne oppfølgingsoppgave"
+          : "Oppfølgingsoppgave frist"
       }`,
     });
   }
@@ -160,25 +160,19 @@ interface Props {
 }
 
 export function FristDataCell({ personData }: Props) {
-  const [
-    isOppfolgingsoppgaveModalOpen,
-    setIsOppfolgingsoppgaveModalOpen,
-  ] = useState<boolean>(false);
-  const [
-    isAktivitetskravModalOpen,
-    setIsAktivitetskravModalOpen,
-  ] = useState<boolean>(false);
-  const [
-    isDialogmoteAvventModalOpen,
-    setIsDialogmoteAvventModalOpen,
-  ] = useState<boolean>(false);
+  const [isOppfolgingsoppgaveModalOpen, setIsOppfolgingsoppgaveModalOpen] =
+    useState<boolean>(false);
+  const [isAktivitetskravModalOpen, setIsAktivitetskravModalOpen] =
+    useState<boolean>(false);
+  const [isDialogmoteAvventModalOpen, setIsDialogmoteAvventModalOpen] =
+    useState<boolean>(false);
   const { selectedTab } = useTabType();
   const frister: Frist[] = fristerInfo(
     personData,
     setIsOppfolgingsoppgaveModalOpen,
     setIsAktivitetskravModalOpen,
     setIsDialogmoteAvventModalOpen,
-    selectedTab
+    selectedTab,
   );
 
   const currentVurdering = personData.aktivitetskravvurdering?.vurderinger[0];

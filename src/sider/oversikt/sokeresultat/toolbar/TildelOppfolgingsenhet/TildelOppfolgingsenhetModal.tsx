@@ -8,34 +8,34 @@ import {
   Skeleton,
   UNSAFE_Combobox,
   Box,
-} from '@navikt/ds-react';
-import React, { useState } from 'react';
-import { useGetMuligeOppfolgingsenheter } from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter';
+} from "@navikt/ds-react";
+import React, { useState } from "react";
+import { useGetMuligeOppfolgingsenheter } from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter";
 import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
-} from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet';
-import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
-import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
+} from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet";
+import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
+import { FeedbackNotification } from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
 
 const text = {
-  heading: 'Endre oppfølgingsenhet',
+  heading: "Endre oppfølgingsenhet",
   description:
-    'Her kan du flytte den sykmeldte til en annen oppfølgingsenhet. Dersom den sykemeldte har endret bostedsadresse, skjer flyttingen automatisk.',
-  velgOppfolgingsenhet: 'Velg ny oppfølgingsenhet',
-  formErrorMessage: 'Du må velge en oppfølgingsenhet',
+    "Her kan du flytte den sykmeldte til en annen oppfølgingsenhet. Dersom den sykemeldte har endret bostedsadresse, skjer flyttingen automatisk.",
+  velgOppfolgingsenhet: "Velg ny oppfølgingsenhet",
+  formErrorMessage: "Du må velge en oppfølgingsenhet",
   getMuligeOppfolgingsenheterFailedErrorMessage:
-    'Noe gikk galt. Klarer ikke å hente mulig enheter å tildele til.',
-  buttonLabel: 'Tildel oppfølgingsenhet',
-  endreEnhet: 'Endre oppfølgingsenhet',
-  avbryt: 'Avbryt',
-  errorMessage: 'Tildeling av oppfølgingsenhet feilet.',
+    "Noe gikk galt. Klarer ikke å hente mulig enheter å tildele til.",
+  buttonLabel: "Tildel oppfølgingsenhet",
+  endreEnhet: "Endre oppfølgingsenhet",
+  avbryt: "Avbryt",
+  errorMessage: "Tildeling av oppfølgingsenhet feilet.",
 };
 
 const tildelOppfolgingsenhetSuccessText = (
   antallTildelt: number,
   antallMaybeTildelt: number,
-  enhet: string
+  enhet: string,
 ): string => {
   if (antallMaybeTildelt > 1) {
     return `${antallTildelt} av ${antallMaybeTildelt} personer tildelt ${enhet}.`;
@@ -49,7 +49,7 @@ interface Props {
   selectedPersoner: string[];
   setSelectedPersoner: (personer: string[]) => void;
   setTableFeedbackNotification: (
-    feedbackNotification: FeedbackNotification | undefined
+    feedbackNotification: FeedbackNotification | undefined,
   ) => void;
 }
 
@@ -61,15 +61,15 @@ export default function TildelOppfolgingsenhetModal({
 }: Props) {
   const getMuligeOppfolgingsenheter = useGetMuligeOppfolgingsenheter();
   const postTildelOppfolgingsenhet = usePostTildelOppfolgingsenhet();
-  const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string>('');
+  const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string>("");
   const [isFormError, setIsFormError] = useState<boolean>(false);
   const showTildelingerInfo = !!oppfolgingsenhet;
   const chosenOppfolgingsenhet = getMuligeOppfolgingsenheter?.data?.find(
-    (enhet) => enhet.enhetId === oppfolgingsenhet
+    (enhet) => enhet.enhetId === oppfolgingsenhet,
   );
   const { data: personoversikt } = useGetPersonstatusQuery();
   const selectedPersonerInfo = personoversikt.filter((person) =>
-    selectedPersoner.includes(person.fnr)
+    selectedPersoner.includes(person.fnr),
   );
 
   function closeModal() {
@@ -84,13 +84,13 @@ export default function TildelOppfolgingsenhetModal({
       setOppfolgingsenhet(option);
     } else {
       setIsFormError(true);
-      setOppfolgingsenhet('');
+      setOppfolgingsenhet("");
     }
   }
 
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const isFormValid = oppfolgingsenhet !== '';
+    const isFormValid = oppfolgingsenhet !== "";
     if (!isFormValid) {
       setIsFormError(true);
     } else {
@@ -101,23 +101,24 @@ export default function TildelOppfolgingsenhetModal({
         },
         {
           onSuccess: (response: OppfolgingsenhetTildelingerResponseDTO) => {
-            const tildeltOppfolgingsenhet = getMuligeOppfolgingsenheter.data?.find(
-              (enhet) => enhet.enhetId === oppfolgingsenhet
-            );
+            const tildeltOppfolgingsenhet =
+              getMuligeOppfolgingsenheter.data?.find(
+                (enhet) => enhet.enhetId === oppfolgingsenhet,
+              );
             const antallTildelt = response.tildelinger.length;
             const antallMaybeTildelt = selectedPersoner.length;
             setTableFeedbackNotification({
-              type: 'success',
+              type: "success",
               text: tildelOppfolgingsenhetSuccessText(
                 antallTildelt,
                 antallMaybeTildelt,
-                `${tildeltOppfolgingsenhet?.navn} (${tildeltOppfolgingsenhet?.enhetId})`
+                `${tildeltOppfolgingsenhet?.navn} (${tildeltOppfolgingsenhet?.enhetId})`,
               ),
             });
             setSelectedPersoner([]);
           },
           onSettled: closeModal,
-        }
+        },
       );
     }
   }
@@ -161,14 +162,14 @@ export default function TildelOppfolgingsenhetModal({
                     person.latestOppfolgingstilfelle?.virksomhetList;
                   const virksomhetText = virksomhetList
                     ?.map((v) => v.virksomhetsnavn)
-                    .join(', ');
+                    .join(", ");
                   return (
                     <List.Item key={index}>
                       <span>
                         {`${person.navn} (${person.fnr}). `}
                         {!!virksomhetList?.length
                           ? `Virksomhet: `
-                          : 'Uten virksomhet'}
+                          : "Uten virksomhet"}
                         <b>{virksomhetText}</b>
                       </span>
                     </List.Item>

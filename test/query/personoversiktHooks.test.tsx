@@ -1,17 +1,17 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { ReactNode } from 'react';
-import { stubModiaContext } from '../stubs/stubModiaContext';
-import { personoversiktEnhetMock } from '@/mocks/data/personoversiktEnhetMock';
-import { stubPersonoversikt } from '../stubs/stubPersonoversikt';
-import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
-import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { describe, expect, it } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { ReactNode } from "react";
+import { stubModiaContext } from "../stubs/stubModiaContext";
+import { personoversiktEnhetMock } from "@/mocks/data/personoversiktEnhetMock";
+import { stubPersonoversikt } from "../stubs/stubPersonoversikt";
+import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
+import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
+import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
+import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock";
+import { NotificationProvider } from "@/context/notification/NotificationContext";
+import { describe, expect, it } from "vitest";
+import { renderHook, waitFor } from "@testing-library/react";
 
-describe('personoversiktHooks tests', () => {
+describe("personoversiktHooks tests", () => {
   const queryClient = new QueryClient();
 
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -29,7 +29,7 @@ describe('personoversiktHooks tests', () => {
     </NotificationProvider>
   );
 
-  it('loads personoversikt correctly', async () => {
+  it("loads personoversikt correctly", async () => {
     stubModiaContext();
 
     stubPersonoversikt();
@@ -46,7 +46,7 @@ describe('personoversiktHooks tests', () => {
     expect(actual[0]?.fnr).to.eq(personoversiktEnhetMock[0]?.fnr);
   });
 
-  it('contains only personer with ubehandlet oppgave', async () => {
+  it("contains only personer with ubehandlet oppgave", async () => {
     stubModiaContext();
     stubPersonoversikt();
 

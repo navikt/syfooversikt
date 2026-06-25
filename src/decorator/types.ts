@@ -9,8 +9,8 @@ export interface DecoratorProps {
   // Valgfrie props
   enhet?: string | undefined; // Konfigurasjon av enhet-kontekst
   fnr?: string | undefined; // Konfigurasjon av fødselsnummer-kontekst
-  fnrSyncMode?: 'sync' | 'writeOnly' | 'ignore'; // Modus for fnr state management. "sync" er default. "writeOnly" setter men henter ikke. "ignore" verken henter eller setter.
-  enhetSyncMode?: 'sync' | 'writeOnly' | 'ignore'; // Samme som fnrSyncMode, men for enhet.
+  fnrSyncMode?: "sync" | "writeOnly" | "ignore"; // Modus for fnr state management. "sync" er default. "writeOnly" setter men henter ikke. "ignore" verken henter eller setter.
+  enhetSyncMode?: "sync" | "writeOnly" | "ignore"; // Samme som fnrSyncMode, men for enhet.
   accessToken?: string | undefined; // JWT som settes som Authorization-header
   includeCredentials?: boolean | undefined; // Sett `credentials: 'include'` på requests til contextholderen
   userKey?: string | undefined; // Midlertidig kode i stedet for fnr (se "userKey" under)
@@ -37,16 +37,16 @@ export interface Enhet {
 }
 
 export type Environment =
-  | 'q0'
-  | 'q1'
-  | 'q2'
-  | 'q3'
-  | 'q4'
-  | 'prod'
-  | 'local'
-  | 'mock';
+  | "q0"
+  | "q1"
+  | "q2"
+  | "q3"
+  | "q4"
+  | "prod"
+  | "local"
+  | "mock";
 
-export type UrlFormat = 'LOCAL' | 'NAV_NO' | 'ANSATT';
+export type UrlFormat = "LOCAL" | "NAV_NO" | "ANSATT";
 
 export interface HotkeyObject {
   char: string;

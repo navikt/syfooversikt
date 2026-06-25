@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { TextField } from '@navikt/ds-react';
+import React, { ReactElement } from "react";
+import { useFilters } from "@/context/filters/FilterContext";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { TextField } from "@navikt/ds-react";
 
 const texts = {
-  label: 'Sykmeldt',
-  placeholder: 'Filtrer på navn eller fødselsnummer',
+  label: "Sykmeldt",
+  placeholder: "Filtrer på navn eller fødselsnummer",
 };
 
 export default function SykmeldtFilter(): ReactElement {

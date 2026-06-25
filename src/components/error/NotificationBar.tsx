@@ -1,7 +1,7 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { useNotifications } from '@/context/notification/NotificationContext';
-import { Alert, Heading } from '@navikt/ds-react';
-import { Notification } from '@/context/notification/Notifications';
+import React, { ReactNode } from "react";
+import { useNotifications } from "@/context/notification/NotificationContext";
+import { Alert, Heading } from "@navikt/ds-react";
+import { Notification } from "@/context/notification/Notifications";
 
 interface Props {
   notification: Notification;
@@ -27,14 +27,12 @@ function AlertWithCloseButton({ notification }: Props) {
   ) : null;
 }
 
-export default function NotificationBar(): ReactElement {
+export default function NotificationBar() {
   const { notifications } = useNotifications();
 
-  const notificationBars = notifications.map(
+  return notifications.map(
     (notification, index): ReactNode => (
       <AlertWithCloseButton key={index} notification={notification} />
-    )
+    ),
   );
-
-  return <>{notificationBars}</>;
 }

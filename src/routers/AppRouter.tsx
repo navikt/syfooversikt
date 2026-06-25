@@ -1,13 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Side from '../components/Side';
-import Decorator from '../decorator/Decorator';
-import OversiktContainer from '@/sider/oversikt/OversiktContainer';
-import ErrorBoundary from '@/components/error/ErrorBoundary';
-import SokContainer from '@/sider/sokperson/SokContainer';
-import { routes } from '@/routers/routes';
-import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import * as Umami from '@/utils/umami';
+import React, { ReactElement, useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Side from "../components/Side";
+import Decorator from "../decorator/Decorator";
+import OversiktContainer from "@/sider/oversikt/OversiktContainer";
+import ErrorBoundary from "@/components/error/ErrorBoundary";
+import SokContainer from "@/sider/sokperson/SokContainer";
+import { routes } from "@/routers/routes";
+import { useAktivVeilederQuery } from "@/data/veiledereQueryHooks";
+import * as Umami from "@/utils/umami";
 
 export default function AppRouter(): ReactElement {
   const getAktivVeileder = useAktivVeilederQuery();

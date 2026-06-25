@@ -4,9 +4,9 @@ export type Toggles = {
 
 // See toggles: https://teamsykefravr-unleash-web.nav.cloud.nais.io/features
 export enum ToggleNames {
-  isRutingFlexjarEnabled = 'isRutingFlexjarEnabled',
-  isTildelOppfolgingsenhetEnabled = 'isTildelOppfolgingsenhetEnabled',
-  isKartleggingssporsmalEnabled = 'isKartleggingssporsmalEnabled',
+  isRutingFlexjarEnabled = "isRutingFlexjarEnabled",
+  isTildelOppfolgingsenhetEnabled = "isTildelOppfolgingsenhetEnabled",
+  isKartleggingssporsmalEnabled = "isKartleggingssporsmalEnabled",
 }
 
 export const defaultToggles: Toggles = {

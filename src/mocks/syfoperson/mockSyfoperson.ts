@@ -1,7 +1,7 @@
-import { SYFOPERSON_ROOT } from '@/apiConstants';
-import { personInfoMock } from '../data/personInfoMock';
-import { MockPerson } from '../mockUtils';
-import { http, HttpResponse } from 'msw';
+import { SYFOPERSON_ROOT } from "@/apiConstants";
+import { personInfoMock } from "../data/personInfoMock";
+import { MockPerson } from "../mockUtils";
+import { http, HttpResponse } from "msw";
 
 const personInfo = (generatedPersons: MockPerson[]) => [
   ...personInfoMock,
@@ -10,5 +10,5 @@ const personInfo = (generatedPersons: MockPerson[]) => [
 
 export const mockSyfoperson = (generatedPersons: MockPerson[]) =>
   http.post(`${SYFOPERSON_ROOT}/person/info`, () =>
-    HttpResponse.json(personInfo(generatedPersons))
+    HttpResponse.json(personInfo(generatedPersons)),
   );

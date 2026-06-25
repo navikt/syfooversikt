@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { ApiErrorException } from '@/api/errors';
+import { useCallback, useState } from "react";
+import { ApiErrorException } from "@/api/errors";
 
 export function useAsyncError() {
   const [, setError] = useState();
@@ -9,6 +9,6 @@ export function useAsyncError() {
         throw e;
       });
     },
-    [setError]
+    [setError],
   );
 }

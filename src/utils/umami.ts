@@ -7,10 +7,10 @@ async function hashId(id: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(id);
 
-  const hash = await crypto.subtle.digest('SHA-256', data);
+  const hash = await crypto.subtle.digest("SHA-256", data);
   return [...new Uint8Array(hash)]
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
     .slice(0, 40);
 }
 
@@ -31,8 +31,8 @@ declare global {
 window.beforeSendHandler = beforeSendHandler;
 
 enum EventType {
-  ModalApnet = 'modal åpnet',
-  ModalLukket = 'modal lukket',
+  ModalApnet = "modal åpnet",
+  ModalLukket = "modal lukket",
 }
 
 type ModalApnet = {

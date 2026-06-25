@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { ReactElement } from 'react';
-import styled from 'styled-components';
-import { DropdownButton } from './DropdownButton';
+import * as React from "react";
+import { ReactElement } from "react";
+import styled from "styled-components";
+import { DropdownButton } from "./DropdownButton";
 
 export interface DropdownButtonTexts {
   assign: string;
@@ -38,14 +38,14 @@ export const DropdownButtons = (props: DropdownButtonsProps): ReactElement => {
         classNameElement="choose"
         onClick={() => chooseButtonHandler(chosenVeilederIdent)}
         text={texts.assign}
-        type={'standard'}
+        type={"standard"}
       />
 
       <DropdownButton
         classNameElement="close"
         onClick={cancelButtonHandler}
         text={texts.reset}
-        type={'flat'}
+        type={"flat"}
       />
     </DropdownButtonsDiv>
   );

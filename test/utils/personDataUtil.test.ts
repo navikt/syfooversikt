@@ -1,14 +1,14 @@
-import { describe, expect, it } from 'vitest';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { testdata } from '../data/fellesTestdata';
-import { getReadableSkjermingskode } from '@/components/Labels';
+import { describe, expect, it } from "vitest";
+import { PersonData } from "@/api/types/personregisterTypes";
+import { testdata } from "../data/fellesTestdata";
+import { getReadableSkjermingskode } from "@/components/Labels";
 
-const INGEN = 'Ingen';
-const EGEN_ANSATT = 'Egen ansatt';
+const INGEN = "Ingen";
+const EGEN_ANSATT = "Egen ansatt";
 
-describe('personDataUtils', () => {
-  describe('getReadableSkjermingskode', () => {
-    it('returns string with lowercase letters and underscore removed', () => {
+describe("personDataUtils", () => {
+  describe("getReadableSkjermingskode", () => {
+    it("returns string with lowercase letters and underscore removed", () => {
       const person: PersonData = {
         navn: testdata.navn1,
         harMotebehovUbehandlet: false,

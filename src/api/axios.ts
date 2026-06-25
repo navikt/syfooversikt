@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import {
   accessDeniedError,
   ApiErrorException,
@@ -6,19 +6,19 @@ import {
   generalError,
   loginRequiredError,
   networkError,
-} from './errors';
-import { generateUUID } from '@/utils/uuidUtils';
+} from "./errors";
+import { generateUUID } from "@/utils/uuidUtils";
 
-export const NAV_CALL_ID_HEADER = 'Nav-Call-Id';
-export const NAV_CONSUMER_ID_HEADER = 'Nav-Consumer-Id';
-export const NAV_CONSUMER_ID = 'syfooversikt';
-export const NAV_PERSONIDENT_HEADER = 'nav-personident';
+export const NAV_CALL_ID_HEADER = "Nav-Call-Id";
+export const NAV_CONSUMER_ID_HEADER = "Nav-Consumer-Id";
+export const NAV_CONSUMER_ID = "syfooversikt";
+export const NAV_PERSONIDENT_HEADER = "nav-personident";
 
 export function defaultRequestHeaders(
-  personident?: string
+  personident?: string,
 ): Record<string, string> {
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     [NAV_CONSUMER_ID_HEADER]: NAV_CONSUMER_ID,
     [NAV_CALL_ID_HEADER]: `${NAV_CONSUMER_ID}-${generateUUID()}`,
   };
@@ -36,19 +36,19 @@ function handleAxiosError(error: AxiosError) {
         window.location.href = `/oauth2/login?redirectTo=${window.location.pathname}`;
         throw new ApiErrorException(
           loginRequiredError(error),
-          error.response.status
+          error.response.status,
         );
       }
       case 403: {
         throw new ApiErrorException(
           accessDeniedError(error),
-          error.response.status
+          error.response.status,
         );
       }
       case 409: {
         throw new ApiErrorException(
           conflictError(error),
-          error.response.status
+          error.response.status,
         );
       }
       default:
@@ -63,7 +63,7 @@ function handleAxiosError(error: AxiosError) {
 
 export const get = <ResponseData>(
   url: string,
-  personident?: string
+  personident?: string,
 ): Promise<ResponseData> => {
   return axios
     .get(url, {
@@ -83,7 +83,7 @@ export const post = <ResponseData>(
   url: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any> | Record<string, any>[],
-  personident?: string
+  personident?: string,
 ): Promise<ResponseData> => {
   return axios
     .post(url, data, {

@@ -1,72 +1,72 @@
-import { AlertProps } from '@navikt/ds-react';
+import { AlertProps } from "@navikt/ds-react";
 
 export type NotificationType =
-  | 'fetchPersonoversiktFailed'
-  | 'fetchPersonregisterFailed'
-  | 'fetchVeiledereFailed'
-  | 'fetchAktivVeilederFailed'
-  | 'tildelVeilederFailed'
-  | 'tildelVeilederTilgangFailed'
-  | 'tildelOppfolgingsenhetFailed'
-  | 'tildelOppfolgingsenhetTilgangFailed'
-  | 'tildelOppfolgingsenhetSuccess';
+  | "fetchPersonoversiktFailed"
+  | "fetchPersonregisterFailed"
+  | "fetchVeiledereFailed"
+  | "fetchAktivVeilederFailed"
+  | "tildelVeilederFailed"
+  | "tildelVeilederTilgangFailed"
+  | "tildelOppfolgingsenhetFailed"
+  | "tildelOppfolgingsenhetTilgangFailed"
+  | "tildelOppfolgingsenhetSuccess";
 
-export interface Notification extends Pick<AlertProps, 'variant'> {
+export interface Notification extends Pick<AlertProps, "variant"> {
   type: NotificationType;
   header?: string;
   message: string;
 }
 
 export const FetchVeiledereFailed: Notification = {
-  type: 'fetchVeiledereFailed',
-  variant: 'error',
+  type: "fetchVeiledereFailed",
+  variant: "error",
   message:
-    'Vi klarte ikke å laste inn veiledere. Du vil ikke kunne tildele veiledere, og veileder-kolonnen vil vise ident i stedet for navn.',
+    "Vi klarte ikke å laste inn veiledere. Du vil ikke kunne tildele veiledere, og veileder-kolonnen vil vise ident i stedet for navn.",
 };
 
 export const FetchAktivVeilederFailed: Notification = {
-  type: 'fetchAktivVeilederFailed',
-  variant: 'error',
+  type: "fetchAktivVeilederFailed",
+  variant: "error",
   message:
     'Vi klarte ikke å laste inn aktiv veileder. Fanen "Min oversikt" vil ikke fungere. Vennligst prøv igjen senere.',
 };
 
 export const TildelVeilederFailed: Notification = {
-  type: 'tildelVeilederFailed',
-  variant: 'error',
+  type: "tildelVeilederFailed",
+  variant: "error",
   message:
-    'Det skjedde en feil ved tildeling av veileder. Vennligst prøv igjen senere.',
+    "Det skjedde en feil ved tildeling av veileder. Vennligst prøv igjen senere.",
 };
 
 export const TildelVeilederTilgangFailed: Notification = {
-  type: 'tildelVeilederTilgangFailed',
-  variant: 'error',
-  message: 'Du har ikke tilgang til å tildele veileder.',
+  type: "tildelVeilederTilgangFailed",
+  variant: "error",
+  message: "Du har ikke tilgang til å tildele veileder.",
 };
 
 export const FetchPersonoversiktFailed: Notification = {
-  type: 'fetchPersonoversiktFailed',
-  variant: 'error',
+  type: "fetchPersonoversiktFailed",
+  variant: "error",
   message:
-    'Vi klarte ikke laste inn personoversikten. Du vil ikke kunne se noen hendelser. Vennligst prøv igjen senere.',
+    "Vi klarte ikke laste inn personoversikten. Du vil ikke kunne se noen hendelser. Vennligst prøv igjen senere.",
 };
 
 export const FetchPersonregisterFailed: Notification = {
-  type: 'fetchPersonregisterFailed',
-  variant: 'error',
+  type: "fetchPersonregisterFailed",
+  variant: "error",
   message:
-    'Vi klarte ikke laste inn personregister. Enkelte personer vises uten navn eller diskresjonskode.',
+    "Vi klarte ikke laste inn personregister. Enkelte personer vises uten navn eller diskresjonskode.",
 };
 
 export const TildelOppfolgingsenhetFailed: Notification = {
-  type: 'tildelOppfolgingsenhetFailed',
-  variant: 'error',
+  type: "tildelOppfolgingsenhetFailed",
+  variant: "error",
   message:
-    'Det skjedde en feil ved tildeling av oppfølgingsenhet. Vennligst prøv igjen senere.',
+    "Det skjedde en feil ved tildeling av oppfølgingsenhet. Vennligst prøv igjen senere.",
 };
 
 export const TildelOppfolgingsenhetTilgangFailed: Notification = {
-  type: 'tildelOppfolgingsenhetTilgangFailed',
-  variant: 'error',
-  message: 'Du har ikke tilgang til å tildele oppfølgingsenhet.',
+  type: "tildelOppfolgingsenhetTilgangFailed",
+  variant: "error",
+  message: "Du har ikke tilgang til å tildele oppfølgingsenhet.",
 };

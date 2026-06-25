@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { Button } from '@navikt/ds-react';
-import { FeedbackNotification } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
+import React, { useEffect } from "react";
+import { Button } from "@navikt/ds-react";
+import { FeedbackNotification } from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
 
 const text = {
-  buttonLabelTildelOppfolgingsenhet: 'Tildel oppfølgingenhet',
+  buttonLabelTildelOppfolgingsenhet: "Tildel oppfølgingenhet",
   noPeopleSelectedErrorMessage:
-    'Du må velge minst én person før du kan tildele oppfølgingsenhet.',
+    "Du må velge minst én person før du kan tildele oppfølgingsenhet.",
 };
 
 interface Props {
   modalRef: React.RefObject<HTMLDialogElement | null>;
   selectedPersoner: string[];
   setTableFeedbackNotification: (
-    feedbackNotification: FeedbackNotification | undefined
+    feedbackNotification: FeedbackNotification | undefined,
   ) => void;
 }
 
@@ -31,7 +31,7 @@ export default function TildelOppfolgingsenhetButton({
     const isNoPersonsSelected = selectedPersoner.length === 0;
     if (isNoPersonsSelected) {
       setTableFeedbackNotification({
-        type: 'error',
+        type: "error",
         text: text.noPeopleSelectedErrorMessage,
       });
     } else {

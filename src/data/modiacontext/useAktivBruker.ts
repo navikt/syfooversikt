@@ -1,8 +1,8 @@
-import { post } from '@/api/axios';
-import { MODIACONTEXTHOLDER_ROOT } from '@/apiConstants';
-import { useMutation } from '@tanstack/react-query';
+import { post } from "@/api/axios";
+import { MODIACONTEXTHOLDER_ROOT } from "@/apiConstants";
+import { useMutation } from "@tanstack/react-query";
 
-const NY_AKTIV_BRUKER = 'NY_AKTIV_BRUKER';
+const NY_AKTIV_BRUKER = "NY_AKTIV_BRUKER";
 
 export const useAktivBruker = () =>
   useMutation({

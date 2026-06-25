@@ -1,26 +1,26 @@
 export function isDev(): boolean {
   return (
-    window.location.href.indexOf('dev.intern.nav.no') > -1 ||
-    window.location.href.indexOf('intern.dev.nav.no') > -1 ||
+    window.location.href.indexOf("dev.intern.nav.no") > -1 ||
+    window.location.href.indexOf("intern.dev.nav.no") > -1 ||
     isAnsattDev()
   );
 }
 
 export const isAnsattDev = (): boolean => {
-  return window.location.href.indexOf('ansatt.dev.nav.no') > -1;
+  return window.location.href.indexOf("ansatt.dev.nav.no") > -1;
 };
 
 export function isLocal(): boolean {
-  return window.location.host.indexOf('localhost') > -1;
+  return window.location.host.indexOf("localhost") > -1;
 }
 
 export function isProd(): boolean {
-  return window.location.href.indexOf('syfooversikt.intern.nav.no') > -1;
+  return window.location.href.indexOf("syfooversikt.intern.nav.no") > -1;
 }
 
 export function linkToNewHostAndPath(
   newSubdomain: Subdomain,
-  pathname: string
+  pathname: string,
 ): string {
   if (isLocal()) {
     return `http://localhost:3000${pathname}`;
@@ -31,7 +31,7 @@ export function linkToNewHostAndPath(
 }
 
 export enum Subdomain {
-  SYFOOVERSIKT = 'syfooversikt',
-  SYFOMODIAPERSON = 'syfomodiaperson',
-  SYFOMOTEOVERSIKT = 'syfomoteoversikt',
+  SYFOOVERSIKT = "syfooversikt",
+  SYFOMODIAPERSON = "syfomodiaperson",
+  SYFOMOTEOVERSIKT = "syfomoteoversikt",
 }

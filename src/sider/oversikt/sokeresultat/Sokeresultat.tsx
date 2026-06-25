@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { PersonregisterState } from '@/api/types/personregisterTypes';
+import React, { useEffect, useState } from "react";
+import { PersonregisterState } from "@/api/types/personregisterTypes";
 import {
   Filterable,
   filterHendelser,
@@ -9,15 +9,15 @@ import {
   filterOnDato,
   filterOnFodselsnummerOrName,
   getSortedEventsFromSortingType,
-} from '@/utils/hendelseFilteringUtils';
-import { useFilters } from '@/context/filters/FilterContext';
-import { TabType, useTabType } from '@/hooks/useTabType';
-import { filterUfordelteBrukere } from '@/sider/oversikt/filter/UfordelteBrukereFilter';
-import Toolbar from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
-import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
-import { useSorting } from '@/hooks/useSorting';
-import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
-import EmptyDrawer from '@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer';
+} from "@/utils/hendelseFilteringUtils";
+import { useFilters } from "@/context/filters/FilterContext";
+import { TabType, useTabType } from "@/hooks/useTabType";
+import { filterUfordelteBrukere } from "@/sider/oversikt/filter/UfordelteBrukereFilter";
+import Toolbar from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
+import OversiktTable from "@/sider/oversikt/sokeresultat/oversikttable/OversiktTable";
+import { useSorting } from "@/hooks/useSorting";
+import { useVeiledereQuery } from "@/data/veiledereQueryHooks";
+import EmptyDrawer from "@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer";
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
@@ -44,12 +44,12 @@ export default function Sokeresultat({ allEvents }: Props) {
     .applyFilter((v) => filterOnAge(v, filterState.selectedAgeFilters))
     .applyFilter((v) => filterHendelser(v, filterState.selectedHendelseType))
     .applyFilter((v) =>
-      filterOnFodselsnummerOrName(v, filterState.tekstFilter)
+      filterOnFodselsnummerOrName(v, filterState.tekstFilter),
     );
 
   if (selectedTab === TabType.ENHETENS_OVERSIKT) {
     filteredEvents = filteredEvents.applyFilter((v) =>
-      filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter)
+      filterUfordelteBrukere(v, filterState.isUfordelteBrukereFilter),
     );
   }
 
@@ -67,10 +67,10 @@ export default function Sokeresultat({ allEvents }: Props) {
   const sortedPersonregister = getSortedEventsFromSortingType(
     filteredEvents.value,
     veiledereQuery.data || [],
-    sorting
+    sorting,
   );
   const paginatedPersonregister = Object.fromEntries(
-    Object.entries(sortedPersonregister).slice(startItem, endItem + 1)
+    Object.entries(sortedPersonregister).slice(startItem, endItem + 1),
   );
   const personListe = Object.entries(paginatedPersonregister);
 

@@ -1,25 +1,25 @@
-import React, { ReactElement, useState } from 'react';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
+import React, { ReactElement, useState } from "react";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
 import {
   filterVeiledereWithActiveOppgave,
   sortVeiledereBySurnameAsc,
-} from '@/utils/veiledereUtils';
+} from "@/utils/veiledereUtils";
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '@/data/veiledereQueryHooks';
-import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
-import { UNSAFE_Combobox } from '@navikt/ds-react';
+} from "@/data/veiledereQueryHooks";
+import { useFilters } from "@/context/filters/FilterContext";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
+import { UNSAFE_Combobox } from "@navikt/ds-react";
 
 const text = {
-  searchVeileder: 'Veiledere',
-  searchVeilederPlaceholder: 'Velg veiledere',
+  searchVeileder: "Veiledere",
+  searchVeilederPlaceholder: "Velg veiledere",
 };
 
 function veilederLabel(veileder: VeilederDTO): string {
-  return veileder.fornavn === ''
+  return veileder.fornavn === ""
     ? veileder.ident
     : `${veileder.etternavn}, ${veileder.fornavn}`;
 }
@@ -37,7 +37,7 @@ export default function VeilederFilter(): ReactElement {
   const getPersonstatusQuery = useGetPersonstatusQuery();
   const { filterState, dispatch } = useFilters();
   const [selectedVeiledere, setSelectedVeiledere] = useState<string[]>(
-    filterState.selectedVeilederIdents
+    filterState.selectedVeilederIdents,
   );
 
   function onVeilederidentsChange(veilederidents: string[]) {
@@ -49,11 +49,11 @@ export default function VeilederFilter(): ReactElement {
 
   function getVeiledereSorted(): VeilederDTO[] {
     const selectedVeiledereInFilter = veiledereQuery.data?.filter((veileder) =>
-      filterState.selectedVeilederIdents.includes(veileder.ident)
+      filterState.selectedVeilederIdents.includes(veileder.ident),
     );
     const veiledereWithActiveOppgave = filterVeiledereWithActiveOppgave(
       veiledereQuery.data || [],
-      getPersonstatusQuery.data
+      getPersonstatusQuery.data,
     );
     const allVeiledere = selectedVeiledereInFilter
       ? [
@@ -66,7 +66,7 @@ export default function VeilederFilter(): ReactElement {
 
     return sortVeiledereBySurnameAsc(
       allVeiledere,
-      aktivVeilederQuery.data?.ident || ''
+      aktivVeilederQuery.data?.ident || "",
     );
   }
 

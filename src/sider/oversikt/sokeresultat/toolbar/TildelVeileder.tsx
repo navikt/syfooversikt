@@ -1,23 +1,23 @@
-import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import {
   sortVeiledereAlphabetically,
   sortVeiledereBySurnameAsc,
-} from '@/utils/veiledereUtils';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { OpenDropdownButton } from '@/components/toolbar/OpenDropdownButton/OpenDropdownButton.tsx';
-import Dropdown from '@/components/toolbar/Dropdown/Dropdown';
-import { DropdownButtonTexts } from '@/components/toolbar/Dropdown/DropdownButtons';
+} from "@/utils/veiledereUtils";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
+import { OpenDropdownButton } from "@/components/toolbar/OpenDropdownButton/OpenDropdownButton.tsx";
+import Dropdown from "@/components/toolbar/Dropdown/Dropdown";
+import { DropdownButtonTexts } from "@/components/toolbar/Dropdown/DropdownButtons";
 import {
   useAktivVeilederQuery,
   useTildelVeileder,
   useVeiledereQuery,
-} from '@/data/veiledereQueryHooks';
-import { useTabType } from '@/hooks/useTabType';
-import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
+} from "@/data/veiledereQueryHooks";
+import { useTabType } from "@/hooks/useTabType";
+import { VeilederArbeidstaker } from "@/api/types/veilederArbeidstakerTypes";
 
 const dropdownButtonTexts: DropdownButtonTexts = {
-  assign: 'Tildel veileder',
-  reset: 'Avbryt',
+  assign: "Tildel veileder",
+  reset: "Avbryt",
 };
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
 
 const lagListe = (
   markertePersoner: string[],
-  veilederIdent: string
+  veilederIdent: string,
 ): VeilederArbeidstaker[] => {
   return markertePersoner.map((fnr: string) => ({
     veilederIdent,
@@ -37,14 +37,14 @@ const lagListe = (
 
 function filterVeiledereOnInput(
   veiledere: VeilederDTO[],
-  lowerCaseInput: string
+  lowerCaseInput: string,
 ): VeilederDTO[] {
   const filteredVeiledere = veiledere.filter(
     (veileder: VeilederDTO) =>
-      lowerCaseInput === '' ||
+      lowerCaseInput === "" ||
       veileder.ident.toLowerCase().includes(lowerCaseInput) ||
       veileder.fornavn.toLowerCase().includes(lowerCaseInput) ||
-      veileder.etternavn.toLowerCase().includes(lowerCaseInput)
+      veileder.etternavn.toLowerCase().includes(lowerCaseInput),
   );
 
   const isInputGiven = lowerCaseInput.length > 0;
@@ -62,8 +62,8 @@ export default function TildelVeileder({
   const aktivVeilederQuery = useAktivVeilederQuery();
   const tildelVeileder = useTildelVeileder();
 
-  const [chosenVeilederIdent, setChosenVeilederIdent] = useState('');
-  const [input, setInput] = useState('');
+  const [chosenVeilederIdent, setChosenVeilederIdent] = useState("");
+  const [input, setInput] = useState("");
   const [showList, setShowList] = useState(false);
   const [veilederIsChosen, setVeilederIsChosen] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -80,8 +80,8 @@ export default function TildelVeileder({
   }, [selectedTab]);
 
   const resetStateToDefault = () => {
-    setChosenVeilederIdent('');
-    setInput('');
+    setChosenVeilederIdent("");
+    setInput("");
     setShowList(false);
     setShowError(false);
     setVeilederIsChosen(false);
@@ -103,7 +103,7 @@ export default function TildelVeileder({
       if (showList) {
         resetStateToDefault();
       } else {
-        setInput('');
+        setInput("");
         setShowList(!showList);
       }
     }
@@ -122,7 +122,7 @@ export default function TildelVeileder({
       setShowList(false);
       setVeilederIsChosen(false);
       setShowError(false);
-      setChosenVeilederIdent('');
+      setChosenVeilederIdent("");
     } else {
       setShowError(true);
     }
@@ -142,17 +142,17 @@ export default function TildelVeileder({
   const veiledere = veiledereQuery.data?.filter((value) => value.enabled) || [];
   const veiledereSortedAlphabetically = sortVeiledereBySurnameAsc(
     veiledere,
-    aktivVeilederQuery.data?.ident || ''
+    aktivVeilederQuery.data?.ident || "",
   );
   const filteredVeiledere = filterVeiledereOnInput(
     veiledereSortedAlphabetically,
-    lowerCaseInput
+    lowerCaseInput,
   );
 
   return (
     <div tabIndex={1} onBlur={onBlur}>
       <OpenDropdownButton
-        text={'Tildel veileder'}
+        text={"Tildel veileder"}
         onClick={assignToOtherVeilederButtonHandler}
         showList={showList}
         active={selectedPersoner.length > 0}
@@ -170,8 +170,8 @@ export default function TildelVeileder({
           inputChangeHandler={inputChangeHandler}
           buttonChangeHandler={radiobuttonOnChangeHandler}
           veilederIsChosen={veilederIsChosen}
-          buttonType={'radio'}
-          placeholder={'Tildel veileder'}
+          buttonType={"radio"}
+          placeholder={"Tildel veileder"}
           selectedVeileders={veiledere}
           showNoChosenVeilederError={showError}
         />

@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import * as React from "react";
+import { useEffect } from "react";
 import {
   filterInitialState,
   FilterState,
-} from '@/context/filters/filterContextState';
-import { filterReducer } from '@/context/filters/filterContextReducer';
-import { FilterActions } from '@/context/filters/filterContextActions';
+} from "@/context/filters/filterContextState";
+import { filterReducer } from "@/context/filters/filterContextReducer";
+import { FilterActions } from "@/context/filters/filterContextActions";
 
 type FilterProviderProps = { children: React.ReactNode };
 
@@ -18,14 +18,14 @@ const FilterContext = React.createContext<{
 });
 
 const FilterProvider = ({ children }: FilterProviderProps) => {
-  const storeKey = 'filters-v3';
+  const storeKey = "filters-v3";
   const storedFilters = sessionStorage.getItem(storeKey);
   const initialState =
     storedFilters === null ? filterInitialState : JSON.parse(storedFilters);
   const parsedFilters = parseFilters(initialState);
   const [filterState, dispatch] = React.useReducer(
     filterReducer,
-    parsedFilters
+    parsedFilters,
   );
   useEffect(() => {
     sessionStorage.setItem(storeKey, JSON.stringify(filterState));
@@ -57,7 +57,7 @@ const parseFilters = (initialState: FilterState): FilterState => {
 const useFilters = () => {
   const context = React.useContext(FilterContext);
   if (context === undefined) {
-    throw new Error('useFilters must be used within a FilterProvider');
+    throw new Error("useFilters must be used within a FilterProvider");
   }
   return context;
 };

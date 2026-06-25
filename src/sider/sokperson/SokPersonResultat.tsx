@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
-import { useSorting } from '@/hooks/useSorting';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { BodyShort, Box, Table } from '@navikt/ds-react';
-import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
-import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { PersonRadVirksomhetColumn } from '@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn';
-import { toPersonData } from '@/api/types/personregisterTypes';
+import React, { ReactElement } from "react";
+import { useSorting } from "@/hooks/useSorting";
+import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
+import { BodyShort, Box, Table } from "@navikt/ds-react";
+import { LinkSyfomodiaperson } from "@/components/LinkSyfomodiaperson";
+import { toLastnameFirstnameFormat } from "@/utils/stringUtil";
+import { PersonRadVirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn";
+import { toPersonData } from "@/api/types/personregisterTypes";
 
 const texts = {
   noResults: {
-    first: 'Fant ingen sykmeldte personer for søkeparameterne.',
+    first: "Fant ingen sykmeldte personer for søkeparameterne.",
     second:
-      'Det kan hende personen ikke er sykmeldt eller at du ikke har tilgang å se personen.',
+      "Det kan hende personen ikke er sykmeldt eller at du ikke har tilgang å se personen.",
   },
 };
 
@@ -25,9 +25,9 @@ export default function SokPersonResultat({
   const { columns: allColumns } = useSorting();
   const columns = allColumns.filter(
     (column) =>
-      column.sortKey === 'NAME' ||
-      column.sortKey === 'FNR' ||
-      column.sortKey === 'COMPANY'
+      column.sortKey === "NAME" ||
+      column.sortKey === "FNR" ||
+      column.sortKey === "COMPANY",
   );
 
   const personer = Object.entries(toPersonData(sokeresultater, []));

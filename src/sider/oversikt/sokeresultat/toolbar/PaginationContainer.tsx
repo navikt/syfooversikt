@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { Pagination, Switch } from '@navikt/ds-react';
+import React, { ReactElement, useEffect, useState } from "react";
+import { Pagination, Switch } from "@navikt/ds-react";
 
 export const PAGINATED_NUMBER_OF_ITEMS = 50;
 
@@ -18,7 +18,7 @@ const PaginationContainer = ({
   onPageChange,
 }: PaginationContainerProps): ReactElement => {
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
-    PAGINATED_NUMBER_OF_ITEMS
+    PAGINATED_NUMBER_OF_ITEMS,
   );
   const [page, setPage] = useState(1);
   const numberOfPages =
@@ -31,7 +31,7 @@ const PaginationContainer = ({
   useEffect(() => {
     const start = Math.min(
       (page - 1) * numberOfItemsPerPage,
-      numberOfItemsTotal
+      numberOfItemsTotal,
     );
     const end = allItemsVisible
       ? numberOfItemsTotal

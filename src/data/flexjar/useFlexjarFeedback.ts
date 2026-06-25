@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
-import { FLEXJAR_ROOT } from '@/apiConstants';
-import { post } from '@/api/axios';
+import { useMutation } from "@tanstack/react-query";
+import { FLEXJAR_ROOT } from "@/apiConstants";
+import { post } from "@/api/axios";
 
 export const useFlexjarFeedback = () => {
   const path = `${FLEXJAR_ROOT}/feedback/azure`;

@@ -1,31 +1,31 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { screen } from '@testing-library/react';
-import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { personregister, testdata } from '../data/fellesTestdata';
-import React from 'react';
+import { beforeEach, describe, expect, it } from "vitest";
+import { screen } from "@testing-library/react";
+import { NotificationProvider } from "@/context/notification/NotificationContext";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
+import { personregister, testdata } from "../data/fellesTestdata";
+import React from "react";
 import {
   getQueryClientWithMockdata,
   testQueryClient,
-} from '../testQueryClient';
-import OversiktTable from '@/sider/oversikt/sokeresultat/oversikttable/OversiktTable';
+} from "../testQueryClient";
+import OversiktTable from "@/sider/oversikt/sokeresultat/oversikttable/OversiktTable";
 import {
   PersonData,
   PersonregisterState,
   Skjermingskode,
-} from '@/api/types/personregisterTypes';
+} from "@/api/types/personregisterTypes";
 import {
   AktivitetskravStatus,
   AvventVurderingArsak,
   OnskerOppfolging,
   Oppfolgingsgrunn,
-} from '@/api/types/personoversiktTypes';
-import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
-import dayjs from 'dayjs';
-import { renderWithRouter } from '../testRenderUtils';
-import { routes } from '@/routers/routes';
+} from "@/api/types/personoversiktTypes";
+import { toLastnameFirstnameFormat } from "@/utils/stringUtil";
+import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock";
+import dayjs from "dayjs";
+import { renderWithRouter } from "../testRenderUtils";
+import { routes } from "@/routers/routes";
 
 let queryClient = testQueryClient();
 
@@ -36,7 +36,7 @@ const defaultPersonData: PersonData = {
   harDialogmotesvar: false,
   skjermingskode: testdata.skjermingskode.diskresjonsmerket as Skjermingskode,
   harOppfolgingsplanLPSBistandUbehandlet: false,
-  tildeltVeilederIdent: '234',
+  tildeltVeilederIdent: "234",
   harBehandlerdialogUbehandlet: false,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
@@ -68,7 +68,7 @@ const personDataAktivitetskravAvventMedFrist: PersonData = {
     vurderinger: [
       {
         status: AktivitetskravStatus.AVVENT,
-        frist: new Date('2023-04-01'),
+        frist: new Date("2023-04-01"),
         arsaker: [],
       },
     ],
@@ -77,8 +77,8 @@ const personDataAktivitetskravAvventMedFrist: PersonData = {
 const personWithOppfolgingstilfelle: PersonData = {
   ...defaultPersonData,
   latestOppfolgingstilfelle: {
-    oppfolgingstilfelleStart: new Date('2023-01-01'),
-    oppfolgingstilfelleEnd: new Date('2023-01-15'),
+    oppfolgingstilfelleStart: new Date("2023-01-01"),
+    oppfolgingstilfelleEnd: new Date("2023-01-15"),
     varighetUker: 2,
     virksomhetList: [],
   },
@@ -99,80 +99,80 @@ const renderOversikt = (personer: PersonregisterState) =>
             selectedRows={[]}
             setSelectedRows={() => void 0}
             setSorting={() => void 0}
-            sorting={{ orderBy: 'FNR', direction: 'ascending' }}
+            sorting={{ orderBy: "FNR", direction: "ascending" }}
           />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>
     </NotificationProvider>,
-    routes.ENHET_OVERSIKT
+    routes.ENHET_OVERSIKT,
   );
 
-describe('NewOversiktTable', () => {
+describe("NewOversiktTable", () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
   });
 
-  it('rendrer kolonnenavn', () => {
+  it("rendrer kolonnenavn", () => {
     renderOversikt(personregister);
 
-    expect(screen.getByText('Navn')).to.exist;
-    expect(screen.getByText('Fødselsnummer')).to.exist;
-    expect(screen.getByText('Virksomhet')).to.exist;
-    expect(screen.getByText('Veileder')).to.exist;
-    expect(screen.getByText('Sykefravær')).to.exist;
-    expect(screen.getByText('Frist/Dato')).to.exist;
-    expect(screen.getByText('Hendelse')).to.exist;
+    expect(screen.getByText("Navn")).to.exist;
+    expect(screen.getByText("Fødselsnummer")).to.exist;
+    expect(screen.getByText("Virksomhet")).to.exist;
+    expect(screen.getByText("Veileder")).to.exist;
+    expect(screen.getByText("Sykefravær")).to.exist;
+    expect(screen.getByText("Frist/Dato")).to.exist;
+    expect(screen.getByText("Hendelse")).to.exist;
   });
 
-  it('rendrer en rad per person', () => {
+  it("rendrer en rad per person", () => {
     renderOversikt(personregister);
 
-    expect(screen.getByRole('link', { name: 'Navn, Et' })).to.exist;
-    expect(screen.getByRole('link', { name: 'Navn, Et Annet' })).to.exist;
+    expect(screen.getByRole("link", { name: "Navn, Et" })).to.exist;
+    expect(screen.getByRole("link", { name: "Navn, Et Annet" })).to.exist;
   });
 
-  it('Skal rendre riktig navn, fodselsnummer og ikon for skjermingskode', () => {
+  it("Skal rendre riktig navn, fodselsnummer og ikon for skjermingskode", () => {
     renderOversikt({ [testdata.fnr1]: defaultPersonData });
 
     expect(
-      screen.getByRole('link', {
+      screen.getByRole("link", {
         name: toLastnameFirstnameFormat(defaultPersonData.navn),
-      })
+      }),
     ).to.exist;
     expect(screen.getByText(testdata.fnr1)).to.exist;
-    expect(screen.getByRole('img')).to.exist;
+    expect(screen.getByRole("img")).to.exist;
   });
 
-  it('Rendrer ikke ikon når person mangler skjermingskode', () => {
+  it("Rendrer ikke ikon når person mangler skjermingskode", () => {
     renderOversikt({
-      [testdata.fnr1]: { ...defaultPersonData, skjermingskode: 'INGEN' },
+      [testdata.fnr1]: { ...defaultPersonData, skjermingskode: "INGEN" },
     });
 
-    expect(screen.queryByRole('img')).to.not.exist;
+    expect(screen.queryByRole("img")).to.not.exist;
   });
 
-  it('Skal rendre frist-dato for aktivitetskrav AVVENT', () => {
+  it("Skal rendre frist-dato for aktivitetskrav AVVENT", () => {
     renderOversikt({ [testdata.fnr1]: personDataAktivitetskravAvventMedFrist });
 
-    const fristText = screen.getAllByText('01.04.2023');
+    const fristText = screen.getAllByText("01.04.2023");
     expect(fristText).to.have.lengthOf(2); // 1 in the table and 1 in the modal
   });
 
-  it('Rendrer ingen frist-dato for aktivitetskrav AVVENT når frist mangler', () => {
+  it("Rendrer ingen frist-dato for aktivitetskrav AVVENT når frist mangler", () => {
     renderOversikt({
       [testdata.fnr1]: personDataAktivitetskravAvventUtenFrist,
     });
 
-    expect(screen.queryByText('01.04.2023')).to.not.exist;
+    expect(screen.queryByText("01.04.2023")).to.not.exist;
   });
 
-  it('Viser riktig utregning av varighet på sykefraværet', () => {
+  it("Viser riktig utregning av varighet på sykefraværet", () => {
     renderOversikt({ [testdata.fnr1]: personWithOppfolgingstilfelle });
 
-    expect(screen.getByText('2 uker')).to.exist;
+    expect(screen.getByText("2 uker")).to.exist;
   });
 
-  it('Viser hendelse for en rad', () => {
+  it("Viser hendelse for en rad", () => {
     renderOversikt({
       [testdata.fnr1]: {
         ...defaultPersonData,
@@ -180,27 +180,27 @@ describe('NewOversiktTable', () => {
       },
     });
 
-    expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
+    expect(screen.getByText("Dialogmøte - Nytt svar")).to.exist;
   });
 
-  it('Viser flere hendelser for en rad', () => {
+  it("Viser flere hendelser for en rad", () => {
     renderOversikt({
       [testdata.fnr1]: {
         ...defaultPersonData,
         harDialogmotesvar: true,
         dialogmotekandidatStatus: {
-          uuid: '111',
-          createdAt: new Date('2022-01-01'),
-          personident: '99999966667',
+          uuid: "111",
+          createdAt: new Date("2022-01-01"),
+          personident: "99999966667",
           isKandidat: true,
         },
         dialogmoteAvvent: {
-          uuid: 'abc-111',
-          createdAt: new Date('2022-01-15'),
+          uuid: "abc-111",
+          createdAt: new Date("2022-01-15"),
           frist: new Date(),
-          createdBy: 'M987654',
-          personident: '99999966668',
-          beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+          createdBy: "M987654",
+          personident: "99999966668",
+          beskrivelse: "Trenger mer tid før møte kan gjennomføres",
           isLukket: false,
         },
         harMotebehovUbehandlet: true,
@@ -212,21 +212,21 @@ describe('NewOversiktTable', () => {
             {
               status: AktivitetskravStatus.FORHANDSVARSEL,
               varsel: {
-                svarfrist: dayjs().add(-1, 'day').toDate(),
+                svarfrist: dayjs().add(-1, "day").toDate(),
               },
               arsaker: [],
             },
           ],
         },
         behandlerBerOmBistandUbehandlet: true,
-        friskmeldingTilArbeidsformidlingFom: dayjs().add(1, 'week').toDate(),
+        friskmeldingTilArbeidsformidlingFom: dayjs().add(1, "week").toDate(),
         arbeidsuforhetvurdering: {
           varsel: {
-            svarfrist: dayjs().add(1, 'week').toDate(),
+            svarfrist: dayjs().add(1, "week").toDate(),
           },
         },
         senOppfolgingKandidat: {
-          personident: '',
+          personident: "",
           varselAt: new Date(),
           svar: {
             svarAt: new Date(),
@@ -234,39 +234,39 @@ describe('NewOversiktTable', () => {
           },
         },
         oppfolgingsoppgave: {
-          uuid: '123',
-          createdBy: '432',
+          uuid: "123",
+          createdBy: "432",
           updatedAt: new Date(),
           createdAt: new Date(),
-          tekst: 'Oppfølgingsoppgave',
+          tekst: "Oppfølgingsoppgave",
           oppfolgingsgrunn: Oppfolgingsgrunn.TA_KONTAKT_SYKEMELDT,
           frist: new Date(),
         },
         manglendeMedvirkning: {
           varsel: {
-            svarfrist: dayjs().subtract(1, 'week').toDate(),
+            svarfrist: dayjs().subtract(1, "week").toDate(),
           },
         },
       },
     });
 
-    expect(screen.getByText('Dialogmøte - Nytt svar')).to.exist;
-    expect(screen.getByText('Dialogmøte - Avventer')).to.exist;
-    expect(screen.getByText('Dialogmøte - Møtebehov')).to.exist;
-    expect(screen.getByText('Aktivitetskrav - Forhåndsvarsel utløpt')).to.exist;
-    expect(screen.getByText('Arbeidsuførhet - Forhåndsvarsel sendt')).to.exist;
-    expect(screen.getByText('Friskmelding til arbeidsformidling')).to.exist;
-    expect(screen.getByText('Oppf.oppgave - Kontakt sykmeldt')).to.exist;
-    expect(screen.getByText('Bistandsbehov fra behandler')).to.exist;
-    expect(screen.getByText('Dialogmelding')).to.exist;
-    expect(screen.getByText('Oppfølgingsplan')).to.exist;
-    expect(screen.getByText('Snart slutt på sykepengene - Ønsker oppfølging'))
+    expect(screen.getByText("Dialogmøte - Nytt svar")).to.exist;
+    expect(screen.getByText("Dialogmøte - Avventer")).to.exist;
+    expect(screen.getByText("Dialogmøte - Møtebehov")).to.exist;
+    expect(screen.getByText("Aktivitetskrav - Forhåndsvarsel utløpt")).to.exist;
+    expect(screen.getByText("Arbeidsuførhet - Forhåndsvarsel sendt")).to.exist;
+    expect(screen.getByText("Friskmelding til arbeidsformidling")).to.exist;
+    expect(screen.getByText("Oppf.oppgave - Kontakt sykmeldt")).to.exist;
+    expect(screen.getByText("Bistandsbehov fra behandler")).to.exist;
+    expect(screen.getByText("Dialogmelding")).to.exist;
+    expect(screen.getByText("Oppfølgingsplan")).to.exist;
+    expect(screen.getByText("Snart slutt på sykepengene - Ønsker oppfølging"))
       .to.exist;
-    expect(screen.getByText('Manglende medvirkning - Forhåndsvarsel utløpt')).to
+    expect(screen.getByText("Manglende medvirkning - Forhåndsvarsel utløpt")).to
       .exist;
   });
 
-  it('Viser årsaker for aktivitetskravvurdering ved status AVVENT for flere personer', () => {
+  it("Viser årsaker for aktivitetskravvurdering ved status AVVENT for flere personer", () => {
     renderOversikt({
       [testdata.fnr1]: {
         ...defaultPersonData,
@@ -311,14 +311,14 @@ describe('NewOversiktTable', () => {
 
     expect(
       screen.getByText(
-        'Aktivitetskrav - Avventer (Har bedt om informasjon fra den sykmeldte, Annet)'
-      )
+        "Aktivitetskrav - Avventer (Har bedt om informasjon fra den sykmeldte, Annet)",
+      ),
     ).to.exist;
     expect(
       screen.getByText(
-        'Aktivitetskrav - Avventer (Har bedt om mer informasjon fra behandler)'
-      )
+        "Aktivitetskrav - Avventer (Har bedt om mer informasjon fra behandler)",
+      ),
     ).to.exist;
-    expect(screen.getByText('Aktivitetskrav - Avventer')).to.exist;
+    expect(screen.getByText("Aktivitetskrav - Avventer")).to.exist;
   });
 });

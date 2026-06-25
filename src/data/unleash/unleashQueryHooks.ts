@@ -1,13 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { UNLEASH_ROOT } from '@/apiConstants';
-import { defaultToggles, Toggles } from '@/data/unleash/types/unleash_types';
-import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { get } from '@/api/axios';
+import { useQuery } from "@tanstack/react-query";
+import { UNLEASH_ROOT } from "@/apiConstants";
+import { defaultToggles, Toggles } from "@/data/unleash/types/unleash_types";
+import { useAktivVeilederQuery } from "@/data/veiledereQueryHooks";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { get } from "@/api/axios";
 
 export const unleashQueryKeys = {
   toggles: (valgtEnhet: string, veilederIdent: string) => [
-    'toggles',
+    "toggles",
     valgtEnhet,
     veilederIdent,
   ],
@@ -16,10 +16,10 @@ export const unleashQueryKeys = {
 export function useGetFeatureToggles() {
   const { data: veilederInfo } = useAktivVeilederQuery();
   const { aktivEnhet } = useAktivEnhet();
-  const veilederIdent = veilederInfo?.ident || '';
+  const veilederIdent = veilederInfo?.ident || "";
   const path = `${UNLEASH_ROOT}/toggles`;
   const queryParameters = `?enhetId=${aktivEnhet}${
-    veilederIdent ? `&veilederId=${veilederIdent}` : ''
+    veilederIdent ? `&veilederId=${veilederIdent}` : ""
   }`;
   const fetchToggles = () => get<Toggles>(path + queryParameters);
   const {
@@ -28,7 +28,7 @@ export function useGetFeatureToggles() {
     isLoading,
     isSuccess,
   } = useQuery({
-    queryKey: unleashQueryKeys.toggles(aktivEnhet || '', veilederIdent),
+    queryKey: unleashQueryKeys.toggles(aktivEnhet || "", veilederIdent),
     queryFn: fetchToggles,
     enabled: !!aktivEnhet || !!veilederIdent,
   });

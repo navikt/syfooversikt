@@ -1,6 +1,6 @@
-import { Label } from '@navikt/ds-react';
-import React from 'react';
-import { PageInfoType } from '@/sider/oversikt/sokeresultat/toolbar/Toolbar';
+import { Label } from "@navikt/ds-react";
+import React from "react";
+import { PageInfoType } from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
 
 interface Props {
   pageInfo: PageInfoType;
@@ -10,7 +10,7 @@ interface Props {
 
 const textPaginatedUsers = (
   pageInfo: PageInfoType,
-  numberOfItemsTotal: number
+  numberOfItemsTotal: number,
 ) => {
   return `Viser ${pageInfo.firstVisibleIndex + 1}-${
     pageInfo.lastVisibleIndex

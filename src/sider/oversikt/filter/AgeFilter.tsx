@@ -1,14 +1,14 @@
-import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import React from 'react';
-import { AgeFilterOption } from '@/utils/hendelseFilteringUtils';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { useFilters } from '@/context/filters/FilterContext';
+import { Checkbox, CheckboxGroup } from "@navikt/ds-react";
+import React from "react";
+import { AgeFilterOption } from "@/utils/hendelseFilteringUtils";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { useFilters } from "@/context/filters/FilterContext";
 
 const text = {
-  legend: 'Alder',
+  legend: "Alder",
   option: {
-    underThirty: 'Under 30 år',
-    overThirty: '30 år og eldre',
+    underThirty: "Under 30 år",
+    overThirty: "30 år og eldre",
   },
 };
 

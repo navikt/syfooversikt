@@ -1,10 +1,10 @@
-import express from 'express';
-import expressHttpProxy from 'express-http-proxy';
-import url from 'url';
+import express from "express";
+import expressHttpProxy from "express-http-proxy";
+import url from "url";
 
-import { getOnBehalfOfToken } from './authUtils.js';
-import * as Config from './config.js';
-import { logger } from '@navikt/pino-logger';
+import { getOnBehalfOfToken } from "./authUtils.js";
+import * as Config from "./config.js";
+import { logger } from "@navikt/pino-logger";
 
 const proxyExternalHostWithoutAuthentication = (host: any) =>
   expressHttpProxy(host, {
@@ -12,23 +12,23 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
     proxyReqPathResolver: (req) => {
       const urlFromApi = url.parse(host);
       const pathFromApi =
-        urlFromApi.pathname === '/' ? '' : urlFromApi.pathname;
+        urlFromApi.pathname === "/" ? "" : urlFromApi.pathname;
 
       const urlFromRequest = url.parse(req.originalUrl);
       const pathFromRequest = urlFromRequest.pathname;
 
       const queryString = urlFromRequest.query;
       const newPath =
-        (pathFromApi ? pathFromApi : '') +
-        (pathFromRequest ? pathFromRequest : '') +
-        (queryString ? '?' + queryString : '');
+        (pathFromApi ? pathFromApi : "") +
+        (pathFromRequest ? pathFromRequest : "") +
+        (queryString ? "?" + queryString : "");
 
       return newPath;
     },
     proxyErrorHandler: (err, res, next) => {
       logger.error(`Error in proxy for ${host} ${err.message}, ${err.code}`);
-      if (err && err.code === 'ECONNREFUSED') {
-        logger.error('proxyErrorHandler: Got ECONNREFUSED');
+      if (err && err.code === "ECONNREFUSED") {
+        logger.error("proxyErrorHandler: Got ECONNREFUSED");
         return res.status(503).send({ message: `Could not contact ${host}` });
       }
       next(err);
@@ -38,7 +38,7 @@ const proxyExternalHostWithoutAuthentication = (host: any) =>
 const proxyExternalHost = (
   externalAppConfig: Config.ExternalAppConfig,
   accessToken: any,
-  parseReqBody: any
+  parseReqBody: any,
 ) =>
   expressHttpProxy(externalAppConfig.host, {
     https: false,
@@ -50,27 +50,27 @@ const proxyExternalHost = (
       if (!options.headers) {
         options.headers = {};
       }
-      options.headers['Authorization'] = `Bearer ${accessToken}`;
+      options.headers["Authorization"] = `Bearer ${accessToken}`;
       return options;
     },
     proxyReqPathResolver: (req) => {
       const urlFromApi = url.parse(externalAppConfig.host);
       const pathFromApi =
-        urlFromApi.pathname === '/' ? '' : urlFromApi.pathname;
+        urlFromApi.pathname === "/" ? "" : urlFromApi.pathname;
 
       const urlFromRequest = url.parse(req.originalUrl);
       const pathFromRequest = urlFromRequest.pathname;
 
       const queryString = urlFromRequest.query;
       const newPath =
-        (pathFromApi ? pathFromApi : '') +
-        (pathFromRequest ? pathFromRequest : '') +
-        (queryString ? '?' + queryString : '');
+        (pathFromApi ? pathFromApi : "") +
+        (pathFromRequest ? pathFromRequest : "") +
+        (queryString ? "?" + queryString : "");
 
       if (externalAppConfig.removePathPrefix) {
         const newPathWithoutPrefix = newPath.replace(
           `${externalAppConfig.applicationName}/`,
-          ''
+          "",
         );
         return newPathWithoutPrefix;
       }
@@ -79,10 +79,10 @@ const proxyExternalHost = (
     },
     proxyErrorHandler: (err, res, next) => {
       logger.error(
-        `Error in proxy for ${externalAppConfig.host} ${err.message}, ${err.code}`
+        `Error in proxy for ${externalAppConfig.host} ${err.message}, ${err.code}`,
       );
-      if (err && err.code === 'ECONNREFUSED') {
-        logger.error('proxyErrorHandler: Got ECONNREFUSED');
+      if (err && err.code === "ECONNREFUSED") {
+        logger.error("proxyErrorHandler: Got ECONNREFUSED");
         return res
           .status(503)
           .send({ message: `Could not contact ${externalAppConfig.host}` });
@@ -95,24 +95,24 @@ const proxyOnBehalfOf = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  externalAppConfig: Config.ExternalAppConfig
+  externalAppConfig: Config.ExternalAppConfig,
 ) => {
   getOnBehalfOfToken(req, externalAppConfig.clientId)
     .then((accessToken) => {
       if (!accessToken) {
-        res.status(500).send('Failed to fetch access token on behalf of user.');
-        logger.error('proxyOnBehalfOf: on-behalf-of-token was undefined');
+        res.status(500).send("Failed to fetch access token on behalf of user.");
+        logger.error("proxyOnBehalfOf: on-behalf-of-token was undefined");
         return;
       }
       return proxyExternalHost(
         externalAppConfig,
         accessToken,
-        req.method === 'POST'
+        req.method === "POST",
       )(req, res, next);
     })
     .catch((error: any) => {
-      logger.error('Failed to get OBO token. Original error: %s', error);
-      res.status(500).send('Failed to fetch access tokens on behalf of user');
+      logger.error("Failed to get OBO token. Original error: %s", error);
+      res.status(500).send("Failed to fetch access tokens on behalf of user");
     });
 };
 
@@ -120,84 +120,84 @@ export const setupProxy = (): express.Router => {
   const router = express.Router();
 
   router.use(
-    '/ereg/*',
+    "/ereg/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyExternalHostWithoutAuthentication(Config.auth.ereg.host)(
         req,
         res,
-        next
+        next,
       );
-    }
+    },
   );
 
   router.use(
-    '/modiacontextholder/*',
+    "/modiacontextholder/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.modiacontextholder);
-    }
+    },
   );
 
   router.use(
-    '/api/*',
+    "/api/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfooversiktsrv);
-    }
+    },
   );
 
   router.use(
-    '/syfoperson/*',
+    "/syfoperson/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfoperson);
-    }
+    },
   );
 
   router.use(
-    '/syfoveileder/*',
+    "/syfoveileder/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfoveileder);
-    }
+    },
   );
 
   router.use(
-    '/syfobehandlendeenhet/*',
+    "/syfobehandlendeenhet/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.syfobehandlendeenhet);
-    }
+    },
   );
 
   router.use(
-    '/flexjar-backend/*',
+    "/flexjar-backend/*",
     (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction
+      next: express.NextFunction,
     ) => {
       proxyOnBehalfOf(req, res, next, Config.auth.flexjar);
-    }
+    },
   );
 
   return router;

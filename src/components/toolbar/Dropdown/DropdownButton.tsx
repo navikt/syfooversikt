@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Knapp, KnappBaseProps } from 'nav-frontend-knapper';
-import { ReactElement } from 'react';
+import * as React from "react";
+import { Knapp, KnappBaseProps } from "nav-frontend-knapper";
+import { ReactElement } from "react";
 
 interface DropdownButtonProps extends KnappBaseProps {
   classNameElement: string;

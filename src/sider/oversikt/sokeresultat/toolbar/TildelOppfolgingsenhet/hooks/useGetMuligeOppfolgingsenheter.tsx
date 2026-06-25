@@ -1,11 +1,11 @@
-import { SYFOBEHANDLENDEENHET_ROOT } from '@/apiConstants';
-import { useQuery } from '@tanstack/react-query';
-import { get } from '@/api/axios';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { SYFOBEHANDLENDEENHET_ROOT } from "@/apiConstants";
+import { useQuery } from "@tanstack/react-query";
+import { get } from "@/api/axios";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
 const muligeOppfolgingsenhetQueryKeys = {
   muligeOppfolgingsenheter: (enhetId?: string) => [
-    'muligeOppfolgingsenheter',
+    "muligeOppfolgingsenheter",
     enhetId,
   ],
 };
@@ -17,9 +17,8 @@ export function useGetMuligeOppfolgingsenheter() {
   const getVeilederBrukerKnytning = () => get<Enhet[]>(path);
 
   return useQuery({
-    queryKey: muligeOppfolgingsenhetQueryKeys.muligeOppfolgingsenheter(
-      aktivEnhet
-    ),
+    queryKey:
+      muligeOppfolgingsenhetQueryKeys.muligeOppfolgingsenheter(aktivEnhet),
     queryFn: getVeilederBrukerKnytning,
     enabled: !!aktivEnhet,
   });

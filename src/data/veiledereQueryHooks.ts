@@ -1,23 +1,23 @@
-import { PERSONTILDELING_ROOT, SYFOVEILEDER_ROOT } from '@/apiConstants';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { VeilederArbeidstaker } from '@/api/types/veilederArbeidstakerTypes';
-import { get, post } from '@/api/axios';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
-import { useNotifications } from '@/context/notification/NotificationContext';
+import { PERSONTILDELING_ROOT, SYFOVEILEDER_ROOT } from "@/apiConstants";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
+import { VeilederArbeidstaker } from "@/api/types/veilederArbeidstakerTypes";
+import { get, post } from "@/api/axios";
+import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { personoversiktQueryKeys } from "@/data/personoversiktHooks";
+import { useNotifications } from "@/context/notification/NotificationContext";
 import {
   FetchAktivVeilederFailed,
   FetchVeiledereFailed,
   TildelVeilederFailed,
   TildelVeilederTilgangFailed,
-} from '@/context/notification/Notifications';
-import { ApiErrorException } from '@/api/errors';
+} from "@/context/notification/Notifications";
+import { ApiErrorException } from "@/api/errors";
 
 export const veiledereQueryKeys = {
-  veiledereInfo: ['veiledereInfo'],
-  veiledere: ['veiledere'],
+  veiledereInfo: ["veiledereInfo"],
+  veiledere: ["veiledere"],
   veiledereForEnhet: (enhetId?: string) => [
     ...veiledereQueryKeys.veiledere,
     enhetId,
@@ -39,7 +39,7 @@ export const useVeiledereQuery = () => {
       handleError: () => {
         displayNotification(FetchVeiledereFailed);
       },
-      handleSuccess: () => clearNotification('fetchVeiledereFailed'),
+      handleSuccess: () => clearNotification("fetchVeiledereFailed"),
     },
   });
 };
@@ -57,7 +57,7 @@ export function useAktivVeilederQuery() {
       handleError: () => {
         displayNotification(FetchAktivVeilederFailed);
       },
-      handleSuccess: () => clearNotification('fetchAktivVeilederFailed'),
+      handleSuccess: () => clearNotification("fetchAktivVeilederFailed"),
     },
   });
 }
@@ -75,29 +75,28 @@ export const useTildelVeileder = () => {
   return useMutation({
     mutationFn: postTildelVeileder,
     onMutate: (liste: VeilederArbeidstaker[]) => {
-      clearNotification('tildelVeilederFailed');
-      clearNotification('tildelVeilederTilgangFailed');
+      clearNotification("tildelVeilederFailed");
+      clearNotification("tildelVeilederTilgangFailed");
 
       const previousPersonoversikt: PersonOversiktStatusDTO[] =
         queryClient.getQueryData(
-          personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
+          personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         ) || [];
-      const optimisticlyUpdatedPersonoversikt: PersonOversiktStatusDTO[] = previousPersonoversikt.map(
-        (person) => {
+      const optimisticlyUpdatedPersonoversikt: PersonOversiktStatusDTO[] =
+        previousPersonoversikt.map((person) => {
           const tilknytning = liste.find(
-            (tilknytning) => tilknytning.fnr === person.fnr
+            (tilknytning) => tilknytning.fnr === person.fnr,
           );
 
           return {
             ...person,
             veilederIdent: tilknytning?.veilederIdent || person.veilederIdent,
           };
-        }
-      );
+        });
 
       queryClient.setQueryData(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
-        () => optimisticlyUpdatedPersonoversikt
+        () => optimisticlyUpdatedPersonoversikt,
       );
 
       return { previousPersonoversikt };
@@ -111,7 +110,7 @@ export const useTildelVeileder = () => {
 
       queryClient.setQueryData(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
-        context?.previousPersonoversikt || []
+        context?.previousPersonoversikt || [],
       );
     },
     onSettled: () => {

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { Checkbox, Radio } from 'nav-frontend-skjema';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { ReactElement } from 'react';
+import * as React from "react";
+import styled from "styled-components";
+import { Checkbox, Radio } from "nav-frontend-skjema";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
+import { ReactElement } from "react";
 
 interface VeilederCheckboxProps {
   onChangeHandler: (veileder: VeilederDTO) => void;
@@ -33,7 +33,7 @@ const InputButtons = (props: VeilederCheckboxProps) => {
   const { onChangeHandler, filteredVeiledere, selectedVeileders } = props;
 
   const getVeilederIdentification = (veileder: VeilederDTO): string => {
-    return veileder.fornavn === ''
+    return veileder.fornavn === ""
       ? veileder.ident
       : `${veileder.etternavn}, ${veileder.fornavn}`;
   };
@@ -41,7 +41,7 @@ const InputButtons = (props: VeilederCheckboxProps) => {
   return (
     <React.Fragment>
       {filteredVeiledere.map((veileder: VeilederDTO, index: number) =>
-        props.buttonType === 'radio' ? (
+        props.buttonType === "radio" ? (
           <StyledRadio
             key={JSON.stringify({ ...veileder, index })}
             label={getVeilederIdentification(veileder)}
@@ -56,14 +56,14 @@ const InputButtons = (props: VeilederCheckboxProps) => {
             onChange={() => onChangeHandler(veileder)}
             checked={selectedVeileders.indexOf(veileder) !== -1}
           />
-        )
+        ),
       )}
     </React.Fragment>
   );
 };
 
 export const VeilederInputButtons = (
-  props: VeilederCheckboxProps
+  props: VeilederCheckboxProps,
 ): ReactElement => {
   if (props.isInputGiven) {
     return <InputButtons {...props} />;

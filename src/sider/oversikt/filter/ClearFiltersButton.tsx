@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { Button } from '@navikt/ds-react';
-import { TrashIcon } from '@navikt/aksel-icons';
+import React, { ReactElement } from "react";
+import { useFilters } from "@/context/filters/FilterContext";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { Button } from "@navikt/ds-react";
+import { TrashIcon } from "@navikt/aksel-icons";
 
 const texts = {
-  nullstill: 'Nullstill valg',
+  nullstill: "Nullstill valg",
 };
 
 export const ClearFiltersButton = (): ReactElement => {

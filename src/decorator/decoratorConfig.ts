@@ -1,26 +1,26 @@
-import { isAnsattDev, isDev, isLocal, isProd } from '@/utils/miljoUtil';
-import { DecoratorProps, Environment, UrlFormat } from '@/decorator/types.ts';
+import { isAnsattDev, isDev, isLocal, isProd } from "@/utils/miljoUtil";
+import { DecoratorProps, Environment, UrlFormat } from "@/decorator/types.ts";
 
 const getEnvironment = (): Environment => {
   if (isProd()) {
-    return 'prod';
+    return "prod";
   } else if (isDev()) {
-    return 'q2';
+    return "q2";
   } else {
-    return 'mock';
+    return "mock";
   }
 };
 
 const getUrlFormat = (): UrlFormat => {
   if (isAnsattDev()) {
-    return 'ANSATT';
+    return "ANSATT";
   } else if (isLocal()) {
-    return 'LOCAL';
-  } else return 'NAV_NO';
+    return "LOCAL";
+  } else return "NAV_NO";
 };
 
 export const decoratorConfig: DecoratorProps = {
-  appName: 'Sykefraværsoppfølging',
+  appName: "Sykefraværsoppfølging",
   fetchActiveEnhetOnMount: true,
   showEnheter: true,
   showSearchArea: true,
@@ -28,6 +28,6 @@ export const decoratorConfig: DecoratorProps = {
   enableHotkeys: true,
   environment: getEnvironment(),
   urlFormat: getUrlFormat(),
-  proxy: '/modiacontextholder',
-  fnrSyncMode: 'writeOnly',
+  proxy: "/modiacontextholder",
+  fnrSyncMode: "writeOnly",
 };

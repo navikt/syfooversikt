@@ -1,25 +1,25 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { ReactNode } from 'react';
-import { stubVeiledere } from '../stubs/stubVeiledere';
-import { stubModiaContext } from '../stubs/stubModiaContext';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { ReactNode } from "react";
+import { stubVeiledere } from "../stubs/stubVeiledere";
+import { stubModiaContext } from "../stubs/stubModiaContext";
 import {
   useAktivVeilederQuery,
   useVeiledereQuery,
-} from '@/data/veiledereQueryHooks';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
-import { stubAktivVeileder } from '../stubs/stubAktivVeileder';
-import { veiledereMock } from '@/mocks/data/veiledereMock';
-import { veilederMock } from '@/mocks/data/veilederMock';
-import { AktivEnhetContext } from '@/context/aktivEnhet/AktivEnhetContext';
-import { aktivEnhetMock } from '@/mocks/data/aktivEnhetMock';
-import { NotificationProvider } from '@/context/notification/NotificationContext';
-import { describe, expect, it } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+} from "@/data/veiledereQueryHooks";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
+import { stubAktivVeileder } from "../stubs/stubAktivVeileder";
+import { veiledereMock } from "@/mocks/data/veiledereMock";
+import { veilederMock } from "@/mocks/data/veilederMock";
+import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
+import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock";
+import { NotificationProvider } from "@/context/notification/NotificationContext";
+import { describe, expect, it } from "vitest";
+import { renderHook, waitFor } from "@testing-library/react";
 
-describe('veiledereQueryHooks tests', () => {
+describe("veiledereQueryHooks tests", () => {
   const queryClient = new QueryClient();
 
-  it('loads veiledere correctly', async () => {
+  it("loads veiledere correctly", async () => {
     stubModiaContext();
     stubVeiledere();
 
@@ -50,7 +50,7 @@ describe('veiledereQueryHooks tests', () => {
     expect(actual[0]?.ident).to.eq(veiledereMock[0]?.ident);
   });
 
-  it('loads aktiv veileder correctly', async () => {
+  it("loads aktiv veileder correctly", async () => {
     stubModiaContext();
     stubAktivVeileder();
 

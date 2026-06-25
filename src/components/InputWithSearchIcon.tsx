@@ -1,8 +1,8 @@
-import React, { ChangeEvent, ReactElement } from 'react';
-import styled from 'styled-components';
-import { Input } from 'nav-frontend-skjema';
-import SearchIcon from '../img/icons/SearchIcon';
-import themes from '../styles/themes';
+import React, { ChangeEvent, ReactElement } from "react";
+import styled from "styled-components";
+import { Input } from "nav-frontend-skjema";
+import SearchIcon from "../img/icons/SearchIcon";
+import themes from "../styles/themes";
 
 interface InputWithSearchIconProps {
   autofocus: boolean;

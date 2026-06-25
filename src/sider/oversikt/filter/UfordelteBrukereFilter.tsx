@@ -1,16 +1,16 @@
-import { Checkbox } from '@navikt/ds-react';
-import React from 'react';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { useFilters } from '@/context/filters/FilterContext';
-import { PersonregisterState } from '@/api/types/personregisterTypes';
+import { Checkbox } from "@navikt/ds-react";
+import React from "react";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { useFilters } from "@/context/filters/FilterContext";
+import { PersonregisterState } from "@/api/types/personregisterTypes";
 
 const text = {
-  label: 'Ufordelte brukere',
+  label: "Ufordelte brukere",
 };
 
 export function filterUfordelteBrukere(
   personregister: PersonregisterState,
-  isUfordelteBrukereFilter: boolean
+  isUfordelteBrukereFilter: boolean,
 ): PersonregisterState {
   if (!isUfordelteBrukereFilter) return personregister;
 
@@ -22,7 +22,7 @@ export function filterUfordelteBrukere(
 
 function numberOfUfordelteBrukere(personregister: PersonregisterState): number {
   return Object.values(personregister).filter(
-    (personData) => !personData.tildeltVeilederIdent
+    (personData) => !personData.tildeltVeilederIdent,
   ).length;
 }
 
