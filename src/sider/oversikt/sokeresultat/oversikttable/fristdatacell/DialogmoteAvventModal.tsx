@@ -1,13 +1,13 @@
-import { BodyLong, BodyShort, Heading, Modal } from '@navikt/ds-react';
-import { toReadableDate } from '@/utils/dateUtils';
-import React from 'react';
-import { DialogmoteAvventDTO } from '@/api/types/dialogmoteAvvent';
-import { trackModalApnet, trackModalLukket } from '@/utils/umami';
+import { BodyLong, BodyShort, Heading, Modal } from "@navikt/ds-react";
+import { toReadableDate } from "@/utils/dateUtils";
+import React from "react";
+import { DialogmoteAvventDTO } from "@/api/types/dialogmoteAvvent";
+import { trackModalApnet, trackModalLukket } from "@/utils/umami";
 
 const texts = {
-  header: 'Dialogmøte avvent vurdering',
-  beskrivelse: 'Beskrivelse',
-  frist: 'Frist',
+  header: "Dialogmøte avvent vurdering",
+  beskrivelse: "Beskrivelse",
+  frist: "Frist",
 };
 
 interface Props {

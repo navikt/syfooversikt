@@ -1,15 +1,15 @@
-import { screen } from '@testing-library/react';
-import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell';
-import React from 'react';
-import { PersonData, Skjermingskode } from '@/api/types/personregisterTypes';
-import { testdata } from '../data/fellesTestdata';
-import { describe, expect, it } from 'vitest';
-import { AktivitetskravStatus } from '@/api/types/personoversiktTypes';
-import { toReadableDate } from '@/utils/dateUtils';
-import { addWeeks } from '@/utils/dateUtils';
-import { getOppfolgingsoppgave } from '@/mocks/data/personoversiktEnhetMock';
-import { renderWithRouter } from '../testRenderUtils';
-import { routes } from '@/routers/routes';
+import { screen } from "@testing-library/react";
+import { FristDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell";
+import React from "react";
+import { PersonData, Skjermingskode } from "@/api/types/personregisterTypes";
+import { testdata } from "../data/fellesTestdata";
+import { describe, expect, it } from "vitest";
+import { AktivitetskravStatus } from "@/api/types/personoversiktTypes";
+import { toReadableDate } from "@/utils/dateUtils";
+import { addWeeks } from "@/utils/dateUtils";
+import { getOppfolgingsoppgave } from "@/mocks/data/personoversiktEnhetMock";
+import { renderWithRouter } from "../testRenderUtils";
+import { routes } from "@/routers/routes";
 
 const defaultPersonData: PersonData = {
   navn: testdata.navn1,
@@ -18,7 +18,7 @@ const defaultPersonData: PersonData = {
   harDialogmotesvar: false,
   skjermingskode: testdata.skjermingskode.diskresjonsmerket as Skjermingskode,
   harOppfolgingsplanLPSBistandUbehandlet: false,
-  tildeltVeilederIdent: '234',
+  tildeltVeilederIdent: "234",
   harBehandlerdialogUbehandlet: false,
   behandlerBerOmBistandUbehandlet: false,
   arbeidsuforhetvurdering: null,
@@ -37,20 +37,20 @@ const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
 const renderFristColumn = (personData: PersonData) => {
   renderWithRouter(
     <FristDataCell personData={personData} />,
-    routes.ENHET_OVERSIKT
+    routes.ENHET_OVERSIKT,
   );
 };
 
-describe('FristColumn', () => {
-  it('viser ingen frister når person har hverken aktivitetskrav AVVENT med frist eller oppfolgingsoppgave med frist', () => {
+describe("FristColumn", () => {
+  it("viser ingen frister når person har hverken aktivitetskrav AVVENT med frist eller oppfolgingsoppgave med frist", () => {
     const personUtenFrister: PersonData = { ...defaultPersonData };
     renderFristColumn(personUtenFrister);
 
     expect(screen.queryAllByText(fristFormatRegex)).to.be.empty;
   });
 
-  it('viser frist for person når aktivitetskrav AVVENT med frist', () => {
-    const aktivitetskravVurderingFrist = new Date('2023-12-18');
+  it("viser frist for person når aktivitetskrav AVVENT med frist", () => {
+    const aktivitetskravVurderingFrist = new Date("2023-12-18");
     const personAvventerMedFrist: PersonData = {
       ...defaultPersonData,
       aktivitetskravvurdering: {
@@ -67,13 +67,13 @@ describe('FristColumn', () => {
     renderFristColumn(personAvventerMedFrist);
 
     const fristText = screen.getAllByText(
-      toReadableDate(aktivitetskravVurderingFrist)
+      toReadableDate(aktivitetskravVurderingFrist),
     );
     expect(fristText).to.have.length(2); // 1 in the table and 1 in the modal
   });
 
-  it('viser frist for person når person har oppfolgingsoppgave', () => {
-    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-31'));
+  it("viser frist for person når person har oppfolgingsoppgave", () => {
+    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date("2023-12-31"));
     const personOppfolgingsoppgaveMedFrist: PersonData = {
       ...defaultPersonData,
       oppfolgingsoppgave,
@@ -84,7 +84,7 @@ describe('FristColumn', () => {
       .exist;
   });
 
-  it('viser frist for person når friskmelding til arbeidsformidling fom-dato er satt', () => {
+  it("viser frist for person når friskmelding til arbeidsformidling fom-dato er satt", () => {
     const friskmeldingTilArbeidsformidlingFom = addWeeks(new Date(), 10);
     const personFriskmeldingTilArbeidsformidling: PersonData = {
       ...defaultPersonData,
@@ -93,11 +93,11 @@ describe('FristColumn', () => {
     renderFristColumn(personFriskmeldingTilArbeidsformidling);
 
     expect(
-      screen.getByText(toReadableDate(friskmeldingTilArbeidsformidlingFom))
+      screen.getByText(toReadableDate(friskmeldingTilArbeidsformidlingFom)),
     ).to.exist;
   });
 
-  it('viser frist for person med manglende medvirkning forhåndsvarsel med svarfrist', () => {
+  it("viser frist for person med manglende medvirkning forhåndsvarsel med svarfrist", () => {
     const svarfrist = addWeeks(new Date(), 3);
     const personManglendeMedvirkning: PersonData = {
       ...defaultPersonData,
@@ -112,17 +112,17 @@ describe('FristColumn', () => {
     expect(screen.getByText(toReadableDate(svarfrist))).to.exist;
   });
 
-  it('viser frist for person når avvent dialogmøte', () => {
+  it("viser frist for person når avvent dialogmøte", () => {
     const frist = addWeeks(new Date(), 1);
     const personDialogmotekandidat: PersonData = {
       ...defaultPersonData,
       dialogmoteAvvent: {
-        uuid: 'abc-111',
-        createdAt: new Date('2022-01-15'),
+        uuid: "abc-111",
+        createdAt: new Date("2022-01-15"),
         frist: frist,
-        createdBy: 'M987654',
-        personident: '99999966668',
-        beskrivelse: 'Trenger mer tid før møte kan gjennomføres',
+        createdBy: "M987654",
+        personident: "99999966668",
+        beskrivelse: "Trenger mer tid før møte kan gjennomføres",
         isLukket: false,
       },
     };
@@ -131,9 +131,9 @@ describe('FristColumn', () => {
     expect(screen.getAllByText(toReadableDate(frist))).to.exist;
   });
 
-  it('viser tidligste frist først når person har flere frister', () => {
-    const aktivitetskravVurderingFrist = new Date('2023-12-10');
-    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date('2023-12-05'));
+  it("viser tidligste frist først når person har flere frister", () => {
+    const aktivitetskravVurderingFrist = new Date("2023-12-10");
+    const oppfolgingsoppgave = getOppfolgingsoppgave(new Date("2023-12-05"));
     const friskmeldingTilArbeidsformidlingFom = addWeeks(new Date(), 10);
     const personMedFlereFrister: PersonData = {
       ...defaultPersonData,
@@ -157,19 +157,19 @@ describe('FristColumn', () => {
     // 3 frister i oversikten + 1 i modal for oppfølgingsoppgave og 1 i modal for aktivitetskrav som finnes i DOM
     expect(allFrister).to.have.length(5);
     expect(allFrister[0]?.textContent).to.eq(
-      toReadableDate(oppfolgingsoppgave.frist)
+      toReadableDate(oppfolgingsoppgave.frist),
     );
     expect(allFrister[1]?.textContent).to.eq(
-      toReadableDate(aktivitetskravVurderingFrist)
+      toReadableDate(aktivitetskravVurderingFrist),
     );
     expect(allFrister[2]?.textContent).to.eq(
-      toReadableDate(friskmeldingTilArbeidsformidlingFom)
+      toReadableDate(friskmeldingTilArbeidsformidlingFom),
     );
   });
 
-  describe('aktivitetskravvurdering frister', () => {
-    it('viser svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel', () => {
-      const aktivitetskravSvarfristForhandsvarsel = new Date('2024-07-16');
+  describe("aktivitetskravvurdering frister", () => {
+    it("viser svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel", () => {
+      const aktivitetskravSvarfristForhandsvarsel = new Date("2024-07-16");
       const personMedForhandsvarsel: PersonData = {
         ...defaultPersonData,
         aktivitetskravvurdering: {
@@ -188,13 +188,13 @@ describe('FristColumn', () => {
       renderFristColumn(personMedForhandsvarsel);
 
       expect(
-        screen.getByText(toReadableDate(aktivitetskravSvarfristForhandsvarsel))
+        screen.getByText(toReadableDate(aktivitetskravSvarfristForhandsvarsel)),
       ).to.exist;
     });
 
-    it('viser ikke dobbel svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel og aktivitetskravVurderingFrist har verdi', () => {
-      const svarfristForhandsvarselVis = new Date('2024-07-16');
-      const svarfristForhandsvarselIkkeVis = new Date('2024-07-17');
+    it("viser ikke dobbel svarfrist for forhåndsvarsel når aktivitetskravvurdering har varsel og aktivitetskravVurderingFrist har verdi", () => {
+      const svarfristForhandsvarselVis = new Date("2024-07-16");
+      const svarfristForhandsvarselIkkeVis = new Date("2024-07-17");
       const personMedForhandsvarsel: PersonData = {
         ...defaultPersonData,
         aktivitetskravvurdering: {

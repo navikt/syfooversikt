@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { virksomhetnummerFromPersonData } from '@/utils/personDataUtil';
-import { Popover } from '@navikt/ds-react';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { useVirksomheterQueries } from '@/data/virksomhet/virksomhetQueryHooks';
+import React, { useRef, useState } from "react";
+import { virksomhetnummerFromPersonData } from "@/utils/personDataUtil";
+import { Popover } from "@navikt/ds-react";
+import { PersonData } from "@/api/types/personregisterTypes";
+import { useVirksomheterQueries } from "@/data/virksomhet/virksomhetQueryHooks";
 
 interface PersonRadVirksomhetColumnProps {
   personData: PersonData;
@@ -34,7 +34,7 @@ export const PersonRadVirksomhetColumn = ({
         anchorEl={virksomehtRef.current}
         placement="top-start"
       >
-        <Popover.Content>{companyNames.join(', ')}</Popover.Content>
+        <Popover.Content>{companyNames.join(", ")}</Popover.Content>
       </Popover>
     </>
   );

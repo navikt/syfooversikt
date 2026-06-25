@@ -1,14 +1,14 @@
 import {
   PersonData,
   PersonregisterState,
-} from '@/api/types/personregisterTypes';
+} from "@/api/types/personregisterTypes";
 
 export function mapPersonregisterToCompanyList(
-  personregister: PersonregisterState
+  personregister: PersonregisterState,
 ): string[] {
-  const allCompanyNames = Object.entries(
-    personregister
-  ).flatMap(([, persondata]) => companyNamesFromPersonData(persondata));
+  const allCompanyNames = Object.entries(personregister).flatMap(
+    ([, persondata]) => companyNamesFromPersonData(persondata),
+  );
   return [...new Set(allCompanyNames)].filter((v) => v && v.length > 0);
 }
 
@@ -23,13 +23,13 @@ export function companyNamesFromPersonData(p: PersonData): string[] {
 export function virksomhetnummerFromPersonData(p: PersonData): string[] {
   return p.latestOppfolgingstilfelle
     ? p.latestOppfolgingstilfelle.virksomhetList.map(
-        ({ virksomhetsnummer }) => virksomhetsnummer
+        ({ virksomhetsnummer }) => virksomhetsnummer,
       )
     : [];
 }
 
 export function firstCompanyNameFromPersonData(
-  p: PersonData
+  p: PersonData,
 ): string | undefined {
   return companyNamesFromPersonData(p).shift();
 }

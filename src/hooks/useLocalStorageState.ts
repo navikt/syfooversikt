@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export enum StoreKey {
-  SORTING = 'sorting',
-  FLEXJAR_RUTING_FEEDBACK_DATE = 'flexjarRutingFeedbackDate',
+  SORTING = "sorting",
+  FLEXJAR_RUTING_FEEDBACK_DATE = "flexjarRutingFeedbackDate",
 }
 
 export const useLocalStorageState = <T>(key: StoreKey, initialState: T) => {

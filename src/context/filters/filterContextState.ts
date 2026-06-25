@@ -1,8 +1,8 @@
 import {
   AgeFilterOption,
   DatoFilterOption,
-} from '@/utils/hendelseFilteringUtils';
-import { DateRange } from '@/sider/oversikt/filter/types.ts';
+} from "@/utils/hendelseFilteringUtils";
+import { DateRange } from "@/sider/oversikt/filter/types.ts";
 
 export interface FristFilter {
   selectedDatoOptions: DatoFilterOption[];
@@ -39,7 +39,7 @@ export interface FilterState {
 }
 
 export const filterInitialState: FilterState = {
-  tekstFilter: '',
+  tekstFilter: "",
   selectedVeilederIdents: [],
   selectedOptions: [],
   selectedCompanies: [],

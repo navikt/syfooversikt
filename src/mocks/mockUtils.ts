@@ -9,32 +9,32 @@ const randomChoice = (choices: string[]) => {
 
 const generateName = () => {
   const e = [
-    'Banan',
-    'Eple',
-    'Fersken',
-    'Rambutan',
-    'Durian',
-    'Stjernefrukt',
-    'Tomat',
-    'Drue',
-    'Vannmelon',
-    'Nektarin',
-    'Mandarin',
-    'Persimon',
+    "Banan",
+    "Eple",
+    "Fersken",
+    "Rambutan",
+    "Durian",
+    "Stjernefrukt",
+    "Tomat",
+    "Drue",
+    "Vannmelon",
+    "Nektarin",
+    "Mandarin",
+    "Persimon",
   ] as string[];
   const f = [
-    'Rød',
-    'Gul',
-    'Blå',
-    'Grønn',
-    'Rosa',
-    'Oransje',
-    'Sort',
-    'Lilla',
-    'Hvit',
-    'Turkis',
-    'Fiolett',
-    'Infrarød',
+    "Rød",
+    "Gul",
+    "Blå",
+    "Grønn",
+    "Rosa",
+    "Oransje",
+    "Sort",
+    "Lilla",
+    "Hvit",
+    "Turkis",
+    "Fiolett",
+    "Infrarød",
   ] as string[];
 
   return `${randomChoice(f)} ${randomChoice(e)}`;
@@ -48,11 +48,11 @@ export interface MockPerson {
 
 export const generatePerson = (): MockPerson => {
   const name = generateName();
-  const fnr = getRandomInt(31999999999).toString().padStart(11, '0');
+  const fnr = getRandomInt(31999999999).toString().padStart(11, "0");
   return {
     name,
     fnr,
-    skjermingskode: 'INGEN',
+    skjermingskode: "INGEN",
   };
 };
 
@@ -60,14 +60,14 @@ export const generatePersons = (amount: number) =>
   new Array(amount).fill(generatePerson());
 
 export const generatePersonoversiktEnhetFromPersons = (
-  persons: MockPerson[]
+  persons: MockPerson[],
 ) => {
   return persons.map((person: MockPerson) => {
     return {
       fnr: person.fnr,
       navn: generateName(),
-      enhet: '0316',
-      veilederIdent: 'Z202020',
+      enhet: "0316",
+      veilederIdent: "Z202020",
       motebehovUbehandlet: null,
       oppfolgingsplanLPSBistandUbehandlet: null,
       motestatus: undefined,

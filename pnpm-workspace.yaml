@@ -6,6 +6,7 @@ allowBuilds:
   styled-components: true
 minimumReleaseAge: 4320 # 3 days
 ignoreScripts: true
+savePrefix: ''
 minimumReleaseAgeExclude:
   - protobufjs@7.5.6
   - ip-address@10.1.1

@@ -1,4 +1,4 @@
 export const aktivEnhetMock = {
-  aktivBruker: 'e123456',
-  aktivEnhet: '0316',
+  aktivBruker: "e123456",
+  aktivEnhet: "0316",
 };

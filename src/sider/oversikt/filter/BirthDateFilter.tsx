@@ -1,19 +1,19 @@
-import React, { ReactElement } from 'react';
-import { UNSAFE_Combobox } from '@navikt/ds-react';
-import { useFilters } from '@/context/filters/FilterContext';
-import { ActionType } from '@/context/filters/filterContextActions';
+import React, { ReactElement } from "react";
+import { UNSAFE_Combobox } from "@navikt/ds-react";
+import { useFilters } from "@/context/filters/FilterContext";
+import { ActionType } from "@/context/filters/filterContextActions";
 
 const allDates = new Array(71)
   .fill(1)
   .map((currentNumber, index) => currentNumber + index);
 
 const options: string[] = allDates.map((date) =>
-  date.toString().padStart(2, '0')
+  date.toString().padStart(2, "0"),
 );
 
 const texts = {
-  title: 'Fødselsdato',
-  placeholder: 'Velg datoer',
+  title: "Fødselsdato",
+  placeholder: "Velg datoer",
 };
 
 export default function BirthDateFilter(): ReactElement {

@@ -14,76 +14,76 @@ interface LinkClickDetail {
 
 interface DecoratorElementAttributes {
   // Påkrevde attributter
-  'app-name': string;
+  "app-name": string;
   environment: string;
-  'url-format': string;
-  'show-enheter': string;
-  'show-search-area': string;
-  'show-hotkeys': string;
+  "url-format": string;
+  "show-enheter": string;
+  "show-search-area": string;
+  "show-hotkeys": string;
   // Valgfrie attributter
   fnr?: string;
   enhet?: string;
-  'fnr-sync-mode'?: string;
-  'enhet-sync-mode'?: string;
-  'enable-hotkeys'?: string;
-  'fetch-active-enhet-on-mount'?: string;
-  'fetch-active-user-on-mount'?: string;
+  "fnr-sync-mode"?: string;
+  "enhet-sync-mode"?: string;
+  "enable-hotkeys"?: string;
+  "fetch-active-enhet-on-mount"?: string;
+  "fetch-active-user-on-mount"?: string;
   markup?: string;
   hotkeys?: string;
   proxy?: string;
-  'websocket-url'?: string;
-  'access-token'?: string;
-  'include-credentials'?: string;
-  'user-key'?: string;
+  "websocket-url"?: string;
+  "access-token"?: string;
+  "include-credentials"?: string;
+  "user-key"?: string;
 }
 
 interface InternarbeidsflateDecoratorElement extends HTMLElement {
   addEventListener(
-    type: 'enhet-changed',
+    type: "enhet-changed",
     listener: (event: CustomEvent<EnhetChangedDetail>) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   addEventListener(
-    type: 'fnr-changed',
+    type: "fnr-changed",
     listener: (event: CustomEvent<FnrChangedDetail>) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   addEventListener(
-    type: 'link-click',
+    type: "link-click",
     listener: (event: CustomEvent<LinkClickDetail>) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   removeEventListener(
-    type: 'enhet-changed',
+    type: "enhet-changed",
     listener: (event: CustomEvent<EnhetChangedDetail>) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
   removeEventListener(
-    type: 'fnr-changed',
+    type: "fnr-changed",
     listener: (event: CustomEvent<FnrChangedDetail>) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
   removeEventListener(
-    type: 'link-click',
+    type: "link-click",
     listener: (event: CustomEvent<LinkClickDetail>) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
 declare namespace React {
   namespace JSX {
     interface IntrinsicElements {
-      'internarbeidsflate-decorator': React.HTMLAttributes<HTMLElement> &
+      "internarbeidsflate-decorator": React.HTMLAttributes<HTMLElement> &
         React.RefAttributes<InternarbeidsflateDecoratorElement> &
         DecoratorElementAttributes;
     }
@@ -92,6 +92,6 @@ declare namespace React {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'internarbeidsflate-decorator': InternarbeidsflateDecoratorElement;
+    "internarbeidsflate-decorator": InternarbeidsflateDecoratorElement;
   }
 }

@@ -1,7 +1,7 @@
 import {
   AktivitetskravStatus,
   AvventVurderingArsak,
-} from '@/api/types/personoversiktTypes';
+} from "@/api/types/personoversiktTypes";
 
 export interface AktivitetskravDTO {
   status: AktivitetskravStatus;

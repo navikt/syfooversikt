@@ -1,22 +1,22 @@
-import React, { ReactElement } from 'react';
-import { Checkbox, Table } from '@navikt/ds-react';
-import { VeilederColumn } from '@/sider/oversikt/sokeresultat/oversikttable/VeilederColumn';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { PersonRadVirksomhetColumn } from '@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn';
-import { FristDataCell } from '@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell';
-import { Sorting, SortingKey, useSorting } from '@/hooks/useSorting';
-import { LinkSyfomodiaperson } from '@/components/LinkSyfomodiaperson';
-import { toLastnameFirstnameFormat } from '@/utils/stringUtil';
-import { OppfolgingstilfelleDTO } from '@/api/types/personoversiktTypes';
-import { TabType, useTabType } from '@/hooks/useTabType';
-import HendelseColumn from '@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn';
+import React, { ReactElement } from "react";
+import { Checkbox, Table } from "@navikt/ds-react";
+import { VeilederColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VeilederColumn";
+import { PersonData } from "@/api/types/personregisterTypes";
+import { PersonRadVirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn";
+import { FristDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell";
+import { Sorting, SortingKey, useSorting } from "@/hooks/useSorting";
+import { LinkSyfomodiaperson } from "@/components/LinkSyfomodiaperson";
+import { toLastnameFirstnameFormat } from "@/utils/stringUtil";
+import { OppfolgingstilfelleDTO } from "@/api/types/personoversiktTypes";
+import { TabType, useTabType } from "@/hooks/useTabType";
+import HendelseColumn from "@/sider/oversikt/sokeresultat/oversikttable/HendelseColumn";
 
 function getVarighetOppfolgingstilfelle(
-  oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined
+  oppfolgingstilfelle: OppfolgingstilfelleDTO | undefined,
 ): string {
   return oppfolgingstilfelle
     ? `${oppfolgingstilfelle.varighetUker} uker`
-    : 'Ukjent';
+    : "Ukjent";
 }
 
 interface Props {
@@ -38,16 +38,16 @@ export default function OversiktTable({
   const { selectedTab } = useTabType();
 
   function handleSort(sortKey: string | undefined) {
-    let direction: 'none' | 'ascending' | 'descending';
-    if (sortKey === sorting.orderBy && sorting.direction === 'descending') {
-      direction = 'none';
+    let direction: "none" | "ascending" | "descending";
+    if (sortKey === sorting.orderBy && sorting.direction === "descending") {
+      direction = "none";
       setSorting({
-        orderBy: 'NONE',
+        orderBy: "NONE",
         direction: direction,
       });
     } else {
       direction =
-        sorting.direction === 'ascending' ? 'descending' : 'ascending';
+        sorting.direction === "ascending" ? "descending" : "ascending";
       setSorting({
         orderBy: sortKey as SortingKey,
         direction: direction,
@@ -99,7 +99,7 @@ export default function OversiktTable({
             .filter(
               (column) =>
                 selectedTab === TabType.ENHETENS_OVERSIKT ||
-                column.sortKey !== 'VEILEDER'
+                column.sortKey !== "VEILEDER",
             )
             .map((col, index) => (
               <Table.ColumnHeader key={index} sortKey={col.sortKey} sortable>
@@ -118,7 +118,7 @@ export default function OversiktTable({
                 onChange={() => toggleSelectedRow(fnr)}
                 aria-labelledby={`id-${fnr}`}
               >
-                {' '}
+                {" "}
               </Checkbox>
             </Table.DataCell>
             <Table.HeaderCell scope="row" textSize="small">
@@ -151,7 +151,7 @@ export default function OversiktTable({
             )}
             <Table.DataCell textSize="small">
               {getVarighetOppfolgingstilfelle(
-                persondata.latestOppfolgingstilfelle
+                persondata.latestOppfolgingstilfelle,
               )}
             </Table.DataCell>
             <FristDataCell personData={persondata} />

@@ -1,15 +1,15 @@
 import {
   filterInitialState,
   FilterState,
-} from '@/context/filters/filterContextState';
+} from "@/context/filters/filterContextState";
 import {
   ActionType,
   FilterActions,
-} from '@/context/filters/filterContextActions';
+} from "@/context/filters/filterContextActions";
 
 export const filterReducer = (
   state: FilterState,
-  action: FilterActions
+  action: FilterActions,
 ): FilterState => {
   switch (action.type) {
     case ActionType.SetTekstFilter: {

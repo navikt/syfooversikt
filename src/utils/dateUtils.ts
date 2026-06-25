@@ -1,38 +1,38 @@
-import dayjs from 'dayjs';
-import minMax from 'dayjs/plugin/minMax';
-import { DateRange } from '@/sider/oversikt/filter/types.ts';
+import dayjs from "dayjs";
+import minMax from "dayjs/plugin/minMax";
+import { DateRange } from "@/sider/oversikt/filter/types.ts";
 
 dayjs.extend(minMax);
 
 export function toReadableDate(dateArg: Date | null): string {
   if (!dateArg) {
-    return '';
+    return "";
   }
-  return dayjs(dateArg).format('DD.MM.YYYY');
+  return dayjs(dateArg).format("DD.MM.YYYY");
 }
 
 export function isPast(compareDate: Date): boolean {
-  return dayjs(compareDate).isBefore(dayjs(), 'day');
+  return dayjs(compareDate).isBefore(dayjs(), "day");
 }
 
 export function isToday(compareDate: Date): boolean {
-  return dayjs(compareDate).isSame(dayjs(), 'day');
+  return dayjs(compareDate).isSame(dayjs(), "day");
 }
 
 export function isFuture(compareDate: Date): boolean {
-  return dayjs(compareDate).isAfter(dayjs(), 'day');
+  return dayjs(compareDate).isAfter(dayjs(), "day");
 }
 
 export function isWithinRange(
   compareDate: Date,
-  dateRange: DateRange
+  dateRange: DateRange,
 ): boolean {
   if (!dateRange?.from || !dateRange?.to) return true;
 
   const date = dayjs(compareDate);
   return (
-    !date.isBefore(dayjs(dateRange.from), 'day') &&
-    !date.isAfter(dayjs(dateRange.to), 'day')
+    !date.isBefore(dayjs(dateRange.from), "day") &&
+    !date.isAfter(dayjs(dateRange.to), "day")
   );
 }
 
@@ -53,15 +53,15 @@ export function latestDate(dateArray: Date[]): Date | null {
 }
 
 export function getWeeksBetween(date1: Date, date2: Date): number {
-  return Math.abs(dayjs(date1).diff(date2, 'week'));
+  return Math.abs(dayjs(date1).diff(date2, "week"));
 }
 
 export function addWeeks(date: Date, numberOfWeeks: number): Date {
-  return dayjs(date).add(numberOfWeeks, 'weeks').toDate();
+  return dayjs(date).add(numberOfWeeks, "weeks").toDate();
 }
 
 export function subWeeks(date: Date, numberOfWeeks: number): Date {
-  return dayjs(date).subtract(numberOfWeeks, 'weeks').toDate();
+  return dayjs(date).subtract(numberOfWeeks, "weeks").toDate();
 }
 
 export function parseDateString(dateString: string): Date | null {

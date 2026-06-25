@@ -1,15 +1,15 @@
-import React, { ReactElement } from 'react';
-import DocumentTitle from 'react-document-title';
+import React, { ReactElement } from "react";
+import DocumentTitle from "react-document-title";
 
 interface SideProps {
   children: ReactElement;
   tittel: string;
 }
 
-const Side = ({ tittel = '', children }: SideProps): ReactElement => {
+const Side = ({ tittel = "", children }: SideProps): ReactElement => {
   return (
     <DocumentTitle
-      title={tittel + (tittel.length > 0 ? ' - Syfooversikt' : 'Syfooversikt')}
+      title={tittel + (tittel.length > 0 ? " - Syfooversikt" : "Syfooversikt")}
     >
       {children}
     </DocumentTitle>

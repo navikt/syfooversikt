@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
-import { Labels } from '@/components/Labels';
-import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
-import { Link } from '@navikt/ds-react';
+import React, { ReactElement } from "react";
+import { PersonData } from "@/api/types/personregisterTypes";
+import { linkToNewHostAndPath, Subdomain } from "@/utils/miljoUtil";
+import { Labels } from "@/components/Labels";
+import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { Link } from "@navikt/ds-react";
 
 export function lenkeTilModia(personData: PersonData): string {
   let path = `/sykefravaer`;
@@ -19,7 +19,8 @@ export function lenkeTilModia(personData: PersonData): string {
   const isGoingToArbeidsuforhet = !!personData.arbeidsuforhetvurdering;
   const isGoingToSenOppfolging = !!personData.senOppfolgingKandidat;
   const isGoingToManglendeMedvirkning = !!personData.manglendeMedvirkning;
-  const isGoingToFrisktilarbeid = !!personData.friskmeldingTilArbeidsformidlingFom;
+  const isGoingToFrisktilarbeid =
+    !!personData.friskmeldingTilArbeidsformidlingFom;
   const isGoingToKartleggingssporsmal =
     personData.isAktivKartleggingssporsmalVurdering;
 

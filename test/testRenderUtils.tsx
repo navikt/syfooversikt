@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { render } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import React from "react";
 
 export const renderWithRouter = (element: React.ReactNode, path: string) => {
   render(
@@ -8,6 +8,6 @@ export const renderWithRouter = (element: React.ReactNode, path: string) => {
       <Routes>
         <Route path={path} element={element} />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };

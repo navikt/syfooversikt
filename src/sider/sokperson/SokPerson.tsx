@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Alert,
   BodyLong,
@@ -10,37 +10,34 @@ import {
   Label,
   TextField,
   VStack,
-} from '@navikt/ds-react';
-import { useSokPerson } from '@/data/personoversiktHooks';
-import { SokDTO } from '@/api/types/sokDTO';
-import SokPersonResultat from '@/sider/sokperson/SokPersonResultat';
-import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
-import { isNumeric, removePunctuation } from '@/utils/stringUtil';
-import { parseDateString } from '@/utils/dateUtils';
-import { resolveErrorMessage } from '@/api/errors.ts';
+} from "@navikt/ds-react";
+import { useSokPerson } from "@/data/personoversiktHooks";
+import { SokDTO } from "@/api/types/sokDTO";
+import SokPersonResultat from "@/sider/sokperson/SokPersonResultat";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import { isNumeric, removePunctuation } from "@/utils/stringUtil";
+import { parseDateString } from "@/utils/dateUtils";
+import { resolveErrorMessage } from "@/api/errors.ts";
 
 const texts = {
-  header: 'Søk etter sykmeldt',
-  info: 'Her kan du søke for å finne brukere med aktivt sykefravær.',
+  header: "Søk etter sykmeldt",
+  info: "Her kan du søke for å finne brukere med aktivt sykefravær.",
   label: {
-    initials: 'Initialer (valgfri)',
-    birthdate: 'Fødselsdato (obligatorisk)',
+    initials: "Initialer (valgfri)",
+    birthdate: "Fødselsdato (obligatorisk)",
   },
   helpText: {
     info: {
-      title: 'Hvordan søke etter sykmeldt?',
-      p1:
-        'Fyll inn fødselsdato for å finne en sykmeldt du har tilgang til, vedkommende må ha et aktivt sykefravær. ',
-      p2:
-        'Ønsker man et mer nøyaktig søk kan man legge til initialer til den sykmeldte, men dette er valgfritt. Det er ikke mulig å søke på initialer uten å skrive inn fødselsdato. Dette er for å minimere risiko for feil søkeresultat, og at du finner akkurat den personen du er på leting etter.',
+      title: "Hvordan søke etter sykmeldt?",
+      p1: "Fyll inn fødselsdato for å finne en sykmeldt du har tilgang til, vedkommende må ha et aktivt sykefravær. ",
+      p2: "Ønsker man et mer nøyaktig søk kan man legge til initialer til den sykmeldte, men dette er valgfritt. Det er ikke mulig å søke på initialer uten å skrive inn fødselsdato. Dette er for å minimere risiko for feil søkeresultat, og at du finner akkurat den personen du er på leting etter.",
     },
     initials: {
-      title: 'Hvordan fyller jeg inn initialer?',
-      text:
-        'Her kan du fylle inn initialene til den du vil søke opp. Feltet krever forbokstaven for fornavn og etternavn. Det er mulig å legge til forbokstavene for mellomnavn for mer nøyaktig søkeresultat. ',
+      title: "Hvordan fyller jeg inn initialer?",
+      text: "Her kan du fylle inn initialene til den du vil søke opp. Feltet krever forbokstaven for fornavn og etternavn. Det er mulig å legge til forbokstavene for mellomnavn for mer nøyaktig søkeresultat. ",
     },
     birthdate: {
-      title: 'Hvordan fyller jeg inn fødselsdato?',
+      title: "Hvordan fyller jeg inn fødselsdato?",
       text: (
         <>
           Her kan du fylle inn fødselsdato til den du vil søke opp. For å kunne
@@ -53,10 +50,10 @@ const texts = {
     },
   },
   validation: {
-    initials: 'Vennligst angi to til fire initialer',
-    birthdate: 'Vennligst angi en gyldig fødselsdato',
+    initials: "Vennligst angi to til fire initialer",
+    birthdate: "Vennligst angi en gyldig fødselsdato",
   },
-  error: 'Noe gikk galt under søket. Vennligst prøv igjen.',
+  error: "Noe gikk galt under søket. Vennligst prøv igjen.",
 };
 
 function InitialerLabel() {
@@ -84,8 +81,8 @@ function FodselsdatoLabel() {
 }
 
 export default function SokPerson() {
-  const [initials, setInitials] = useState<string>('');
-  const [birthdate, setBirthdate] = useState<string>('');
+  const [initials, setInitials] = useState<string>("");
+  const [birthdate, setBirthdate] = useState<string>("");
   const {
     mutate,
     data: searchResults,
@@ -107,7 +104,7 @@ export default function SokPerson() {
   };
 
   const isValidInitials = (initials: string): boolean => {
-    return initials === '' || (initials.length <= 4 && initials.length > 1);
+    return initials === "" || (initials.length <= 4 && initials.length > 1);
   };
 
   const handleSubmit = () => {

@@ -17,7 +17,7 @@ dist-server/
 
 npm-debug.log*
 
-.idea
+.idea/*
 *.iml
 *.log
 settings.json
@@ -25,3 +25,6 @@ settings.json
 **/.DS_STORE
 
 .env
+
+!/.idea/externalDependencies.xml
+!/.idea/codeStyles/

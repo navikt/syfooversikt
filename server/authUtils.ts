@@ -1,6 +1,6 @@
-import { Request } from 'express';
-import { auth } from './config.js';
-import { logger } from '@navikt/pino-logger';
+import { Request } from "express";
+import { auth } from "./config.js";
+import { logger } from "@navikt/pino-logger";
 
 interface TokenIntrospectionResponse {
   active: boolean;
@@ -14,7 +14,7 @@ interface TokenExchangeResponse {
 }
 
 function extractBearerToken(req: Request): string | undefined {
-  return req.headers.authorization?.replace('Bearer ', '');
+  return req.headers.authorization?.replace("Bearer ", "");
 }
 
 export async function validateToken(req: Request): Promise<boolean> {
@@ -22,9 +22,9 @@ export async function validateToken(req: Request): Promise<boolean> {
   if (!token) return false;
 
   const response = await fetch(auth.texas.introspectionEndpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ identity_provider: 'entra_id', token }),
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ identity_provider: "entra_id", token }),
   });
 
   if (!response.ok) {
@@ -38,16 +38,16 @@ export async function validateToken(req: Request): Promise<boolean> {
 
 export async function getOnBehalfOfToken(
   req: Request,
-  clientId: string
+  clientId: string,
 ): Promise<string | undefined> {
   const userToken = extractBearerToken(req);
   if (!userToken) return undefined;
 
   const response = await fetch(auth.texas.tokenExchangeEndpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      identity_provider: 'entra_id',
+      identity_provider: "entra_id",
       target: `api://${clientId}/.default`,
       user_token: userToken,
     }),

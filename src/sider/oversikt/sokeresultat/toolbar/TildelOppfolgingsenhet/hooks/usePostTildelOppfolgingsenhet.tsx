@@ -1,15 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { SYFOBEHANDLENDEENHET_ROOT } from '@/apiConstants';
-import { post } from '@/api/axios';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { personoversiktQueryKeys } from '@/data/personoversiktHooks';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { useNotifications } from '@/context/notification/NotificationContext.tsx';
-import { ApiErrorException } from '@/api/errors.ts';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { SYFOBEHANDLENDEENHET_ROOT } from "@/apiConstants";
+import { post } from "@/api/axios";
+import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
+import { personoversiktQueryKeys } from "@/data/personoversiktHooks";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { useNotifications } from "@/context/notification/NotificationContext.tsx";
+import { ApiErrorException } from "@/api/errors.ts";
 import {
   TildelOppfolgingsenhetFailed,
   TildelOppfolgingsenhetTilgangFailed,
-} from '@/context/notification/Notifications.ts';
+} from "@/context/notification/Notifications.ts";
 
 export function usePostTildelOppfolgingsenhet() {
   const queryClient = useQueryClient();
@@ -18,33 +18,33 @@ export function usePostTildelOppfolgingsenhet() {
 
   const path = `${SYFOBEHANDLENDEENHET_ROOT}/oppfolgingsenhet-tildelinger`;
   const postTildelOppfolgingsenhet = (
-    person: OppfolgingsenhetTildelingerRequestDTO
+    person: OppfolgingsenhetTildelingerRequestDTO,
   ) => post<OppfolgingsenhetTildelingerResponseDTO>(path, person);
 
   return useMutation({
     mutationFn: postTildelOppfolgingsenhet,
     onMutate: () => {
-      clearNotification('tildelOppfolgingsenhetFailed');
-      clearNotification('tildelOppfolgingsenhetTilgangFailed');
+      clearNotification("tildelOppfolgingsenhetFailed");
+      clearNotification("tildelOppfolgingsenhetTilgangFailed");
     },
     onSuccess: (data: OppfolgingsenhetTildelingerResponseDTO) => {
       const personer: PersonOversiktStatusDTO[] =
         queryClient.getQueryData(
-          personoversiktQueryKeys.personoversiktEnhet(aktivEnhet)
+          personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
         ) || [];
 
       const updatedPersoner: PersonOversiktStatusDTO[] = personer.filter(
         (person) => {
           const isPersonTildelt = data.tildelinger.find(
-            (tildeling) => tildeling.personident === person.fnr
+            (tildeling) => tildeling.personident === person.fnr,
           );
           return !isPersonTildelt;
-        }
+        },
       );
 
       queryClient.setQueryData(
         personoversiktQueryKeys.personoversiktEnhet(aktivEnhet),
-        updatedPersoner
+        updatedPersoner,
       );
     },
     onError: (error: Error) => {

@@ -1,13 +1,13 @@
-import { QueryCache, QueryClient } from '@tanstack/react-query';
-import { minutesToMillis } from '@/utils/timeUtils';
-import '@tanstack/react-query';
+import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { minutesToMillis } from "@/utils/timeUtils";
+import "@tanstack/react-query";
 
 interface Meta extends Record<string, unknown> {
   handleError: (error: Error) => void;
   handleSuccess: () => void;
 }
 
-declare module '@tanstack/react-query' {
+declare module "@tanstack/react-query" {
   interface Register {
     queryMeta: Meta;
   }
@@ -28,10 +28,10 @@ export const queryClient = new QueryClient({
   }),
   defaultOptions: {
     mutations: {
-      networkMode: 'offlineFirst',
+      networkMode: "offlineFirst",
     },
     queries: {
-      networkMode: 'offlineFirst',
+      networkMode: "offlineFirst",
       refetchOnWindowFocus: false,
       gcTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),

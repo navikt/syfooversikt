@@ -1,15 +1,15 @@
-import TildelVeileder from './TildelVeileder';
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
-import themes from '../../../../styles/themes';
+import TildelVeileder from "./TildelVeileder";
+import React, { useRef, useState } from "react";
+import styled from "styled-components";
+import themes from "../../../../styles/themes";
 import PaginationContainer, {
   PAGINATED_NUMBER_OF_ITEMS,
-} from '@/sider/oversikt/sokeresultat/toolbar/PaginationContainer';
-import TildelOppfolgingsenhetModal from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal';
-import TildelOppfolgingsenhetButton from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton';
-import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
-import PaginationLabel from '@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel';
-import { Alert } from '@navikt/ds-react';
+} from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
+import TildelOppfolgingsenhetModal from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal";
+import TildelOppfolgingsenhetButton from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton";
+import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
+import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
+import { Alert } from "@navikt/ds-react";
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const ToolbarStyled = styled.div`
 `;
 
 export interface FeedbackNotification {
-  type: 'success' | 'warning' | 'error';
+  type: "success" | "warning" | "error";
   text: string;
 }
 

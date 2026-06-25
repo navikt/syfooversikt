@@ -1,28 +1,28 @@
-import React from 'react';
+import React from "react";
 import {
   PersonregisterState,
   PersonSkjermingskode,
   toPersonData,
-} from '@/api/types/personregisterTypes';
-import Sokeresultat from '@/sider/oversikt/sokeresultat/Sokeresultat';
-import SykmeldtFilter from '@/sider/oversikt/filter/SykmeldtFilter';
-import { ClearFiltersButton } from '@/sider/oversikt/filter/ClearFiltersButton';
+} from "@/api/types/personregisterTypes";
+import Sokeresultat from "@/sider/oversikt/sokeresultat/Sokeresultat";
+import SykmeldtFilter from "@/sider/oversikt/filter/SykmeldtFilter";
+import { ClearFiltersButton } from "@/sider/oversikt/filter/ClearFiltersButton";
 import {
   Filterable,
   filterEventsOnVeileder,
-} from '@/utils/hendelseFilteringUtils';
-import { PersonOversiktStatusDTO } from '@/api/types/personoversiktTypes';
-import { useFilters } from '@/context/filters/FilterContext';
-import { useAktivVeilederQuery } from '@/data/veiledereQueryHooks';
-import HendelseFilter from '@/sider/oversikt/filter/HendelseFilter';
-import { Box } from '@navikt/ds-react';
-import { TabType, useTabType } from '@/hooks/useTabType';
-import UfordelteBrukereFilter from '@/sider/oversikt/filter/UfordelteBrukereFilter';
-import VeilederFilter from '@/sider/oversikt/filter/VeilederFilter';
-import CompanyFilter from '@/sider/oversikt/filter/CompanyFilter';
-import BirthDateFilter from '@/sider/oversikt/filter/BirthDateFilter';
-import AgeFilter from '@/sider/oversikt/filter/AgeFilter';
-import DatoFilter from '@/sider/oversikt/filter/DatoFilter';
+} from "@/utils/hendelseFilteringUtils";
+import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
+import { useFilters } from "@/context/filters/FilterContext";
+import { useAktivVeilederQuery } from "@/data/veiledereQueryHooks";
+import HendelseFilter from "@/sider/oversikt/filter/HendelseFilter";
+import { Box } from "@navikt/ds-react";
+import { TabType, useTabType } from "@/hooks/useTabType";
+import UfordelteBrukereFilter from "@/sider/oversikt/filter/UfordelteBrukereFilter";
+import VeilederFilter from "@/sider/oversikt/filter/VeilederFilter";
+import CompanyFilter from "@/sider/oversikt/filter/CompanyFilter";
+import BirthDateFilter from "@/sider/oversikt/filter/BirthDateFilter";
+import AgeFilter from "@/sider/oversikt/filter/AgeFilter";
+import DatoFilter from "@/sider/oversikt/filter/DatoFilter";
 
 interface Props {
   personoversiktData: PersonOversiktStatusDTO[];
@@ -39,18 +39,16 @@ export default function Oversikt({
 
   const personData: PersonregisterState = toPersonData(
     personoversiktData,
-    personSkjermingskode
+    personSkjermingskode,
   );
 
   const eventFilterValue =
     selectedTab === TabType.MIN_OVERSIKT
-      ? [aktivVeilederQuery.data?.ident || '']
+      ? [aktivVeilederQuery.data?.ident || ""]
       : filterState.selectedVeilederIdents;
 
-  const allEvents = new Filterable<PersonregisterState>(
-    personData
-  ).applyFilter((personData) =>
-    filterEventsOnVeileder(personData, eventFilterValue)
+  const allEvents = new Filterable<PersonregisterState>(personData).applyFilter(
+    (personData) => filterEventsOnVeileder(personData, eventFilterValue),
   );
 
   return (

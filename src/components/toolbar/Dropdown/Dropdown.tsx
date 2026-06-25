@@ -1,9 +1,9 @@
-import React, { ChangeEvent, ReactElement } from 'react';
-import styled from 'styled-components';
-import InputWithSearchIcon from '../../InputWithSearchIcon';
-import { VeilederInputButtons } from './VeilederInputButtons';
-import { DropdownButtons, DropdownButtonTexts } from './DropdownButtons';
-import { VeilederDTO } from '@/api/types/veiledereTypes';
+import React, { ChangeEvent, ReactElement } from "react";
+import styled from "styled-components";
+import InputWithSearchIcon from "../../InputWithSearchIcon";
+import { VeilederInputButtons } from "./VeilederInputButtons";
+import { DropdownButtons, DropdownButtonTexts } from "./DropdownButtons";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
 
 interface Props {
   buttonTexts: DropdownButtonTexts;
@@ -40,7 +40,7 @@ const DropdownPanel = styled.section`
 `;
 
 const texts = {
-  noChosenVeilederError: 'Du må velge en veileder for å kunne tildele. ',
+  noChosenVeilederError: "Du må velge en veileder for å kunne tildele. ",
 };
 
 const NoVeilederChosenErrorMessage = styled.p`
@@ -73,7 +73,7 @@ export default function Dropdown(props: Props): ReactElement {
         label=""
         onChange={inputChangeHandler}
         placeholder={placeholder}
-        type={'text'}
+        type={"text"}
         value={input}
       />
 

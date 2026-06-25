@@ -4,13 +4,13 @@ import {
   OppfolgingstilfelleDTO,
   PersonOversiktStatusDTO,
   SenOppfolgingKandidatDTO,
-} from './personoversiktTypes';
-import { AktivitetskravDTO } from '@/api/types/aktivitetskravDTO';
-import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
-import { DialogmotekandidatDTO } from '@/api/types/dialogmotekandidatDTO';
-import { DialogmoteAvventDTO } from '@/api/types/dialogmoteAvvent';
+} from "./personoversiktTypes";
+import { AktivitetskravDTO } from "@/api/types/aktivitetskravDTO";
+import { ManglendeMedvirkningDTO } from "@/api/types/manglendeMedvirkningDTO";
+import { DialogmotekandidatDTO } from "@/api/types/dialogmotekandidatDTO";
+import { DialogmoteAvventDTO } from "@/api/types/dialogmoteAvvent";
 
-export type Skjermingskode = 'INGEN' | 'DISKRESJONSMERKET' | 'EGEN_ANSATT';
+export type Skjermingskode = "INGEN" | "DISKRESJONSMERKET" | "EGEN_ANSATT";
 
 export interface PersonData {
   navn: string;
@@ -45,23 +45,23 @@ export interface PersonSkjermingskode {
 
 export function toPersonData(
   personoversiktData: PersonOversiktStatusDTO[],
-  personSkjermingskode: PersonSkjermingskode[]
+  personSkjermingskode: PersonSkjermingskode[],
 ): PersonregisterState {
   const personDataList: Record<string, PersonData> = {};
 
   personoversiktData.forEach((person) => {
     const matchingPersonRegister = personSkjermingskode?.find(
-      (reg) => reg.fnr === person.fnr
+      (reg) => reg.fnr === person.fnr,
     );
     personDataList[person.fnr] = {
-      navn: person.navn || '',
+      navn: person.navn || "",
       fodselsdato: new Date(person.fodselsdato) || null,
       harMotebehovUbehandlet: person.motebehovUbehandlet || false,
       harDialogmotesvar: person.dialogmotesvarUbehandlet,
       harOppfolgingsplanLPSBistandUbehandlet:
         person.oppfolgingsplanLPSBistandUbehandlet || false,
-      skjermingskode: matchingPersonRegister?.skjermingskode || 'INGEN',
-      tildeltVeilederIdent: person.veilederIdent || '',
+      skjermingskode: matchingPersonRegister?.skjermingskode || "INGEN",
+      tildeltVeilederIdent: person.veilederIdent || "",
       dialogmotekandidatStatus: person.dialogmotekandidatStatus,
       latestOppfolgingstilfelle: person.latestOppfolgingstilfelle,
       harBehandlerdialogUbehandlet: person.behandlerdialogUbehandlet,

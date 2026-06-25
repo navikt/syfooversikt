@@ -1,9 +1,9 @@
-import { HendelseTypeFilter } from '@/context/filters/filterContextState';
+import { HendelseTypeFilter } from "@/context/filters/filterContextState";
 import {
   AgeFilterOption,
   DatoFilterOption,
-} from '@/utils/hendelseFilteringUtils';
-import { DateRange } from '@/sider/oversikt/filter/types.ts';
+} from "@/utils/hendelseFilteringUtils";
+import { DateRange } from "@/sider/oversikt/filter/types.ts";
 
 export enum ActionType {
   SetTekstFilter,

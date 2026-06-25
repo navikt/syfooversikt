@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-import { defaultErrorTexts } from '@/api/errors';
-import { Alert } from '@navikt/ds-react';
+import React, { ReactNode } from "react";
+import { defaultErrorTexts } from "@/api/errors";
+import { Alert } from "@navikt/ds-react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

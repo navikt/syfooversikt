@@ -1,15 +1,15 @@
-import { SYFOPERSON_ROOT } from '@/apiConstants';
-import { useQuery } from '@tanstack/react-query';
-import { post } from '@/api/axios';
-import { PersonSkjermingskode } from '@/api/types/personregisterTypes';
-import { useGetPersonstatusQuery } from '@/data/personoversiktHooks';
-import { FetchPersonregisterFailed } from '@/context/notification/Notifications';
-import { useNotifications } from '@/context/notification/NotificationContext';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
+import { SYFOPERSON_ROOT } from "@/apiConstants";
+import { useQuery } from "@tanstack/react-query";
+import { post } from "@/api/axios";
+import { PersonSkjermingskode } from "@/api/types/personregisterTypes";
+import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
+import { FetchPersonregisterFailed } from "@/context/notification/Notifications";
+import { useNotifications } from "@/context/notification/NotificationContext";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 
 export const personSkjermingskodeQueryKeys = {
   personSkjermingskode: (enhetId: string | undefined) => [
-    'personSkjermingskode',
+    "personSkjermingskode",
     enhetId,
   ],
 };
@@ -24,7 +24,7 @@ export const useGetPersonSkjermingskodeQuery = () => {
   const fetchPersonSkjermingskode = () => {
     const personSkjermingskode = post<PersonSkjermingskode[]>(
       `${SYFOPERSON_ROOT}/person/info`,
-      fnrForPersonerListe
+      fnrForPersonerListe,
     );
 
     return personSkjermingskode || [];
@@ -38,7 +38,7 @@ export const useGetPersonSkjermingskodeQuery = () => {
       handleError: () => {
         displayNotification(FetchPersonregisterFailed);
       },
-      handleSuccess: () => clearNotification('fetchPersonregisterFailed'),
+      handleSuccess: () => clearNotification("fetchPersonregisterFailed"),
     },
   });
 };

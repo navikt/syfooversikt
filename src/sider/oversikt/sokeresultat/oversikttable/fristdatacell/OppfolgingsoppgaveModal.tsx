@@ -1,16 +1,16 @@
-import React from 'react';
-import { BodyLong, BodyShort, Label, Modal } from '@navikt/ds-react';
+import React from "react";
+import { BodyLong, BodyShort, Label, Modal } from "@navikt/ds-react";
 import {
   oppfolgingsgrunnToString,
   OppfolgingsoppgaveDTO,
-} from '@/api/types/personoversiktTypes';
-import { toReadableDate } from '@/utils/dateUtils';
-import { trackModalApnet, trackModalLukket } from '@/utils/umami';
+} from "@/api/types/personoversiktTypes";
+import { toReadableDate } from "@/utils/dateUtils";
+import { trackModalApnet, trackModalLukket } from "@/utils/umami";
 
 const texts = {
-  header: 'Oppfølgingsoppgave',
-  oppfolgingsgrunn: 'Oppfølgingsgrunn',
-  frist: 'Frist',
+  header: "Oppfølgingsoppgave",
+  oppfolgingsgrunn: "Oppfølgingsgrunn",
+  frist: "Frist",
 };
 
 interface Props {

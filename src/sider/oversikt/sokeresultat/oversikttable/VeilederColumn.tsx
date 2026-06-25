@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
-import { useVeiledereQuery } from '@/data/veiledereQueryHooks';
-import { PersonData } from '@/api/types/personregisterTypes';
-import { Tag } from '@navikt/ds-react';
+import React, { ReactElement } from "react";
+import { useVeiledereQuery } from "@/data/veiledereQueryHooks";
+import { PersonData } from "@/api/types/personregisterTypes";
+import { Tag } from "@navikt/ds-react";
 
 const VeilederName = ({ veilederIdent }: { veilederIdent: string }) => {
   const { data } = useVeiledereQuery();

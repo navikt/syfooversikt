@@ -1,9 +1,9 @@
-import * as React from 'react';
-import styled, { css } from 'styled-components';
-import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
-import themes from '../../../styles/themes';
-import SearchIcon from '../../../img/icons/SearchIcon';
-import { ReactElement } from 'react';
+import * as React from "react";
+import styled, { css } from "styled-components";
+import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
+import themes from "../../../styles/themes";
+import SearchIcon from "../../../img/icons/SearchIcon";
+import { ReactElement } from "react";
 
 interface ButtonDivProps {
   active: boolean;
@@ -71,7 +71,7 @@ interface AssignToVeilederButtonProps {
 }
 
 export const OpenDropdownButton = (
-  props: AssignToVeilederButtonProps
+  props: AssignToVeilederButtonProps,
 ): ReactElement => {
   return (
     <ButtonDiv className="openDropdownButton" active={props.active}>

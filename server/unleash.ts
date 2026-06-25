@@ -1,9 +1,9 @@
-import { initialize, Strategy, Context } from 'unleash-client';
-import { unleashConfig } from './config.js';
+import { initialize, Strategy, Context } from "unleash-client";
+import { unleashConfig } from "./config.js";
 
 class VeilederIds extends Strategy {
   constructor() {
-    super('VeilederIds');
+    super("VeilederIds");
   }
 
   isEnabled(parameters: any, context: Context) {
@@ -13,7 +13,7 @@ class VeilederIds extends Strategy {
 
 class EnhetIds extends Strategy {
   constructor() {
-    super('EnhetIds');
+    super("EnhetIds");
   }
 
   isEnabled(parameters: any, context: Context) {
@@ -22,8 +22,8 @@ class EnhetIds extends Strategy {
 }
 
 export const unleash = initialize({
-  url: unleashConfig.serverApiUrl + '/api',
-  appName: 'syfooversikt',
+  url: unleashConfig.serverApiUrl + "/api",
+  appName: "syfooversikt",
   customHeaders: { Authorization: unleashConfig.serverApiToken },
   strategies: [new VeilederIds(), new EnhetIds()],
 });
@@ -35,16 +35,16 @@ export function getUnleashToggles(veilederId: any, enhetId: any) {
   };
   return {
     isRutingFlexjarEnabled: unleash.isEnabled(
-      'isRutingFlexjarEnabled',
-      context
+      "isRutingFlexjarEnabled",
+      context,
     ),
     isTildelOppfolgingsenhetEnabled: unleash.isEnabled(
-      'isTildelOppfolgingsenhetEnabled',
-      context
+      "isTildelOppfolgingsenhetEnabled",
+      context,
     ),
     isKartleggingssporsmalEnabled: unleash.isEnabled(
-      'isKartleggingssporsmalEnabled',
-      context
+      "isKartleggingssporsmalEnabled",
+      context,
     ),
   };
 }

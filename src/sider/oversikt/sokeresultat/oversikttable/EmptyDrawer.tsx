@@ -1,10 +1,10 @@
-import React from 'react';
-import { BodyShort } from '@navikt/ds-react';
-import EmptyDrawerImage from '@/svg/EmptyDrawer.svg';
+import React from "react";
+import { BodyShort } from "@navikt/ds-react";
+import EmptyDrawerImage from "@/svg/EmptyDrawer.svg";
 
 const texts = {
-  ingenHendelser: 'Vi finner ingen personer som har hendelser',
-  altText: 'Her var det ikke mye',
+  ingenHendelser: "Vi finner ingen personer som har hendelser",
+  altText: "Her var det ikke mye",
 };
 
 export default function EmptyDrawer() {

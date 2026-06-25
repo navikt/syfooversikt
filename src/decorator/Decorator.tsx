@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { decoratorConfig } from './decoratorConfig';
-import { linkToNewHostAndPath, Subdomain } from '@/utils/miljoUtil';
-import { useAktivBruker } from '@/data/modiacontext/useAktivBruker';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext.tsx';
+import React, { useLayoutEffect, useRef } from "react";
+import { decoratorConfig } from "./decoratorConfig";
+import { linkToNewHostAndPath, Subdomain } from "@/utils/miljoUtil";
+import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext.tsx";
 
 const Decorator = () => {
   const aktivEnhet = useAktivEnhet();
@@ -15,7 +15,7 @@ const Decorator = () => {
         onSuccess: () => {
           window.location.href = linkToNewHostAndPath(
             Subdomain.SYFOMODIAPERSON,
-            `/sykefravaer`
+            `/sykefravaer`,
           );
         },
       });
@@ -34,12 +34,12 @@ const Decorator = () => {
       if (fnr) handlePersonsokSubmit(fnr);
     };
 
-    decoratorElement.addEventListener('fnr-changed', onFnrChanged);
-    decoratorElement.addEventListener('enhet-changed', onEnhetChanged);
+    decoratorElement.addEventListener("fnr-changed", onFnrChanged);
+    decoratorElement.addEventListener("enhet-changed", onEnhetChanged);
 
     return () => {
-      decoratorElement.removeEventListener('fnr-changed', onFnrChanged);
-      decoratorElement.removeEventListener('enhet-changed', onEnhetChanged);
+      decoratorElement.removeEventListener("fnr-changed", onFnrChanged);
+      decoratorElement.removeEventListener("enhet-changed", onEnhetChanged);
     };
   });
 
@@ -48,7 +48,7 @@ const Decorator = () => {
       ref={decoratorRef}
       app-name={decoratorConfig.appName}
       fetch-active-enhet-on-mount={String(
-        decoratorConfig.fetchActiveEnhetOnMount
+        decoratorConfig.fetchActiveEnhetOnMount,
       )}
       show-enheter={String(decoratorConfig.showEnheter)}
       show-search-area={String(decoratorConfig.showSearchArea)}

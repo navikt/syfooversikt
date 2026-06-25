@@ -1,29 +1,29 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   isUbehandlet,
   PersonOversiktStatusDTO,
-} from '@/api/types/personoversiktTypes';
-import { get, post } from '@/api/axios';
-import { useAktivEnhet } from '@/context/aktivEnhet/AktivEnhetContext';
-import { useNotifications } from '@/context/notification/NotificationContext';
-import { FetchPersonoversiktFailed } from '@/context/notification/Notifications';
-import { minutesToMillis } from '@/utils/timeUtils';
-import { useMemo } from 'react';
-import { PERSONOVERSIKT_ROOT } from '@/apiConstants';
-import { SokDTO } from '@/api/types/sokDTO';
-import { useGetFeatureToggles } from '@/data/unleash/unleashQueryHooks';
+} from "@/api/types/personoversiktTypes";
+import { get, post } from "@/api/axios";
+import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
+import { useNotifications } from "@/context/notification/NotificationContext";
+import { FetchPersonoversiktFailed } from "@/context/notification/Notifications";
+import { minutesToMillis } from "@/utils/timeUtils";
+import { useMemo } from "react";
+import { PERSONOVERSIKT_ROOT } from "@/apiConstants";
+import { SokDTO } from "@/api/types/sokDTO";
+import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 
 function filterIsUbehandlet(
   personOversiktStatusList: PersonOversiktStatusDTO[],
-  isKartleggingssporsmalEnabled: boolean
+  isKartleggingssporsmalEnabled: boolean,
 ): PersonOversiktStatusDTO[] {
   return personOversiktStatusList.filter((personStatus) =>
-    isUbehandlet(personStatus, isKartleggingssporsmalEnabled)
+    isUbehandlet(personStatus, isKartleggingssporsmalEnabled),
   );
 }
 
 export const personoversiktQueryKeys = {
-  personoversikt: ['personoversikt'],
+  personoversikt: ["personoversikt"],
   personoversiktEnhet: (enhetId?: string) => [
     ...personoversiktQueryKeys.personoversikt,
     enhetId,
@@ -37,7 +37,7 @@ export const useGetPersonstatusQuery = () => {
 
   const fetchPersonoversikt = () => {
     const personoversiktData = get<PersonOversiktStatusDTO[]>(
-      `${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhet}`
+      `${PERSONOVERSIKT_ROOT}/enhet/${aktivEnhet}`,
     );
     return personoversiktData || [];
   };
@@ -51,7 +51,7 @@ export const useGetPersonstatusQuery = () => {
       handleError: () => {
         displayNotification(FetchPersonoversiktFailed);
       },
-      handleSuccess: () => clearNotification('fetchPersonoversiktFailed'),
+      handleSuccess: () => clearNotification("fetchPersonoversiktFailed"),
     },
   });
 
@@ -62,10 +62,10 @@ export const useGetPersonstatusQuery = () => {
         query.data
           ? filterIsUbehandlet(
               query.data,
-              toggles.isKartleggingssporsmalEnabled
+              toggles.isKartleggingssporsmalEnabled,
             )
           : [],
-      [query.data, toggles.isKartleggingssporsmalEnabled]
+      [query.data, toggles.isKartleggingssporsmalEnabled],
     ),
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Alert,
   BodyShort,
@@ -10,53 +10,53 @@ import {
   Radio,
   RadioGroup,
   Textarea,
-} from '@navikt/ds-react';
+} from "@navikt/ds-react";
 import {
   FlexjarFeedbackDTO,
   useFlexjarFeedback,
-} from '@/data/flexjar/useFlexjarFeedback';
-import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
-import { defaultErrorTexts } from '@/api/errors';
-import { StoreKey, useLocalStorageState } from '@/hooks/useLocalStorageState';
+} from "@/data/flexjar/useFlexjarFeedback";
+import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
+import { defaultErrorTexts } from "@/api/errors";
+import { StoreKey, useLocalStorageState } from "@/hooks/useLocalStorageState";
 
 const texts = {
-  apneKnapp: 'Flytter du sykmeldte mellom enheter?',
-  anonym: 'Anonym tilbakemelding',
+  apneKnapp: "Flytter du sykmeldte mellom enheter?",
+  anonym: "Anonym tilbakemelding",
   feedbackLabelDescription:
-    'Ikke skriv inn navn eller andre personopplysninger.',
+    "Ikke skriv inn navn eller andre personopplysninger.",
   followupQuestion:
-    'Hva er årsaken til/bakgrunnen for flyttingen? (Velg en eller flere)',
+    "Hva er årsaken til/bakgrunnen for flyttingen? (Velg en eller flere)",
   utdypendeAnnenIntern:
-    'Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).',
+    "Utdyp gjerne hvordan dere er organisert og hvorfor organiseringen medfører flytting av brukere (valgfritt).",
   utdypendeAnnet:
     'Utdyp gjerne hva "Annet" er og hvorfor det medfører flytting av brukere (valgfritt).',
-  send: 'Send',
-  validation: 'Vennligst velg en tilbakemelding',
-  success: 'Takk for din tilbakemelding!',
-  sporsmal: 'Bruker du Arena til å flytte sykmeldte mellom enheter?',
+  send: "Send",
+  validation: "Vennligst velg en tilbakemelding",
+  success: "Takk for din tilbakemelding!",
+  sporsmal: "Bruker du Arena til å flytte sykmeldte mellom enheter?",
 };
 
 const checkboxValue = {
-  brukerFlyttet: 'brukerFlyttet',
-  navUtland: 'navUtland',
-  virksomhetsorganisering: 'virksomhetsorganisering',
-  annenIntern: 'annenIntern',
-  annet: 'annet',
+  brukerFlyttet: "brukerFlyttet",
+  navUtland: "navUtland",
+  virksomhetsorganisering: "virksomhetsorganisering",
+  annenIntern: "annenIntern",
+  annet: "annet",
 };
 
 const checkboxValueToLabel: {
   [key: string]: string;
 } = {
-  [checkboxValue.brukerFlyttet]: 'Bruker har flyttet',
-  [checkboxValue.navUtland]: 'Tilhører Nav utland',
-  [checkboxValue.virksomhetsorganisering]: 'Virksomhetsorganisering',
-  [checkboxValue.annenIntern]: 'Annen intern organisering',
-  [checkboxValue.annet]: 'Annet',
+  [checkboxValue.brukerFlyttet]: "Bruker har flyttet",
+  [checkboxValue.navUtland]: "Tilhører Nav utland",
+  [checkboxValue.virksomhetsorganisering]: "Virksomhetsorganisering",
+  [checkboxValue.annenIntern]: "Annen intern organisering",
+  [checkboxValue.annet]: "Annet",
 };
 
 enum RadioOption {
-  JA = 'Ja',
-  NEI = 'Nei',
+  JA = "Ja",
+  NEI = "Nei",
 }
 
 interface Props {
@@ -66,23 +66,21 @@ interface Props {
 export default function RutingFlexjar({ side }: Props) {
   const [isApen, setIsApen] = useState<boolean>(true);
   const [annet, setAnnet] = useState<string>();
-  const [
-    annenInternOrganisering,
-    setAnnenInternOrganisering,
-  ] = useState<string>();
+  const [annenInternOrganisering, setAnnenInternOrganisering] =
+    useState<string>();
   const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
   const [radioValue, setRadioValue] = useState<RadioOption | null>(null);
   const sendFeedback = useFlexjarFeedback();
   const [, setFeedbackDate] = useLocalStorageState<Date | null>(
     StoreKey.FLEXJAR_RUTING_FEEDBACK_DATE,
-    null
+    null,
   );
 
   const toggleApen = () => {
     if (isApen) {
       setRadioValue(null);
-      setAnnet('');
-      setAnnenInternOrganisering('');
+      setAnnet("");
+      setAnnenInternOrganisering("");
       setSelectedCheckboxes([]);
     }
     setIsApen(!isApen);
@@ -93,31 +91,31 @@ export default function RutingFlexjar({ side }: Props) {
       ? `${
           checkboxValueToLabel[checkboxValue.annenIntern]
         }: ${annenInternOrganisering}`
-      : '';
+      : "";
     const annetSvar = annet
       ? `${checkboxValueToLabel[checkboxValue.annet]}: ${annet}`
-      : '';
+      : "";
     const utdypendeSvar = [annen, annetSvar]
       .filter((value) => value)
       .map((value) => `{${value}}`)
-      .join(', ');
-    return utdypendeSvar !== '' ? ` - [${utdypendeSvar}]` : '';
+      .join(", ");
+    return utdypendeSvar !== "" ? ` - [${utdypendeSvar}]` : "";
   };
 
   const handleSubmit = () => {
     const selectedValues = selectedCheckboxes
       .map((valg) => checkboxValueToLabel[valg])
-      .join(', ');
+      .join(", ");
     const feedbackString =
       radioValue === RadioOption.JA
         ? `[${selectedValues}]${utdypendeSvar()}`
         : undefined;
     if (radioValue) {
       const body: FlexjarFeedbackDTO = {
-        feedbackId: side + ' - Ruting',
+        feedbackId: side + " - Ruting",
         feedback: feedbackString,
         svar: radioValue,
-        app: 'syfooversikt',
+        app: "syfooversikt",
       };
       sendFeedback.mutate(body, {
         onSuccess: () => setFeedbackDate(new Date()),
@@ -138,7 +136,7 @@ export default function RutingFlexjar({ side }: Props) {
       </Button>
       {isApen && (
         <Box
-          background={'default'}
+          background={"default"}
           borderColor="neutral"
           borderWidth="2"
           shadow="dialog"
@@ -208,7 +206,7 @@ export default function RutingFlexjar({ side }: Props) {
                       </BodyShort>
                     </div>
                   }
-                  value={annenInternOrganisering ?? ''}
+                  value={annenInternOrganisering ?? ""}
                   onChange={(e) => setAnnenInternOrganisering(e.target.value)}
                 />
               )}
@@ -226,7 +224,7 @@ export default function RutingFlexjar({ side }: Props) {
                       </BodyShort>
                     </div>
                   }
-                  value={annet ?? ''}
+                  value={annet ?? ""}
                   onChange={(e) => setAnnet(e.target.value)}
                 />
               )}

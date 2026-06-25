@@ -1,16 +1,16 @@
-import { Table } from '@navikt/ds-react';
-import React from 'react';
-import { PersonData } from '@/api/types/personregisterTypes';
+import { Table } from "@navikt/ds-react";
+import React from "react";
+import { PersonData } from "@/api/types/personregisterTypes";
 import {
   AktivitetskravStatus,
   avventVurderingArsakTexts,
   OnskerOppfolging,
   oppfolgingsgrunnToString,
   SenOppfolgingKandidatDTO,
-} from '@/api/types/personoversiktTypes';
-import { isPast } from '@/utils/dateUtils';
-import { ManglendeMedvirkningDTO } from '@/api/types/manglendeMedvirkningDTO';
-import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
+} from "@/api/types/personoversiktTypes";
+import { isPast } from "@/utils/dateUtils";
+import { ManglendeMedvirkningDTO } from "@/api/types/manglendeMedvirkningDTO";
+import { AktivitetskravvurderingDTO } from "@/api/types/aktivitetskravDTO";
 
 interface Props {
   personData: PersonData;
@@ -22,35 +22,35 @@ function mapAktivitetskravStatus(personData: PersonData): string {
     personData.aktivitetskravvurdering?.vurderinger[0];
   switch (status) {
     case AktivitetskravStatus.NY:
-      return '- Ny kandidat';
+      return "- Ny kandidat";
     case AktivitetskravStatus.NY_VURDERING:
-      return '- Ny vurdering';
+      return "- Ny vurdering";
     case AktivitetskravStatus.AVVENT:
-      return '- Avventer' + getAvventArsakerText(aktivitetskravVurdering);
+      return "- Avventer" + getAvventArsakerText(aktivitetskravVurdering);
     case AktivitetskravStatus.FORHANDSVARSEL:
       const svarfrist =
         personData.aktivitetskravvurdering?.vurderinger[0]?.varsel?.svarfrist;
 
       if (svarfrist) {
         return isPast(svarfrist)
-          ? '- Forhåndsvarsel utløpt'
-          : '- Forhåndsvarsel sendt';
+          ? "- Forhåndsvarsel utløpt"
+          : "- Forhåndsvarsel sendt";
       }
 
-      return '';
+      return "";
     default:
-      return '';
+      return "";
   }
 }
 
 function getAvventArsakerText(
-  aktivitetskravVurdering?: AktivitetskravvurderingDTO | null
+  aktivitetskravVurdering?: AktivitetskravvurderingDTO | null,
 ): string {
   if (
     !aktivitetskravVurdering?.arsaker ||
     aktivitetskravVurdering?.arsaker.length == 0
   ) {
-    return '';
+    return "";
   }
   const arsaker = aktivitetskravVurdering?.arsaker;
 
@@ -58,44 +58,44 @@ function getAvventArsakerText(
     .sort()
     .reverse()
     .map((arsak) => avventVurderingArsakTexts[arsak])
-    .join(', ')})`;
+    .join(", ")})`;
 }
 
 function mapArbeidsuforhetStatus(svarfrist: Date | undefined) {
   if (svarfrist) {
-    return isPast(svarfrist) ? 'Forhåndsvarsel utløpt' : 'Forhåndsvarsel sendt';
+    return isPast(svarfrist) ? "Forhåndsvarsel utløpt" : "Forhåndsvarsel sendt";
   }
 
-  return '';
+  return "";
 }
 
 function mapManglendeMedvirkningStatus(
-  manglendeMedvirkning: ManglendeMedvirkningDTO
+  manglendeMedvirkning: ManglendeMedvirkningDTO,
 ) {
   const svarfrist = manglendeMedvirkning.varsel?.svarfrist;
   if (svarfrist) {
-    return isPast(svarfrist) ? 'Forhåndsvarsel utløpt' : 'Forhåndsvarsel sendt';
+    return isPast(svarfrist) ? "Forhåndsvarsel utløpt" : "Forhåndsvarsel sendt";
   }
 
-  return '';
+  return "";
 }
 
 function mapSenOppfolgingStatus(
-  senOppfolgingKandidat: SenOppfolgingKandidatDTO
+  senOppfolgingKandidat: SenOppfolgingKandidatDTO,
 ): string {
   const svar = senOppfolgingKandidat.svar;
   const varselAt = senOppfolgingKandidat.varselAt;
 
   if (svar) {
     if (svar.onskerOppfolging === OnskerOppfolging.JA) {
-      return 'Ønsker oppfølging';
+      return "Ønsker oppfølging";
     } else {
-      return 'Ønsker ikke oppfølging';
+      return "Ønsker ikke oppfølging";
     }
   } else if (varselAt && svar === null) {
-    return 'Ikke svart';
+    return "Ikke svart";
   }
-  return '';
+  return "";
 }
 
 interface Hendelse {
@@ -135,46 +135,46 @@ export function getHendelser(personData: PersonData): Hendelse[] {
   if (personData.arbeidsuforhetvurdering) {
     hendelser.push({
       beskrivelse: `Arbeidsuførhet - ${mapArbeidsuforhetStatus(
-        personData.arbeidsuforhetvurdering.varsel?.svarfrist
+        personData.arbeidsuforhetvurdering.varsel?.svarfrist,
       )}`,
       frist: personData.arbeidsuforhetvurdering.varsel?.svarfrist ?? undefined,
     });
   }
   if (personData.behandlerBerOmBistandUbehandlet) {
     hendelser.push({
-      beskrivelse: 'Bistandsbehov fra behandler',
+      beskrivelse: "Bistandsbehov fra behandler",
     });
   }
   if (personData.harBehandlerdialogUbehandlet) {
     hendelser.push({
-      beskrivelse: 'Dialogmelding',
+      beskrivelse: "Dialogmelding",
     });
   }
   if (personData.dialogmotekandidatStatus?.isKandidat) {
     if (personData.dialogmoteAvvent) {
       hendelser.push({
-        beskrivelse: 'Dialogmøte - Avventer',
+        beskrivelse: "Dialogmøte - Avventer",
         frist: personData.dialogmoteAvvent.frist,
       });
     } else {
       hendelser.push({
-        beskrivelse: 'Dialogmøte - Kandidat',
+        beskrivelse: "Dialogmøte - Kandidat",
       });
     }
   }
   if (personData.harMotebehovUbehandlet) {
     hendelser.push({
-      beskrivelse: 'Dialogmøte - Møtebehov',
+      beskrivelse: "Dialogmøte - Møtebehov",
     });
   }
   if (personData.harDialogmotesvar) {
     hendelser.push({
-      beskrivelse: 'Dialogmøte - Nytt svar',
+      beskrivelse: "Dialogmøte - Nytt svar",
     });
   }
   if (personData.friskmeldingTilArbeidsformidlingFom) {
     hendelser.push({
-      beskrivelse: 'Friskmelding til arbeidsformidling',
+      beskrivelse: "Friskmelding til arbeidsformidling",
       frist: personData.friskmeldingTilArbeidsformidlingFom,
     });
   }
@@ -183,33 +183,33 @@ export function getHendelser(personData: PersonData): Hendelse[] {
       oppfolgingsgrunnToString[personData.oppfolgingsoppgave.oppfolgingsgrunn]
         ?.short;
     hendelser.push({
-      beskrivelse: `Oppf.oppgave - ${oppfolgingsgrunn ?? ''}`,
+      beskrivelse: `Oppf.oppgave - ${oppfolgingsgrunn ?? ""}`,
       frist: personData.oppfolgingsoppgave.frist ?? undefined,
     });
   }
   if (personData.harOppfolgingsplanLPSBistandUbehandlet) {
     hendelser.push({
-      beskrivelse: 'Oppfølgingsplan',
+      beskrivelse: "Oppfølgingsplan",
     });
   }
   if (personData.senOppfolgingKandidat) {
     hendelser.push({
       beskrivelse: `Snart slutt på sykepengene - ${mapSenOppfolgingStatus(
-        personData.senOppfolgingKandidat
+        personData.senOppfolgingKandidat,
       )}`,
     });
   }
   if (personData.manglendeMedvirkning) {
     hendelser.push({
       beskrivelse: `Manglende medvirkning - ${mapManglendeMedvirkningStatus(
-        personData.manglendeMedvirkning
+        personData.manglendeMedvirkning,
       )}`,
       frist: personData.manglendeMedvirkning.varsel?.svarfrist ?? undefined,
     });
   }
   if (personData.isAktivKartleggingssporsmalVurdering) {
     hendelser.push({
-      beskrivelse: 'Svart på kartleggingsspørsmål',
+      beskrivelse: "Svart på kartleggingsspørsmål",
     });
   }
   return hendelser.sort(byFristOrBottom);

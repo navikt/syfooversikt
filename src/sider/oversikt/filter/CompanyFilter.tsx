@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react';
-import { UNSAFE_Combobox } from '@navikt/ds-react';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { useFilters } from '@/context/filters/FilterContext';
-import { PersonregisterState } from '@/api/types/personregisterTypes';
-import { mapPersonregisterToCompanyList } from '@/utils/personDataUtil';
+import React, { ReactElement } from "react";
+import { UNSAFE_Combobox } from "@navikt/ds-react";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { useFilters } from "@/context/filters/FilterContext";
+import { PersonregisterState } from "@/api/types/personregisterTypes";
+import { mapPersonregisterToCompanyList } from "@/utils/personDataUtil";
 
 const texts = {
-  title: 'Virksomheter',
-  placeholder: 'Velg virksomheter',
+  title: "Virksomheter",
+  placeholder: "Velg virksomheter",
 };
 
 interface Props {

@@ -4,25 +4,25 @@ import {
   CheckboxGroup,
   DatePicker,
   useRangeDatepicker,
-} from '@navikt/ds-react';
-import { DatoFilterOption } from '@/utils/hendelseFilteringUtils';
-import React from 'react';
-import { ActionType } from '@/context/filters/filterContextActions';
-import { useFilters } from '@/context/filters/FilterContext';
-import { DateRange } from '@/sider/oversikt/filter/types.ts';
+} from "@navikt/ds-react";
+import { DatoFilterOption } from "@/utils/hendelseFilteringUtils";
+import React from "react";
+import { ActionType } from "@/context/filters/filterContextActions";
+import { useFilters } from "@/context/filters/FilterContext";
+import { DateRange } from "@/sider/oversikt/filter/types.ts";
 
 const texts = {
-  legend: 'Dato',
+  legend: "Dato",
   option: {
-    past: 'Før dagens dato',
-    today: 'Dagens dato',
-    future: 'Fremtidige datoer',
-    custom: 'Egendefinerte datoer',
+    past: "Før dagens dato",
+    today: "Dagens dato",
+    future: "Fremtidige datoer",
+    custom: "Egendefinerte datoer",
   },
   datePicker: {
-    description: 'Format: dd.mm.åååå',
-    labelFrom: 'Fra',
-    labelTo: 'Til',
+    description: "Format: dd.mm.åååå",
+    labelFrom: "Fra",
+    labelTo: "Til",
   },
 };
 
@@ -79,13 +79,13 @@ export default function DatoFilter() {
       <Checkbox value={DatoFilterOption.Custom}>{texts.option.custom}</Checkbox>
 
       {selectedDatoOptions?.includes(DatoFilterOption.Custom) && (
-        <Box className={'ml-4 mt-2'}>
+        <Box className={"ml-4 mt-2"}>
           <DatePicker {...datepickerProps}>
             <DatePicker.Input
               {...fromInputProps}
               label={texts.datePicker.labelFrom}
               description={texts.datePicker.description}
-              className={'mb-2'}
+              className={"mb-2"}
             />
             <DatePicker.Input
               {...toInputProps}

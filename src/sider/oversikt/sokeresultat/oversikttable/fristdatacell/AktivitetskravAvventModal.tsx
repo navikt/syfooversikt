@@ -1,15 +1,15 @@
-import { BodyLong, BodyShort, Label, Modal } from '@navikt/ds-react';
-import { toReadableDate } from '@/utils/dateUtils';
-import React from 'react';
-import { AktivitetskravvurderingDTO } from '@/api/types/aktivitetskravDTO';
-import { avventVurderingArsakTexts } from '@/api/types/personoversiktTypes';
-import { trackModalApnet, trackModalLukket } from '@/utils/umami';
+import { BodyLong, BodyShort, Label, Modal } from "@navikt/ds-react";
+import { toReadableDate } from "@/utils/dateUtils";
+import React from "react";
+import { AktivitetskravvurderingDTO } from "@/api/types/aktivitetskravDTO";
+import { avventVurderingArsakTexts } from "@/api/types/personoversiktTypes";
+import { trackModalApnet, trackModalLukket } from "@/utils/umami";
 
 const texts = {
-  header: 'Aktivitetskrav avvent vurdering',
-  avventArsak: 'Årsak',
-  frist: 'Frist',
-  ingenArsakOppgitt: 'Ingen årsak oppgitt',
+  header: "Aktivitetskrav avvent vurdering",
+  avventArsak: "Årsak",
+  frist: "Frist",
+  ingenArsakOppgitt: "Ingen årsak oppgitt",
 };
 
 interface Props {
@@ -26,7 +26,7 @@ export default function AktivitetskravAvventModal({
   sykmeldtNavn,
 }: Props) {
   const arsaker = vurdering?.arsaker.map(
-    (arsak) => avventVurderingArsakTexts[arsak]
+    (arsak) => avventVurderingArsakTexts[arsak],
   );
   const frist = toReadableDate(vurdering?.frist ?? null);
 
@@ -34,7 +34,7 @@ export default function AktivitetskravAvventModal({
     if (!arsaker || arsaker.length === 0) {
       return texts.ingenArsakOppgitt;
     } else {
-      return `${arsaker.join(', ')}`;
+      return `${arsaker.join(", ")}`;
     }
   }
 
