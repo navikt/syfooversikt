@@ -16,7 +16,10 @@ export const MAX_QUERY_RETRIES = 3;
  * will not succeed on a subsequent attempt. Other failures (network errors,
  * 5xx, etc.) are retried up to {@link MAX_QUERY_RETRIES} times.
  */
-export function shouldRetryQuery(failureCount: number, error: unknown): boolean {
+export function shouldRetryQuery(
+  failureCount: number,
+  error: unknown,
+): boolean {
   if (is4xxError(error)) {
     return false;
   }
