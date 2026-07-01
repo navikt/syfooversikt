@@ -14,7 +14,7 @@ const personoversiktEnhet = (generatedPersons: MockPerson[]) => [
 
 export const mockPersonoversikt = (generatedPersons: MockPerson[]) =>
   http.get(`${PERSONOVERSIKT_ROOT}/enhet/:id`, () =>
-    HttpResponse.json(personoversiktEnhet(generatedPersons)),
+    HttpResponse.json(personoversiktEnhet(generatedPersons), { status: 500 }),
   );
 
 export function mockSokPerson() {
