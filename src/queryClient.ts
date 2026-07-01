@@ -60,6 +60,7 @@ export const queryClient = new QueryClient({
       gcTime: minutesToMillis(60),
       staleTime: minutesToMillis(30),
       retry: shouldRetryQuery,
+      retryOnMount: false,
     },
   },
 });
