@@ -75,3 +75,16 @@ export const isClientError = (error: unknown): boolean =>
   error.error.type !== ErrorType.LOGIN_REQUIRED &&
   !!error.code &&
   error.code.toString().startsWith("4");
+
+/**
+ * Checks whether the given error represents an HTTP 4xx client error response
+ * (status code in the 400-499 range), including 401 and 403.
+ *
+ * Unlike {@link isClientError}, this does not exclude LOGIN_REQUIRED (401), so
+ * it can be used to determine that a request should not be retried.
+ */
+export const is4xxError = (error: unknown): boolean =>
+  error instanceof ApiErrorException &&
+  error.code !== undefined &&
+  error.code >= 400 &&
+  error.code < 500;
