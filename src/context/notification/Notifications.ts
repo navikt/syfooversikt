@@ -3,6 +3,7 @@ import { AlertProps } from "@navikt/ds-react";
 export type NotificationType =
   | "fetchPersonoversiktFailed"
   | "fetchPersonregisterFailed"
+  | "fetchPersonoversiktTilgangFailed"
   | "fetchVeiledereFailed"
   | "fetchAktivVeilederFailed"
   | "tildelVeilederFailed"
@@ -49,6 +50,12 @@ export const FetchPersonoversiktFailed: Notification = {
   variant: "error",
   message:
     "Vi klarte ikke laste inn personoversikten. Du vil ikke kunne se noen hendelser. Vennligst prøv igjen senere.",
+};
+
+export const FetchPersonoversiktTilgangFailed: Notification = {
+  type: "fetchPersonoversiktTilgangFailed",
+  variant: "error",
+  message: "Du har ikke tilgang til å hente personoversikt.",
 };
 
 export const FetchPersonregisterFailed: Notification = {

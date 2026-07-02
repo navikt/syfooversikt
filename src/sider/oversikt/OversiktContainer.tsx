@@ -42,7 +42,7 @@ export default function OversiktContainer(): ReactElement {
       <div className="flex flex-col mx-8">
         <NavigationBar />
         <NotificationBar />
-        {getPersonstatusQuery.isLoading ? (
+        {getPersonstatusQuery.isLoading && !getPersonstatusQuery.isFetched ? (
           <AppSpinner />
         ) : (
           <Oversikt

@@ -6,12 +6,16 @@ import {
 import { get, post } from "@/api/axios";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext";
 import { useNotifications } from "@/context/notification/NotificationContext";
-import { FetchPersonoversiktFailed } from "@/context/notification/Notifications";
+import {
+  FetchPersonoversiktFailed,
+  FetchPersonoversiktTilgangFailed,
+} from "@/context/notification/Notifications";
 import { minutesToMillis } from "@/utils/timeUtils";
 import { useMemo } from "react";
 import { PERSONOVERSIKT_ROOT } from "@/apiConstants";
 import { SokDTO } from "@/api/types/sokDTO";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
+import { ApiErrorException } from "@/api/errors.ts";
 
 function filterIsUbehandlet(
   personOversiktStatusList: PersonOversiktStatusDTO[],
@@ -48,10 +52,17 @@ export const useGetPersonstatusQuery = () => {
     enabled: !!aktivEnhet,
     staleTime: minutesToMillis(5),
     meta: {
-      handleError: () => {
-        displayNotification(FetchPersonoversiktFailed);
+      handleError: (error) => {
+        if (error instanceof ApiErrorException && error.code === 403) {
+          displayNotification(FetchPersonoversiktTilgangFailed);
+        } else {
+          displayNotification(FetchPersonoversiktFailed);
+        }
       },
-      handleSuccess: () => clearNotification("fetchPersonoversiktFailed"),
+      handleSuccess: () => {
+        clearNotification("fetchPersonoversiktFailed");
+        clearNotification("fetchPersonoversiktTilgangFailed");
+      },
     },
   });
 
