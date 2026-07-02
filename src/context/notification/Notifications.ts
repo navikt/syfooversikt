@@ -49,13 +49,13 @@ export const FetchPersonoversiktFailed: Notification = {
   type: "fetchPersonoversiktFailed",
   variant: "error",
   message:
-    "Vi klarte ikke laste inn personoversikten. Du vil ikke kunne se noen hendelser. Vennligst prøv igjen senere.",
+    "Vi klarte ikke laste inn oversikten. Du vil ikke kunne se noen hendelser. Vennligst prøv igjen senere.",
 };
 
 export const FetchPersonoversiktTilgangFailed: Notification = {
   type: "fetchPersonoversiktTilgangFailed",
   variant: "error",
-  message: "Du har ikke tilgang til å hente personoversikt.",
+  message: "Du har ikke tilgang til å hente oversikten.",
 };
 
 export const FetchPersonregisterFailed: Notification = {

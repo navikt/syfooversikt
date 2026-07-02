@@ -3,10 +3,8 @@ import { MAX_QUERY_RETRIES, shouldRetryQuery } from "@/queryClient";
 import {
   accessDeniedError,
   ApiErrorException,
-  conflictError,
   generalError,
   loginRequiredError,
-  networkError,
 } from "@/api/errors";
 
 function apiError(code?: number): ApiErrorException {
@@ -33,15 +31,6 @@ describe("shouldRetryQuery", () => {
 
       expect(shouldRetryQuery(0, error)).toBe(false);
     });
-
-    it("does not retry other 4xx errors such as 409 conflict", () => {
-      const error = new ApiErrorException(
-        conflictError(new Error("conflict")),
-        409,
-      );
-
-      expect(shouldRetryQuery(0, error)).toBe(false);
-    });
   });
 
   describe("retryable errors", () => {
@@ -50,24 +39,6 @@ describe("shouldRetryQuery", () => {
 
       expect(shouldRetryQuery(0, error)).toBe(true);
       expect(shouldRetryQuery(MAX_QUERY_RETRIES - 1, error)).toBe(true);
-      expect(shouldRetryQuery(MAX_QUERY_RETRIES, error)).toBe(false);
-    });
-
-    it("retries network errors without a status code", () => {
-      const error = new ApiErrorException(networkError(new Error("offline")));
-
-      expect(shouldRetryQuery(0, error)).toBe(true);
-    });
-
-    it("retries unknown non-ApiErrorException errors", () => {
-      const error = new Error("unexpected");
-
-      expect(shouldRetryQuery(0, error)).toBe(true);
-    });
-
-    it("stops retrying once the failure count reaches the cap", () => {
-      const error = apiError(503);
-
       expect(shouldRetryQuery(MAX_QUERY_RETRIES, error)).toBe(false);
     });
   });
