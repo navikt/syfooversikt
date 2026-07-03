@@ -1,9 +1,11 @@
-import { afterAll, afterEach, beforeAll } from "vitest";
+import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { setupServer } from "msw/node";
 import { mockUnleash } from "@/mocks/mockUnleash";
 import { mockSyfoveileder } from "@/mocks/syfoveileder/mockSyfoveileder";
 
 export const mockServer = setupServer(mockUnleash, ...mockSyfoveileder);
+
+Element.prototype.scrollIntoView = vi.fn();
 
 // Start server before all tests
 beforeAll(() => mockServer.listen({ onUnhandledRequest: "warn" }));

@@ -1,19 +1,19 @@
 import { Label } from "@navikt/ds-react";
 import React from "react";
-import { PageInfoType } from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
+import { Pagination } from "@/hooks/usePagination";
 
 interface Props {
-  pageInfo: PageInfoType;
+  pagination: Pagination;
   numberOfItemsTotal: number;
   selectedPersoner: string[];
 }
 
 const textPaginatedUsers = (
-  pageInfo: PageInfoType,
+  pagination: Pagination,
   numberOfItemsTotal: number,
 ) => {
-  return `Viser ${pageInfo.firstVisibleIndex + 1}-${
-    pageInfo.lastVisibleIndex
+  return `Viser ${pagination.startItem + 1}-${
+    pagination.endItem
   } av ${numberOfItemsTotal} brukere.`;
 };
 
@@ -22,14 +22,14 @@ const textSelectedPersoner = (amount: number) => {
 };
 
 export default function PaginationLabel({
-  pageInfo,
+  pagination,
   numberOfItemsTotal,
   selectedPersoner,
 }: Props) {
   return (
     <div className="px-1 py-2 flex justify-between items-center">
       <Label size="small">
-        {textPaginatedUsers(pageInfo, numberOfItemsTotal)}
+        {textPaginatedUsers(pagination, numberOfItemsTotal)}
       </Label>
       {selectedPersoner.length > 0 && (
         <Label size="small">

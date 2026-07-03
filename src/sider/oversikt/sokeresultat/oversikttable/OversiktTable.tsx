@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { Checkbox, Table } from "@navikt/ds-react";
 import { VeilederColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VeilederColumn";
 import { PersonData } from "@/api/types/personregisterTypes";
@@ -25,6 +25,7 @@ interface Props {
   setSelectedRows: (rows: string[]) => void;
   sorting: Sorting;
   setSorting: (sorting: Sorting) => void;
+  initialActivePersonFnr?: string;
 }
 
 export default function OversiktTable({
@@ -33,9 +34,28 @@ export default function OversiktTable({
   setSelectedRows,
   sorting,
   setSorting,
+  initialActivePersonFnr,
 }: Props): ReactElement {
   const { columns } = useSorting();
   const { selectedTab } = useTabType();
+  const activeRowRef = useRef<HTMLTableRowElement | null>(null);
+  const hasScrolledToActiveRow = useRef(false);
+
+  useEffect(() => {
+    if (
+      hasScrolledToActiveRow.current ||
+      !initialActivePersonFnr ||
+      !activeRowRef.current
+    ) {
+      return;
+    }
+
+    activeRowRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+    hasScrolledToActiveRow.current = true;
+  }, [personListe, initialActivePersonFnr]);
 
   function handleSort(sortKey: string | undefined) {
     let direction: "none" | "ascending" | "descending";
@@ -110,7 +130,13 @@ export default function OversiktTable({
       </Table.Header>
       <Table.Body>
         {personListe.map(([fnr, persondata], index) => (
-          <Table.Row key={index}>
+          <Table.Row
+            key={index}
+            ref={fnr === initialActivePersonFnr ? activeRowRef : undefined}
+            className={
+              fnr === initialActivePersonFnr ? "border-3 border-solid" : ""
+            }
+          >
             <Table.DataCell>
               <Checkbox
                 checked={isRowSelected(fnr)}

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { PersonData } from "@/api/types/personregisterTypes";
 import { linkToNewHostAndPath, Subdomain } from "@/utils/miljoUtil";
 import { Labels } from "@/components/Labels";
-import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { useAktivBrukerMutation } from "@/data/modiacontext/useAktivBrukerMutation";
 import { Link } from "@navikt/ds-react";
 
 export function lenkeTilModia(personData: PersonData): string {
@@ -60,7 +60,7 @@ export function LinkSyfomodiaperson({
   personident,
   linkText,
 }: Props): ReactElement {
-  const aktivBruker = useAktivBruker();
+  const aktivBruker = useAktivBrukerMutation();
   const onPersonClick = () => {
     aktivBruker.mutate(personident, {
       onSuccess: () => {

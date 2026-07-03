@@ -3,7 +3,10 @@ import Sokeresultat from "@/sider/oversikt/sokeresultat/Sokeresultat";
 import { personregister } from "../data/fellesTestdata";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Filterable } from "@/utils/hendelseFilteringUtils";
-import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
+import {
+  AktivEnhetContext,
+  AktivEnhetProvider,
+} from "@/context/aktivEnhet/AktivEnhetContext";
 import { NotificationProvider } from "@/context/notification/NotificationContext";
 import { stubAktivVeileder } from "../stubs/stubAktivVeileder";
 import { screen } from "@testing-library/react";
@@ -13,6 +16,8 @@ import { FilterState } from "@/context/filters/filterContextState";
 import { testQueryClient } from "../testQueryClient";
 import { renderWithRouter } from "../testRenderUtils";
 import { routes } from "@/routers/routes";
+import { stubModiaContext } from "../stubs/stubModiaContext.ts";
+import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock.ts";
 
 let queryClient: QueryClient;
 
@@ -20,9 +25,14 @@ const renderSokeresultat = () =>
   renderWithRouter(
     <NotificationProvider>
       <QueryClientProvider client={queryClient}>
-        <AktivEnhetProvider>
+        <AktivEnhetContext.Provider
+          value={{
+            aktivEnhet: aktivEnhetMock.aktivEnhet,
+            handleAktivEnhetChanged: () => void 0,
+          }}
+        >
           <Sokeresultat allEvents={new Filterable(personregister)} />
-        </AktivEnhetProvider>
+        </AktivEnhetContext.Provider>
       </QueryClientProvider>
     </NotificationProvider>,
     routes.ENHET_OVERSIKT,
@@ -32,11 +42,13 @@ describe("Sokeresultat", () => {
   beforeEach(() => {
     queryClient = testQueryClient();
     stubAktivVeileder();
+    stubModiaContext();
   });
 
-  it("Skal inneholde knapperad", () => {
+  it("Skal inneholde knapperad", async () => {
     renderSokeresultat();
-    expect(screen.getByRole("button", { name: "Tildel veileder" })).to.exist;
+    expect(await screen.findByRole("button", { name: "Tildel veileder" })).to
+      .exist;
     const velgAlleCheckbox = screen.getByRole("checkbox", {
       name: "Velg alle",
       checked: false,
@@ -44,13 +56,13 @@ describe("Sokeresultat", () => {
     expect(velgAlleCheckbox).to.exist;
   });
 
-  it("Skal inneholde liste av personer", () => {
+  it("Skal inneholde liste av personer", async () => {
     renderSokeresultat();
-    expect(screen.getByRole("link", { name: "Navn, Et" })).to.exist;
+    expect(await screen.findByRole("link", { name: "Navn, Et" })).to.exist;
     expect(screen.getByRole("link", { name: "Navn, Et Annet" })).to.exist;
   });
 
-  it("Filters søkeresultat by motedatasvar", () => {
+  it("Filters søkeresultat by motedatasvar", async () => {
     const filterSetMotedatasvar: FilterState = {
       tekstFilter: "",
       selectedVeilederIdents: [],
@@ -101,7 +113,7 @@ describe("Sokeresultat", () => {
       </NotificationProvider>,
       routes.ENHET_OVERSIKT,
     );
-    expect(screen.getByRole("link", { name: "Navn, Et" })).to.exist;
+    expect(await screen.findByRole("link", { name: "Navn, Et" })).to.exist;
     expect(screen.queryByRole("link", { name: "Navn, Et Annet" })).to.not.exist;
   });
 });
