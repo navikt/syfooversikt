@@ -1,5 +1,7 @@
 import { MODIACONTEXTHOLDER_ROOT } from "@/apiConstants";
 import { http, HttpResponse } from "msw";
+import { AKTIV_BRUKER_DEFAULT } from "@/mocks/data/aktivBrukerMock.ts";
+import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock.ts";
 
 const saksbehandler = {
   ident: "Z999999",
@@ -19,13 +21,13 @@ const saksbehandler = {
 };
 
 const aktivBruker = {
-  aktivBruker: null,
-  aktivEnhet: null,
+  aktivBruker: AKTIV_BRUKER_DEFAULT.aktivBruker,
+  aktivEnhet: AKTIV_BRUKER_DEFAULT.aktivEnhet,
 };
 
 const aktivEnhet = {
-  aktivBruker: null,
-  aktivEnhet: "0316",
+  aktivBruker: aktivEnhetMock.aktivBruker,
+  aktivEnhet: aktivEnhetMock.aktivEnhet,
 };
 
 export const mockModiacontextholder = [

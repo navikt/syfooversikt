@@ -2,14 +2,13 @@ import TildelVeileder from "./TildelVeileder";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import themes from "../../../../styles/themes";
-import PaginationContainer, {
-  PAGINATED_NUMBER_OF_ITEMS,
-} from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
+import PaginationContainer from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
 import TildelOppfolgingsenhetModal from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal";
 import TildelOppfolgingsenhetButton from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
 import { Alert } from "@navikt/ds-react";
+import { Pagination } from "@/hooks/usePagination";
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -31,23 +30,14 @@ export interface FeedbackNotification {
 export interface Props {
   isAllSelected: boolean;
   numberOfItemsTotal: number;
+  pagination: Pagination;
   checkAllHandler: (checked: boolean) => void;
-  onPageChange: (startItem: number, endItem: number) => void;
   selectedPersoner: string[];
   setSelectedPersoner: (personer: string[]) => void;
 }
 
-export interface PageInfoType {
-  firstVisibleIndex: number;
-  lastVisibleIndex: number;
-}
-
 export default function Toolbar(props: Props) {
   const { toggles } = useGetFeatureToggles();
-  const [pageInfo, setPageInfo] = useState<PageInfoType>({
-    firstVisibleIndex: 0,
-    lastVisibleIndex: PAGINATED_NUMBER_OF_ITEMS,
-  });
   const [tableFeedbackNotification, setTableFeedbackNotification] = useState<
     FeedbackNotification | undefined
   >();
@@ -56,7 +46,7 @@ export default function Toolbar(props: Props) {
   return (
     <>
       <PaginationLabel
-        pageInfo={pageInfo}
+        pagination={props.pagination}
         numberOfItemsTotal={props.numberOfItemsTotal}
         selectedPersoner={props.selectedPersoner}
       />
@@ -83,11 +73,7 @@ export default function Toolbar(props: Props) {
               />
             )}
           </div>
-          <PaginationContainer
-            numberOfItemsTotal={props.numberOfItemsTotal}
-            onPageChange={props.onPageChange}
-            setPageInfo={setPageInfo}
-          />
+          <PaginationContainer pagination={props.pagination} />
         </section>
         {!!tableFeedbackNotification && (
           <Alert

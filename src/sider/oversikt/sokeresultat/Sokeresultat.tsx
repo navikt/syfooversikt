@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PersonregisterState } from "@/api/types/personregisterTypes";
 import {
   Filterable,
@@ -18,20 +18,24 @@ import OversiktTable from "@/sider/oversikt/sokeresultat/oversikttable/OversiktT
 import { useSorting } from "@/hooks/useSorting";
 import { useVeiledereQuery } from "@/data/veiledereQueryHooks";
 import EmptyDrawer from "@/sider/oversikt/sokeresultat/oversikttable/EmptyDrawer";
+import { useAktivBruker } from "@/data/modiacontext/modiacontextQueryHooks.ts";
+import AppSpinner from "@/components/AppSpinner.tsx";
+import { usePagination } from "@/hooks/usePagination";
 
 interface Props {
   allEvents: Filterable<PersonregisterState>;
 }
 
 export default function Sokeresultat({ allEvents }: Props) {
+  const aktivBruker = useAktivBruker();
+
   const { filterState } = useFilters();
   const { selectedTab } = useTabType();
   const { sorting, setSorting } = useSorting();
   const veiledereQuery = useVeiledereQuery();
 
   const [selectedPersoner, setSelectedPersoner] = useState<string[]>([]);
-  const [startItem, setStartItem] = useState(0);
-  const [endItem, setEndItem] = useState(0);
+  const hasJumpedToInitialPage = useRef(false);
 
   useEffect(() => {
     setSelectedPersoner([]);
@@ -54,14 +58,10 @@ export default function Sokeresultat({ allEvents }: Props) {
   }
 
   const allFnr = Object.keys(filteredEvents.value);
+  const pagination = usePagination(allFnr.length);
 
   const checkAllHandler = (checked: boolean): void => {
     setSelectedPersoner(checked ? allFnr : []);
-  };
-
-  const onPageChange = (startItem: number, endItem: number): void => {
-    setStartItem(startItem);
-    setEndItem(endItem);
   };
 
   const sortedPersonregister = getSortedEventsFromSortingType(
@@ -69,16 +69,41 @@ export default function Sokeresultat({ allEvents }: Props) {
     veiledereQuery.data || [],
     sorting,
   );
-  const paginatedPersonregister = Object.fromEntries(
-    Object.entries(sortedPersonregister).slice(startItem, endItem + 1),
+  const personListe = Object.entries(sortedPersonregister).slice(
+    pagination.startItem,
+    pagination.endItem,
   );
-  const personListe = Object.entries(paginatedPersonregister);
+
+  useEffect(() => {
+    if (hasJumpedToInitialPage.current || !aktivBruker.isSuccess) {
+      return;
+    }
+
+    const initialActivePersonFnr = aktivBruker.data.aktivBruker;
+    const personIndex = Object.keys(sortedPersonregister).indexOf(
+      initialActivePersonFnr,
+    );
+    if (personIndex === -1) return;
+
+    hasJumpedToInitialPage.current = true;
+    pagination.setPage(
+      Math.floor(personIndex / pagination.numberOfItemsPerPage) + 1,
+    );
+  }, [aktivBruker, sortedPersonregister, pagination]);
+
+  if (!aktivBruker.isSuccess) {
+    return (
+      <div>
+        <AppSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="flex-[3]">
       <Toolbar
         numberOfItemsTotal={allFnr.length}
-        onPageChange={onPageChange}
+        pagination={pagination}
         isAllSelected={allFnr.length === selectedPersoner.length}
         checkAllHandler={checkAllHandler}
         selectedPersoner={selectedPersoner}
@@ -94,6 +119,7 @@ export default function Sokeresultat({ allEvents }: Props) {
           personListe={personListe}
           selectedRows={selectedPersoner}
           setSelectedRows={setSelectedPersoner}
+          initialActivePersonFnr={aktivBruker.data.aktivBruker}
         />
       )}
     </div>

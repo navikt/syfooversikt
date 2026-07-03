@@ -1,14 +1,13 @@
+import { useMutation } from "@tanstack/react-query";
 import { post } from "@/api/axios";
 import { MODIACONTEXTHOLDER_ROOT } from "@/apiConstants";
-import { useMutation } from "@tanstack/react-query";
+import { EventType } from "@/data/modiacontext/modiacontextTypes.ts";
 
-const NY_AKTIV_BRUKER = "NY_AKTIV_BRUKER";
-
-export const useAktivBruker = () =>
+export const useAktivBrukerMutation = () =>
   useMutation({
     mutationFn: (fnr: string) =>
       post(`${MODIACONTEXTHOLDER_ROOT}/context`, {
         verdi: fnr,
-        eventType: NY_AKTIV_BRUKER,
+        eventType: EventType.NY_AKTIV_BRUKER,
       }),
   });
