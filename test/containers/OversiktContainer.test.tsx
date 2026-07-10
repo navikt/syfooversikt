@@ -8,6 +8,9 @@ import { stubPersonregister } from "../stubs/stubPersonregister";
 import { stubAktivVeileder } from "../stubs/stubAktivVeileder";
 import { stubModiaContext } from "../stubs/stubModiaContext";
 import { stubVeiledere } from "../stubs/stubVeiledere";
+import { stubTildelOppfolgingsenhet } from "../stubs/stubTildelOppfolgingsenhet";
+import { mockEreg } from "@/mocks/ereg/mockEreg";
+import { mockServer } from "../setup";
 import { aktivEnhetMock } from "@/mocks/data/aktivEnhetMock";
 import { FilterProvider } from "@/context/filters/FilterContext";
 import {
@@ -52,6 +55,9 @@ function renderOversikten(notifications: Notification[] = []) {
 describe("OversiktContainer", () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
+    stubModiaContext();
+    stubTildelOppfolgingsenhet();
+    mockServer.use(mockEreg);
   });
 
   afterEach(() => {

@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { decoratorConfig } from "./decoratorConfig";
 import { linkToNewHostAndPath, Subdomain } from "@/utils/miljoUtil";
-import { useAktivBruker } from "@/data/modiacontext/useAktivBruker";
+import { useAktivBrukerMutation } from "@/data/modiacontext/useAktivBrukerMutation";
 import { useAktivEnhet } from "@/context/aktivEnhet/AktivEnhetContext.tsx";
 
 const Decorator = () => {
   const aktivEnhet = useAktivEnhet();
-  const aktivBruker = useAktivBruker();
+  const aktivBruker = useAktivBrukerMutation();
   const decoratorRef = useRef<InternarbeidsflateDecoratorElement>(null);
 
   useLayoutEffect(() => {
