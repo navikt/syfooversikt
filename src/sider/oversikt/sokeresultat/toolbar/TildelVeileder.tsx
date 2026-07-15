@@ -92,8 +92,8 @@ export default function TildelVeileder({
     setInput(target.value);
   };
 
-  const radiobuttonOnChangeHandler = (veileder: VeilederDTO) => {
-    setChosenVeilederIdent(veileder.ident);
+  const radiobuttonOnChangeHandler = (veilederident: string) => {
+    setChosenVeilederIdent(veilederident);
     setVeilederIsChosen(true);
     setShowError(false);
   };
@@ -170,9 +170,7 @@ export default function TildelVeileder({
           inputChangeHandler={inputChangeHandler}
           buttonChangeHandler={radiobuttonOnChangeHandler}
           veilederIsChosen={veilederIsChosen}
-          buttonType={"radio"}
           placeholder={"Tildel veileder"}
-          selectedVeileders={veiledere}
           showNoChosenVeilederError={showError}
         />
       )}

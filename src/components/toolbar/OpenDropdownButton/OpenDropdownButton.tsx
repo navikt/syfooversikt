@@ -1,9 +1,10 @@
 import * as React from "react";
+import { ReactElement } from "react";
 import styled, { css } from "styled-components";
 import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
 import themes from "../../../styles/themes";
 import SearchIcon from "../../../img/icons/SearchIcon";
-import { ReactElement } from "react";
+import { Label } from "@navikt/ds-react";
 
 interface ButtonDivProps {
   active: boolean;
@@ -84,7 +85,7 @@ export const OpenDropdownButton = (
             <SearchIconBlue className="inputWithSearchIcon__icon" />
           </SearchIconWrapper>
         )}
-        {props.text}
+        <Label size={"small"}>{props.text}</Label>
         {props.showList ? (
           <ChevronUpIcon className="openDropdownButton__chevron" aria-hidden />
         ) : (
