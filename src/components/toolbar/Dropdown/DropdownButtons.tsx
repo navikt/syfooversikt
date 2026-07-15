@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import { DropdownButton } from "./DropdownButton";
+import { Button } from "@navikt/ds-react";
 
 export interface DropdownButtonTexts {
   assign: string;
@@ -34,19 +34,17 @@ export const DropdownButtons = (props: DropdownButtonsProps): ReactElement => {
 
   return (
     <DropdownButtonsDiv className="confirmVeilederButtons">
-      <DropdownButton
-        classNameElement="choose"
+      <Button
         onClick={() => chooseButtonHandler(chosenVeilederIdent)}
-        text={texts.assign}
-        type={"standard"}
-      />
+        size="small"
+        variant="primary"
+      >
+        {texts.assign}
+      </Button>
 
-      <DropdownButton
-        classNameElement="close"
-        onClick={cancelButtonHandler}
-        text={texts.reset}
-        type={"flat"}
-      />
+      <Button onClick={cancelButtonHandler} size="small" variant="secondary">
+        {texts.reset}
+      </Button>
     </DropdownButtonsDiv>
   );
 };

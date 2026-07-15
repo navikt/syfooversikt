@@ -1,15 +1,14 @@
 import * as React from "react";
-import styled from "styled-components";
-import { Checkbox, Radio } from "nav-frontend-skjema";
-import { VeilederDTO } from "@/api/types/veiledereTypes";
 import { ReactElement } from "react";
+import styled from "styled-components";
+import { VeilederDTO } from "@/api/types/veiledereTypes";
+import { Radio, RadioGroup } from "@navikt/ds-react";
 
 interface VeilederCheckboxProps {
-  onChangeHandler: (veileder: VeilederDTO) => void;
+  onChangeHandler: (veilederident: string) => void;
   filteredVeiledere: VeilederDTO[];
-  selectedVeileders: VeilederDTO[];
+  chosenVeilederIdent: string;
   isInputGiven: boolean;
-  buttonType: string;
 }
 
 const LoggedInVeilederFirst = styled.div`
@@ -24,13 +23,8 @@ const StyledRadio = styled(Radio)`
   margin-bottom: 0.5em;
 `;
 
-const StyledCheckbox = styled(Checkbox)`
-  width: calc(100% - 1em);
-  margin-bottom: 0.5em;
-`;
-
 const InputButtons = (props: VeilederCheckboxProps) => {
-  const { onChangeHandler, filteredVeiledere, selectedVeileders } = props;
+  const { onChangeHandler, filteredVeiledere, chosenVeilederIdent } = props;
 
   const getVeilederIdentification = (veileder: VeilederDTO): string => {
     return veileder.fornavn === ""
@@ -39,26 +33,22 @@ const InputButtons = (props: VeilederCheckboxProps) => {
   };
 
   return (
-    <React.Fragment>
-      {filteredVeiledere.map((veileder: VeilederDTO, index: number) =>
-        props.buttonType === "radio" ? (
-          <StyledRadio
-            key={JSON.stringify({ ...veileder, index })}
-            label={getVeilederIdentification(veileder)}
-            name="veiledereRadioButton"
-            onChange={() => onChangeHandler(veileder)}
-          />
-        ) : (
-          <StyledCheckbox
-            key={JSON.stringify({ ...veileder, index })}
-            label={getVeilederIdentification(veileder)}
-            name="veiledereCheckbox"
-            onChange={() => onChangeHandler(veileder)}
-            checked={selectedVeileders.indexOf(veileder) !== -1}
-          />
-        ),
-      )}
-    </React.Fragment>
+    <RadioGroup
+      legend="Velg veileder."
+      onChange={(veileder: string) => onChangeHandler(veileder)}
+      value={chosenVeilederIdent}
+    >
+      {filteredVeiledere.map((veileder: VeilederDTO, index: number) => (
+        <StyledRadio
+          key={JSON.stringify({ ...veileder, index })}
+          name="veiledereRadioButton"
+          size={"small"}
+          value={veileder.ident}
+        >
+          {getVeilederIdentification(veileder)}
+        </StyledRadio>
+      ))}
+    </RadioGroup>
   );
 };
 

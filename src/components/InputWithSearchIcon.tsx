@@ -1,15 +1,14 @@
 import React, { ChangeEvent, ReactElement } from "react";
 import styled from "styled-components";
-import { Input } from "nav-frontend-skjema";
 import SearchIcon from "../img/icons/SearchIcon";
 import themes from "../styles/themes";
+import { TextField } from "@navikt/ds-react";
 
 interface InputWithSearchIconProps {
   autofocus: boolean;
   label: string;
-  onChange: (event: ChangeEvent) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  type: string;
   value: string;
 }
 
@@ -18,9 +17,10 @@ const InputDiv = styled.div`
   width: 100%;
   align-items: center;
   justify-content: flex-end;
+  padding: 0.5em;
 `;
-const InputStyled = styled(Input)`
-  margin: 0.5em;
+
+const InputStyled = styled(TextField)`
   width: 100%;
   outline: none;
 `;
@@ -28,25 +28,26 @@ const InputStyled = styled(Input)`
 const SearchIconBlue = styled(SearchIcon)`
   fill: ${themes.color.navBla};
   position: absolute;
+  padding: 0.125em;
   right: 1em;
-  top: 1.5em;
 `;
 
 const InputWithSearchIcon = (props: InputWithSearchIconProps): ReactElement => {
-  const { autofocus, label, onChange, placeholder, type, value } = props;
+  const { autofocus, label, onChange, placeholder, value } = props;
   return (
     <InputDiv className="inputWithSearchIcon">
       <InputStyled
         className="inputWithSearchIcon__input"
         label={label}
+        hideLabel={true}
         value={value}
-        type={type}
+        size="small"
         onChange={(event) => onChange(event)}
         placeholder={placeholder}
         autoFocus={autofocus}
       />
 
-      <SearchIconBlue className="inputWithSearchIcon__icon" />
+      <SearchIconBlue />
     </InputDiv>
   );
 };

@@ -13,16 +13,14 @@ interface Props {
   filteredVeiledere: VeilederDTO[];
   input: string;
   inputChangeHandler: (event: ChangeEvent) => void;
-  buttonChangeHandler: (veileder: VeilederDTO) => void;
+  buttonChangeHandler: (veilederident: string) => void;
   veilederIsChosen: boolean;
-  selectedVeileders: VeilederDTO[];
   showNoChosenVeilederError: boolean;
   placeholder: string;
-  buttonType: string;
 }
 
 const ButtonPanelGroup = styled.div`
-  margin: 0.5em;
+  padding: 0.5em;
   border: 0;
   overflow: auto;
   height: 20em;
@@ -60,30 +58,26 @@ export default function Dropdown(props: Props): ReactElement {
     inputChangeHandler,
     buttonChangeHandler,
     veilederIsChosen,
-    selectedVeileders,
     showNoChosenVeilederError,
     placeholder,
-    buttonType,
   } = props;
 
   return (
-    <DropdownPanel className="tildelVeileder__dropdownPanel">
+    <DropdownPanel>
       <InputWithSearchIcon
         autofocus
-        label=""
+        label="Tildel veileder"
         onChange={inputChangeHandler}
         placeholder={placeholder}
-        type={"text"}
         value={input}
       />
 
-      <ButtonPanelGroup className="radioPanelGroup">
+      <ButtonPanelGroup>
         <VeilederInputButtons
           onChangeHandler={buttonChangeHandler}
           filteredVeiledere={filteredVeiledere}
-          selectedVeileders={selectedVeileders}
+          chosenVeilederIdent={chosenVeilederIdent}
           isInputGiven={input.length > 0}
-          buttonType={buttonType}
         />
       </ButtonPanelGroup>
 
