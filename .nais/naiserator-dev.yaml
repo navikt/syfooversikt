@@ -28,6 +28,13 @@ spec:
   prometheus:
     enabled: true
     path: /actuator/metrics
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+    logging:
+      destinations:
+        - id: loki
   resources:
     limits:
       memory: 1Gi
