@@ -1,5 +1,5 @@
 import { MODIACONTEXTHOLDER_ROOT } from "@/apiConstants";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, ws } from "msw";
 
 const saksbehandler = {
   ident: "Z999999",
@@ -49,4 +49,7 @@ export const mockModiacontextholder = [
     `${MODIACONTEXTHOLDER_ROOT}/context`,
     () => new HttpResponse(null, { status: 204 }),
   ),
+  ws.link("ws://localhost:4000/*").addEventListener("connection", () => {
+    // Silently ignore WebSocket connections to Internflatedecorator in local development
+  }),
 ];
