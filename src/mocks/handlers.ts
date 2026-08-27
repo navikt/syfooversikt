@@ -9,7 +9,6 @@ import {
   mockSokPerson,
 } from "@/mocks/personoversikt/mockPersonoversikt";
 import { mockModiacontextholder } from "@/mocks/modiacontextholder/mockModiacontextholder";
-import { mockFlexjar } from "@/mocks/flexjar/mockFlexjar";
 import { mockEreg } from "@/mocks/ereg/mockEreg";
 import {
   mockGetMuligeTildelinger,
@@ -20,7 +19,6 @@ import { mockUmami } from "@/mocks/umami/mockUmami";
 const generatedPersons = generatePersons(50);
 
 const handlers: Array<HttpHandler | WebSocketHandler> = [
-  mockFlexjar,
   mockUmami,
   mockUnleash,
   mockEreg,
