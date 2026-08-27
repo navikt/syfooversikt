@@ -4,38 +4,12 @@ import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
 import AppSpinner from "@/components/AppSpinner";
 import NavigationBar from "@/components/NavigationBar";
 import ErrorBoundary from "@/components/error/ErrorBoundary";
-import { StoreKey, useLocalStorageState } from "@/hooks/useLocalStorageState";
-import { getWeeksBetween } from "@/utils/dateUtils";
-import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
-import { TabType, useTabType } from "@/hooks/useTabType";
 import Oversikt from "@/sider/oversikt/Oversikt";
 import NotificationBar from "@/components/error/NotificationBar";
-import RutingFlexjar from "@/components/flexjar/RutingFlexjar";
-
-function toReadableString(overviewTabType: TabType): string {
-  switch (overviewTabType) {
-    case TabType.ENHETENS_OVERSIKT:
-      return "Enhetens oversikt";
-    case TabType.MIN_OVERSIKT:
-      return "Min oversikt";
-    case TabType.SOK_SYKMELDT:
-      return "Søk sykmeldt";
-  }
-}
 
 export default function OversiktContainer(): ReactElement {
   const personregisterQuery = useGetPersonSkjermingskodeQuery();
   const getPersonstatusQuery = useGetPersonstatusQuery();
-  const { toggles } = useGetFeatureToggles();
-  const { selectedTab } = useTabType();
-  const [feedbackRutingDate] = useLocalStorageState<Date | null>(
-    StoreKey.FLEXJAR_RUTING_FEEDBACK_DATE,
-    null,
-  );
-  const showRutingFlexjar =
-    toggles.isRutingFlexjarEnabled &&
-    (feedbackRutingDate === null ||
-      getWeeksBetween(new Date(), feedbackRutingDate) >= 8);
 
   return (
     <ErrorBoundary>
@@ -49,9 +23,6 @@ export default function OversiktContainer(): ReactElement {
             personSkjermingskode={personregisterQuery.data || []}
             personoversiktData={getPersonstatusQuery.data || []}
           />
-        )}
-        {showRutingFlexjar && getPersonstatusQuery.isSuccess && (
-          <RutingFlexjar side={toReadableString(selectedTab)} />
         )}
       </div>
     </ErrorBoundary>

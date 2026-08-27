@@ -34,10 +34,6 @@ export function getUnleashToggles(veilederId: any, enhetId: any) {
     enhetId: enhetId,
   };
   return {
-    isRutingFlexjarEnabled: unleash.isEnabled(
-      "isRutingFlexjarEnabled",
-      context,
-    ),
     isTildelOppfolgingsenhetEnabled: unleash.isEnabled(
       "isTildelOppfolgingsenhetEnabled",
       context,
