@@ -7,4 +7,3 @@ export const SYFOBEHANDLENDEENHET_ROOT =
   "/syfobehandlendeenhet/api/internad/v2";
 export const UNLEASH_ROOT = "/unleash";
 export const EREG_ROOT = "/ereg/api/v1";
-export const FLEXJAR_ROOT = "/flexjar-backend/api/v1";

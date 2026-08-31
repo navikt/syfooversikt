@@ -68,8 +68,6 @@ spec:
         - application: syfoperson
         - application: syfoveileder
         - application: syfobehandlendeenhet
-        - application: flexjar-backend
-          namespace: flex
         - application: modiacontextholder
           namespace: personoversikt
   ingresses:
@@ -104,7 +102,3 @@ spec:
       value: "http://syfoperson"
     - name: SYFOVEILEDER_HOST
       value: "http://syfoveileder"
-    - name: FLEXJAR_AAD_APP_CLIENT_ID
-      value: "dev-gcp.flex.flexjar-backend"
-    - name: FLEXJAR_HOST
-      value: "http://flexjar-backend.flex"
