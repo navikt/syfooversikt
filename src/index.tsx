@@ -4,7 +4,6 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/styles.less";
 import "./styles/style.css";
-import { initFaro } from "@/faro";
 import { isLocal, isProd } from "@/utils/miljoUtil";
 import ErrorBoundary from "@/components/error/ErrorBoundary";
 import { NotificationProvider } from "@/context/notification/NotificationContext";
@@ -14,8 +13,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/queryClient";
 import AppRouter from "@/routers/AppRouter";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-initFaro();
+import "@/naisApm.ts";
 
 function addUmamiScript() {
   const [dataWebsiteId, src] = isProd()

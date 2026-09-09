@@ -23,9 +23,7 @@
     "msw:update": "msw init . --save"
   },
   "dependencies": {
-    "@grafana/faro-react": "2.8.2",
-    "@grafana/faro-web-sdk": "2.8.2",
-    "@grafana/faro-web-tracing": "2.8.2",
+    "@nais/apm": "0.6.3",
     "@navikt/aksel-icons": "8.15.0",
     "@navikt/ds-css": "8.15.0",
     "@navikt/ds-react": "8.15.0",
