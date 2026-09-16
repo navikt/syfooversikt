@@ -120,7 +120,7 @@ export const setupProxy = (): express.Router => {
   const router = express.Router();
 
   router.use(
-    "/ereg/*",
+    "/ereg/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -135,7 +135,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/modiacontextholder/*",
+    "/modiacontextholder/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -146,7 +146,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/api/*",
+    "/api/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -157,7 +157,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/syfoperson/*",
+    "/syfoperson/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -168,7 +168,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/syfoveileder/*",
+    "/syfoveileder/*splat",
     (
       req: express.Request,
       res: express.Response,
@@ -179,7 +179,7 @@ export const setupProxy = (): express.Router => {
   );
 
   router.use(
-    "/syfobehandlendeenhet/*",
+    "/syfobehandlendeenhet/*splat",
     (
       req: express.Request,
       res: express.Response,
