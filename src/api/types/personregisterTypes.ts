@@ -31,6 +31,7 @@ export interface PersonData {
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
   isAktivKartleggingssporsmalVurdering: boolean;
+  harUtenlandsoppholdSoknadUbehandlet: boolean;
   dialogmoteAvvent: DialogmoteAvventDTO | null;
 }
 
@@ -75,6 +76,8 @@ export function toPersonData(
       manglendeMedvirkning: person.manglendeMedvirkning,
       isAktivKartleggingssporsmalVurdering:
         person.isAktivKartleggingssporsmalVurdering,
+      harUtenlandsoppholdSoknadUbehandlet:
+        person.utenlandsoppholdSoknadUbehandlet,
       dialogmoteAvvent: person.dialogmoteAvvent,
     };
   });

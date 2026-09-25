@@ -28,6 +28,7 @@ const defaultPersonData: PersonData = {
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
+  harUtenlandsoppholdSoknadUbehandlet: false,
   dialogmotekandidatStatus: null,
   dialogmoteAvvent: null,
 };

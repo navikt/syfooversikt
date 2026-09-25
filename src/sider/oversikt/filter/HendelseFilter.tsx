@@ -23,6 +23,7 @@ const HendelseTekster = {
   MANGLENDE_MEDVIRKNING: "§ 8-8 Manglende medvirkning",
   AKTIVITETSKRAV: "§ 8-8 Aktivitetskrav",
   AKTIVITETSKRAV_VURDER_STANS: "§ 8-8 Vurder stans aktivitetskrav",
+  UTENLANDSOPPHOLD: "§ 8-9 Søknad om utenlandsopphold",
   KARTLEGGINGSSPORSMAL: "Kartleggingsspørsmål",
   SNART_SLUTT_PA_SYKEPENGENE: "Snart slutt på sykepengene",
   OPPFOLGINGSOPPGAVE: "Oppfølgingsoppgave",
@@ -47,6 +48,7 @@ function initFilter(hendelse: Hendelse): HendelseTypeFilter {
     isSenOppfolgingChecked: false,
     isManglendeMedvirkningChecked: false,
     isKartleggingssporsmalChecked: false,
+    isUtenlandsoppholdChecked: false,
   };
   return updateFilterState(filter, hendelse);
 }
@@ -117,6 +119,10 @@ function updateFilterState(
         !filter.isKartleggingssporsmalChecked;
       return filter;
     }
+    case "UTENLANDSOPPHOLD": {
+      filter.isUtenlandsoppholdChecked = !filter.isUtenlandsoppholdChecked;
+      return filter;
+    }
   }
 }
 
@@ -150,6 +156,8 @@ function isChecked(state: HendelseTypeFilter, hendelse: Hendelse): boolean {
       return state.isManglendeMedvirkningChecked;
     case "KARTLEGGINGSSPORSMAL":
       return state.isKartleggingssporsmalChecked;
+    case "UTENLANDSOPPHOLD":
+      return state.isUtenlandsoppholdChecked;
   }
 }
 

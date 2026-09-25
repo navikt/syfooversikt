@@ -25,6 +25,7 @@ const behandletPerson = {
   aktivitetskravvurdering: null,
   manglendeMedvirkning: null,
   isAktivKartleggingssporsmalVurdering: false,
+  utenlandsoppholdSoknadUbehandlet: false,
   dialogmoteAvvent: null,
 };
 
@@ -783,6 +784,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     veilederIdent: "Z101010",
     motestatus: undefined,
     isAktivKartleggingssporsmalVurdering: true,
+    utenlandsoppholdSoknadUbehandlet: true,
   },
 ];
 
