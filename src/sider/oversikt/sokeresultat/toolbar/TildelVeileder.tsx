@@ -16,6 +16,9 @@ const texts = {
   combobox: {
     label: "Velg veileder",
     placeholder: "Søk etter veileder",
+    error: {
+      missingVeileder: "Vennligst velg veileder",
+    },
   },
   assignButton: "Tildel",
   closeDialog: "Avbryt",
@@ -36,13 +39,13 @@ export default function TildelVeileder({
   const [selectedVeilederIdent, setSelectedVeilederIdent] = useState<
     string | undefined
   >();
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const veiledere = veiledereQuery.data || [];
 
   const resetStateToDefault = () => {
     setSelectedVeilederIdent(undefined);
-    setIsError(false);
+    setError(undefined);
   };
 
   const options = veiledere
@@ -57,9 +60,8 @@ export default function TildelVeileder({
     .sort((a, b) => a.label.localeCompare(b.label));
 
   const onSelected = (option: string) => {
-    console.log("click", option);
     setSelectedVeilederIdent(option);
-    setIsError(false);
+    setError(undefined);
   };
 
   const selectedOptions = () => {
@@ -70,7 +72,6 @@ export default function TildelVeileder({
   };
 
   const handleTildelVeileder = () => {
-    console.log("selectedVeilederIdent", selectedVeilederIdent);
     if (selectedVeilederIdent !== undefined) {
       const tildeltePersoner = selectedPersoner.map(
         (fnr: string): VeilederArbeidstaker => ({
@@ -82,7 +83,7 @@ export default function TildelVeileder({
         onSuccess: () => handleSelectAll(false),
       });
     } else {
-      setIsError(true);
+      setError(texts.combobox.error.missingVeileder);
     }
   };
 
@@ -111,6 +112,7 @@ export default function TildelVeileder({
               options={options}
               selectedOptions={selectedOptions()}
               onToggleSelected={onSelected}
+              error={error}
             />
           </Dialog.Body>
           <Dialog.Footer>
