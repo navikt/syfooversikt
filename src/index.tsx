@@ -14,6 +14,7 @@ import { queryClient } from "@/queryClient";
 import AppRouter from "@/routers/AppRouter";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "@/naisApm.ts";
+import { loadDecoratorScript } from "@/decorator/loadDecoratorScript.ts";
 
 function addUmamiScript() {
   const [dataWebsiteId, src] = isProd()
@@ -51,7 +52,10 @@ function renderApp() {
     document.getElementById("maincontent") || new DocumentFragment();
   const root = createRoot(container);
 
-  addUmamiScript();
+  if (!isLocal()) {
+    addUmamiScript();
+  }
+  loadDecoratorScript();
   if (isLocal()) {
     setupMocking().then(() => root.render(<App />));
   } else {
