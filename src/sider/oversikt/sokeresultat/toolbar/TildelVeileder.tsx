@@ -20,6 +20,7 @@ const texts = {
       missingVeileder: "Vennligst velg veileder",
     },
   },
+  unassignButton: "Sett som ufordelt",
   assignButton: "Tildel",
   closeDialog: "Avbryt",
 };
@@ -40,6 +41,7 @@ export default function TildelVeileder({
     string | undefined
   >();
   const [error, setError] = useState<string | undefined>(undefined);
+  const [open, setOpen] = useState(false);
 
   const veiledere = veiledereQuery.data || [];
 
@@ -82,14 +84,28 @@ export default function TildelVeileder({
       tildelVeileder.mutate(tildeltePersoner, {
         onSuccess: () => handleSelectAll(false),
       });
+      setOpen(false);
     } else {
       setError(texts.combobox.error.missingVeileder);
     }
   };
 
+  function handleSettSomUfordelt() {
+    tildelVeileder.mutate([], {
+      onSuccess: () => handleSelectAll(false),
+    });
+    setOpen(false);
+  }
+
   return (
     <div tabIndex={1}>
-      <Dialog>
+      <Dialog
+        open={open}
+        onOpenChange={(open) => {
+          setOpen(open);
+          resetStateToDefault();
+        }}
+      >
         <Dialog.Trigger>
           <Button size="small" disabled={selectedPersoner.length === 0}>
             {texts.openDialog}
@@ -116,12 +132,17 @@ export default function TildelVeileder({
             />
           </Dialog.Body>
           <Dialog.Footer>
-            <Button onClick={handleTildelVeileder}>{texts.assignButton}</Button>
+            <Button
+              className="mr-auto"
+              variant="tertiary"
+              onClick={handleSettSomUfordelt}
+            >
+              {texts.unassignButton}
+            </Button>
             <Dialog.CloseTrigger>
-              <Button variant="secondary" onClick={resetStateToDefault}>
-                {texts.closeDialog}
-              </Button>
+              <Button variant="secondary">{texts.closeDialog}</Button>
             </Dialog.CloseTrigger>
+            <Button onClick={handleTildelVeileder}>{texts.assignButton}</Button>
           </Dialog.Footer>
         </Dialog.Popup>
       </Dialog>
