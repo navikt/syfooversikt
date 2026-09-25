@@ -1,23 +1,24 @@
-import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import {
-  sortVeiledereAlphabetically,
-  sortVeiledereBySurnameAsc,
-} from "@/utils/veiledereUtils";
-import { VeilederDTO } from "@/api/types/veiledereTypes";
-import { OpenDropdownButton } from "@/components/toolbar/OpenDropdownButton/OpenDropdownButton.tsx";
-import Dropdown from "@/components/toolbar/Dropdown/Dropdown";
-import { DropdownButtonTexts } from "@/components/toolbar/Dropdown/DropdownButtons";
-import {
-  useAktivVeilederQuery,
   useTildelVeileder,
   useVeiledereQuery,
 } from "@/data/veiledereQueryHooks";
-import { useTabType } from "@/hooks/useTabType";
 import { VeilederArbeidstaker } from "@/api/types/veilederArbeidstakerTypes";
+import { Alert, Button, Dialog, UNSAFE_Combobox } from "@navikt/ds-react";
 
-const dropdownButtonTexts: DropdownButtonTexts = {
-  assign: "Tildel veileder",
-  reset: "Avbryt",
+const texts = {
+  openDialog: "Tildel veileder",
+  header: "Tildel veileder",
+  description1: "Her tildeler du innbyggeren til en veileder på din enhet.",
+  description2: "Tildeling av enkelthendelser er ikke mulig.",
+  alert:
+    "Tildelingen gjelder kun i Modia SYFO, ikke i Arena eller Modia Arbeidsrettet oppfølging",
+  combobox: {
+    label: "Velg veileder",
+    placeholder: "Søk etter veileder",
+  },
+  assignButton: "Tildel",
+  closeDialog: "Avbryt",
 };
 
 interface Props {
@@ -25,155 +26,103 @@ interface Props {
   handleSelectAll: (checked: boolean) => void;
 }
 
-const lagListe = (
-  markertePersoner: string[],
-  veilederIdent: string,
-): VeilederArbeidstaker[] => {
-  return markertePersoner.map((fnr: string) => ({
-    veilederIdent,
-    fnr,
-  }));
-};
-
-function filterVeiledereOnInput(
-  veiledere: VeilederDTO[],
-  lowerCaseInput: string,
-): VeilederDTO[] {
-  const filteredVeiledere = veiledere.filter(
-    (veileder: VeilederDTO) =>
-      lowerCaseInput === "" ||
-      veileder.ident.toLowerCase().includes(lowerCaseInput) ||
-      veileder.fornavn.toLowerCase().includes(lowerCaseInput) ||
-      veileder.etternavn.toLowerCase().includes(lowerCaseInput),
-  );
-
-  const isInputGiven = lowerCaseInput.length > 0;
-  if (isInputGiven) {
-    return sortVeiledereAlphabetically(filteredVeiledere);
-  }
-  return filteredVeiledere;
-}
-
 export default function TildelVeileder({
   selectedPersoner,
   handleSelectAll,
 }: Props): ReactElement {
   const veiledereQuery = useVeiledereQuery();
-  const aktivVeilederQuery = useAktivVeilederQuery();
   const tildelVeileder = useTildelVeileder();
 
-  const [chosenVeilederIdent, setChosenVeilederIdent] = useState("");
-  const [input, setInput] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [veilederIsChosen, setVeilederIsChosen] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const { selectedTab } = useTabType();
+  const [selectedVeilederIdent, setSelectedVeilederIdent] = useState<
+    string | undefined
+  >();
+  const [isError, setIsError] = useState(false);
 
-  const handleTildelVeileder = (veilederIdent: string): void => {
-    const veilederArbeidstakerListe = lagListe(selectedPersoner, veilederIdent);
-
-    tildelVeileder.mutate(veilederArbeidstakerListe);
-  };
-
-  useEffect(() => {
-    setShowList(false);
-  }, [selectedTab]);
+  const veiledere = veiledereQuery.data || [];
 
   const resetStateToDefault = () => {
-    setChosenVeilederIdent("");
-    setInput("");
-    setShowList(false);
-    setShowError(false);
-    setVeilederIsChosen(false);
+    setSelectedVeilederIdent(undefined);
+    setIsError(false);
   };
 
-  const inputChangeHandler = (event: ChangeEvent) => {
-    const target = event.target as HTMLInputElement;
-    setInput(target.value);
+  const options = veiledere
+    .map((veileder) => {
+      const fullName = `${veileder.etternavn}, ${veileder.fornavn}`;
+
+      return {
+        label: !fullName || fullName.trim() === "," ? veileder.ident : fullName,
+        value: veileder.ident,
+      };
+    })
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  const onSelected = (option: string) => {
+    console.log("click", option);
+    setSelectedVeilederIdent(option);
+    setIsError(false);
   };
 
-  const radiobuttonOnChangeHandler = (veilederident: string) => {
-    setChosenVeilederIdent(veilederident);
-    setVeilederIsChosen(true);
-    setShowError(false);
+  const selectedOptions = () => {
+    const selectedOption = options.find(
+      (option) => option.value === selectedVeilederIdent,
+    );
+    return selectedOption ? [selectedOption] : [];
   };
 
-  const assignToOtherVeilederButtonHandler = () => {
-    if (selectedPersoner.length > 0) {
-      if (showList) {
-        resetStateToDefault();
-      } else {
-        setInput("");
-        setShowList(!showList);
-      }
-    }
-  };
-
-  const assignUsersToSelectedVeileder = (): void => {
-    if (chosenVeilederIdent && chosenVeilederIdent.length > 0) {
-      handleTildelVeileder(chosenVeilederIdent);
-    }
-    handleSelectAll(false);
-  };
-
-  const chooseButtonHandler = (chosenVeilederIdent: string) => {
-    if (chosenVeilederIdent && chosenVeilederIdent.length > 0) {
-      assignUsersToSelectedVeileder();
-      setShowList(false);
-      setVeilederIsChosen(false);
-      setShowError(false);
-      setChosenVeilederIdent("");
+  const handleTildelVeileder = () => {
+    console.log("selectedVeilederIdent", selectedVeilederIdent);
+    if (selectedVeilederIdent !== undefined) {
+      const tildeltePersoner = selectedPersoner.map(
+        (fnr: string): VeilederArbeidstaker => ({
+          veilederIdent: selectedVeilederIdent,
+          fnr,
+        }),
+      );
+      tildelVeileder.mutate(tildeltePersoner, {
+        onSuccess: () => handleSelectAll(false),
+      });
     } else {
-      setShowError(true);
+      setIsError(true);
     }
   };
-
-  const onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    const currentTarget = e.currentTarget;
-    setTimeout(() => {
-      if (!currentTarget.contains(document.activeElement)) {
-        resetStateToDefault();
-      }
-    }, 0);
-  };
-
-  const lowerCaseInput = input.toLowerCase();
-
-  const veiledere = veiledereQuery.data?.filter((value) => value.enabled) || [];
-  const veiledereSortedAlphabetically = sortVeiledereBySurnameAsc(
-    veiledere,
-    aktivVeilederQuery.data?.ident || "",
-  );
-  const filteredVeiledere = filterVeiledereOnInput(
-    veiledereSortedAlphabetically,
-    lowerCaseInput,
-  );
 
   return (
-    <div tabIndex={1} onBlur={onBlur}>
-      <OpenDropdownButton
-        text={"Tildel veileder"}
-        onClick={assignToOtherVeilederButtonHandler}
-        showList={showList}
-        active={selectedPersoner.length > 0}
-        search={false}
-      />
-
-      {showList && (
-        <Dropdown
-          buttonTexts={dropdownButtonTexts}
-          cancelButtonHandler={resetStateToDefault}
-          chooseButtonHandler={chooseButtonHandler}
-          chosenVeilederIdent={chosenVeilederIdent}
-          filteredVeiledere={filteredVeiledere}
-          input={input}
-          inputChangeHandler={inputChangeHandler}
-          buttonChangeHandler={radiobuttonOnChangeHandler}
-          veilederIsChosen={veilederIsChosen}
-          placeholder={"Tildel veileder"}
-          showNoChosenVeilederError={showError}
-        />
-      )}
+    <div tabIndex={1}>
+      <Dialog>
+        <Dialog.Trigger>
+          <Button size="small" disabled={selectedPersoner.length === 0}>
+            {texts.openDialog}
+          </Button>
+        </Dialog.Trigger>
+        <Dialog.Popup>
+          <Dialog.Header>
+            <Dialog.Title>{texts.header}</Dialog.Title>
+            <Dialog.Description>{texts.description1}</Dialog.Description>
+            <Dialog.Description>{texts.description2}</Dialog.Description>
+          </Dialog.Header>
+          <Dialog.Body>
+            <Alert className="mb-4" variant="warning" size="small">
+              {texts.alert}
+            </Alert>
+            <UNSAFE_Combobox
+              shouldAutocomplete
+              label={texts.combobox.label}
+              placeholder={texts.combobox.placeholder}
+              options={options}
+              selectedOptions={selectedOptions()}
+              onToggleSelected={onSelected}
+            />
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Button onClick={handleTildelVeileder}>{texts.assignButton}</Button>
+            <Dialog.CloseTrigger>
+              <Button variant="secondary" onClick={resetStateToDefault}>
+                {texts.closeDialog}
+              </Button>
+            </Dialog.CloseTrigger>
+          </Dialog.Footer>
+        </Dialog.Popup>
+      </Dialog>
     </div>
   );
 }
