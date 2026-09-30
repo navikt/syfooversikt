@@ -58,7 +58,7 @@
 - Node.js with Express and TypeScript for the backend server. Entry point is `server.ts` and the `/server` folder.
 - The Express-server works as a backend-for-frontend proxy which handles proxying between frontend and several backend
   apps in our microservice. The proxy also handles authentication, session management and some caching.
-- Webpack is our module bundler
+- Vite is our module bundler
 - Vitest is our testing framework, with React Testing Library for component tests
 - We have a design system available as a dependency from `@navikt/ds-react`
 - Tailwind for styling when the design system does not cover our needs
@@ -119,12 +119,6 @@
 
 ## Limitations in legacy code
 
-- We have `.less`-files for styling, but these are legacy and should be avoided in new code. Refactor old .less-files to
-  use Tailwind or CSS modules when touching them.
-- We have some components from our old design system, named `nav-frontend-*` in `package.json`. These are legacy and
-  should be avoided in new code. Refactor old `nav-frontend-*` components to use `@navikt/ds-react` components when
-  touching them.
 - We have some js-files in the codebase, but new code should always be in TypeScript. Refactor old js-files to
   TypeScript when touching them.
-- The webpack configuration is legacy and should not be changed unless absolutely necessary.
 - The Express backend server is legacy and should not be changed unless absolutely necessary.

@@ -2,7 +2,6 @@ import "core-js";
 import "regenerator-runtime/runtime";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "./styles/styles.less";
 import "./styles/style.css";
 import { isLocal, isProd } from "@/utils/miljoUtil";
 import ErrorBoundary from "@/components/error/ErrorBoundary";
