@@ -61,7 +61,7 @@
 - Vite is our module bundler
 - Vitest is our testing framework, with React Testing Library for component tests
 - We have a design system available as a dependency from `@navikt/ds-react`
-- Tailwind for styling when the design system does not cover our needs
+- Tailwind for styling when the design system does not cover our needs. Do not use CSS-in-JS (styled-components) or Less
 - Axios for API calls
 - React Query for data fetching and caching
 - React Router for routing, see `src/routers/AppRouter.tsx`

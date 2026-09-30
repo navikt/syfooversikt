@@ -37,7 +37,6 @@
     "@types/react-document-title": "2.0.10",
     "@types/react-dom": "19.2.3",
     "@types/react-router-dom": "5.3.3",
-    "@types/styled-components": "5.1.34",
     "@types/umami": "2.10.1",
     "axios": "1.18.1",
     "classnames": "2.5.1",
@@ -56,11 +55,9 @@
     "react-dom": "19.2.8",
     "react-router-dom": "7.18.1",
     "regenerator-runtime": "0.14.1",
-    "styled-components": "5.3.6",
     "unleash-client": "6.11.1"
   },
   "devDependencies": {
-    "@styled/typescript-styled-plugin": "1.0.1",
     "@tailwindcss/vite": "4.3.3",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.2",

@@ -53,3 +53,21 @@ export const filterVeiledereWithActiveOppgave = (
     ),
   );
 };
+
+/**
+ * Returns the name of a veileder as "Etternavn, Fornavn", or the ident if the veileder has no name.
+ */
+export function getVeilederLabel(veileder: VeilederDTO): string {
+  return veileder.fornavn === ""
+    ? veileder.ident
+    : `${veileder.etternavn}, ${veileder.fornavn}`;
+}
+
+/**
+ * Returns the veileder label including the ident, e.g. "Etternavn, Fornavn (Z123456)", so the ident is searchable.
+ */
+export function getVeilederLabelWithIdent(veileder: VeilederDTO): string {
+  return veileder.fornavn === ""
+    ? veileder.ident
+    : `${getVeilederLabel(veileder)} (${veileder.ident})`;
+}

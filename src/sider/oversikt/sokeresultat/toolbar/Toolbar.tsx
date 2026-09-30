@@ -1,7 +1,6 @@
-import TildelVeileder from "./TildelVeileder";
+import TildelVeilederButton from "./TildelVeileder/TildelVeilederButton";
+import TildelVeilederModal from "./TildelVeileder/TildelVeilederModal";
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import themes from "../../../../styles/themes";
 import PaginationContainer, {
   PAGINATED_NUMBER_OF_ITEMS,
 } from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
@@ -11,27 +10,13 @@ import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
 import { Alert } from "@navikt/ds-react";
 
-const ToolbarStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: ${themes.color.white};
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  border-radius: 4px;
-  border: 1px solid ${themes.color.navGra20};
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-`;
-
 export interface FeedbackNotification {
   type: "success" | "warning" | "error";
   text: string;
 }
 
 export interface Props {
-  isAllSelected: boolean;
   numberOfItemsTotal: number;
-  checkAllHandler: (checked: boolean) => void;
   onPageChange: (startItem: number, endItem: number) => void;
   selectedPersoner: string[];
   setSelectedPersoner: (personer: string[]) => void;
@@ -52,6 +37,7 @@ export default function Toolbar(props: Props) {
     FeedbackNotification | undefined
   >();
   const modalRef = useRef<HTMLDialogElement>(null);
+  const tildelVeilederModalRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
@@ -60,12 +46,18 @@ export default function Toolbar(props: Props) {
         numberOfItemsTotal={props.numberOfItemsTotal}
         selectedPersoner={props.selectedPersoner}
       />
-      <ToolbarStyled>
+      <div className="sticky top-0 z-[2] flex flex-col rounded-ax-4 border border-ax-border-neutral-subtle bg-ax-bg-default shadow-ax-dialog">
         <section className="flex flex-row items-center justify-between">
           <div className="flex items-center p-2 gap-2">
-            <TildelVeileder
+            <TildelVeilederButton
+              modalRef={tildelVeilederModalRef}
               selectedPersoner={props.selectedPersoner}
-              handleSelectAll={props.checkAllHandler}
+              setTableFeedbackNotification={setTableFeedbackNotification}
+            />
+            <TildelVeilederModal
+              ref={tildelVeilederModalRef}
+              selectedPersoner={props.selectedPersoner}
+              setSelectedPersoner={props.setSelectedPersoner}
             />
             {toggles.isTildelOppfolgingsenhetEnabled && (
               <TildelOppfolgingsenhetButton
@@ -98,7 +90,7 @@ export default function Toolbar(props: Props) {
             {tableFeedbackNotification.text}
           </Alert>
         )}
-      </ToolbarStyled>
+      </div>
     </>
   );
 }

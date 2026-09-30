@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { VeilederDTO } from "@/api/types/veiledereTypes";
 import {
   filterVeiledereWithActiveOppgave,
+  getVeilederLabel,
   sortVeiledereBySurnameAsc,
 } from "@/utils/veiledereUtils";
 import {
@@ -18,15 +19,9 @@ const text = {
   searchVeilederPlaceholder: "Velg veiledere",
 };
 
-function veilederLabel(veileder: VeilederDTO): string {
-  return veileder.fornavn === ""
-    ? veileder.ident
-    : `${veileder.etternavn}, ${veileder.fornavn}`;
-}
-
 function toComboboxOption(veileder: VeilederDTO) {
   return {
-    label: veilederLabel(veileder),
+    label: getVeilederLabel(veileder),
     value: veileder.ident,
   };
 }

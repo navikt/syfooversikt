@@ -55,10 +55,6 @@ export default function Sokeresultat({ allEvents }: Props) {
 
   const allFnr = Object.keys(filteredEvents.value);
 
-  const checkAllHandler = (checked: boolean): void => {
-    setSelectedPersoner(checked ? allFnr : []);
-  };
-
   const onPageChange = (startItem: number, endItem: number): void => {
     setStartItem(startItem);
     setEndItem(endItem);
@@ -79,8 +75,6 @@ export default function Sokeresultat({ allEvents }: Props) {
       <Toolbar
         numberOfItemsTotal={allFnr.length}
         onPageChange={onPageChange}
-        isAllSelected={allFnr.length === selectedPersoner.length}
-        checkAllHandler={checkAllHandler}
         selectedPersoner={selectedPersoner}
         setSelectedPersoner={setSelectedPersoner}
       />

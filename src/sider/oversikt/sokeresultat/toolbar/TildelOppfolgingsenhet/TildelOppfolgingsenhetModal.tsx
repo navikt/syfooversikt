@@ -3,11 +3,9 @@ import {
   BodyLong,
   BodyShort,
   Button,
-  List,
   Modal,
   Skeleton,
   UNSAFE_Combobox,
-  Box,
 } from "@navikt/ds-react";
 import React, { useState } from "react";
 import { useGetMuligeOppfolgingsenheter } from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter";
@@ -15,7 +13,7 @@ import {
   OppfolgingsenhetTildelingerResponseDTO,
   usePostTildelOppfolgingsenhet,
 } from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/usePostTildelOppfolgingsenhet";
-import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
+import ValgtePersonerList from "@/sider/oversikt/sokeresultat/toolbar/ValgtePersonerList";
 import { FeedbackNotification } from "@/sider/oversikt/sokeresultat/toolbar/Toolbar";
 
 const text = {
@@ -66,10 +64,6 @@ export default function TildelOppfolgingsenhetModal({
   const showTildelingerInfo = !!oppfolgingsenhet;
   const chosenOppfolgingsenhet = getMuligeOppfolgingsenheter?.data?.find(
     (enhet) => enhet.enhetId === oppfolgingsenhet,
-  );
-  const { data: personoversikt } = useGetPersonstatusQuery();
-  const selectedPersonerInfo = personoversikt.filter((person) =>
-    selectedPersoner.includes(person.fnr),
   );
 
   function closeModal() {
@@ -135,7 +129,7 @@ export default function TildelOppfolgingsenhetModal({
         {getMuligeOppfolgingsenheter.isSuccess && (
           <>
             <BodyLong>{text.description}</BodyLong>
-            <form id="form" onSubmit={onSubmit}>
+            <form id="tildel-oppfolgingsenhet-form" onSubmit={onSubmit}>
               <UNSAFE_Combobox
                 label={text.velgOppfolgingsenhet}
                 size="small"
@@ -155,28 +149,7 @@ export default function TildelOppfolgingsenhetModal({
         {showTildelingerInfo && (
           <div>
             <BodyShort>{`Du tildeler nå følgende personer til ${chosenOppfolgingsenhet?.navn} (${chosenOppfolgingsenhet?.enhetId}):`}</BodyShort>
-            <Box marginBlock="space-16" asChild>
-              <List data-aksel-migrated-v8 as="ul">
-                {selectedPersonerInfo.map((person, index) => {
-                  const virksomhetList =
-                    person.latestOppfolgingstilfelle?.virksomhetList;
-                  const virksomhetText = virksomhetList
-                    ?.map((v) => v.virksomhetsnavn)
-                    .join(", ");
-                  return (
-                    <List.Item key={index}>
-                      <span>
-                        {`${person.navn} (${person.fnr}). `}
-                        {!!virksomhetList?.length
-                          ? `Virksomhet: `
-                          : "Uten virksomhet"}
-                        <b>{virksomhetText}</b>
-                      </span>
-                    </List.Item>
-                  );
-                })}
-              </List>
-            </Box>
+            <ValgtePersonerList selectedPersoner={selectedPersoner} />
           </div>
         )}
         {getMuligeOppfolgingsenheter.isError && (
@@ -187,7 +160,10 @@ export default function TildelOppfolgingsenhetModal({
       </Modal.Body>
       <Modal.Footer>
         {getMuligeOppfolgingsenheter.isSuccess && (
-          <Button form="form" loading={postTildelOppfolgingsenhet.isPending}>
+          <Button
+            form="tildel-oppfolgingsenhet-form"
+            loading={postTildelOppfolgingsenhet.isPending}
+          >
             {text.endreEnhet}
           </Button>
         )}
