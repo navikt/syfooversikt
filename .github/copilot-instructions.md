@@ -121,4 +121,3 @@
 
 - We have some js-files in the codebase, but new code should always be in TypeScript. Refactor old js-files to
   TypeScript when touching them.
-- The Express backend server is legacy and should not be changed unless absolutely necessary.
