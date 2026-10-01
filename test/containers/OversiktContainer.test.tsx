@@ -52,7 +52,6 @@ function renderOversikten(notifications: Notification[] = []) {
 describe("OversiktContainer", () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
-    stubPersonregister();
   });
 
   afterEach(() => {
