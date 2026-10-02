@@ -155,8 +155,8 @@ importers:
         specifier: 2.10.1
         version: 2.10.1
       axios:
-        specifier: 1.18.1
-        version: 1.18.1(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)
+        specifier: 1.20.0
+        version: 1.20.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)
       classnames:
         specifier: 2.5.1
         version: 2.5.1
@@ -1508,8 +1508,8 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
-  axios@1.18.1:
-    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+  axios@1.20.0:
+    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
 
   babel-plugin-styled-components@2.1.4:
     resolution: {integrity: sha512-Xgp9g+A/cG47sUyRwwYxGM4bR/jDRg5N6it/8+HxCnbT5XNKSKDT9xm4oag/osgqjC2It/vH0yXsomOG6k558g==}
@@ -4504,7 +4504,7 @@ snapshots:
       postcss: 8.5.22
       postcss-value-parser: 4.2.0
 
-  axios@1.18.1(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0):
+  axios@1.20.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0):
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.3(supports-color@5.5.0))
       form-data: 4.0.6
