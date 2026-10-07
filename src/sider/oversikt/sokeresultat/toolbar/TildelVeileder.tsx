@@ -3,8 +3,17 @@ import {
   useTildelVeileder,
   useVeiledereQuery,
 } from "@/data/veiledereQueryHooks";
+import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
 import { VeilederArbeidstaker } from "@/api/types/veilederArbeidstakerTypes";
-import { Alert, Button, Dialog, UNSAFE_Combobox } from "@navikt/ds-react";
+import {
+  Alert,
+  Button,
+  Dialog,
+  Label,
+  List,
+  UNSAFE_Combobox,
+} from "@navikt/ds-react";
+import { PersonIcon } from "@navikt/aksel-icons";
 
 const texts = {
   openDialog: "Tildel veileder",
@@ -13,6 +22,7 @@ const texts = {
   description2: "Tildeling av enkelthendelser er ikke mulig.",
   alert:
     "Tildelingen gjelder kun i Modia SYFO, ikke i Arena eller Modia Arbeidsrettet oppfølging",
+  selectedPersonsLabel: "Valgte personer",
   combobox: {
     label: "Velg veileder",
     placeholder: "Søk etter veileder",
@@ -35,6 +45,7 @@ export default function TildelVeileder({
   handleSelectAll,
 }: Props): ReactElement {
   const veiledereQuery = useVeiledereQuery();
+  const { data: personoversikt } = useGetPersonstatusQuery();
   const tildelVeileder = useTildelVeileder();
 
   const [selectedVeilederIdent, setSelectedVeilederIdent] = useState<
@@ -44,6 +55,9 @@ export default function TildelVeileder({
   const [open, setOpen] = useState(false);
 
   const veiledere = veiledereQuery.data || [];
+  const personoversiktByFnr = new Map(
+    personoversikt.map((person) => [person.fnr, person]),
+  );
 
   const resetStateToDefault = () => {
     setSelectedVeilederIdent(undefined);
@@ -51,6 +65,7 @@ export default function TildelVeileder({
   };
 
   const options = veiledere
+    .filter((veileder) => veileder.enabled)
     .map((veileder) => {
       const fullName = `${veileder.etternavn}, ${veileder.fornavn}`;
 
@@ -121,6 +136,17 @@ export default function TildelVeileder({
             <Alert className="mb-4" variant="warning" size="small">
               {texts.alert}
             </Alert>
+            <Label>{texts.selectedPersonsLabel}</Label>
+            <List className="mb-4" size="small">
+              {selectedPersoner.map((fnr) => {
+                const person = personoversiktByFnr.get(fnr);
+                return (
+                  <List.Item key={fnr} icon={<PersonIcon />}>
+                    {person ? `${person.navn} (${fnr})` : fnr}
+                  </List.Item>
+                );
+              })}
+            </List>
             <UNSAFE_Combobox
               shouldAutocomplete
               label={texts.combobox.label}
