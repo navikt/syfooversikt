@@ -220,7 +220,9 @@ function isPersonVisible(
     (filters.isManglendeMedvirkningChecked &&
       !!personData.manglendeMedvirkning) ||
     (filters.isKartleggingssporsmalChecked &&
-      personData.isAktivKartleggingssporsmalVurdering)
+      personData.isAktivKartleggingssporsmalVurdering) ||
+    (filters.isUtenlandsoppholdChecked &&
+      personData.harUtenlandsoppholdSoknadUbehandlet)
   );
 }
 

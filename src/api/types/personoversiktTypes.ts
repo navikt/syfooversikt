@@ -67,6 +67,7 @@ export interface PersonOversiktStatusDTO {
   aktivitetskravvurdering: AktivitetskravDTO | null;
   manglendeMedvirkning: ManglendeMedvirkningDTO | null;
   isAktivKartleggingssporsmalVurdering: boolean;
+  utenlandsoppholdSoknadUbehandlet: boolean;
   dialogmoteAvvent: DialogmoteAvventDTO | null;
 }
 
@@ -87,6 +88,7 @@ export function isUbehandlet(
     !!personStatus.oppfolgingsoppgave ||
     !!personStatus.aktivitetskravvurdering ||
     !!personStatus.manglendeMedvirkning ||
+    personStatus.utenlandsoppholdSoknadUbehandlet ||
     (isKartleggingssporsmalEnabled &&
       personStatus.isAktivKartleggingssporsmalVurdering)
   );

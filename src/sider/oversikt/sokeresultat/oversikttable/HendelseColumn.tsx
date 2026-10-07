@@ -212,6 +212,11 @@ export function getHendelser(personData: PersonData): Hendelse[] {
       beskrivelse: "Svart på kartleggingsspørsmål",
     });
   }
+  if (personData.harUtenlandsoppholdSoknadUbehandlet) {
+    hendelser.push({
+      beskrivelse: "Søknad om utenlandsopphold",
+    });
+  }
   return hendelser.sort(byFristOrBottom);
 }
 

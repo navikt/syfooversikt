@@ -40,6 +40,7 @@ export function createPersonDataWithName(
     aktivitetskravvurdering: null,
     manglendeMedvirkning: null,
     isAktivKartleggingssporsmalVurdering: false,
+    harUtenlandsoppholdSoknadUbehandlet: false,
     dialogmoteAvvent: null,
   };
 }
@@ -59,6 +60,7 @@ const defaulthendelseFilter: HendelseTypeFilter = {
   isAktivitetskravVurderStansChecked: false,
   isManglendeMedvirkningChecked: false,
   isKartleggingssporsmalChecked: false,
+  isUtenlandsoppholdChecked: false,
 };
 
 describe("hendelseFilteringUtils", () => {
@@ -691,6 +693,25 @@ describe("hendelseFilteringUtils", () => {
       );
 
       expect(Object.keys(filteredPersonregister).length).to.equal(2);
+    });
+
+    it("Return elements with unprocessed applications for stays abroad", () => {
+      const personregister: PersonregisterState = {
+        "16614407794": {
+          ...createPersonDataWithName("Person With Application"),
+          harUtenlandsoppholdSoknadUbehandlet: true,
+        },
+        "09128034883": createPersonDataWithName("Person Without Application"),
+      };
+
+      const filteredPersonregister = filterHendelser(personregister, {
+        ...defaulthendelseFilter,
+        isUtenlandsoppholdChecked: true,
+      });
+
+      expect(Object.keys(filteredPersonregister)).to.deep.equal([
+        "16614407794",
+      ]);
     });
 
     describe("Frist filter", () => {
