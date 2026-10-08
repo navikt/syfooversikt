@@ -68,9 +68,9 @@ export default function TildelOppfolgingsenhet({
 
   const [open, setOpen] = useState(false);
   const [isFormError, setIsFormError] = useState<boolean>(false);
-  const [oppfolgingsenhet, setOppfolgingsenhet] = useState<string | undefined>(
-    undefined,
-  );
+  const [oppfolgingsenhet, setOppfolgingsenhet] = useState<
+    string | undefined
+  >();
 
   const selectedPersonerInfo = personoversikt.filter((person) =>
     selectedPersoner.includes(person.fnr),
