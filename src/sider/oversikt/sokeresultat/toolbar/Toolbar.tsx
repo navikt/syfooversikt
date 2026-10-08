@@ -1,5 +1,5 @@
 import TildelVeileder from "./TildelVeileder";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import themes from "../../../../styles/themes";
 import PaginationContainer, {
@@ -7,7 +7,7 @@ import PaginationContainer, {
 } from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
-import { Alert } from "@navikt/ds-react";
+import { Alert, LocalAlert } from "@navikt/ds-react";
 import TildelOppfolgingsenhet from "./TildelOppfolgingsenhet/TildelOppfolgingsenhet";
 
 const ToolbarStyled = styled.div`
@@ -51,6 +51,19 @@ export default function Toolbar(props: Props) {
     FeedbackNotification | undefined
   >();
 
+  useEffect(() => {
+    if (tableFeedbackNotification) {
+      const timer = setTimeout(() => {
+        setTableFeedbackNotification(undefined);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [tableFeedbackNotification]);
+
+  useEffect(() => {
+    setTableFeedbackNotification(undefined);
+  }, [props.selectedPersoner]);
+
   return (
     <>
       <PaginationLabel
@@ -64,6 +77,7 @@ export default function Toolbar(props: Props) {
             <TildelVeileder
               selectedPersoner={props.selectedPersoner}
               handleSelectAll={props.checkAllHandler}
+              setTableFeedbackNotification={setTableFeedbackNotification}
             />
             {toggles.isTildelOppfolgingsenhetEnabled && (
               <TildelOppfolgingsenhet
@@ -80,13 +94,19 @@ export default function Toolbar(props: Props) {
           />
         </section>
         {!!tableFeedbackNotification && (
-          <Alert
-            variant={tableFeedbackNotification.type}
-            size="small"
-            className="m-1"
+          <LocalAlert
+            status={tableFeedbackNotification.type}
+            className="mx-2 mb-2"
           >
-            {tableFeedbackNotification.text}
-          </Alert>
+            <LocalAlert.Header>
+              <LocalAlert.Title>
+                {tableFeedbackNotification.text}
+              </LocalAlert.Title>
+              <LocalAlert.CloseButton
+                onClick={() => setTableFeedbackNotification(undefined)}
+              />
+            </LocalAlert.Header>
+          </LocalAlert>
         )}
       </ToolbarStyled>
     </>

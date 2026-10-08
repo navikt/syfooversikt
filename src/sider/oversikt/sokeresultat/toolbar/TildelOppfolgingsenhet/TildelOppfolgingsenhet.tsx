@@ -5,6 +5,7 @@ import {
   UNSAFE_Combobox,
   Dialog,
   Label,
+  LocalAlert,
 } from "@navikt/ds-react";
 import React, { useState } from "react";
 import { useGetMuligeOppfolgingsenheter } from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter";
@@ -18,19 +19,22 @@ import { PersonIcon } from "@navikt/aksel-icons";
 
 const text = {
   buttonLabelTildelOppfolgingsenhet: "Tildel oppfølgingenhet",
-  heading: "Endre oppfølgingsenhet",
+  heading: "Tildel oppfølgingsenhet",
   description:
     "Her kan du flytte den sykmeldte til en annen oppfølgingsenhet. Dersom den sykemeldte har endret bostedsadresse, skjer flyttingen automatisk.",
   velgOppfolgingsenhet: "Velg ny oppfølgingsenhet",
   formErrorMessage: "Du må velge en oppfølgingsenhet",
-  getMuligeOppfolgingsenheterFailedErrorMessage:
-    "Noe gikk galt. Klarer ikke å hente mulig enheter å tildele til.",
-
+  getMuligeOppfolgingsenheterFailedErrorMessage: {
+    title: "Noe gikk galt",
+    description: "Klarer ikke å hente mulig enheter å tildele til.",
+  },
   selectedPersonsLabel: "Valgte personer",
   buttonLabel: "Tildel oppfølgingsenhet",
-  endreEnhet: "Endre oppfølgingsenhet",
+  endreEnhet: "Tildel oppfølgingsenhet",
   avbryt: "Avbryt",
   errorMessage: "Tildeling av oppfølgingsenhet feilet.",
+  missingSelectedPersons:
+    "Vennligst velg personer før du tildeler oppfølgingsenhet",
 };
 
 const tildelOppfolgingsenhetSuccessText = (
@@ -120,85 +124,105 @@ export default function TildelOppfolgingsenhet({
     }
   };
 
+  const openDialog = () => {
+    if (selectedPersoner.length === 0) {
+      setTableFeedbackNotification({
+        type: "warning",
+        text: text.missingSelectedPersons,
+      });
+      return;
+    }
+    setOpen(true);
+  };
+
   const resetStateToDefault = () => {
     setOppfolgingsenhet(undefined);
     setIsFormError(false);
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(open) => {
-        setOpen(open);
-        resetStateToDefault();
-      }}
-    >
-      <Dialog.Trigger>
-        <Button
-          size="small"
-          variant="secondary"
-          disabled={selectedPersoner.length === 0}
-        >
-          {text.buttonLabelTildelOppfolgingsenhet}
-        </Button>
-      </Dialog.Trigger>
-      <Dialog.Popup>
-        <Dialog.Header>
-          <Dialog.Title>{text.heading}</Dialog.Title>
-          <Dialog.Description>{text.description}</Dialog.Description>
-        </Dialog.Header>
-        <Dialog.Body className="flex flex-col gap-4">
-          <div>
-            <Label>{text.selectedPersonsLabel}</Label>
-            <List size="small">
-              {selectedPersonerInfo.map((person, index) => {
-                const virksomhetList =
-                  person.latestOppfolgingstilfelle?.virksomhetList;
-                const virksomhetText = virksomhetList
-                  ?.map((v) => v.virksomhetsnavn)
-                  .join(", ");
-                return (
-                  <List.Item key={index} icon={<PersonIcon />}>
-                    {`${person.navn} (${person.fnr}). `}
-                    {!!virksomhetList?.length
-                      ? `Virksomhet: `
-                      : "Uten virksomhet"}
-                    <b>{virksomhetText}</b>
-                  </List.Item>
-                );
-              })}
-            </List>
-          </div>
-          {getMuligeOppfolgingsenheter.isSuccess && (
-            <form id="form" onSubmit={onSubmit}>
-              <UNSAFE_Combobox
-                label={text.velgOppfolgingsenhet}
-                options={getMuligeOppfolgingsenheter.data.map((enhet) => ({
-                  label: `${enhet.navn} - ${enhet.enhetId}`,
-                  value: enhet.enhetId,
-                }))}
-                onToggleSelected={onOppfolgingsenhetChange}
-                error={isFormError && text.formErrorMessage}
-              />
-            </form>
-          )}
-          {getMuligeOppfolgingsenheter.isError && (
-            <Alert size="small" variant="error">
-              {text.getMuligeOppfolgingsenheterFailedErrorMessage}
-            </Alert>
-          )}
-        </Dialog.Body>
-        <Dialog.Footer>
-          <Dialog.CloseTrigger>
-            <Button variant="secondary">{text.avbryt}</Button>
-          </Dialog.CloseTrigger>
-          {getMuligeOppfolgingsenheter.isSuccess && (
-            <Button form="form" loading={postTildelOppfolgingsenhet.isPending}>
-              {text.endreEnhet}
-            </Button>
-          )}
-        </Dialog.Footer>
-      </Dialog.Popup>
-    </Dialog>
+    <>
+      <Button size="small" variant="secondary" onClick={openDialog}>
+        {text.buttonLabelTildelOppfolgingsenhet}
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={(open) => {
+          setOpen(open);
+          resetStateToDefault();
+        }}
+      >
+        <Dialog.Popup>
+          <Dialog.Header>
+            <Dialog.Title>{text.heading}</Dialog.Title>
+            <Dialog.Description>{text.description}</Dialog.Description>
+          </Dialog.Header>
+          <Dialog.Body className="flex flex-col gap-4">
+            {true && (
+              <LocalAlert status="error">
+                <LocalAlert.Header>
+                  <LocalAlert.Title>
+                    {text.getMuligeOppfolgingsenheterFailedErrorMessage.title}
+                  </LocalAlert.Title>
+                </LocalAlert.Header>
+                <LocalAlert.Content>
+                  {
+                    text.getMuligeOppfolgingsenheterFailedErrorMessage
+                      .description
+                  }
+                </LocalAlert.Content>
+              </LocalAlert>
+            )}
+            <div>
+              <Label>{text.selectedPersonsLabel}</Label>
+              <List size="small">
+                {selectedPersonerInfo.map((person, index) => {
+                  const virksomhetList =
+                    person.latestOppfolgingstilfelle?.virksomhetList;
+                  const virksomhetText = virksomhetList
+                    ?.map((v) => v.virksomhetsnavn)
+                    .join(", ");
+                  return (
+                    <List.Item key={index} icon={<PersonIcon />}>
+                      {`${person.navn} (${person.fnr}). `}
+                      {!!virksomhetList?.length
+                        ? `Virksomhet: `
+                        : "Uten virksomhet"}
+                      <b>{virksomhetText}</b>
+                    </List.Item>
+                  );
+                })}
+              </List>
+            </div>
+            {getMuligeOppfolgingsenheter.isSuccess && (
+              <form id="form" onSubmit={onSubmit}>
+                <UNSAFE_Combobox
+                  label={text.velgOppfolgingsenhet}
+                  options={getMuligeOppfolgingsenheter.data.map((enhet) => ({
+                    label: `${enhet.navn} - ${enhet.enhetId}`,
+                    value: enhet.enhetId,
+                  }))}
+                  onToggleSelected={onOppfolgingsenhetChange}
+                  error={isFormError && text.formErrorMessage}
+                />
+              </form>
+            )}
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Dialog.CloseTrigger>
+              <Button variant="secondary">{text.avbryt}</Button>
+            </Dialog.CloseTrigger>
+            {getMuligeOppfolgingsenheter.isSuccess && (
+              <Button
+                form="form"
+                loading={postTildelOppfolgingsenhet.isPending}
+              >
+                {text.endreEnhet}
+              </Button>
+            )}
+          </Dialog.Footer>
+        </Dialog.Popup>
+      </Dialog>
+    </>
   );
 }

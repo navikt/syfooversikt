@@ -6,22 +6,26 @@ import {
 import { useGetPersonstatusQuery } from "@/data/personoversiktHooks";
 import { VeilederArbeidstaker } from "@/api/types/veilederArbeidstakerTypes";
 import {
-  Alert,
   Button,
   Dialog,
   Label,
   List,
+  LocalAlert,
   UNSAFE_Combobox,
 } from "@navikt/ds-react";
 import { PersonIcon } from "@navikt/aksel-icons";
+import { FeedbackNotification } from "./Toolbar";
 
 const texts = {
   openDialog: "Tildel veileder",
   header: "Tildel veileder",
   description1: "Her tildeler du innbyggeren til en veileder på din enhet.",
   description2: "Tildeling av enkelthendelser er ikke mulig.",
-  alert:
-    "Tildelingen gjelder kun i Modia SYFO, ikke i Arena eller Modia Arbeidsrettet oppfølging",
+  alert: {
+    title: "Gjelder kun Modia SYFO",
+    description:
+      "Tildelingen gjelder kun i Modia SYFO, ikke i Arena eller Modia Arbeidsrettet oppfølging",
+  },
   selectedPersonsLabel: "Valgte personer",
   combobox: {
     label: "Velg veileder",
@@ -32,16 +36,21 @@ const texts = {
   },
   assignButton: "Tildel veileder",
   closeDialog: "Avbryt",
+  missingSelectedPersons: "Vennligst velg personer før du tildeler veileder",
 };
 
 interface Props {
   selectedPersoner: string[];
   handleSelectAll: (checked: boolean) => void;
+  setTableFeedbackNotification: (
+    feedbackNotification: FeedbackNotification | undefined,
+  ) => void;
 }
 
 export default function TildelVeileder({
   selectedPersoner,
   handleSelectAll,
+  setTableFeedbackNotification,
 }: Props): ReactElement {
   const veiledereQuery = useVeiledereQuery();
   const { data: personoversikt } = useGetPersonstatusQuery();
@@ -57,11 +66,6 @@ export default function TildelVeileder({
   const personoversiktByFnr = new Map(
     personoversikt.map((person) => [person.fnr, person]),
   );
-
-  const resetStateToDefault = () => {
-    setSelectedVeilederIdent(undefined);
-    setError(undefined);
-  };
 
   const options = veiledere
     .filter((veileder) => veileder.enabled)
@@ -104,8 +108,27 @@ export default function TildelVeileder({
     }
   };
 
+  const openDialog = () => {
+    if (selectedPersoner.length === 0) {
+      setTableFeedbackNotification({
+        type: "warning",
+        text: texts.missingSelectedPersons,
+      });
+      return;
+    }
+    setOpen(true);
+  };
+
+  const resetStateToDefault = () => {
+    setSelectedVeilederIdent(undefined);
+    setError(undefined);
+  };
+
   return (
     <div tabIndex={1}>
+      <Button size="small" onClick={openDialog}>
+        {texts.openDialog}
+      </Button>
       <Dialog
         open={open}
         onOpenChange={(open) => {
@@ -113,11 +136,6 @@ export default function TildelVeileder({
           resetStateToDefault();
         }}
       >
-        <Dialog.Trigger>
-          <Button size="small" disabled={selectedPersoner.length === 0}>
-            {texts.openDialog}
-          </Button>
-        </Dialog.Trigger>
         <Dialog.Popup>
           <Dialog.Header>
             <Dialog.Title>{texts.header}</Dialog.Title>
@@ -125,9 +143,12 @@ export default function TildelVeileder({
             <Dialog.Description>{texts.description2}</Dialog.Description>
           </Dialog.Header>
           <Dialog.Body className="flex flex-col gap-4">
-            <Alert variant="warning" size="small">
-              {texts.alert}
-            </Alert>
+            <LocalAlert status="warning">
+              <LocalAlert.Header>
+                <LocalAlert.Title>{texts.alert.title}</LocalAlert.Title>
+              </LocalAlert.Header>
+              <LocalAlert.Content>{texts.alert.description}</LocalAlert.Content>
+            </LocalAlert>
             <div>
               <Label>{texts.selectedPersonsLabel}</Label>
               <List size="small">
