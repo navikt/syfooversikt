@@ -159,7 +159,7 @@ export default function TildelOppfolgingsenhet({
           </Dialog.Header>
           <Dialog.Body className="flex flex-col gap-4">
             {getMuligeOppfolgingsenheter.isError && (
-              <LocalAlert status="error">
+              <LocalAlert status="error" size="small">
                 <LocalAlert.Header>
                   <LocalAlert.Title>
                     {text.getMuligeOppfolgingsenheterFailedErrorMessage.title}

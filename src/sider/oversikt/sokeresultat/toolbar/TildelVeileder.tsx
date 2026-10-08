@@ -143,7 +143,7 @@ export default function TildelVeileder({
             <Dialog.Description>{texts.description2}</Dialog.Description>
           </Dialog.Header>
           <Dialog.Body className="flex flex-col gap-4">
-            <LocalAlert status="warning">
+            <LocalAlert status="warning" size="small">
               <LocalAlert.Header>
                 <LocalAlert.Title>{texts.alert.title}</LocalAlert.Title>
               </LocalAlert.Header>

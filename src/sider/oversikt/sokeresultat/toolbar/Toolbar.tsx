@@ -98,6 +98,7 @@ export default function Toolbar(props: Props) {
         {!!tableFeedbackNotification && (
           <LocalAlert
             status={tableFeedbackNotification.type}
+            size="small"
             className="mx-2 mb-2"
           >
             <LocalAlert.Header>
