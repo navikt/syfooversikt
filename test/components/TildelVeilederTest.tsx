@@ -50,7 +50,7 @@ describe("TildelVeileder", () => {
     );
   });
 
-  it("viser bare enabled veiledere i dropdown", async () => {
+  it("viser bare enabled veiledere i combobox", async () => {
     renderTildelVeileder();
     const tildelButton = screen.getByRole("button", {
       name: "Tildel veileder",
@@ -60,7 +60,7 @@ describe("TildelVeileder", () => {
     const enabledVeiledere = veiledereMock.filter(
       (veileder) => veileder.enabled,
     );
-    const veilederOptions = screen.getAllByRole("radio");
+    const veilederOptions = screen.getAllByRole("option");
     expect(veilederOptions).toHaveLength(enabledVeiledere.length);
   });
 });
