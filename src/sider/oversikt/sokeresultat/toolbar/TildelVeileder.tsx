@@ -30,7 +30,6 @@ const texts = {
       missingVeileder: "Vennligst velg veileder",
     },
   },
-  unassignButton: "Sett som ufordelt",
   assignButton: "Tildel",
   closeDialog: "Avbryt",
 };
@@ -105,13 +104,6 @@ export default function TildelVeileder({
     }
   };
 
-  function handleSettSomUfordelt() {
-    tildelVeileder.mutate([], {
-      onSuccess: () => handleSelectAll(false),
-    });
-    setOpen(false);
-  }
-
   return (
     <div tabIndex={1}>
       <Dialog
@@ -158,13 +150,6 @@ export default function TildelVeileder({
             />
           </Dialog.Body>
           <Dialog.Footer>
-            <Button
-              className="mr-auto"
-              variant="tertiary"
-              onClick={handleSettSomUfordelt}
-            >
-              {texts.unassignButton}
-            </Button>
             <Dialog.CloseTrigger>
               <Button variant="secondary">{texts.closeDialog}</Button>
             </Dialog.CloseTrigger>
