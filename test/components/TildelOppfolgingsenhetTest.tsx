@@ -65,7 +65,7 @@ describe("TildelVeileder", () => {
 
     expect(
       within(modal).getByRole("heading", {
-        name: "Endre oppfølgingsenhet",
+        name: "Tildel oppfølgingsenhet",
         hidden: true,
       }),
     ).to.exist;
@@ -111,7 +111,7 @@ describe("TildelVeileder", () => {
     await userEvent.click(option);
     await userEvent.click(
       screen.getByRole("button", {
-        name: "Endre oppfølgingsenhet",
+        name: "Tildel oppfølgingsenhet",
         hidden: true,
       }),
     );
