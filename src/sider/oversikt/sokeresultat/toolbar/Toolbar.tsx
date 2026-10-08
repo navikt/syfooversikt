@@ -1,15 +1,14 @@
 import TildelVeileder from "./TildelVeileder";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import themes from "../../../../styles/themes";
 import PaginationContainer, {
   PAGINATED_NUMBER_OF_ITEMS,
 } from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
-import TildelOppfolgingsenhetModal from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal";
-import TildelOppfolgingsenhetButton from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetButton";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
 import { Alert } from "@navikt/ds-react";
+import TildelOppfolgingsenhet from "./TildelOppfolgingsenhet/TildelOppfolgingsenhet";
 
 const ToolbarStyled = styled.div`
   display: flex;
@@ -51,7 +50,6 @@ export default function Toolbar(props: Props) {
   const [tableFeedbackNotification, setTableFeedbackNotification] = useState<
     FeedbackNotification | undefined
   >();
-  const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
@@ -68,15 +66,7 @@ export default function Toolbar(props: Props) {
               handleSelectAll={props.checkAllHandler}
             />
             {toggles.isTildelOppfolgingsenhetEnabled && (
-              <TildelOppfolgingsenhetButton
-                modalRef={modalRef}
-                selectedPersoner={props.selectedPersoner}
-                setTableFeedbackNotification={setTableFeedbackNotification}
-              />
-            )}
-            {toggles.isTildelOppfolgingsenhetEnabled && (
-              <TildelOppfolgingsenhetModal
-                ref={modalRef}
+              <TildelOppfolgingsenhet
                 selectedPersoner={props.selectedPersoner}
                 setSelectedPersoner={props.setSelectedPersoner}
                 setTableFeedbackNotification={setTableFeedbackNotification}

@@ -30,7 +30,7 @@ const texts = {
       missingVeileder: "Vennligst velg veileder",
     },
   },
-  assignButton: "Tildel",
+  assignButton: "Tildel veileder",
   closeDialog: "Avbryt",
 };
 
@@ -124,21 +124,23 @@ export default function TildelVeileder({
             <Dialog.Description>{texts.description1}</Dialog.Description>
             <Dialog.Description>{texts.description2}</Dialog.Description>
           </Dialog.Header>
-          <Dialog.Body>
-            <Alert className="mb-4" variant="warning" size="small">
+          <Dialog.Body className="flex flex-col gap-4">
+            <Alert variant="warning" size="small">
               {texts.alert}
             </Alert>
-            <Label>{texts.selectedPersonsLabel}</Label>
-            <List className="mb-4" size="small">
-              {selectedPersoner.map((fnr) => {
-                const person = personoversiktByFnr.get(fnr);
-                return (
-                  <List.Item key={fnr} icon={<PersonIcon />}>
-                    {person ? `${person.navn} (${fnr})` : fnr}
-                  </List.Item>
-                );
-              })}
-            </List>
+            <div>
+              <Label>{texts.selectedPersonsLabel}</Label>
+              <List size="small">
+                {selectedPersoner.map((fnr) => {
+                  const person = personoversiktByFnr.get(fnr);
+                  return (
+                    <List.Item key={fnr} icon={<PersonIcon />}>
+                      {person ? `${person.navn} (${fnr})` : fnr}
+                    </List.Item>
+                  );
+                })}
+              </List>
+            </div>
             <UNSAFE_Combobox
               shouldAutocomplete
               label={texts.combobox.label}
