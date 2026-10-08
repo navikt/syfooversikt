@@ -61,7 +61,9 @@ export default function Toolbar(props: Props) {
   }, [tableFeedbackNotification]);
 
   useEffect(() => {
-    setTableFeedbackNotification(undefined);
+    if (props.selectedPersoner.length > 0) {
+      setTableFeedbackNotification(undefined);
+    }
   }, [props.selectedPersoner]);
 
   return (
