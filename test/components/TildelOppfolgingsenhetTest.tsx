@@ -21,9 +21,8 @@ import userEvent from "@testing-library/user-event";
 let queryClient = testQueryClient();
 const aktivEnhet = aktivEnhetMock.aktivEnhet;
 const selectedFnr = personoversiktEnhetMock[0]?.fnr || "";
-const modalRef = React.createRef<HTMLDialogElement>();
 
-const renderTildelOppfolgingsenhetModal = () =>
+const renderTildelOppfolgingsenhet = async () => {
   renderWithRouter(
     <NotificationProvider>
       <QueryClientProvider client={queryClient}>
@@ -43,6 +42,10 @@ const renderTildelOppfolgingsenhetModal = () =>
     </NotificationProvider>,
     routes.ENHET_OVERSIKT,
   );
+  await userEvent.click(
+    screen.getByRole("button", { name: "Tildel oppfølgingenhet" }),
+  );
+};
 
 describe("TildelVeileder", () => {
   beforeEach(() => {
@@ -55,9 +58,9 @@ describe("TildelVeileder", () => {
 
   it("Skal vise modal", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
-    const modal = await screen.findByRole("dialog", { hidden: true });
+    const modal = await screen.findByRole("dialog");
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
 
     expect(
@@ -75,21 +78,19 @@ describe("TildelVeileder", () => {
 
   it("Skal vise oppsummering når man har valgt enhet å flytte til", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    await userEvent.click(
+      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+    );
 
     const option = screen.getByRole("option", {
       name: "Nav Fredrikstad - 0106",
-      hidden: true,
     });
     await userEvent.click(option);
 
-    expect(
-      screen.getByText(
-        "Du tildeler nå følgende personer til Nav Fredrikstad (0106):",
-      ),
-    ).to.exist;
+    expect(screen.getByText("Valgte personer")).to.exist;
     expect(screen.getByText("Korrupt Heis (01999911111). Virksomhet:")).to
       .exist;
     expect(screen.getByText("NAV Security, Annen Virksomhet AS")).to.exist;
@@ -97,13 +98,15 @@ describe("TildelVeileder", () => {
 
   it("Sender riktig verdier når man tildeler oppfølgingsenhet", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    await userEvent.click(
+      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+    );
 
     const option = screen.getByRole("option", {
       name: "Nav Fredrikstad - 0106",
-      hidden: true,
     });
     await userEvent.click(option);
     await userEvent.click(
