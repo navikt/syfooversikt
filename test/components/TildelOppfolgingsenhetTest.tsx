@@ -13,7 +13,7 @@ import { screen, within } from "@testing-library/react";
 import { veiledereQueryKeys } from "@/data/veiledereQueryHooks";
 import { veiledereMock } from "@/mocks/data/veiledereMock";
 import React from "react";
-import TildelOppfolgingsenhetModal from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal";
+import TildelOppfolgingsenhet from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhet";
 import { stubTildelOppfolgingsenhet } from "../stubs/stubTildelOppfolgingsenhet";
 import { personoversiktEnhetMock } from "@/mocks/data/personoversiktEnhetMock";
 import userEvent from "@testing-library/user-event";
@@ -33,8 +33,7 @@ const renderTildelOppfolgingsenhetModal = () =>
             handleAktivEnhetChanged: () => void 0,
           }}
         >
-          <TildelOppfolgingsenhetModal
-            ref={modalRef}
+          <TildelOppfolgingsenhet
             selectedPersoner={[selectedFnr]}
             setSelectedPersoner={() => void 0}
             setTableFeedbackNotification={() => void 0}
