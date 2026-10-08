@@ -26,7 +26,7 @@ const text = {
   formErrorMessage: "Du må velge en oppfølgingsenhet",
   getMuligeOppfolgingsenheterFailedErrorMessage: {
     title: "Noe gikk galt",
-    description: "Klarer ikke å hente mulig enheter å tildele til.",
+    description: "Klarte ikke å hente enheter.",
   },
   selectedPersonsLabel: "Valgte personer",
   buttonLabel: "Tildel oppfølgingsenhet",
