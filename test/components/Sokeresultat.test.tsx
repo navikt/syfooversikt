@@ -80,6 +80,7 @@ describe("Sokeresultat", () => {
         isAktivitetskravVurderStansChecked: false,
         isManglendeMedvirkningChecked: false,
         isKartleggingssporsmalChecked: false,
+        isUtenlandsoppholdChecked: false,
       },
       isUfordelteBrukereFilter: false,
     };

@@ -127,6 +127,12 @@ describe("HendelseTypeFilter", () => {
       checked: false,
     });
     expect(kartleggingssporsmalCheckbox).to.exist;
+
+    const utenlandsoppholdCheckbox = screen.getByRole("checkbox", {
+      name: /§ 8-9 Søknad om utenlandsopphold/,
+      checked: false,
+    });
+    expect(utenlandsoppholdCheckbox).to.exist;
   });
   it("Viser ikke ufordelte brukere-checkboks i min oversikt", () => {
     renderHendelseFilter(routes.MIN_OVERSIKT);

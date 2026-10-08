@@ -21,6 +21,8 @@ export function lenkeTilModia(personData: PersonData): string {
   const isGoingToManglendeMedvirkning = !!personData.manglendeMedvirkning;
   const isGoingToFrisktilarbeid =
     !!personData.friskmeldingTilArbeidsformidlingFom;
+  const isGoingToUtenlandsopphold =
+    personData.harUtenlandsoppholdSoknadUbehandlet;
   const isGoingToKartleggingssporsmal =
     personData.isAktivKartleggingssporsmalVurdering;
 
@@ -42,6 +44,8 @@ export function lenkeTilModia(personData: PersonData): string {
     path = `${path}/manglendemedvirkning`;
   } else if (isGoingToFrisktilarbeid) {
     path = `${path}/frisktilarbeid`;
+  } else if (isGoingToUtenlandsopphold) {
+    path = `${path}/utenlandsopphold`;
   } else if (isGoingToKartleggingssporsmal) {
     path = `${path}/kartleggingssporsmal`;
   }
