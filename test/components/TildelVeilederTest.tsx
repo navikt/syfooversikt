@@ -34,6 +34,7 @@ const renderTildelVeileder = () =>
           <TildelVeileder
             selectedPersoner={[selectedFnr]}
             handleSelectAll={() => void 0}
+            setTableFeedbackNotification={() => void 0}
           />
         </AktivEnhetContext.Provider>
       </QueryClientProvider>

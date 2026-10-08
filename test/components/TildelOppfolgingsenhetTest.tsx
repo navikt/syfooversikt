@@ -13,7 +13,7 @@ import { screen, within } from "@testing-library/react";
 import { veiledereQueryKeys } from "@/data/veiledereQueryHooks";
 import { veiledereMock } from "@/mocks/data/veiledereMock";
 import React from "react";
-import TildelOppfolgingsenhetModal from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhetModal";
+import TildelOppfolgingsenhet from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/TildelOppfolgingsenhet";
 import { stubTildelOppfolgingsenhet } from "../stubs/stubTildelOppfolgingsenhet";
 import { personoversiktEnhetMock } from "@/mocks/data/personoversiktEnhetMock";
 import userEvent from "@testing-library/user-event";
@@ -21,9 +21,8 @@ import userEvent from "@testing-library/user-event";
 let queryClient = testQueryClient();
 const aktivEnhet = aktivEnhetMock.aktivEnhet;
 const selectedFnr = personoversiktEnhetMock[0]?.fnr || "";
-const modalRef = React.createRef<HTMLDialogElement>();
 
-const renderTildelOppfolgingsenhetModal = () =>
+const renderTildelOppfolgingsenhet = async () => {
   renderWithRouter(
     <NotificationProvider>
       <QueryClientProvider client={queryClient}>
@@ -33,8 +32,7 @@ const renderTildelOppfolgingsenhetModal = () =>
             handleAktivEnhetChanged: () => void 0,
           }}
         >
-          <TildelOppfolgingsenhetModal
-            ref={modalRef}
+          <TildelOppfolgingsenhet
             selectedPersoner={[selectedFnr]}
             setSelectedPersoner={() => void 0}
             setTableFeedbackNotification={() => void 0}
@@ -44,6 +42,10 @@ const renderTildelOppfolgingsenhetModal = () =>
     </NotificationProvider>,
     routes.ENHET_OVERSIKT,
   );
+  await userEvent.click(
+    screen.getByRole("button", { name: "Tildel oppfølgingenhet" }),
+  );
+};
 
 describe("TildelVeileder", () => {
   beforeEach(() => {
@@ -56,14 +58,14 @@ describe("TildelVeileder", () => {
 
   it("Skal vise modal", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
-    const modal = await screen.findByRole("dialog", { hidden: true });
+    const modal = await screen.findByRole("dialog");
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
 
     expect(
       within(modal).getByRole("heading", {
-        name: "Endre oppfølgingsenhet",
+        name: "Tildel oppfølgingsenhet",
         hidden: true,
       }),
     ).to.exist;
@@ -76,21 +78,19 @@ describe("TildelVeileder", () => {
 
   it("Skal vise oppsummering når man har valgt enhet å flytte til", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    await userEvent.click(
+      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+    );
 
     const option = screen.getByRole("option", {
       name: "Nav Fredrikstad - 0106",
-      hidden: true,
     });
     await userEvent.click(option);
 
-    expect(
-      screen.getByText(
-        "Du tildeler nå følgende personer til Nav Fredrikstad (0106):",
-      ),
-    ).to.exist;
+    expect(screen.getByText("Valgte personer")).to.exist;
     expect(screen.getByText("Korrupt Heis (01999911111). Virksomhet:")).to
       .exist;
     expect(screen.getByText("NAV Security, Annen Virksomhet AS")).to.exist;
@@ -98,18 +98,20 @@ describe("TildelVeileder", () => {
 
   it("Sender riktig verdier når man tildeler oppfølgingsenhet", async () => {
     stubTildelOppfolgingsenhet();
-    renderTildelOppfolgingsenhetModal();
+    await renderTildelOppfolgingsenhet();
 
     expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    await userEvent.click(
+      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+    );
 
     const option = screen.getByRole("option", {
       name: "Nav Fredrikstad - 0106",
-      hidden: true,
     });
     await userEvent.click(option);
     await userEvent.click(
       screen.getByRole("button", {
-        name: "Endre oppfølgingsenhet",
+        name: "Tildel oppfølgingsenhet",
         hidden: true,
       }),
     );
