@@ -1,4 +1,4 @@
-import { Table } from "@navikt/ds-react";
+import { BodyShort, Table } from "@navikt/ds-react";
 import React from "react";
 import { PersonData } from "@/api/types/personregisterTypes";
 import {
@@ -227,9 +227,9 @@ export default function HendelseColumn({ personData }: Props) {
       className="align-top [&>*:not(:last-child)]:mb-1.5"
     >
       {getHendelser(personData).map((hendelse, index) => (
-        <p key={index} className="m-0">
+        <BodyShort key={index} className="m-0">
           {hendelse.beskrivelse}
-        </p>
+        </BodyShort>
       ))}
     </Table.DataCell>
   );
