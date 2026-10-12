@@ -1,5 +1,6 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import {
+  useAktivVeilederQuery,
   useTildelVeileder,
   useVeiledereQuery,
 } from "@/data/veiledereQueryHooks";
@@ -15,6 +16,7 @@ import {
 } from "@navikt/ds-react";
 import { PersonIcon } from "@navikt/aksel-icons";
 import { FeedbackNotification } from "./Toolbar";
+import { sortVeiledereBySurnameAsc } from "@/utils/veiledereUtils.tsx";
 
 const texts = {
   openDialog: "Tildel veileder",
@@ -53,6 +55,7 @@ export default function TildelVeileder({
   setTableFeedbackNotification,
 }: Props): ReactElement {
   const veiledereQuery = useVeiledereQuery();
+  const aktivVeilederQuery = useAktivVeilederQuery();
   const { data: personoversikt } = useGetPersonstatusQuery();
   const tildelVeileder = useTildelVeileder();
 
@@ -61,13 +64,17 @@ export default function TildelVeileder({
   >();
   const [error, setError] = useState<string | undefined>(undefined);
   const [open, setOpen] = useState(false);
+  const comboboxRef = useRef<HTMLInputElement>(null);
 
   const veiledere = veiledereQuery.data || [];
   const personoversiktByFnr = new Map(
     personoversikt.map((person) => [person.fnr, person]),
   );
 
-  const options = veiledere
+  const options = sortVeiledereBySurnameAsc(
+    veiledere,
+    aktivVeilederQuery.data?.ident || "",
+  )
     .filter((veileder) => veileder.enabled)
     .map((veileder) => {
       const fullName = `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -76,8 +83,7 @@ export default function TildelVeileder({
         label: !fullName || fullName.trim() === "," ? veileder.ident : fullName,
         value: veileder.ident,
       };
-    })
-    .sort((a, b) => a.label.localeCompare(b.label));
+    });
 
   const onSelected = (option: string) => {
     setSelectedVeilederIdent(option);
@@ -125,7 +131,7 @@ export default function TildelVeileder({
   };
 
   return (
-    <div tabIndex={1}>
+    <div>
       <Button size="small" onClick={openDialog}>
         {texts.openDialog}
       </Button>
@@ -136,7 +142,7 @@ export default function TildelVeileder({
           resetStateToDefault();
         }}
       >
-        <Dialog.Popup>
+        <Dialog.Popup initialFocusTo={() => comboboxRef.current}>
           <Dialog.Header>
             <Dialog.Title>{texts.header}</Dialog.Title>
             <Dialog.Description>{texts.description1}</Dialog.Description>
@@ -163,6 +169,7 @@ export default function TildelVeileder({
               </List>
             </div>
             <UNSAFE_Combobox
+              ref={comboboxRef}
               shouldAutocomplete
               label={texts.combobox.label}
               placeholder={texts.combobox.placeholder}

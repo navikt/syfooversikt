@@ -1,13 +1,12 @@
 import {
-  Alert,
   Button,
-  List,
-  UNSAFE_Combobox,
   Dialog,
   Label,
+  List,
   LocalAlert,
+  UNSAFE_Combobox,
 } from "@navikt/ds-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useGetMuligeOppfolgingsenheter } from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/hooks/useGetMuligeOppfolgingsenheter";
 import {
   OppfolgingsenhetTildelingerResponseDTO,
@@ -22,11 +21,16 @@ const text = {
   heading: "Tildel oppfølgingsenhet",
   description:
     "Her kan du flytte den sykmeldte til en annen oppfølgingsenhet. Dersom den sykemeldte har endret bostedsadresse, skjer flyttingen automatisk.",
-  velgOppfolgingsenhet: "Velg ny oppfølgingsenhet",
-  formErrorMessage: "Du må velge en oppfølgingsenhet",
   getMuligeOppfolgingsenheterFailedErrorMessage: {
     title: "Noe gikk galt",
     description: "Klarte ikke å hente enheter.",
+  },
+  combobox: {
+    label: "Velg oppfølgingsenhet",
+    placeholder: "Søk etter oppfølgingsenhet",
+    error: {
+      missingOppfolgingsenhet: "Vennligst velg oppfølgingsenhet",
+    },
   },
   selectedPersonsLabel: "Valgte personer",
   buttonLabel: "Tildel oppfølgingsenhet",
@@ -71,6 +75,7 @@ export default function TildelOppfolgingsenhet({
   const [oppfolgingsenhet, setOppfolgingsenhet] = useState<
     string | undefined
   >();
+  const comboboxRef = useRef<HTMLInputElement>(null);
 
   const selectedPersonerInfo = personoversikt.filter((person) =>
     selectedPersoner.includes(person.fnr),
@@ -152,7 +157,7 @@ export default function TildelOppfolgingsenhet({
           resetStateToDefault();
         }}
       >
-        <Dialog.Popup>
+        <Dialog.Popup initialFocusTo={() => comboboxRef.current}>
           <Dialog.Header>
             <Dialog.Title>{text.heading}</Dialog.Title>
             <Dialog.Description>{text.description}</Dialog.Description>
@@ -197,13 +202,17 @@ export default function TildelOppfolgingsenhet({
             {getMuligeOppfolgingsenheter.isSuccess && (
               <form id="form" onSubmit={onSubmit}>
                 <UNSAFE_Combobox
-                  label={text.velgOppfolgingsenhet}
+                  ref={comboboxRef}
+                  label={text.combobox.label}
+                  placeholder={text.combobox.placeholder}
                   options={getMuligeOppfolgingsenheter.data.map((enhet) => ({
                     label: `${enhet.navn} - ${enhet.enhetId}`,
                     value: enhet.enhetId,
                   }))}
                   onToggleSelected={onOppfolgingsenhetChange}
-                  error={isFormError && text.formErrorMessage}
+                  error={
+                    isFormError && text.combobox.error.missingOppfolgingsenhet
+                  }
                 />
               </form>
             )}

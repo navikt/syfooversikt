@@ -61,7 +61,7 @@ describe("TildelVeileder", () => {
     await renderTildelOppfolgingsenhet();
 
     const modal = await screen.findByRole("dialog");
-    expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    expect(await screen.findByText("Velg oppfølgingsenhet")).to.exist;
 
     expect(
       within(modal).getByRole("heading", {
@@ -80,9 +80,9 @@ describe("TildelVeileder", () => {
     stubTildelOppfolgingsenhet();
     await renderTildelOppfolgingsenhet();
 
-    expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    expect(await screen.findByText("Velg oppfølgingsenhet")).to.exist;
     await userEvent.click(
-      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+      screen.getByRole("combobox", { name: "Velg oppfølgingsenhet" }),
     );
 
     const option = screen.getByRole("option", {
@@ -100,9 +100,9 @@ describe("TildelVeileder", () => {
     stubTildelOppfolgingsenhet();
     await renderTildelOppfolgingsenhet();
 
-    expect(await screen.findByText("Velg ny oppfølgingsenhet")).to.exist;
+    expect(await screen.findByText("Velg oppfølgingsenhet")).to.exist;
     await userEvent.click(
-      screen.getByRole("combobox", { name: "Velg ny oppfølgingsenhet" }),
+      screen.getByRole("combobox", { name: "Velg oppfølgingsenhet" }),
     );
 
     const option = screen.getByRole("option", {
