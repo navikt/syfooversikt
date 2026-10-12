@@ -64,4 +64,13 @@ describe("TildelVeileder", () => {
     const veilederOptions = screen.getAllByRole("option");
     expect(veilederOptions).toHaveLength(enabledVeiledere.length);
   });
+
+  it("fokuserer på combobox når dialogen åpnes", async () => {
+    renderTildelVeileder();
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tildel veileder" }),
+    );
+
+    expect(document.activeElement).toBe(screen.getByRole("combobox"));
+  });
 });
