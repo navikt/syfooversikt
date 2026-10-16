@@ -65,7 +65,7 @@
     "autoprefixer": "10.5.4",
     "husky": "8.0.3",
     "jsdom": "25.0.1",
-    "lint-staged": "13.2.1",
+    "lint-staged": "17.6.0",
     "msw": "2.15.0",
     "oxfmt": "0.60.0",
     "oxlint": "1.75.0",
