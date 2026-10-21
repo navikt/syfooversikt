@@ -136,6 +136,9 @@ importers:
       '@types/express':
         specifier: 5.0.6
         version: 5.0.6
+      '@types/express-http-proxy':
+        specifier: 1.6.7
+        version: 1.6.7
       '@types/react':
         specifier: 19.2.17
         version: 19.2.17
@@ -169,6 +172,9 @@ importers:
       express:
         specifier: 5.2.1
         version: 5.2.1(supports-color@5.5.0)
+      express-http-proxy:
+        specifier: 2.1.2
+        version: 2.1.2(supports-color@5.5.0)
       helmet:
         specifier: 8.3.0
         version: 8.3.0
