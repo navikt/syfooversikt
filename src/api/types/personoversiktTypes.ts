@@ -8,6 +8,7 @@ export enum MoteStatusType {
   AVLYST = "AVLYST",
   FERDIGSTILT = "FERDIGSTILT",
   NYTT_TID_STED = "NYTT_TID_STED",
+  ENDRET = "ENDRET",
   LUKKET = "LUKKET",
 }
 
