@@ -4,22 +4,6 @@ Frontend for å vise oversikt over syfooppgaver
 
 ## Lokalt utviklingsmiljø
 
-Node-versjonen styres av `.nvmrc`, og pnpm-versjonen er angitt i `package.json`.
-Med [nvm](https://github.com/nvm-sh/nvm) installert:
-
-```sh
-nvm install
-nvm use
-```
-
-Endre kun `.nvmrc` for å oppdatere Node lokalt, i GitHub Actions og i Docker.
-Docker bruker samme hovedversjon som bygget. Etter at appen er bygget, kan
-Docker-imaget bygges lokalt med den valgte Node-versjonen:
-
-```sh
-docker build --build-arg NODE_VERSION="$(node -p 'process.versions.node.split(".")[0]')" .
-```
-
 #### Ved første kjøring:
 
 ```sh
@@ -28,6 +12,8 @@ $ npm install --legacy-peer-deps # installerer avhengigheter
 ```
 
 #### For å kjøre koden lokalt:
+
+Du må ha Node v22 og npm v10 installert.
 
 - `$ npm install --legacy-peer-deps`
 - `$ npm start`
