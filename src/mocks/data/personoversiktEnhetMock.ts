@@ -546,7 +546,7 @@ export const personoversiktEnhetMock: PersonOversiktStatusDTO[] = [
     fodselsdato: "1990-01-01",
     enhet: "0316",
     veilederIdent: "Z101010",
-    motestatus: MoteStatusType.NYTT_TID_STED,
+    motestatus: MoteStatusType.ENDRET,
     oppfolgingsoppgave: null,
     latestOppfolgingstilfelle: {
       oppfolgingstilfelleStart: new Date("2022-01-01"),
