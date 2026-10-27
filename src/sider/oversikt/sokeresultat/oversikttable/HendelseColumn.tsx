@@ -227,7 +227,7 @@ export default function HendelseColumn({ personData }: Props) {
       className="align-top [&>*:not(:last-child)]:mb-1.5"
     >
       {getHendelser(personData).map((hendelse, index) => (
-        <BodyShort key={index} className="m-0">
+        <BodyShort size="small" key={index} className="m-0">
           {hendelse.beskrivelse}
         </BodyShort>
       ))}
