@@ -7,27 +7,53 @@ import { setupProxy } from "./server/proxy.js";
 import { getUnleashToggles } from "./server/unleash.js";
 import { fileURLToPath } from "url";
 import { logger } from "@navikt/pino-logger";
+import { setupCspReporting } from "./server/csp.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const server = express();
+const isProdCluster = process.env.NAIS_CLUSTER_NAME === "prod-gcp";
 
-server.use(express.json() as any);
+const connectSrcProd = [
+  "wss://modiacontextholder.intern.nav.no",
+  "https://telemetry.nav.no",
+  "https://reops-event-proxy.nav.no",
+];
+
+const connectSrcDev = [
+  "wss://modiacontextholder.intern.dev.nav.no",
+  "https://telemetry.ekstern.dev.nav.no",
+  "https://reops-event-proxy.ekstern.dev.nav.no",
+];
+
 server.use(
   helmet({
     contentSecurityPolicy: {
-      useDefaults: true,
+      useDefaults: false,
       directives: {
-        "default-src": ["'self'", "https://*.nav.no"],
-        "script-src": ["'self'", "'unsafe-inline'", "https://*.nav.no"],
-        "style-src": ["'self'", "'unsafe-inline'", "https://*.nav.no"],
-        "font-src": ["'self'", "data:", "https://*.nav.no"],
-        "connect-src": ["'self'", "https://*.nav.no", "wss://*.nav.no"],
+        defaultSrc: ["'self'"],
+        baseUri: ["'self'"],
+        objectSrc: ["'none'"],
+        formAction: ["'self'"],
+        frameAncestors: ["'none'"],
+        scriptSrc: ["'self'", "https://cdn.nav.no"],
+        // 'unsafe-inline' required while styled-components injects inline styles.
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        fontSrc: ["'self'", "https://cdn.nav.no"],
+        imgSrc: ["'self'", "data:"],
+        connectSrc: [
+          "'self'",
+          ...(isProdCluster ? connectSrcProd : connectSrcDev),
+        ],
+        reportUri: ["/csp-report"],
+        reportTo: ["csp-endpoint"],
       },
     },
   }),
 );
+setupCspReporting(server);
+server.use(express.json());
 
 const nocache = (
   req: express.Request,
