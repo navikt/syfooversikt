@@ -1,8 +1,3 @@
-import {
-  PersonData,
-  PersonregisterState,
-} from "@/api/types/personregisterTypes";
-
 const veilederIdent = "Z101010";
 const enhetId = "0316";
 
@@ -22,24 +17,52 @@ export const testdata = {
     diskresjonsmerket: "DISKRESJONSMERKET",
     egenAnsatt: "EGEN_ANSATT",
   },
-};
+} as const;
 
-export const personregister: PersonregisterState = {
+export const personregister = {
   [testdata.fnr1]: {
     navn: testdata.navn1,
     harMotebehovUbehandlet: true,
     harDialogmotesvar: true,
     skjermingskode: testdata.skjermingskode.ingen,
     tildeltVeilederIdent: "Z999999",
-  } as PersonData,
+    fodselsdato: null,
+    harOppfolgingsplanLPSBistandUbehandlet: false,
+    dialogmotekandidatStatus: null,
+    harBehandlerdialogUbehandlet: false,
+    behandlerBerOmBistandUbehandlet: false,
+    friskmeldingTilArbeidsformidlingFom: null,
+    arbeidsuforhetvurdering: null,
+    senOppfolgingKandidat: null,
+    oppfolgingsoppgave: null,
+    aktivitetskravvurdering: null,
+    manglendeMedvirkning: null,
+    isAktivKartleggingssporsmalVurdering: false,
+    harUtenlandsoppholdSoknadUbehandlet: false,
+    dialogmoteAvvent: null,
+  },
   [testdata.fnr2]: {
     navn: testdata.navn2,
     harMotebehovUbehandlet: false,
     harDialogmotesvar: false,
     skjermingskode: testdata.skjermingskode.egenAnsatt,
     tildeltVeilederIdent: "Z999999",
-  } as PersonData,
-};
+    fodselsdato: null,
+    harOppfolgingsplanLPSBistandUbehandlet: false,
+    dialogmotekandidatStatus: null,
+    harBehandlerdialogUbehandlet: false,
+    behandlerBerOmBistandUbehandlet: false,
+    friskmeldingTilArbeidsformidlingFom: null,
+    arbeidsuforhetvurdering: null,
+    senOppfolgingKandidat: null,
+    oppfolgingsoppgave: null,
+    aktivitetskravvurdering: null,
+    manglendeMedvirkning: null,
+    isAktivKartleggingssporsmalVurdering: false,
+    harUtenlandsoppholdSoknadUbehandlet: false,
+    dialogmoteAvvent: null,
+  },
+} as const;
 
 export const veiledere = [
   {

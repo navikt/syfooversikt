@@ -7,29 +7,31 @@ export function mapPersonregisterToCompanyList(
   personregister: PersonregisterState,
 ): string[] {
   const allCompanyNames = Object.entries(personregister).flatMap(
-    ([, persondata]) => companyNamesFromPersonData(persondata),
+    ([, personData]) => companyNamesFromPersonData(personData),
   );
   return [...new Set(allCompanyNames)].filter((v) => v && v.length > 0);
 }
 
-export function companyNamesFromPersonData(p: PersonData): string[] {
-  return p.latestOppfolgingstilfelle
-    ? (p.latestOppfolgingstilfelle.virksomhetList
+export function companyNamesFromPersonData(personData: PersonData): string[] {
+  return personData.latestOppfolgingstilfelle
+    ? (personData.latestOppfolgingstilfelle.virksomhetList
         .map(({ virksomhetsnavn }) => virksomhetsnavn)
         .filter((v) => !!v) as string[])
     : [];
 }
 
-export function virksomhetnummerFromPersonData(p: PersonData): string[] {
-  return p.latestOppfolgingstilfelle
-    ? p.latestOppfolgingstilfelle.virksomhetList.map(
-        ({ virksomhetsnummer }) => virksomhetsnummer,
-      )
-    : [];
+export function virksomhetnummerFromPersonData(
+  personData: PersonData,
+): string[] {
+  return (
+    personData.latestOppfolgingstilfelle?.virksomhetList.map(
+      ({ virksomhetsnummer }) => virksomhetsnummer,
+    ) ?? []
+  );
 }
 
 export function firstCompanyNameFromPersonData(
-  p: PersonData,
+  personData: PersonData,
 ): string | undefined {
-  return companyNamesFromPersonData(p).shift();
+  return companyNamesFromPersonData(personData).shift();
 }
