@@ -102,7 +102,11 @@ export default function OversiktTable({
                 column.sortKey !== "VEILEDER",
             )
             .map((col, index) => (
-              <Table.ColumnHeader key={index} sortKey={col.sortKey} sortable>
+              <Table.ColumnHeader
+                key={index}
+                sortKey={col.sortKey}
+                sortable={col.sortKey !== "COMPANY"}
+              >
                 {col.sortingText}
               </Table.ColumnHeader>
             ))}

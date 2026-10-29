@@ -173,7 +173,11 @@ describe("SokPerson", () => {
       .exist;
     expect(await screen.findByRole("cell", { name: "01999911111" })).to.exist;
     expect(await screen.findByRole("cell", { name: "99999922222" })).to.exist;
-    expect(await screen.findByRole("cell", { name: "NAV Security" })).to.exist;
+    expect(
+      await screen.findByRole("cell", {
+        name: /Annen Virksomhet AS\s*Nav Security/i,
+      }),
+    ).to.exist;
     expect(await screen.findByRole("cell", { name: "Bolle Og Brus" })).to.exist;
   });
 });
