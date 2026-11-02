@@ -6,9 +6,11 @@ export type Toggles = {
 export enum ToggleNames {
   isTildelOppfolgingsenhetEnabled = "isTildelOppfolgingsenhetEnabled",
   isKartleggingssporsmalEnabled = "isKartleggingssporsmalEnabled",
+  isBransjerEnabled = "isBransjerEnabled",
 }
 
 export const defaultToggles: Toggles = {
   isTildelOppfolgingsenhetEnabled: false,
   isKartleggingssporsmalEnabled: false,
+  isBransjerEnabled: false,
 };

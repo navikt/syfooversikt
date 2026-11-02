@@ -3,7 +3,7 @@ import { virksomhetnummerFromPersonData } from "@/utils/personDataUtil";
 import { BodyShort, Button } from "@navikt/ds-react";
 import { PersonData } from "@/api/types/personregisterTypes";
 import { useVirksomheterQueries } from "@/data/virksomhet/virksomhetQueryHooks";
-import { getVirksomhetsnavn } from "@/data/virksomhet/EregVirksomhetsnavn.ts";
+import { getVirksomhetsnavn } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { VirksomhetDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/virksomhetDataCell/VirksomhetDataCell.tsx";
 
 const TILFELLER_TO_SHOW_DEFAULT = 2;

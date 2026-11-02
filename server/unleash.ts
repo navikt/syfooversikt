@@ -1,4 +1,4 @@
-import { initialize, Strategy, Context } from "unleash-client";
+import { Context, initialize, Strategy } from "unleash-client";
 import { unleashConfig } from "./config.js";
 
 class VeilederIds extends Strategy {
@@ -42,5 +42,6 @@ export function getUnleashToggles(veilederId: any, enhetId: any) {
       "isKartleggingssporsmalEnabled",
       context,
     ),
+    isBransjerEnabled: unleash.isEnabled("isBransjerEnabled", context),
   };
 }
