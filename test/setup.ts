@@ -3,11 +3,13 @@ import { setupServer } from "msw/node";
 import { mockUnleash } from "@/mocks/mockUnleash";
 import { mockSyfoveileder } from "@/mocks/syfoveileder/mockSyfoveileder";
 import { mockNaringskode } from "@/mocks/syfoperson/mockNaringskode";
+import { mockEreg } from "@/mocks/ereg/mockEreg";
 
 export const mockServer = setupServer(
   mockUnleash,
   ...mockSyfoveileder,
   mockNaringskode,
+  mockEreg,
 );
 
 // Start server before all tests
