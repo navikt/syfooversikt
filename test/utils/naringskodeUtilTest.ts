@@ -30,7 +30,7 @@ describe("naringskodeUtil", () => {
     ])("validates $period as $expected", ({ period, expected }) => {
       const naring: EregNaringDTO = {
         naeringskode: "62.200",
-        gyldighetsperiode: period,
+        bruksperiode: period,
       };
 
       const isValid = isValidNaring(naring);
@@ -42,18 +42,18 @@ describe("naringskodeUtil", () => {
   describe("getStandardForNaring", () => {
     it.each([
       { fom: undefined, expected: null },
-      { fom: "1993-12-31", expected: null },
-      { fom: "1994-01-01", expected: 1994 },
-      { fom: "2001-12-31", expected: 1994 },
-      { fom: "2002-01-01", expected: 2002 },
-      { fom: "2008-12-31", expected: 2002 },
-      { fom: "2009-01-01", expected: 2007 },
-      { fom: "2025-08-31", expected: 2007 },
-      { fom: "2025-09-01", expected: 2025 },
+      { fom: "1993-12-31T00:00:00.000Z", expected: null },
+      { fom: "1994-01-01T00:00:00.000Z", expected: 1994 },
+      { fom: "2001-12-31T00:00:00.000Z", expected: 1994 },
+      { fom: "2002-01-01T00:00:00.000Z", expected: 2002 },
+      { fom: "2008-12-31T00:00:00.000Z", expected: 2002 },
+      { fom: "2009-01-01T00:00:00.000Z", expected: 2007 },
+      { fom: "2025-08-31T00:00:00.000Z", expected: 2007 },
+      { fom: "2025-09-01T00:00:00.000Z", expected: 2025 },
     ])("resolves $fom to $expected", ({ fom, expected }) => {
       const naring: EregNaringDTO = {
         naeringskode: "62.200",
-        gyldighetsperiode: { fom },
+        bruksperiode: { fom: fom },
       };
 
       const standard = getStandardForNaring(naring);
@@ -71,7 +71,7 @@ describe("naringskodeUtil", () => {
           naeringer: [
             {
               naeringskode: "62.200",
-              gyldighetsperiode: { fom: "2025-09-01" },
+              bruksperiode: { fom: "2025-09-01T00:00:00.000Z" },
             },
           ],
         },
@@ -101,11 +101,26 @@ describe("naringskodeUtil", () => {
     it("deduplicates code-and-standard pairs while preserving order and distinct standards", () => {
       virksomhet.organisasjonDetaljer = {
         naeringer: [
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2025-09-01" } },
-          { naeringskode: "70.200", gyldighetsperiode: { fom: "2025-09-01" } },
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2026-01-01" } },
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2009-01-01" } },
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2010-01-01" } },
+          {
+            naeringskode: "62.200",
+            bruksperiode: { fom: "2025-09-01T00:00:00.000Z" },
+          },
+          {
+            naeringskode: "70.200",
+            bruksperiode: { fom: "2025-09-01T00:00:00.000Z" },
+          },
+          {
+            naeringskode: "62.200",
+            bruksperiode: { fom: "2026-01-01T00:00:00.000Z" },
+          },
+          {
+            naeringskode: "62.200",
+            bruksperiode: { fom: "2009-01-01T00:00:00.000Z" },
+          },
+          {
+            naeringskode: "62.200",
+            bruksperiode: { fom: "2010-01-01T00:00:00.000Z" },
+          },
         ],
       };
 
@@ -122,13 +137,25 @@ describe("naringskodeUtil", () => {
     it("excludes invalid periods and unknown standards without suppressing later valid duplicates", () => {
       virksomhet.organisasjonDetaljer = {
         naeringer: [
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2027-01-01" } },
           {
             naeringskode: "62.200",
-            gyldighetsperiode: { fom: "2025-09-01", tom: "2026-11-03" },
+            bruksperiode: { fom: "2027-01-01T00:00:00.000Z" },
           },
-          { naeringskode: "62.200", gyldighetsperiode: { fom: "2025-09-01" } },
-          { naeringskode: "01.410", gyldighetsperiode: { fom: "1993-01-01" } },
+          {
+            naeringskode: "62.200",
+            bruksperiode: {
+              fom: "2025-09-01T00:00:00.000Z",
+              tom: "2026-11-03T00:00:00.000Z",
+            },
+          },
+          {
+            naeringskode: "62.200",
+            bruksperiode: { fom: "2025-09-01T00:00:00.000Z" },
+          },
+          {
+            naeringskode: "01.410",
+            bruksperiode: { fom: "1993-01-01T00:00:00.000Z" },
+          },
           { naeringskode: "71.330" },
         ],
       };

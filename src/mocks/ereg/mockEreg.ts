@@ -17,7 +17,7 @@ const eregResponses: EregMockData = {
           naeringskode: "70.220",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "2009-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "2009-08-03",
@@ -27,7 +27,7 @@ const eregResponses: EregMockData = {
           naeringskode: "62.020",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "2009-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "2009-08-03",
@@ -48,7 +48,7 @@ const eregResponses: EregMockData = {
           naeringskode: "70.200",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "2026-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "2026-08-03",
@@ -68,7 +68,7 @@ const eregResponses: EregMockData = {
           naeringskode: "62.200",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "2026-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "2026-08-03",
@@ -88,7 +88,7 @@ const eregResponses: EregMockData = {
           naeringskode: "01.410",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "1997-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "1997-08-03",
@@ -109,7 +109,7 @@ const eregResponses: EregMockData = {
           naeringskode: "71.330",
           hjelpeenhet: false,
           bruksperiode: {
-            fom: "2026-08-29T04:22:02.656",
+            fom: "2003-08-03T04:22:02.656",
           },
           gyldighetsperiode: {
             fom: "2003-08-03",

@@ -10,11 +10,11 @@ export const STANDARD_2007_DATE_FOM = new Date("2009-01-01");
 export const STANDARD_2025_DATE_FOM = new Date("2025-09-01");
 
 export function isValidNaring(naring: EregNaringDTO): boolean {
-  const gyldigFom = naring.gyldighetsperiode?.fom
-    ? new Date(naring.gyldighetsperiode.fom)
+  const gyldigFom = naring.bruksperiode?.fom
+    ? new Date(naring.bruksperiode.fom)
     : null;
-  const gyldigTom = naring.gyldighetsperiode?.tom
-    ? new Date(naring.gyldighetsperiode.tom)
+  const gyldigTom = naring.bruksperiode?.tom
+    ? new Date(naring.bruksperiode.tom)
     : null;
 
   if (gyldigFom && gyldigFom > new Date()) {
@@ -28,8 +28,8 @@ export function isValidNaring(naring: EregNaringDTO): boolean {
 export function getStandardForNaring(
   naring: EregNaringDTO,
 ): NaringskodeStandard | null {
-  const gyldigFom = naring.gyldighetsperiode?.fom
-    ? new Date(naring.gyldighetsperiode.fom)
+  const gyldigFom = naring.bruksperiode?.fom
+    ? new Date(naring.bruksperiode.fom)
     : null;
 
   if (gyldigFom && gyldigFom >= STANDARD_2025_DATE_FOM) {
