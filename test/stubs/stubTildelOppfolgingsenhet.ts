@@ -1,6 +1,9 @@
 import { mockServer } from "../setup";
-import { mockGetMuligeTildelinger } from "@/mocks/mockSyfobehandlendeenhet";
+import {
+  mockGetMuligeTildelinger,
+  mockPostTildelOppfolgingsenhet,
+} from "@/mocks/mockSyfobehandlendeenhet";
 
-export const stubTildelOppfolgingsenhet = () => {
-  mockServer.use(mockGetMuligeTildelinger());
-};
+export function stubTildelOppfolgingsenhet() {
+  mockServer.use(mockGetMuligeTildelinger(), mockPostTildelOppfolgingsenhet());
+}

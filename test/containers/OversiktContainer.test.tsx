@@ -54,6 +54,7 @@ describe("OversiktContainer", () => {
   beforeEach(() => {
     queryClient = getQueryClientWithMockdata();
     stubTildelOppfolgingsenhet();
+    stubPersonregister();
   });
 
   afterEach(() => {
@@ -62,7 +63,6 @@ describe("OversiktContainer", () => {
 
   it("Skal vise notifikasjon ved feilende apikall", async () => {
     stubPersonoversikt();
-    stubPersonregister();
     stubAktivVeileder();
     stubModiaContext();
     stubVeiledere();

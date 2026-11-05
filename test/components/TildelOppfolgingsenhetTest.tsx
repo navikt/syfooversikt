@@ -9,7 +9,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetContext } from "@/context/aktivEnhet/AktivEnhetContext";
 import { routes } from "@/routers/routes";
 import { beforeEach, describe, expect, it } from "vitest";
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import { veiledereQueryKeys } from "@/data/veiledereQueryHooks";
 import { veiledereMock } from "@/mocks/data/veiledereMock";
 import React from "react";
@@ -120,6 +120,18 @@ describe("TildelVeileder", () => {
     expect(tildelMutation?.state.variables).to.deep.equal({
       personidenter: [selectedFnr],
       oppfolgingsenhet: "0106",
+    });
+
+    await waitFor(() => {
+      expect(tildelMutation?.state.status).to.equal("success");
+    });
+    expect(tildelMutation?.state.data).to.deep.equal({
+      tildelinger: [
+        {
+          personident: selectedFnr,
+          oppfolgingsenhet: "0106",
+        },
+      ],
     });
   });
 });

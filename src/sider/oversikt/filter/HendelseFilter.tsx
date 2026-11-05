@@ -198,18 +198,21 @@ export default function HendelseFilter({ personRegister }: Props) {
   const { filterState, dispatch: dispatchFilterAction } = useFilters();
   const { toggles } = useGetFeatureToggles();
   const checkboxElements = hendelseCheckboxes(personRegister, filterState);
+  const selectedHendelser = checkboxElements
+    .filter((checkbox) => checkbox.isChecked)
+    .map((checkbox) => checkbox.hendelse);
 
-  const onChange = (value: string) => {
+  function onChange(value: string) {
     const newFilterState = { ...filterState.selectedHendelseType };
     updateFilterState(newFilterState, value as Hendelse);
     dispatchFilterAction({
       type: ActionType.SetSelectedHendelseType,
       selectedHendelseType: newFilterState,
     });
-  };
+  }
 
   return (
-    <CheckboxGroup legend="Hendelse" size="small">
+    <CheckboxGroup legend="Hendelse" size="small" value={selectedHendelser}>
       {checkboxElements.map((checkbox) => {
         if (
           checkbox.hendelse === "KARTLEGGINGSSPORSMAL" &&
@@ -220,7 +223,6 @@ export default function HendelseFilter({ personRegister }: Props) {
         return (
           <Checkbox
             key={checkbox.hendelse}
-            checked={checkbox.isChecked}
             value={checkbox.hendelse}
             onChange={(e) => onChange(e.target.value)}
           >

@@ -35,12 +35,18 @@ const defaultPersonData: PersonData = {
 
 const fristFormatRegex = /\b\d{2}\.\d{2}\.\d{4}\b/;
 
-const renderFristColumn = (personData: PersonData) => {
+function renderFristColumn(personData: PersonData) {
   renderWithRouter(
-    <FristDataCell personData={personData} />,
+    <table>
+      <tbody>
+        <tr>
+          <FristDataCell personData={personData} />
+        </tr>
+      </tbody>
+    </table>,
     routes.ENHET_OVERSIKT,
   );
-};
+}
 
 describe("FristColumn", () => {
   it("viser ingen frister når person har hverken aktivitetskrav AVVENT med frist eller oppfolgingsoppgave med frist", () => {
