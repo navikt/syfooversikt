@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Alert,
   BodyLong,
   Box,
   Button,
@@ -8,6 +7,7 @@ import {
   Heading,
   HelpText,
   Label,
+  LocalAlert,
   TextField,
   VStack,
 } from "@navikt/ds-react";
@@ -182,9 +182,13 @@ export default function SokPerson() {
               )}
             </div>
             {isError && (
-              <Alert variant="error" size="small">
-                {resolveErrorMessage(searchError)}
-              </Alert>
+              <LocalAlert status="error" size="small">
+                <LocalAlert.Header>
+                  <LocalAlert.Title as="h3">
+                    {resolveErrorMessage(searchError)}
+                  </LocalAlert.Title>
+                </LocalAlert.Header>
+              </LocalAlert>
             )}
           </VStack>
         </form>

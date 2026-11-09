@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { defaultErrorTexts } from "@/api/errors";
-import { Alert } from "@navikt/ds-react";
+import { LocalAlert } from "@navikt/ds-react";
 
-interface ErrorBoundaryProps {
+interface Props {
   children: ReactNode;
 }
 
@@ -10,9 +10,8 @@ type State = {
   hasError: boolean;
 };
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(props: any) {
+class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
@@ -26,7 +25,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
       return (
         <div className="flex justify-center">
           <div className="flex flex-col w-[50rem] m-8">
-            <Alert variant="error">{defaultErrorTexts.generalError}</Alert>
+            <LocalAlert status="error">
+              <LocalAlert.Header>
+                <LocalAlert.Title>
+                  {defaultErrorTexts.generalError}
+                </LocalAlert.Title>
+              </LocalAlert.Header>
+            </LocalAlert>
           </div>
         </div>
       );
