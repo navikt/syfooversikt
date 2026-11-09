@@ -14,13 +14,11 @@ const texts = {
   virksomheterError: "Klarte ikke hente virksomheter",
 };
 
-interface PersonRadVirksomhetColumnProps {
+interface Props {
   personData: PersonData;
 }
 
-export const PersonRadVirksomhetColumn = ({
-  personData,
-}: PersonRadVirksomhetColumnProps) => {
+export const VirksomhetColumn = ({ personData }: Props) => {
   const [virksomhetExpanded, setVirksomhetExpanded] = useState(false);
 
   const virksomhetsnummerList = virksomhetnummerFromPersonData(personData);

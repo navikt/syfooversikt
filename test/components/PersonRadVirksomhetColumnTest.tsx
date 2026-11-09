@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
-import { PersonRadVirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn";
+import { VirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VirksomhetColumn.tsx";
 import { PersonData } from "@/api/types/personregisterTypes";
 import { virksomhetQueryKeys } from "@/data/virksomhet/virksomhetQueryHooks";
 import { EREG_ROOT } from "@/apiConstants";
@@ -60,7 +60,7 @@ function renderColumn(personData: PersonData) {
         }}
       >
         <QueryClientProvider client={queryClient}>
-          <PersonRadVirksomhetColumn personData={personData} />
+          <VirksomhetColumn personData={personData} />
         </QueryClientProvider>
       </AktivEnhetContext.Provider>
     </NotificationProvider>,

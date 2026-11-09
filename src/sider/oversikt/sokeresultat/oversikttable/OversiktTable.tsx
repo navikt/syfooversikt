@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Checkbox, Table } from "@navikt/ds-react";
 import { VeilederColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VeilederColumn";
 import { PersonData } from "@/api/types/personregisterTypes";
-import { PersonRadVirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn";
+import { VirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VirksomhetColumn.tsx";
 import { FristDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/fristdatacell/FristDataCell";
 import { Sorting, SortingKey, useSorting } from "@/hooks/useSorting";
 import { LinkSyfomodiaperson } from "@/components/LinkSyfomodiaperson";
@@ -105,7 +105,7 @@ export default function OversiktTable({
               <Table.ColumnHeader
                 key={index}
                 sortKey={col.sortKey}
-                sortable={col.sortKey !== "COMPANY"}
+                sortable={true}
               >
                 {col.sortingText}
               </Table.ColumnHeader>
@@ -146,7 +146,7 @@ export default function OversiktTable({
               )}
             </Table.DataCell>
             <Table.DataCell textSize="small">
-              <PersonRadVirksomhetColumn personData={persondata} />
+              <VirksomhetColumn personData={persondata} />
             </Table.DataCell>
             {selectedTab === TabType.ENHETENS_OVERSIKT && (
               <Table.DataCell textSize="small">

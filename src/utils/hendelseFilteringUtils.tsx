@@ -329,11 +329,13 @@ function sortEventsOnCompanyName(
     ([, persondataA], [, persondataB]) => {
       const companyNameA = firstCompanyNameFromPersonData(persondataA) || "";
       const companyNameB = firstCompanyNameFromPersonData(persondataB) || "";
-      if (companyNameA > companyNameB)
-        return direction === "ascending" ? -1 : 1;
-      if (companyNameA < companyNameB)
-        return direction === "ascending" ? 1 : -1;
-      return 0;
+
+      if (!companyNameA && !companyNameB) return 0;
+      if (!companyNameA) return 1;
+      if (!companyNameB) return -1;
+
+      const comparison = companyNameA.localeCompare(companyNameB, "nb");
+      return direction === "ascending" ? comparison : -comparison;
     },
   );
 
