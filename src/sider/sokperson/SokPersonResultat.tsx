@@ -4,7 +4,7 @@ import { PersonOversiktStatusDTO } from "@/api/types/personoversiktTypes";
 import { BodyShort, Box, Table } from "@navikt/ds-react";
 import { LinkSyfomodiaperson } from "@/components/LinkSyfomodiaperson";
 import { toLastnameFirstnameFormat } from "@/utils/stringUtil";
-import { PersonRadVirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/PersonRadVirksomhetColumn";
+import { VirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VirksomhetColumn.tsx";
 import { toPersonData } from "@/api/types/personregisterTypes";
 
 const texts = {
@@ -72,7 +72,7 @@ export default function SokPersonResultat({
               )}
             </Table.DataCell>
             <Table.DataCell textSize="small">
-              <PersonRadVirksomhetColumn personData={persondata} />
+              <VirksomhetColumn personData={persondata} />
             </Table.DataCell>
           </Table.Row>
         ))}
