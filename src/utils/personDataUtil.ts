@@ -14,9 +14,10 @@ export function mapPersonregisterToCompanyList(
 
 export function companyNamesFromPersonData(personData: PersonData): string[] {
   return personData.latestOppfolgingstilfelle
-    ? (personData.latestOppfolgingstilfelle.virksomhetList
+    ? personData.latestOppfolgingstilfelle.virksomhetList
         .map(({ virksomhetsnavn }) => virksomhetsnavn)
-        .filter((v) => !!v) as string[])
+        .filter((v): v is string => !!v)
+        .sort((a, b) => a.localeCompare(b, "nb"))
     : [];
 }
 
