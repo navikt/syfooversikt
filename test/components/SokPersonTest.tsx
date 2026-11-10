@@ -1,5 +1,11 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { NotificationProvider } from "@/context/notification/NotificationContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AktivEnhetProvider } from "@/context/aktivEnhet/AktivEnhetContext";
@@ -12,6 +18,9 @@ import { parseDateString } from "@/utils/dateUtils";
 import { mockServer } from "../setup";
 import { mockSokPerson } from "@/mocks/personoversikt/mockPersonoversikt";
 import { mockEreg } from "@/mocks/ereg/mockEreg";
+import { http, HttpResponse } from "msw";
+import { PERSONOVERSIKT_ROOT } from "@/apiConstants";
+import { defaultErrorTexts } from "@/api/errors";
 
 let queryClient: QueryClient;
 
@@ -74,6 +83,30 @@ describe("SokPerson", () => {
     expect(screen.getByText("Vennligst angi en gyldig fødselsdato")).to.exist;
     expect(screen.queryByText("Vennligst angi to til fire initialer")).to.not
       .exist;
+  });
+
+  it("should show a local alert when the search fails", async () => {
+    mockServer.use(
+      http.post(
+        `${PERSONOVERSIKT_ROOT}/search`,
+        () => new HttpResponse(null, { status: 500 }),
+      ),
+    );
+    renderSokPerson();
+
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /^Fødselsdato/ }),
+      "101090",
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Søk" }));
+
+    const alert = await screen.findByRole("alert");
+    expect(
+      within(alert).getByRole("heading", {
+        level: 3,
+        name: `Feil: ${defaultErrorTexts.generalError}`,
+      }),
+    ).to.exist;
   });
   it("should render validation error for initialer when blank and too many characters", async () => {
     renderSokPerson();

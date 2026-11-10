@@ -7,7 +7,7 @@ import PaginationContainer, {
 } from "@/sider/oversikt/sokeresultat/toolbar/PaginationContainer";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks";
 import PaginationLabel from "@/sider/oversikt/sokeresultat/toolbar/TildelOppfolgingsenhet/PaginationLabel";
-import { Alert, LocalAlert } from "@navikt/ds-react";
+import { LocalAlert } from "@navikt/ds-react";
 import TildelOppfolgingsenhet from "./TildelOppfolgingsenhet/TildelOppfolgingsenhet";
 
 const ToolbarStyled = styled.div`

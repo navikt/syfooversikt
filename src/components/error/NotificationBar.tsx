@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { useNotifications } from "@/context/notification/NotificationContext";
-import { Alert, Heading } from "@navikt/ds-react";
+import { LocalAlert } from "@navikt/ds-react";
 import { Notification } from "@/context/notification/Notifications";
 
 interface Props {
@@ -8,22 +8,19 @@ interface Props {
 }
 
 function AlertWithCloseButton({ notification }: Props) {
-  const [show, setShow] = React.useState(true);
-  return show ? (
-    <Alert
-      variant={notification.variant}
-      className="mb-4"
-      size="small"
-      onClose={() => setShow(false)}
-      closeButton
-    >
+  const [isVisible, setIsVisible] = React.useState(true);
+  return isVisible ? (
+    <LocalAlert status={notification.status} className="mb-4" size="small">
+      <LocalAlert.Header>
+        <LocalAlert.Title as="h3">
+          {notification.header || notification.message}
+        </LocalAlert.Title>
+        <LocalAlert.CloseButton onClick={() => setIsVisible(false)} />
+      </LocalAlert.Header>
       {!!notification.header && (
-        <Heading size="xsmall" level="3">
-          {notification.header}
-        </Heading>
+        <LocalAlert.Content>{notification.message}</LocalAlert.Content>
       )}
-      {notification.message}
-    </Alert>
+    </LocalAlert>
   ) : null;
 }
 
