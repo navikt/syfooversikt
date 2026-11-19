@@ -24,7 +24,7 @@ const HendelseTekster = {
   AKTIVITETSKRAV: "§ 8-8 Aktivitetskrav",
   AKTIVITETSKRAV_VURDER_STANS: "§ 8-8 Vurder stans aktivitetskrav",
   UTENLANDSOPPHOLD: "§ 8-9 Søknad om utenlandsopphold",
-  KARTLEGGINGSSPORSMAL: "Kartleggingsspørsmål",
+  KARTLEGGINGSSPORSMAL: "Vurder tidlig oppfølging",
   SNART_SLUTT_PA_SYKEPENGENE: "Snart slutt på sykepengene",
   OPPFOLGINGSOPPGAVE: "Oppfølgingsoppgave",
 } as const;

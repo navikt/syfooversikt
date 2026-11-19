@@ -136,7 +136,7 @@ describe("HendelseTypeFilter", () => {
     expect(manglendeMedvirkningCheckbox).to.exist;
 
     const kartleggingssporsmalCheckbox = screen.getByRole("checkbox", {
-      name: /Kartleggingsspørsmål/,
+      name: /Vurder tidlig oppfølging/,
       checked: false,
     });
     expect(kartleggingssporsmalCheckbox).to.exist;

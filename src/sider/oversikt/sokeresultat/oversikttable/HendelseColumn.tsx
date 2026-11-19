@@ -209,7 +209,7 @@ export function getHendelser(personData: PersonData): Hendelse[] {
   }
   if (personData.isAktivKartleggingssporsmalVurdering) {
     hendelser.push({
-      beskrivelse: "Svart på kartleggingsspørsmål",
+      beskrivelse: "Vurder tidlig oppfølging",
     });
   }
   if (personData.harUtenlandsoppholdSoknadUbehandlet) {
