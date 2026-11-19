@@ -130,7 +130,7 @@ describe("OversiktContainer", () => {
       expect(table).to.exist;
 
       const kartleggingssporsmalCheckbox = screen.getByRole("checkbox", {
-        name: /Kartleggingsspørsmål/,
+        name: /Vurder tidlig oppfølging/,
         checked: false,
       });
 
