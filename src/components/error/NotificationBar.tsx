@@ -27,9 +27,7 @@ function AlertWithCloseButton({ notification }: Props) {
 export default function NotificationBar() {
   const { notifications } = useNotifications();
 
-  return notifications.map(
-    (notification, index): ReactNode => (
-      <AlertWithCloseButton key={index} notification={notification} />
-    ),
-  );
+  return notifications.map((notification, index): ReactNode => (
+    <AlertWithCloseButton key={index} notification={notification} />
+  ));
 }
