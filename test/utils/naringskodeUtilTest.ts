@@ -67,6 +67,7 @@ describe("naringskodeUtil", () => {
 
     beforeEach(() => {
       virksomhet = {
+        type: "Virksomhet",
         organisasjonDetaljer: {
           naeringer: [
             {
@@ -84,9 +85,10 @@ describe("naringskodeUtil", () => {
     });
 
     it.each([
-      {},
-      { organisasjonDetaljer: {} },
+      { type: "Virksomhet" as const },
+      { type: "Virksomhet" as const, organisasjonDetaljer: {} },
       {
+        type: "Virksomhet" as const,
         organisasjonDetaljer: { naeringer: [] },
       },
     ])(
