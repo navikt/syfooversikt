@@ -3,7 +3,9 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import React, { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SYFOPERSON_ROOT } from "@/apiConstants";
+import { EREG_ROOT, SYFOPERSON_ROOT } from "@/apiConstants";
+import { get } from "@/api/axios";
+import { EregOrganisasjonResponseDTO } from "@/data/virksomhet/EregOrganisasjonResponseDTO";
 import { NaringskodeStandard } from "@/data/virksomhet/Naringskode";
 import { useNaringskodeQuery } from "@/data/virksomhet/virksomhetQueryHooks";
 import { mockServer } from "../setup";
@@ -12,6 +14,67 @@ import { testQueryClient } from "../testQueryClient";
 interface Props {
   children: ReactNode;
 }
+
+describe("Ereg hierarchy mock", () => {
+  it.each(["987654321", "987654322", "987654324", "987654328", "987654320"])(
+    "returns references for %s and sector details only through a separate lookup",
+    async (organisasjonsnummer) => {
+      const url = `${EREG_ROOT}/organisasjon/${organisasjonsnummer}`;
+
+      const virksomhet = await get<EregOrganisasjonResponseDTO>(
+        `${url}?inkluderHierarki=true`,
+      );
+
+      expect(virksomhet.type).toBe("Virksomhet");
+      if (virksomhet.type !== "Virksomhet") {
+        throw new Error("Expected a virksomhet response");
+      }
+      expect(virksomhet.inngaarIJuridiskEnheter).toHaveLength(1);
+      for (const reference of virksomhet.inngaarIJuridiskEnheter ?? []) {
+        expect(reference.organisasjonsnummer).toBeDefined();
+        expect(reference.navn?.navnelinje1).toBeDefined();
+        expect(reference.bruksperiode?.fom).toBeDefined();
+        expect(reference.gyldighetsperiode?.fom).toBeDefined();
+        expect(reference).not.toHaveProperty("type");
+        expect(reference).not.toHaveProperty("organisasjonDetaljer");
+        expect(reference).not.toHaveProperty("juridiskEnhetDetaljer");
+        expect(reference).not.toHaveProperty("sektorkode");
+
+        const hovedenhet = await get<EregOrganisasjonResponseDTO>(
+          `${EREG_ROOT}/organisasjon/${reference.organisasjonsnummer}`,
+        );
+
+        expect(hovedenhet.type).toBe("JuridiskEnhet");
+        expect(hovedenhet.organisasjonsnummer).toBe(
+          reference.organisasjonsnummer,
+        );
+        expect(hovedenhet.navn).toEqual(reference.navn);
+        if (hovedenhet.type !== "JuridiskEnhet") {
+          throw new Error("Expected a juridisk enhet response");
+        }
+        expect(hovedenhet.juridiskEnhetDetaljer?.sektorkode).toBeDefined();
+      }
+    },
+  );
+
+  it.each(["", "?inkluderHierarki=false"])(
+    "omits hierarchy without inkluderHierarki=true (%s)",
+    async (query) => {
+      const url = `${EREG_ROOT}/organisasjon/987654321`;
+      await get<EregOrganisasjonResponseDTO>(`${url}?inkluderHierarki=true`);
+
+      const virksomhet = await get<EregOrganisasjonResponseDTO>(
+        `${url}${query}`,
+      );
+      const withHierarchy = await get<EregOrganisasjonResponseDTO>(
+        `${url}?inkluderHierarki=true`,
+      );
+
+      expect(virksomhet).not.toHaveProperty("inngaarIJuridiskEnheter");
+      expect(withHierarchy).toHaveProperty("inngaarIJuridiskEnheter");
+    },
+  );
+});
 
 describe("useNaringskodeQuery", () => {
   let queryClient: QueryClient;

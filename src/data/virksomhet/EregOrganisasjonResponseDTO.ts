@@ -3,64 +3,132 @@
  * Empty fields are omitted by the API; dates are ISO-8601 strings.
  * @see https://github.com/navikt/ereg-services/tree/d7f01ec64a3c3ca53d58d6996438dde6dccddf1d/src/main/java/no/nav/ereg/provider/rs/organisasjon/contract
  */
-export type EregOrganisasjonResponseDTO = {
-  type?: string;
+export type EregOrganisasjonResponseDTO =
+  | EregVirksomhetDTO
+  | EregJuridiskEnhetDTO
+  | EregOrganisasjonsleddDTO;
+
+type EregOrganisasjonBaseDTO = {
   organisasjonsnummer?: string;
   navn?: EregOrganisasjonNavnDTO;
+};
+
+type EregOrganisasjonFellesDTO = EregOrganisasjonBaseDTO & {
   organisasjonDetaljer?: EregOrganisasjonDetaljerDTO;
+};
+
+/** Organisation response for a virksomhet. */
+export type EregVirksomhetDTO = EregOrganisasjonFellesDTO & {
+  type: "Virksomhet";
+  inngaarIJuridiskEnheter?: EregOrganisasjonReferanseDTO[];
   virksomhetDetaljer?: EregVirksomhetDetaljerDTO;
 };
 
+/** Organisation response for a juridisk enhet. */
+export type EregJuridiskEnhetDTO = EregOrganisasjonFellesDTO & {
+  type: "JuridiskEnhet";
+  juridiskEnhetDetaljer?: EregJuridiskEnhetDetaljerDTO;
+};
+
+/** Organisation response for an organisasjonsledd. */
+export type EregOrganisasjonsleddDTO = EregOrganisasjonFellesDTO & {
+  type: "Organisasjonsledd";
+  inngaarIJuridiskEnheter?: EregOrganisasjonReferanseDTO[];
+  organisasjonsleddDetaljer?: EregOrganisasjonsleddDetaljerDTO;
+};
+
 /** Recorded period, using ISO local date-times without timezone offsets. */
-export interface EregBruksperiodeDTO {
+export type EregBruksperiodeDTO = {
   fom?: string;
   tom?: string;
-}
+};
 
 /** Validity period, using ISO local dates (yyyy-MM-dd). */
-export interface EregGyldighetsperiodeDTO {
+export type EregGyldighetsperiodeDTO = {
   fom?: string;
   tom?: string;
-}
+};
 
-interface EregPeriodisertDTO {
+type EregPeriodisertDTO = {
   bruksperiode?: EregBruksperiodeDTO;
   gyldighetsperiode?: EregGyldighetsperiodeDTO;
-}
+};
+
+/**
+ * Organisation number and name, with the relationship's recorded and validity periods.
+ * Contains no type, organisation details or sektorkode. Fetch /organisasjon/{organisasjonsnummer}
+ * separately for the full organisation response.
+ * @see https://github.com/navikt/ereg-services/blob/d7f01ec64a3c3ca53d58d6996438dde6dccddf1d/src/main/java/no/nav/ereg/provider/rs/organisasjon/contract/InngaarIJuridiskEnhet.java
+ */
+export type EregOrganisasjonReferanseDTO = EregOrganisasjonBaseDTO &
+  EregPeriodisertDTO;
 
 /** Organisation name, including historical validity information. */
-export interface EregOrganisasjonNavnDTO extends EregPeriodisertDTO {
+export type EregOrganisasjonNavnDTO = EregPeriodisertDTO & {
   redigertnavn?: string;
   navnelinje1?: string;
   navnelinje2?: string;
   navnelinje3?: string;
   navnelinje4?: string;
   navnelinje5?: string;
-}
+};
+
+/** Organisation address, including historical validity information. */
+type EregAdresseDTO = EregPeriodisertDTO & {
+  adresselinje1?: string;
+  adresselinje2?: string;
+  adresselinje3?: string;
+  postnummer?: string;
+  poststed?: string;
+  kommunenummer?: string;
+  landkode?: string;
+};
+
+/** Postal address with validity information. */
+export type EregPostadresseDTO = EregAdresseDTO & {
+  type: "Postadresse";
+};
+
+/** Business address with validity information. */
+export type EregForretningsadresseDTO = EregAdresseDTO & {
+  type: "Forretningsadresse";
+};
 
 /** Common details and historical records for an organisation. */
-export interface EregOrganisasjonDetaljerDTO {
+export type EregOrganisasjonDetaljerDTO = {
   registreringsdato?: string;
   stiftelsesdato?: string;
   opphoersdato?: string;
   sistEndret?: string;
   naeringer?: EregNaringDTO[];
-}
+  forretningsadresser?: EregForretningsadresseDTO[];
+  postadresser?: EregPostadresseDTO[];
+};
 
 /** Details specific to a virksomhet; date values are ISO local dates. */
-export interface EregVirksomhetDetaljerDTO {
+export type EregVirksomhetDetaljerDTO = {
   oppstartsdato?: string;
   eierskiftedato?: string;
   nedleggelsesdato?: string;
   enhetstype?: string;
   ubemannetVirksomhet?: boolean;
-}
+};
+
+/** Partial details specific to a juridisk enhet. */
+export type EregJuridiskEnhetDetaljerDTO = {
+  sektorkode?: string;
+};
+
+/** Partial details specific to an organisasjonsledd. */
+export type EregOrganisasjonsleddDetaljerDTO = {
+  sektorkode?: string;
+};
 
 /** Naringskode and hjelpeenhet status. */
-export interface EregNaringDTO extends EregPeriodisertDTO {
+export type EregNaringDTO = EregPeriodisertDTO & {
   naeringskode: string;
   hjelpeenhet?: boolean;
-}
+};
 
 /** Returns the edited name, the first name line, or an empty string if absent. */
 export function getVirksomhetsnavn(

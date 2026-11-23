@@ -24,7 +24,7 @@ export function useVirksomheterQueries(virksomhetnumre: string[]) {
   const queries = virksomhetnumre.map((nummer: string) => {
     function fetchVirksomhet() {
       return get<EregOrganisasjonResponseDTO>(
-        `${EREG_ROOT}/organisasjon/${nummer}`,
+        `${EREG_ROOT}/organisasjon/${nummer}?inkluderHierarki=true`,
       );
     }
     return {
