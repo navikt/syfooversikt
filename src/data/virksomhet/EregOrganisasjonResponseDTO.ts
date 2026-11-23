@@ -8,6 +8,11 @@ export type EregOrganisasjonResponseDTO =
   | EregJuridiskEnhetDTO
   | EregOrganisasjonsleddDTO;
 
+/** Ereg organisation data enriched with its current legal entity when available. */
+export type EregOrganisasjonEnrichedDTO = EregOrganisasjonResponseDTO & {
+  juridiskEnhet?: EregJuridiskEnhetDTO;
+};
+
 type EregOrganisasjonBaseDTO = {
   organisasjonsnummer?: string;
   navn?: EregOrganisasjonNavnDTO;

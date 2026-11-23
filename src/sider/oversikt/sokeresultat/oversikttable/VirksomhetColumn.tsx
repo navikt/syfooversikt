@@ -5,6 +5,10 @@ import { PersonData } from "@/api/types/personregisterTypes";
 import { useVirksomheterQueries } from "@/data/virksomhet/virksomhetQueryHooks";
 import { getVirksomhetsnavn } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { VirksomhetDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/virksomhetDataCell/VirksomhetDataCell.tsx";
+import {
+  enrichWithJuridiskeVirksomheter,
+  getJuridiskEnhetOrganisasjonsnummer,
+} from "@/utils/virksomhetUtil";
 
 const TILFELLER_TO_SHOW_DEFAULT = 2;
 
@@ -18,11 +22,17 @@ interface Props {
   personData: PersonData;
 }
 
-export const VirksomhetColumn = ({ personData }: Props) => {
+export function VirksomhetColumn({ personData }: Props) {
   const [virksomhetExpanded, setVirksomhetExpanded] = useState(false);
 
   const virksomhetsnummerList = virksomhetnummerFromPersonData(personData);
-  const virksomheter = useVirksomheterQueries(virksomhetsnummerList);
+  const virksomheter = useVirksomheterQueries(virksomhetsnummerList, true);
+  const juridiskeVirksomhetsnumre = virksomheter.data
+    .map(getJuridiskEnhetOrganisasjonsnummer)
+    .filter((nummer) => nummer !== undefined);
+  const juridiskeVirksomheter = useVirksomheterQueries(
+    juridiskeVirksomhetsnumre,
+  );
 
   if (virksomheter.isPending) {
     return null;
@@ -36,7 +46,10 @@ export const VirksomhetColumn = ({ personData }: Props) => {
     );
   }
 
-  const virksomheterSorted = virksomheter.data.sort((a, b) => {
+  const virksomheterSorted = enrichWithJuridiskeVirksomheter(
+    virksomheter.data,
+    juridiskeVirksomheter.data,
+  ).sort((a, b) => {
     const navnA = getVirksomhetsnavn(a);
     const navnB = getVirksomhetsnavn(b);
     return navnA.localeCompare(navnB);
@@ -69,4 +82,4 @@ export const VirksomhetColumn = ({ personData }: Props) => {
       )}
     </div>
   );
-};
+}

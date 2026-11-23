@@ -7,7 +7,7 @@ import { http, HttpResponse } from "msw";
 import { VirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VirksomhetColumn.tsx";
 import { PersonData } from "@/api/types/personregisterTypes";
 import { virksomhetQueryKeys } from "@/data/virksomhet/virksomhetQueryHooks";
-import { EREG_ROOT } from "@/apiConstants";
+import { EREG_ROOT, SYFOPERSON_ROOT } from "@/apiConstants";
 import { personregister, testdata } from "../data/fellesTestdata";
 import { testQueryClient } from "../testQueryClient";
 import { mockServer } from "../setup";
@@ -27,6 +27,7 @@ const virksomheter = Array.from({ length: 5 }, (_, index) => ({
 const firstVirksomhet = virksomheter[0]!;
 const firstVirksomhetQueryKey = virksomhetQueryKeys.virksomhet(
   firstVirksomhet.virksomhetsnummer,
+  true,
 );
 const firstVirksomhetUrl = `${EREG_ROOT}/organisasjon/${firstVirksomhet.virksomhetsnummer}`;
 const togglesQueryKey = unleashQueryKeys.toggles(
@@ -81,7 +82,7 @@ describe("PersonRadVirksomhetColumn", () => {
     });
     virksomheter.forEach(({ virksomhetsnummer, navn }) => {
       queryClient.setQueryData(
-        virksomhetQueryKeys.virksomhet(virksomhetsnummer),
+        virksomhetQueryKeys.virksomhet(virksomhetsnummer, true),
         { navn },
       );
     });
@@ -180,6 +181,81 @@ describe("PersonRadVirksomhetColumn", () => {
     );
   });
 
+  describe("sektor in popover", () => {
+    it("lazily fetches and displays the matching sector name and code", async () => {
+      const user = userEvent.setup();
+      let requestCount = 0;
+      let requestedStandard = "";
+      queryClient.setQueryData(firstVirksomhetQueryKey, {
+        type: "Virksomhet",
+        navn: firstVirksomhet.navn,
+        inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+      });
+      queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+        type: "JuridiskEnhet",
+        organisasjonsnummer: "987654329",
+        juridiskEnhetDetaljer: { sektorkode: "2100" },
+      });
+      mockServer.use(
+        http.get(`${SYFOPERSON_ROOT}/sektorkode/2100`, ({ request }) => {
+          requestCount++;
+          requestedStandard =
+            new URL(request.url).searchParams.get("standard") ?? "";
+          return HttpResponse.json({
+            standard: 2012,
+            hierarki: [
+              {
+                code: "2100",
+                name: "Kodenhet",
+                parentCode: null,
+                level: 1,
+              },
+            ],
+          });
+        }),
+      );
+      renderColumn(getPersonData(1));
+
+      expect(requestCount).toBe(0);
+      await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+      expect(await screen.findByRole("heading", { name: "Sektor" })).to.exist;
+      expect(await screen.findByText("Kodenhet (2100)")).to.exist;
+      expect(requestedStandard).toBe("2012");
+      expect(requestCount).toBe(1);
+    });
+
+    it("keeps the raw sector code and organisation name when lookup fails", async () => {
+      const user = userEvent.setup();
+      queryClient.setQueryData(firstVirksomhetQueryKey, {
+        type: "Virksomhet",
+        navn: firstVirksomhet.navn,
+        inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+      });
+      queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+        type: "JuridiskEnhet",
+        organisasjonsnummer: "987654329",
+        juridiskEnhetDetaljer: { sektorkode: "9999" },
+      });
+      mockServer.use(
+        http.get(`${SYFOPERSON_ROOT}/sektorkode/9999`, () =>
+          HttpResponse.json({}, { status: 502 }),
+        ),
+      );
+      renderColumn(getPersonData(1));
+
+      await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+      expect(await screen.findByText("Klarte ikke hente sektornavn")).to.exist;
+      expect(screen.getByText("9999")).to.exist;
+      expect(
+        screen.getByRole("heading", {
+          name: firstVirksomhet.navn.navnelinje1,
+        }),
+      ).to.exist;
+    });
+  });
+
   describe("flere enn tre virksomheter", () => {
     it.each([4, 5])(
       "viser to av %i virksomheter og riktig antall skjulte",
@@ -226,6 +302,51 @@ describe("PersonRadVirksomhetColumn", () => {
   });
 
   describe("lasting og feil", () => {
+    it("beholder virksomheten mens juridisk enhet lastes og hvis oppslaget feiler", async () => {
+      const juridiskEnhetQueryKey = virksomhetQueryKeys.virksomhet("987654329");
+      let releaseResponse = () => {};
+      const responseReady = new Promise<void>((resolve) => {
+        releaseResponse = resolve;
+      });
+      queryClient.setQueryData(firstVirksomhetQueryKey, {
+        type: "Virksomhet",
+        navn: firstVirksomhet.navn,
+        inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+      });
+      mockServer.use(
+        http.get(`${EREG_ROOT}/organisasjon/987654329`, async () => {
+          await responseReady;
+          return HttpResponse.json({}, { status: 502 });
+        }),
+      );
+
+      renderColumn(getPersonData(1));
+
+      try {
+        await waitFor(() => {
+          expect(
+            queryClient.getQueryState(juridiskEnhetQueryKey)?.fetchStatus,
+          ).toBe("fetching");
+        });
+        expect(
+          screen.getByText(firstVirksomhet.navn.navnelinje1, { selector: "p" }),
+        ).to.exist;
+        expect(screen.getByRole("button", { name: "Se virksomhet" })).to.exist;
+      } finally {
+        releaseResponse();
+      }
+
+      await waitFor(() => {
+        expect(queryClient.getQueryState(juridiskEnhetQueryKey)?.status).toBe(
+          "error",
+        );
+      });
+      expect(
+        screen.getByText(firstVirksomhet.navn.navnelinje1, { selector: "p" }),
+      ).to.exist;
+      expect(screen.queryByText("Klarte ikke hente virksomheter")).to.not.exist;
+    });
+
     it("viser ingenting før alle virksomheter er hentet", async () => {
       queryClient.removeQueries({ queryKey: firstVirksomhetQueryKey });
       mockServer.use(

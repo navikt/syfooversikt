@@ -11,25 +11,31 @@ import {
   Tooltip,
 } from "@navikt/ds-react";
 import {
-  EregOrganisasjonResponseDTO,
+  EregOrganisasjonEnrichedDTO,
   getVirksomhetsnavn,
 } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { Buildings3Icon, FilesIcon } from "@navikt/aksel-icons";
-import { useNaringskodeQueries } from "@/data/virksomhet/virksomhetQueryHooks.ts";
 import { toNaringskodeRequest } from "@/utils/naringskodeUtil.ts";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks.ts";
+import {
+  useNaringskodeQueries,
+  useSektorkodeQuery,
+} from "@/data/virksomhet/ssbQueryHooks.ts";
 
 const texts = {
   bransjerHeading: "Bransje",
   bransjerInfo: "Les mer om bransjer",
+  sektorHeading: "Sektor",
+  sectorLoading: "Laster sektornavn",
+  sectorError: "Klarte ikke hente sektornavn",
 };
 
 interface Props {
-  virksomhet: EregOrganisasjonResponseDTO;
+  virksomhet: EregOrganisasjonEnrichedDTO;
 }
 
-export const VirksomhetDataCell = ({ virksomhet }: Props) => {
-  const [openState, setOpenState] = React.useState(false);
+export function VirksomhetDataCell({ virksomhet }: Props) {
+  const [isOpen, setIsOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -41,6 +47,15 @@ export const VirksomhetDataCell = ({ virksomhet }: Props) => {
     toggles.isBransjerEnabled,
   );
   const naringskodeHirearkier = useNaringskodeQueries(naringskoder);
+  const sektorkode =
+    virksomhet.juridiskEnhet?.juridiskEnhetDetaljer?.sektorkode ??
+    (virksomhet.type === "JuridiskEnhet"
+      ? virksomhet.juridiskEnhetDetaljer?.sektorkode
+      : undefined);
+  const sektorkodeQuery = useSektorkodeQuery(sektorkode ?? "", 2012, isOpen);
+  const sektorkodeNavn = (sektorkodeQuery.data?.hierarki ?? []).find(
+    (kode) => kode.code === sektorkode,
+  )?.name;
 
   const bransjer = naringskodeHirearkier.data.flatMap((naringskodeHirearki) => {
     return naringskodeHirearki?.hierarki?.filter(
@@ -57,14 +72,14 @@ export const VirksomhetDataCell = ({ virksomhet }: Props) => {
         variant="tertiary"
         icon={<Buildings3Icon title="Se virksomhet" />}
         ref={setAnchorEl}
-        onClick={() => setOpenState(!openState)}
-        aria-expanded={openState}
-        aria-controls={openState ? popoverId : undefined}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={isOpen ? popoverId : undefined}
       />
       <Popover
         placement={"top-start"}
-        open={openState}
-        onClose={() => setOpenState(false)}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
         anchorEl={anchorEl}
         id={popoverId}
       >
@@ -82,6 +97,29 @@ export const VirksomhetDataCell = ({ virksomhet }: Props) => {
                 />
               </Tooltip>
             </div>
+          )}
+
+          {sektorkode && (
+            <>
+              <Heading size="xsmall" className="mt-4 mb-2">
+                {texts.sektorHeading}
+              </Heading>
+              <BodyShort size="small" className="m-0">
+                {sektorkodeNavn
+                  ? `${sektorkodeNavn} (${sektorkode})`
+                  : sektorkode}
+              </BodyShort>
+              {isOpen && sektorkodeQuery.isFetching && (
+                <BodyShort size="small" className="m-0">
+                  {texts.sectorLoading}
+                </BodyShort>
+              )}
+              {isOpen && sektorkodeQuery.isError && (
+                <BodyShort size="small" className="m-0">
+                  {texts.sectorError}
+                </BodyShort>
+              )}
+            </>
           )}
 
           {bransjer.length > 0 && (
@@ -119,4 +157,4 @@ export const VirksomhetDataCell = ({ virksomhet }: Props) => {
       </BodyShort>
     </div>
   );
-};
+}
