@@ -5,6 +5,10 @@ import { PersonData } from "@/api/types/personregisterTypes";
 import { useVirksomheterQueries } from "@/data/virksomhet/virksomhetQueryHooks";
 import { getVirksomhetsnavn } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { VirksomhetDataCell } from "@/sider/oversikt/sokeresultat/oversikttable/virksomhetDataCell/VirksomhetDataCell.tsx";
+import {
+  enrichWithOverordnedeEnheter,
+  getOverordnetEnhetOrganisasjonsnummer,
+} from "@/utils/virksomhetUtil";
 
 const TILFELLER_TO_SHOW_DEFAULT = 2;
 
@@ -18,11 +22,15 @@ interface Props {
   personData: PersonData;
 }
 
-export const VirksomhetColumn = ({ personData }: Props) => {
-  const [virksomhetExpanded, setVirksomhetExpanded] = useState(false);
+export function VirksomhetColumn({ personData }: Props) {
+  const [isVirksomhetExpanded, setIsVirksomhetExpanded] = useState(false);
 
   const virksomhetsnummerList = virksomhetnummerFromPersonData(personData);
-  const virksomheter = useVirksomheterQueries(virksomhetsnummerList);
+  const virksomheter = useVirksomheterQueries(virksomhetsnummerList, true);
+  const overordnedeEnhetsnumre = virksomheter.data
+    .map(getOverordnetEnhetOrganisasjonsnummer)
+    .filter((nummer) => nummer !== null);
+  const overordnedeEnheter = useVirksomheterQueries(overordnedeEnhetsnumre);
 
   if (virksomheter.isPending) {
     return null;
@@ -36,15 +44,18 @@ export const VirksomhetColumn = ({ personData }: Props) => {
     );
   }
 
-  const virksomheterSorted = virksomheter.data.sort((a, b) => {
+  const virksomheterSorted = enrichWithOverordnedeEnheter(
+    virksomheter.data,
+    overordnedeEnheter.data,
+  ).sort((a, b) => {
     const navnA = getVirksomhetsnavn(a);
     const navnB = getVirksomhetsnavn(b);
     return navnA.localeCompare(navnB);
   });
-  const showAllVirksomheter =
-    virksomhetExpanded ||
+  const isShowingAllVirksomheter =
+    isVirksomhetExpanded ||
     virksomheterSorted.length <= TILFELLER_TO_SHOW_DEFAULT + 1;
-  const virksomheterToShow = showAllVirksomheter
+  const virksomheterToShow = isShowingAllVirksomheter
     ? virksomheterSorted
     : virksomheterSorted.slice(0, TILFELLER_TO_SHOW_DEFAULT);
 
@@ -58,9 +69,9 @@ export const VirksomhetColumn = ({ personData }: Props) => {
           className={"w-fit mt-2"}
           variant={"secondary"}
           size={"xsmall"}
-          onClick={() => setVirksomhetExpanded(!virksomhetExpanded)}
+          onClick={() => setIsVirksomhetExpanded(!isVirksomhetExpanded)}
         >
-          {virksomhetExpanded
+          {isVirksomhetExpanded
             ? texts.showFewer
             : texts.showMore(
                 virksomheterSorted.length - TILFELLER_TO_SHOW_DEFAULT,
@@ -69,4 +80,4 @@ export const VirksomhetColumn = ({ personData }: Props) => {
       )}
     </div>
   );
-};
+}

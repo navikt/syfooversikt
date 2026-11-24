@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@navikt/ds-react";
 import {
-  EregOrganisasjonResponseDTO,
+  EregOrganisasjonEnrichedDTO,
   getVirksomhetsnavn,
 } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { Buildings3Icon, FilesIcon } from "@navikt/aksel-icons";
@@ -25,7 +25,7 @@ const texts = {
 };
 
 interface Props {
-  virksomhet: EregOrganisasjonResponseDTO;
+  virksomhet: EregOrganisasjonEnrichedDTO;
 }
 
 export const VirksomhetDataCell = ({ virksomhet }: Props) => {

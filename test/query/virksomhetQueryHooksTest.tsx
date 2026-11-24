@@ -7,7 +7,10 @@ import { EREG_ROOT, SYFOPERSON_ROOT } from "@/apiConstants";
 import { get } from "@/api/axios";
 import { EregOrganisasjonResponseDTO } from "@/data/virksomhet/EregOrganisasjonResponseDTO";
 import { NaringskodeStandard } from "@/data/virksomhet/Naringskode";
-import { useNaringskodeQuery } from "@/data/virksomhet/virksomhetQueryHooks";
+import {
+  useNaringskodeQuery,
+  useVirksomheterQueries,
+} from "@/data/virksomhet/virksomhetQueryHooks";
 import { mockServer } from "../setup";
 import { testQueryClient } from "../testQueryClient";
 
@@ -74,6 +77,144 @@ describe("Ereg hierarchy mock", () => {
       expect(withHierarchy).toHaveProperty("inngaarIJuridiskEnheter");
     },
   );
+});
+
+describe("useVirksomheterQueries", () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = testQueryClient();
+  });
+
+  function Wrapper({ children }: Props) {
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+  }
+
+  it("omits hierarchy by default", async () => {
+    const requestedUrls: string[] = [];
+    mockServer.use(
+      http.get(`${EREG_ROOT}/organisasjon/100`, ({ request }) => {
+        requestedUrls.push(request.url);
+        return HttpResponse.json({
+          type: "Virksomhet",
+          organisasjonsnummer: "100",
+          navn: { navnelinje1: "Virksomhet 100" },
+        });
+      }),
+    );
+
+    const { result } = renderHook(() => useVirksomheterQueries(["100"]), {
+      wrapper: Wrapper,
+    });
+
+    await waitFor(() => expect(result.current.data).toHaveLength(1));
+    expect(
+      requestedUrls.map((url) =>
+        new URL(url).searchParams.get("inkluderHierarki"),
+      ),
+    ).toEqual([null]);
+  });
+
+  it("deduplicates organisation requests within and across consumers", async () => {
+    const legalEntityRequests = new Map<string, number>();
+    mockServer.use(
+      http.get(`${EREG_ROOT}/organisasjon/:number`, async ({ params }) => {
+        const number = String(params.number);
+        legalEntityRequests.set(
+          number,
+          (legalEntityRequests.get(number) ?? 0) + 1,
+        );
+        if (number === "300") {
+          await new Promise((resolve) => setTimeout(resolve, 30));
+        }
+        return HttpResponse.json({
+          type: "JuridiskEnhet",
+          organisasjonsnummer: number,
+          navn: { navnelinje1: `Juridisk enhet ${number}` },
+          juridiskEnhetDetaljer: { sektorkode: `S-${number}` },
+        });
+      }),
+    );
+
+    const firstConsumer = renderHook(
+      () => useVirksomheterQueries(["300", "300", ""]),
+      { wrapper: Wrapper },
+    );
+    const secondConsumer = renderHook(
+      () => useVirksomheterQueries(["301", "300"]),
+      { wrapper: Wrapper },
+    );
+
+    await waitFor(() => {
+      expect(firstConsumer.result.current.data[0]?.organisasjonsnummer).toBe(
+        "300",
+      );
+      expect(secondConsumer.result.current.data[0]?.organisasjonsnummer).toBe(
+        "301",
+      );
+      expect(secondConsumer.result.current.data[1]?.organisasjonsnummer).toBe(
+        "300",
+      );
+    });
+
+    expect(legalEntityRequests.get("300")).toBe(1);
+    expect(legalEntityRequests.get("301")).toBe(1);
+    expect(firstConsumer.result.current.data).toHaveLength(1);
+  });
+
+  it("isolates cached base responses by hierarchy flag", async () => {
+    const requestedUrls: string[] = [];
+    mockServer.use(
+      http.get(`${EREG_ROOT}/organisasjon/100`, ({ request }) => {
+        requestedUrls.push(request.url);
+        const includeHierarchy = new URL(request.url).searchParams.get(
+          "inkluderHierarki",
+        );
+        return HttpResponse.json({
+          type: "Virksomhet",
+          organisasjonsnummer: "100",
+          navn: {
+            navnelinje1: includeHierarchy
+              ? "With hierarchy"
+              : "Without hierarchy",
+          },
+          ...(includeHierarchy
+            ? {
+                inngaarIJuridiskEnheter: [{ organisasjonsnummer: "200" }],
+              }
+            : {}),
+        });
+      }),
+    );
+
+    const { result, rerender } = renderHook(
+      ({ inkluderHierarki }: { inkluderHierarki: boolean }) =>
+        useVirksomheterQueries(["100"], inkluderHierarki),
+      {
+        initialProps: { inkluderHierarki: false },
+        wrapper: Wrapper,
+      },
+    );
+
+    await waitFor(() =>
+      expect(result.current.data[0]?.navn?.navnelinje1).toBe(
+        "Without hierarchy",
+      ),
+    );
+    rerender({ inkluderHierarki: true });
+
+    await waitFor(() =>
+      expect(result.current.data[0]?.navn?.navnelinje1).toBe("With hierarchy"),
+    );
+    expect(requestedUrls).toHaveLength(2);
+    expect(
+      requestedUrls.map((url) =>
+        new URL(url).searchParams.get("inkluderHierarki"),
+      ),
+    ).toEqual([null, "true"]);
+  });
 });
 
 describe("useNaringskodeQuery", () => {

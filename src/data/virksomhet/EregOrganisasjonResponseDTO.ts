@@ -8,6 +8,11 @@ export type EregOrganisasjonResponseDTO =
   | EregJuridiskEnhetDTO
   | EregOrganisasjonsleddDTO;
 
+/** Ereg organisation data enriched with its nearest current parent when available. */
+export type EregOrganisasjonEnrichedDTO = EregOrganisasjonResponseDTO & {
+  overordnetEnhet?: EregOrganisasjonsleddDTO | EregJuridiskEnhetDTO;
+};
+
 type EregOrganisasjonBaseDTO = {
   organisasjonsnummer?: string;
   navn?: EregOrganisasjonNavnDTO;
@@ -20,6 +25,7 @@ type EregOrganisasjonFellesDTO = EregOrganisasjonBaseDTO & {
 /** Organisation response for a virksomhet. */
 export type EregVirksomhetDTO = EregOrganisasjonFellesDTO & {
   type: "Virksomhet";
+  bestaarAvOrganisasjonsledd?: EregBestaarAvOrganisasjonsleddDTO[];
   inngaarIJuridiskEnheter?: EregOrganisasjonReferanseDTO[];
   virksomhetDetaljer?: EregVirksomhetDetaljerDTO;
 };
@@ -33,6 +39,7 @@ export type EregJuridiskEnhetDTO = EregOrganisasjonFellesDTO & {
 /** Organisation response for an organisasjonsledd. */
 export type EregOrganisasjonsleddDTO = EregOrganisasjonFellesDTO & {
   type: "Organisasjonsledd";
+  organisasjonsleddOver?: EregBestaarAvOrganisasjonsleddDTO[];
   inngaarIJuridiskEnheter?: EregOrganisasjonReferanseDTO[];
   organisasjonsleddDetaljer?: EregOrganisasjonsleddDetaljerDTO;
 };
@@ -52,6 +59,11 @@ export type EregGyldighetsperiodeDTO = {
 type EregPeriodisertDTO = {
   bruksperiode?: EregBruksperiodeDTO;
   gyldighetsperiode?: EregGyldighetsperiodeDTO;
+};
+
+/** An organisational section and the recorded and validity periods of its relationship. */
+export type EregBestaarAvOrganisasjonsleddDTO = EregPeriodisertDTO & {
+  organisasjonsledd?: EregOrganisasjonsleddDTO;
 };
 
 /**
