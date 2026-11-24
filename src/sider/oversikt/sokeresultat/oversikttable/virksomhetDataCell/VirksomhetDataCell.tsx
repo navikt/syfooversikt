@@ -16,6 +16,7 @@ import {
 } from "@/data/virksomhet/EregOrganisasjonResponseDTO.ts";
 import { Buildings3Icon, FilesIcon } from "@navikt/aksel-icons";
 import { toNaringskodeRequest } from "@/utils/naringskodeUtil.ts";
+import { getForretningsadresse } from "@/utils/virksomhetUtil";
 import { useGetFeatureToggles } from "@/data/unleash/unleashQueryHooks.ts";
 import {
   useNaringskodeQueries,
@@ -28,6 +29,7 @@ const texts = {
   sektorHeading: "Sektor",
   sectorLoading: "Laster sektornavn",
   sectorError: "Klarte ikke hente sektornavn",
+  forretningsadresseHeading: "Forretningsadresse",
 };
 
 interface Props {
@@ -43,11 +45,18 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
 
   const { toggles } = useGetFeatureToggles();
 
-  const naringskoder = toNaringskodeRequest(
-    virksomhet,
-    toggles.isBransjerEnabled,
-  );
-  const naringskodeHirearkier = useNaringskodeQueries(naringskoder);
+  const forretningsadresse = getForretningsadresse(virksomhet);
+  const adresselinjer = [
+    forretningsadresse?.adresselinje1,
+    forretningsadresse?.adresselinje2,
+    forretningsadresse?.adresselinje3,
+    [forretningsadresse?.postnummer, forretningsadresse?.poststed]
+      .filter(Boolean)
+      .join(" "),
+  ]
+    .map((linje) => linje?.trim())
+    .filter((linje) => linje !== undefined && linje !== "");
+
   const overordnetEnhet =
     virksomhet.overordnetEnhet ??
     (virksomhet.type === "JuridiskEnhet" ? virksomhet : undefined);
@@ -60,6 +69,11 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
     (kode) => kode.code === sektorkode,
   )?.name;
 
+  const naringskoder = toNaringskodeRequest(
+    virksomhet,
+    toggles.isBransjerEnabled,
+  );
+  const naringskodeHirearkier = useNaringskodeQueries(naringskoder);
   const bransjer = naringskodeHirearkier.data.flatMap((naringskodeHirearki) => {
     return naringskodeHirearki?.hierarki?.filter(
       (kode) => kode.parentCode === null,
@@ -100,6 +114,19 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
                 />
               </Tooltip>
             </div>
+          )}
+
+          {adresselinjer.length > 0 && (
+            <>
+              <Heading level="3" size="xsmall" className="mt-4 mb-2">
+                {texts.forretningsadresseHeading}
+              </Heading>
+              {adresselinjer.map((linje, index) => (
+                <BodyShort key={index} size="small" className="m-0">
+                  {linje}
+                </BodyShort>
+              ))}
+            </>
           )}
 
           {sektorkode && (

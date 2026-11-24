@@ -37,6 +37,16 @@ const eregResponses: EregMockData = {
       navnelinje1: "NAV Security",
     },
     organisasjonDetaljer: {
+      forretningsadresser: [
+        {
+          type: "Forretningsadresse",
+          adresselinje1: "Testgata 1",
+          adresselinje2: "Etasje 2",
+          postnummer: "0001",
+          poststed: "TESTBY",
+          gyldighetsperiode: { fom: "2020-01-01" },
+        },
+      ],
       naeringer: [
         {
           naeringskode: "70.220",
@@ -69,6 +79,15 @@ const eregResponses: EregMockData = {
       redigertnavn: "NAV Investments",
     },
     organisasjonDetaljer: {
+      forretningsadresser: [
+        {
+          type: "Forretningsadresse",
+          adresselinje1: "Eksempelveien 2",
+          postnummer: "0002",
+          poststed: "TESTBY",
+          gyldighetsperiode: { fom: "2020-01-01" },
+        },
+      ],
       naeringer: [
         {
           naeringskode: "70.200",
