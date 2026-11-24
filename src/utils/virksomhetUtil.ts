@@ -1,9 +1,30 @@
 import dayjs from "dayjs";
 import {
+  EregForretningsadresseDTO,
   EregOrganisasjonEnrichedDTO,
   EregOrganisasjonReferanseDTO,
   EregOrganisasjonResponseDTO,
 } from "@/data/virksomhet/EregOrganisasjonResponseDTO";
+
+/** Returns the current business address, preferring the latest valid start date. */
+export function getForretningsadresse(
+  virksomhet: EregOrganisasjonResponseDTO,
+): EregForretningsadresseDTO | undefined {
+  const today = dayjs();
+  return virksomhet.organisasjonDetaljer?.forretningsadresser
+    ?.filter(({ gyldighetsperiode }) => {
+      const { fom, tom } = gyldighetsperiode ?? {};
+      return (
+        (!fom || !today.isBefore(dayjs(fom), "day")) &&
+        (!tom || !today.isAfter(dayjs(tom), "day"))
+      );
+    })
+    .sort((a, b) =>
+      (b.gyldighetsperiode?.fom ?? "").localeCompare(
+        a.gyldighetsperiode?.fom ?? "",
+      ),
+    )[0];
+}
 
 /**
  * Returns the nearest current parent number, preferring an organisational section over a legal entity.

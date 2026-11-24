@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -177,6 +178,121 @@ describe("PersonRadVirksomhetColumn", () => {
             .getByRole("button", { name: "Se virksomhet" })
             .getAttribute("aria-expanded"),
         ).to.equal("true");
+      },
+    );
+  });
+
+  describe("forretningsadresse i popover", () => {
+    it.each(["JuridiskEnhet", "Organisasjonsledd"])(
+      "viser gjeldende adresse fra underenheten, ikke overordnet enhet (%s)",
+      async (type) => {
+        const user = userEvent.setup();
+        const today = dayjs().format("YYYY-MM-DD");
+        queryClient.setQueryData(firstVirksomhetQueryKey, {
+          type: "Virksomhet",
+          navn: firstVirksomhet.navn,
+          ...(type === "JuridiskEnhet"
+            ? {
+                inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+              }
+            : {
+                bestaarAvOrganisasjonsledd: [
+                  {
+                    organisasjonsledd: {
+                      type,
+                      organisasjonsnummer: "987654329",
+                    },
+                  },
+                ],
+              }),
+          organisasjonDetaljer: {
+            forretningsadresser: [
+              {
+                type: "Forretningsadresse",
+                adresselinje1: "Tidligere adresse",
+                gyldighetsperiode: {
+                  tom: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
+                },
+              },
+              {
+                type: "Forretningsadresse",
+                adresselinje1: "Eldre gyldig adresse",
+                gyldighetsperiode: {
+                  fom: dayjs().subtract(5, "day").format("YYYY-MM-DD"),
+                },
+              },
+              {
+                type: "Forretningsadresse",
+                adresselinje1: "Fremtidig adresse",
+                gyldighetsperiode: {
+                  fom: dayjs().add(1, "day").format("YYYY-MM-DD"),
+                },
+              },
+              {
+                type: "Forretningsadresse",
+                adresselinje1: "Testgata 1",
+                adresselinje2: "Bygg B",
+                adresselinje3: "Etasje 2",
+                postnummer: "0001",
+                poststed: "TESTBY",
+                gyldighetsperiode: { fom: today, tom: today },
+              },
+            ],
+          },
+        });
+        queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+          type,
+          organisasjonsnummer: "987654329",
+          organisasjonDetaljer: {
+            forretningsadresser: [
+              {
+                type: "Forretningsadresse",
+                adresselinje1: "Overordnet enhets adresse",
+              },
+            ],
+          },
+        });
+        renderColumn(getPersonData(1));
+
+        await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+        expect(screen.getByRole("heading", { name: "Forretningsadresse" })).to
+          .exist;
+        expect(screen.getByText("Testgata 1")).to.exist;
+        expect(screen.getByText("Bygg B")).to.exist;
+        expect(screen.getByText("Etasje 2")).to.exist;
+        expect(screen.getByText("0001 TESTBY")).to.exist;
+        expect(screen.queryByText("Tidligere adresse")).to.not.exist;
+        expect(screen.queryByText("Eldre gyldig adresse")).to.not.exist;
+        expect(screen.queryByText("Fremtidig adresse")).to.not.exist;
+        expect(screen.queryByText("Overordnet enhets adresse")).to.not.exist;
+      },
+    );
+
+    it.each([
+      undefined,
+      [],
+      [{ type: "Forretningsadresse", adresselinje1: " " }],
+    ])(
+      "skjuler seksjonen når adressen mangler eller er tom: %j",
+      async (forretningsadresser) => {
+        const user = userEvent.setup();
+        queryClient.setQueryData(firstVirksomhetQueryKey, {
+          type: "Virksomhet",
+          navn: firstVirksomhet.navn,
+          organisasjonDetaljer: { forretningsadresser },
+        });
+        renderColumn(getPersonData(1));
+
+        await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+        expect(screen.queryByRole("heading", { name: "Forretningsadresse" })).to
+          .not.exist;
+        expect(
+          screen.getByRole("heading", {
+            name: firstVirksomhet.navn.navnelinje1,
+          }),
+        ).to.exist;
       },
     );
   });
