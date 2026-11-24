@@ -27,6 +27,7 @@ const virksomheter = Array.from({ length: 5 }, (_, index) => ({
 const firstVirksomhet = virksomheter[0]!;
 const firstVirksomhetQueryKey = virksomhetQueryKeys.virksomhet(
   firstVirksomhet.virksomhetsnummer,
+  true,
 );
 const firstVirksomhetUrl = `${EREG_ROOT}/organisasjon/${firstVirksomhet.virksomhetsnummer}`;
 const togglesQueryKey = unleashQueryKeys.toggles(
@@ -81,7 +82,7 @@ describe("PersonRadVirksomhetColumn", () => {
     });
     virksomheter.forEach(({ virksomhetsnummer, navn }) => {
       queryClient.setQueryData(
-        virksomhetQueryKeys.virksomhet(virksomhetsnummer),
+        virksomhetQueryKeys.virksomhet(virksomhetsnummer, true),
         { navn },
       );
     });
@@ -226,6 +227,72 @@ describe("PersonRadVirksomhetColumn", () => {
   });
 
   describe("lasting og feil", () => {
+    it.each(["JuridiskEnhet", "Organisasjonsledd"])(
+      "beholder virksomheten mens overordnet enhet (%s) lastes og hvis oppslaget feiler",
+      async (type) => {
+        const overordnetEnhetQueryKey =
+          virksomhetQueryKeys.virksomhet("987654329");
+        let releaseResponse = () => {};
+        const responseReady = new Promise<void>((resolve) => {
+          releaseResponse = resolve;
+        });
+        queryClient.setQueryData(firstVirksomhetQueryKey, {
+          type: "Virksomhet",
+          navn: firstVirksomhet.navn,
+          ...(type === "JuridiskEnhet"
+            ? {
+                inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+              }
+            : {
+                bestaarAvOrganisasjonsledd: [
+                  {
+                    organisasjonsledd: {
+                      type: "Organisasjonsledd",
+                      organisasjonsnummer: "987654329",
+                    },
+                  },
+                ],
+              }),
+        });
+        mockServer.use(
+          http.get(`${EREG_ROOT}/organisasjon/987654329`, async () => {
+            await responseReady;
+            return HttpResponse.json({}, { status: 502 });
+          }),
+        );
+
+        renderColumn(getPersonData(1));
+
+        try {
+          await waitFor(() => {
+            expect(
+              queryClient.getQueryState(overordnetEnhetQueryKey)?.fetchStatus,
+            ).toBe("fetching");
+          });
+          expect(
+            screen.getByText(firstVirksomhet.navn.navnelinje1, {
+              selector: "p",
+            }),
+          ).to.exist;
+          expect(screen.getByRole("button", { name: "Se virksomhet" })).to
+            .exist;
+        } finally {
+          releaseResponse();
+        }
+
+        await waitFor(() => {
+          expect(
+            queryClient.getQueryState(overordnetEnhetQueryKey)?.status,
+          ).toBe("error");
+        });
+        expect(
+          screen.getByText(firstVirksomhet.navn.navnelinje1, { selector: "p" }),
+        ).to.exist;
+        expect(screen.queryByText("Klarte ikke hente virksomheter")).to.not
+          .exist;
+      },
+    );
+
     it("viser ingenting før alle virksomheter er hentet", async () => {
       queryClient.removeQueries({ queryKey: firstVirksomhetQueryKey });
       mockServer.use(
