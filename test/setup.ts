@@ -3,12 +3,14 @@ import { setupServer } from "msw/node";
 import { mockUnleash } from "@/mocks/mockUnleash";
 import { mockSyfoveileder } from "@/mocks/syfoveileder/mockSyfoveileder";
 import { mockNaringskode } from "@/mocks/syfoperson/mockNaringskode";
+import { mockSektorkode } from "@/mocks/syfoperson/mockSektorkode";
 import { mockEreg } from "@/mocks/ereg/mockEreg";
 
 export const mockServer = setupServer(
   mockUnleash,
   ...mockSyfoveileder,
   mockNaringskode,
+  mockSektorkode,
   mockEreg,
 );
 
