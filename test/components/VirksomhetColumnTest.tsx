@@ -256,8 +256,7 @@ describe("PersonRadVirksomhetColumn", () => {
 
         await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
 
-        expect(screen.getByRole("heading", { name: "Forretningsadresse" })).to
-          .exist;
+        expect(screen.getByRole("heading", { name: "Adresse" })).to.exist;
         expect(screen.getByText("Testgata 1")).to.exist;
         expect(screen.getByText("Bygg B")).to.exist;
         expect(screen.getByText("Etasje 2")).to.exist;

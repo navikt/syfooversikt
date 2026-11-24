@@ -1,6 +1,26 @@
+/**
+ See documentation for naming guidelines: https://startumami.ansatt.nav.no/taksonomi
+ Other documentation for umami on Aksel: https://aksel.nav.no/god-praksis/artikler/male-brukeradferd-med-umami
+ */
+export { Events } from "@navikt/analytics-types";
+
+import type { EventName, TaxonomyEvent } from "@navikt/analytics-types";
+import { Events } from "@navikt/analytics-types";
+
+// Holds the resolve function of identifierReady so setIdentifier() can release the gate.
+let resolveIdentifierReady: (() => void) | null = null;
+
+// A pending promise used as a gate. trackEvent() awaits this before sending events,
+// ensuring no events are tracked before the veileder identifier has been set.
+// Resolved by setIdentifier() once umami.identify() completes.
+const identifierReady = new Promise<void>((resolve) => {
+  resolveIdentifierReady = resolve;
+});
+
 export async function setIdentifier(veilederident: string) {
-  const maskedVeilederident = await hashId(veilederident);
-  await umami.identify(maskedVeilederident);
+  const maskedVeilederIdent = await hashId(veilederident);
+  await umami.identify(maskedVeilederIdent);
+  resolveIdentifierReady?.();
 }
 
 async function hashId(id: string): Promise<string> {
@@ -21,44 +41,20 @@ function beforeSendHandler(type: string, payload: Record<string, unknown>) {
   return null;
 }
 
-declare global {
-  interface Window {
-    beforeSendHandler: typeof beforeSendHandler;
-  }
-}
-
 // Make the function globally accessible to make "data-before-send" in umami script work
-window.beforeSendHandler = beforeSendHandler;
+(window as any).beforeSendHandler = beforeSendHandler;
 
-enum EventType {
-  ModalApnet = "modal åpnet",
-  ModalLukket = "modal lukket",
-}
-
-type ModalApnet = {
-  type: EventType.ModalApnet;
-  data: {
-    tittel: string;
-  };
-};
-
-type ModalLukket = {
-  type: EventType.ModalLukket;
-  data: {
-    tittel: string;
-  };
-};
-
-type Event = ModalApnet | ModalLukket;
-
-function trackEvent(event: Event) {
-  umami.track(event.type, { ...event.data });
+export async function trackEvent<K extends EventName>(
+  event: TaxonomyEvent<K>,
+): Promise<void> {
+  await identifierReady;
+  umami.track(event.name, { ...event.properties });
 }
 
 export function trackModalApnet(tittel: string) {
   trackEvent({
-    type: EventType.ModalApnet,
-    data: {
+    name: Events.MODAL_APNET,
+    properties: {
       tittel: tittel,
     },
   });
@@ -66,9 +62,19 @@ export function trackModalApnet(tittel: string) {
 
 export function trackModalLukket(tittel: string) {
   trackEvent({
-    type: EventType.ModalLukket,
-    data: {
+    name: Events.MODAL_LUKKET,
+    properties: {
       tittel: tittel,
+    },
+  });
+}
+
+export function trackLinkKlikket(tekst: string, href: string): void {
+  trackEvent({
+    name: Events.LINK_KLIKKET,
+    properties: {
+      tekst,
+      href,
     },
   });
 }
