@@ -3,7 +3,6 @@ import {
   BodyShort,
   Button,
   CopyButton,
-  Detail,
   Heading,
   Link,
   List,
@@ -22,6 +21,9 @@ import {
   useNaringskodeQueries,
   useSektorkodeQuery,
 } from "@/data/virksomhet/ssbQueryHooks.ts";
+import { trackLinkKlikket } from "@/utils/umami.ts";
+
+const lenkeSsbBransjer = "https://dataportal.ssb.no/classifications/6/codes";
 
 const texts = {
   bransjerHeading: "Bransje",
@@ -29,7 +31,7 @@ const texts = {
   sektorHeading: "Sektor",
   sectorLoading: "Laster sektornavn",
   sectorError: "Klarte ikke hente sektornavn",
-  forretningsadresseHeading: "Forretningsadresse",
+  forretningsadresseHeading: "Adresse",
 };
 
 interface Props {
@@ -79,6 +81,7 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
       (kode) => kode.parentCode === null,
     );
   });
+  const firstBransje = bransjer[0];
 
   const popoverId = "virksomhet-popover";
 
@@ -105,7 +108,9 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
 
           {virksomhet.organisasjonsnummer && (
             <div className={"flex items-center gap-0.5"}>
-              <Detail className="m-0">{virksomhet.organisasjonsnummer}</Detail>
+              <BodyShort size="small" className="m-0">
+                {virksomhet.organisasjonsnummer}
+              </BodyShort>
               <Tooltip content="Kopier organisasjonsnummer">
                 <CopyButton
                   copyText={virksomhet.organisasjonsnummer}
@@ -155,23 +160,33 @@ export function VirksomhetDataCell({ virksomhet }: Props) {
               <Heading size="xsmall" className="mt-4 mb-2">
                 {texts.bransjerHeading}
               </Heading>
-              <List size="small">
-                {bransjer.map((bransje) => {
-                  return (
-                    <List.Item key={bransje.code}>
-                      <BodyShort size="small" className="m-0">
-                        {bransje.shortName}
-                      </BodyShort>
-                    </List.Item>
-                  );
-                })}
-              </List>
+
+              {bransjer.length === 1 && firstBransje ? (
+                <BodyShort size="small" className="m-0">
+                  {firstBransje.shortName}
+                </BodyShort>
+              ) : (
+                <List size="small">
+                  {bransjer.map((bransje) => {
+                    return (
+                      <List.Item key={bransje.code}>
+                        <BodyShort size="small" className="m-0">
+                          {bransje.shortName}
+                        </BodyShort>
+                      </List.Item>
+                    );
+                  })}
+                </List>
+              )}
 
               <Link
                 className="mt-2"
-                href="https://dataportal.ssb.no/classifications/6/codes"
+                href={lenkeSsbBransjer}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackLinkKlikket(texts.bransjerInfo, lenkeSsbBransjer)
+                }
               >
                 {texts.bransjerInfo}
               </Link>
