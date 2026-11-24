@@ -7,7 +7,7 @@ import { http, HttpResponse } from "msw";
 import { VirksomhetColumn } from "@/sider/oversikt/sokeresultat/oversikttable/VirksomhetColumn.tsx";
 import { PersonData } from "@/api/types/personregisterTypes";
 import { virksomhetQueryKeys } from "@/data/virksomhet/virksomhetQueryHooks";
-import { EREG_ROOT } from "@/apiConstants";
+import { EREG_ROOT, SYFOPERSON_ROOT } from "@/apiConstants";
 import { personregister, testdata } from "../data/fellesTestdata";
 import { testQueryClient } from "../testQueryClient";
 import { mockServer } from "../setup";
@@ -179,6 +179,166 @@ describe("PersonRadVirksomhetColumn", () => {
         ).to.equal("true");
       },
     );
+  });
+
+  describe("sektor in popover", () => {
+    it.each(["JuridiskEnhet", "Organisasjonsledd"])(
+      "lazily fetches and displays the matching sector name from %s",
+      async (type) => {
+        const user = userEvent.setup();
+        let requestCount = 0;
+        let requestedStandard = "";
+        const sektorkode = type === "Organisasjonsledd" ? "6100" : "2100";
+        queryClient.setQueryData(firstVirksomhetQueryKey, {
+          type: "Virksomhet",
+          navn: firstVirksomhet.navn,
+          inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+          ...(type === "Organisasjonsledd"
+            ? {
+                bestaarAvOrganisasjonsledd: [
+                  {
+                    organisasjonsledd: {
+                      type,
+                      organisasjonsnummer: "987654330",
+                      inngaarIJuridiskEnheter: [
+                        { organisasjonsnummer: "987654329" },
+                      ],
+                    },
+                  },
+                ],
+              }
+            : {}),
+        });
+        queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+          type: "JuridiskEnhet",
+          organisasjonsnummer: "987654329",
+          juridiskEnhetDetaljer: { sektorkode: "2100" },
+        });
+        queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654330"), {
+          type: "Organisasjonsledd",
+          organisasjonsnummer: "987654330",
+          organisasjonsleddDetaljer: { sektorkode: "6100" },
+        });
+        mockServer.use(
+          http.get(
+            `${SYFOPERSON_ROOT}/sektorkode/${sektorkode}`,
+            ({ request }) => {
+              requestCount++;
+              requestedStandard =
+                new URL(request.url).searchParams.get("standard") ?? "";
+              return HttpResponse.json({
+                standard: 2012,
+                hierarki: [
+                  {
+                    code: sektorkode,
+                    name: "Kodenhet",
+                    parentCode: null,
+                    level: 1,
+                  },
+                ],
+              });
+            },
+          ),
+        );
+        renderColumn(getPersonData(1));
+
+        expect(requestCount).toBe(0);
+        await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+        expect(await screen.findByRole("heading", { name: "Sektor" })).to.exist;
+        expect(await screen.findByText("Kodenhet")).to.exist;
+        expect(requestedStandard).toBe("2012");
+        expect(requestCount).toBe(1);
+      },
+    );
+
+    it.each(["JuridiskEnhet", "Organisasjonsledd"])(
+      "keeps the raw sector code from %s and organisation name when lookup fails",
+      async (type) => {
+        const user = userEvent.setup();
+        queryClient.setQueryData(firstVirksomhetQueryKey, {
+          type: "Virksomhet",
+          navn: firstVirksomhet.navn,
+          ...(type === "JuridiskEnhet"
+            ? {
+                inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654329" }],
+              }
+            : {
+                bestaarAvOrganisasjonsledd: [
+                  {
+                    organisasjonsledd: {
+                      type,
+                      organisasjonsnummer: "987654329",
+                    },
+                  },
+                ],
+              }),
+        });
+        queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+          type,
+          organisasjonsnummer: "987654329",
+          ...(type === "JuridiskEnhet"
+            ? { juridiskEnhetDetaljer: { sektorkode: "9999" } }
+            : { organisasjonsleddDetaljer: { sektorkode: "9999" } }),
+        });
+        mockServer.use(
+          http.get(`${SYFOPERSON_ROOT}/sektorkode/9999`, () =>
+            HttpResponse.json({}, { status: 502 }),
+          ),
+        );
+        renderColumn(getPersonData(1));
+
+        await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+        expect(await screen.findByText("Klarte ikke hente sektornavn")).to
+          .exist;
+        expect(screen.getByText("9999")).to.exist;
+        expect(
+          screen.getByRole("heading", {
+            name: firstVirksomhet.navn.navnelinje1,
+          }),
+        ).to.exist;
+      },
+    );
+
+    it("does not use the legal entity's sector when the nearest section has no sector code", async () => {
+      const user = userEvent.setup();
+      let requestCount = 0;
+      queryClient.setQueryData(firstVirksomhetQueryKey, {
+        type: "Virksomhet",
+        navn: firstVirksomhet.navn,
+        inngaarIJuridiskEnheter: [{ organisasjonsnummer: "987654330" }],
+        bestaarAvOrganisasjonsledd: [
+          {
+            organisasjonsledd: {
+              type: "Organisasjonsledd",
+              organisasjonsnummer: "987654329",
+            },
+          },
+        ],
+      });
+      queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654329"), {
+        type: "Organisasjonsledd",
+        organisasjonsnummer: "987654329",
+      });
+      queryClient.setQueryData(virksomhetQueryKeys.virksomhet("987654330"), {
+        type: "JuridiskEnhet",
+        organisasjonsnummer: "987654330",
+        juridiskEnhetDetaljer: { sektorkode: "6100" },
+      });
+      mockServer.use(
+        http.get(`${SYFOPERSON_ROOT}/sektorkode/*`, () => {
+          requestCount++;
+          return HttpResponse.json({ standard: 2012, hierarki: [] });
+        }),
+      );
+      renderColumn(getPersonData(1));
+
+      await user.click(screen.getByRole("button", { name: "Se virksomhet" }));
+
+      expect(screen.queryByRole("heading", { name: "Sektor" })).to.not.exist;
+      expect(requestCount).toBe(0);
+    });
   });
 
   describe("flere enn tre virksomheter", () => {

@@ -4,6 +4,7 @@ import { mockUnleash } from "@/mocks/mockUnleash";
 import { mockSyfoveileder } from "@/mocks/syfoveileder/mockSyfoveileder";
 import { mockSyfoperson } from "@/mocks/syfoperson/mockSyfoperson";
 import { mockNaringskode } from "@/mocks/syfoperson/mockNaringskode";
+import { mockSektorkode } from "@/mocks/syfoperson/mockSektorkode";
 import { mockPersontildeling } from "@/mocks/persontildeling/mockPersontildeling";
 import {
   mockPersonoversikt,
@@ -26,6 +27,7 @@ const handlers: Array<HttpHandler | WebSocketHandler> = [
   ...mockSyfoveileder,
   mockSyfoperson(generatedPersons),
   mockNaringskode,
+  mockSektorkode,
   mockPersontildeling,
   mockPersonoversikt(generatedPersons),
   mockSokPerson(),
